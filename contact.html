@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Contact | Part of the Plot</title>
+
+    <meta
+        name="description"
+        content="Contact Part of the Plot about immersive role-playing mystery parties, games, and scheduling a mystery."
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <!-- Google Fonts -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<div id="site-header"></div>
+
+
+
+<!-- ================= CONTACT HERO ================= -->
+
+<section class="contact-page-hero">
+
+    <div class="contact-page-hero-content">
+
+        <p class="eyebrow">
+            GET IN TOUCH
+        </p>
+
+        <h1>
+            LET'S CREATE<br>
+            <span>A STORY.</span>
+        </h1>
+
+        <div class="divider"></div>
+
+        <p class="tagline">
+            Have questions? Want to schedule a mystery?<br>
+            <strong>I'd love to hear from you.</strong>
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CONTACT ================= -->
+
+<section class="contact">
+
+    <div class="contact-container">
+
+
+        <!-- CONTACT INFORMATION -->
+
+        <div class="contact-info">
+
+            <h3>
+                Part of the Plot
+            </h3>
+
+            <p>
+                Immersive role-playing mystery parties
+                designed to make you part of the story.
+            </p>
+
+            <p>
+                Whether you're planning a party,
+                curious about one of our games, or
+                just have a question, send me a message.
+            </p>
+
+            <p>
+                <strong>Email:</strong><br>
+                your@email.com
+            </p>
+
+        </div>
+
+
+
+        <!-- CONTACT FORM -->
+
+        <form
+            id="contact-form"
+            class="contact-form"
+            action="https://formspree.io/f/mrpzdvla"
+            method="POST"
+        >
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                autocomplete="name"
+                required
+                aria-label="Your Name"
+            >
+
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                autocomplete="email"
+                required
+                aria-label="Your Email"
+            >
+
+
+            <select
+                name="interest"
+                aria-label="What are you interested in?"
+            >
+
+                <option value="">
+                    What are you interested in?
+                </option>
+
+                <option value="Spellbound">
+                    Spellbound
+                </option>
+
+                <option value="Another Game">
+                    Another Game
+                </option>
+
+                <option value="Scheduling a Party">
+                    Scheduling a Party
+                </option>
+
+                <option value="General Question">
+                    General Question
+                </option>
+
+            </select>
+
+
+            <textarea
+                name="message"
+                placeholder="Tell me about your event..."
+                rows="6"
+                aria-label="Your message"
+            ></textarea>
+
+
+            <button
+                type="submit"
+                class="button"
+                data-fs-submit-btn
+            >
+                Send Message
+            </button>
+
+
+            <div
+                class="form-message"
+                id="contact-success"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<div id="site-footer"></div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>

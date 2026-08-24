@@ -1,0 +1,481 @@
+/* =========================================================
+   PART OF THE PLOT
+   HOW IT WORKS PAGE
+   Page-specific colors & styling
+   ========================================================= */
+
+
+/* =========================================================
+   1. HERO
+   ========================================================= */
+
+.how-it-works-hero {
+    position: relative;
+
+    min-height: 700px;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 120px 30px;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #293041 0%,
+            #171c28 40%,
+            #10131a 80%
+        );
+
+    overflow: hidden;
+}
+
+
+/* Subtle gold atmosphere */
+
+.how-it-works-hero::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            transparent 0%,
+            rgba(198, 161, 91, 0.05) 50%,
+            transparent 100%
+        );
+}
+
+
+/* Hero content */
+
+.how-it-works-hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+
+/* Eyebrow */
+
+.how-it-works-hero .eyebrow {
+    margin-bottom: 20px;
+
+    color: var(--gold);
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 4px;
+}
+
+
+/* Main heading */
+
+.how-it-works-hero h1 {
+    margin: 20px 0 0;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(55px, 10vw, 120px);
+    font-weight: 500;
+
+    line-height: 0.95;
+
+    letter-spacing: 8px;
+}
+
+
+/* Gold portion */
+
+.how-it-works-hero h1 span {
+    color: var(--gold);
+}
+
+
+/* Divider */
+
+.how-it-works-hero .divider {
+    width: 100px;
+    height: 1px;
+
+    margin: 35px auto;
+
+    background: var(--gold);
+}
+
+
+/* Tagline */
+
+.how-it-works-hero .tagline {
+    margin-bottom: 0;
+
+    color: #d4d0c8;
+
+    font-size: 20px;
+    font-weight: 300;
+
+    line-height: 1.7;
+}
+
+
+/* Emphasized tagline */
+
+.how-it-works-hero .tagline strong {
+    color: var(--light-gold);
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .how-it-works-hero {
+        min-height: 650px;
+
+        padding: 100px 20px;
+    }
+
+    .how-it-works-hero h1 {
+        font-size: 55px;
+
+        letter-spacing: 4px;
+    }
+
+    .how-it-works-hero .tagline {
+        font-size: 17px;
+    }
+
+}
+
+
+/* =========================================================
+   2. WHAT IS AN IMMERSIVE MYSTERY?
+   ========================================================= */
+
+.how-it-works-intro {
+    background:
+        radial-gradient(
+            circle at 75% 15%,
+            rgba(81, 64, 111, 0.22),
+            transparent 38%
+        ),
+        linear-gradient(
+            180deg,
+            #171c28,
+            #151a25
+        );
+
+    border-top: 1px solid rgba(198, 161, 91, 0.08);
+    border-bottom: 1px solid rgba(198, 161, 91, 0.08);
+}
+
+.how-it-works-intro h2 {
+    color: var(--cream);
+}
+
+.how-it-works-intro p {
+    color: #aaaeb7;
+}
+
+.how-it-works-intro .intro-lead {
+    color: var(--cream);
+}
+
+.how-it-works-intro strong {
+    color: var(--gold);
+}
+
+
+/* =========================================================
+   3. HOW IT WORKS
+   ========================================================= */
+
+.how-it-works {
+    background:
+        linear-gradient(
+            135deg,
+            #121722,
+            #181e2b
+        );
+}
+
+.how-it-works .section-heading h2 {
+    color: var(--cream);
+}
+
+.how-it-works .section-heading > p:last-child {
+    color: #aaaeb7;
+}
+
+
+/* =========================================================
+   4. STEP CARDS
+   ========================================================= */
+
+.step {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.025),
+            rgba(255, 255, 255, 0.008)
+        );
+
+    border-top: 1px solid rgba(198, 161, 91, 0.28);
+    border-left: 1px solid rgba(255, 255, 255, 0.025);
+    border-right: 1px solid rgba(255, 255, 255, 0.025);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.025);
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+.step:hover {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(81, 64, 111, 0.12),
+            rgba(255, 255, 255, 0.02)
+        );
+
+    border-top-color: rgba(198, 161, 91, 0.55);
+
+    transform: translateY(-3px);
+}
+
+.step-number {
+    color: var(--gold);
+}
+
+.step h3 {
+    color: var(--cream);
+}
+
+.step p {
+    color: var(--muted);
+}
+
+.step .text-link {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+}
+
+
+/* =========================================================
+   5. DURING THE GAME
+   ========================================================= */
+
+.game-process {
+    background:
+        radial-gradient(
+            circle at 18% 25%,
+            rgba(81, 64, 111, 0.20),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(198, 161, 91, 0.045),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #0c1018,
+            #10141e
+        );
+
+    border-top: 1px solid rgba(255, 255, 255, 0.025);
+}
+
+.game-process .section-heading h2 {
+    color: var(--cream);
+}
+
+.game-process .section-heading > p:last-child {
+    color: #aaaeb7;
+}
+
+
+/* =========================================================
+   6. PROCESS STEPS
+   ========================================================= */
+
+.game-process-step {
+    border-bottom-color: rgba(198, 161, 91, 0.16);
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease;
+}
+
+.game-process-step:first-child {
+    border-top-color: rgba(198, 161, 91, 0.16);
+}
+
+.game-process-step:hover {
+    background: rgba(81, 64, 111, 0.045);
+    border-bottom-color: rgba(198, 161, 91, 0.28);
+}
+
+.game-process-number {
+    color: var(--gold);
+}
+
+.game-process-content h3 {
+    color: var(--cream);
+}
+
+.game-process-content p {
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   7. EYEBROWS & GOLD ACCENTS
+   ========================================================= */
+
+.how-it-works-hero .eyebrow,
+.how-it-works-intro .eyebrow,
+.how-it-works .eyebrow,
+.game-process .eyebrow {
+    color: var(--gold);
+}
+
+
+/* =========================================================
+   8. MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .how-it-works-hero {
+        background:
+            radial-gradient(
+                circle at 50% 40%,
+                rgba(81, 64, 111, 0.24),
+                transparent 52%
+            ),
+            linear-gradient(
+                180deg,
+                #0b0e16,
+                #151a27
+            );
+    }
+
+    .how-it-works-intro {
+        background:
+            radial-gradient(
+                circle at 80% 15%,
+                rgba(81, 64, 111, 0.18),
+                transparent 42%
+            ),
+            #171c28;
+    }
+
+    .how-it-works {
+        background:
+            linear-gradient(
+                180deg,
+                #121722,
+                #171c28
+            );
+    }
+
+    .step {
+        background: rgba(255, 255, 255, 0.018);
+    }
+
+    .game-process {
+        background:
+            radial-gradient(
+                circle at 20% 20%,
+                rgba(81, 64, 111, 0.18),
+                transparent 45%
+            ),
+            #0c1018;
+    }
+
+}
+
+
+/* =========================================================
+   HOW IT WORKS PAGE — STEP BOXES
+   Styled like the Home Page Experience boxes
+   ========================================================= */
+
+.how-it-works .step {
+    padding: 40px 30px;
+
+    text-align: center;
+
+    border: 1px solid var(--border);
+
+    border-top: 1px solid var(--border);
+
+    background: rgba(255, 255, 255, 0.01);
+
+    transform: none;
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+/* Remove the previous hover effect */
+
+.how-it-works .step:hover {
+    background: rgba(255, 255, 255, 0.02);
+
+    border-color: var(--border);
+
+    transform: none;
+}
+
+
+/* Number / symbol */
+
+.how-it-works .step-number {
+    margin-bottom: 15px;
+
+    color: var(--gold);
+
+    font-family: 'Cinzel', serif;
+    font-size: 25px;
+}
+
+
+/* Heading */
+
+.how-it-works .step h3 {
+    margin-bottom: 12px;
+
+    color: var(--cream);
+
+    font-size: 20px;
+}
+
+
+/* Description */
+
+.how-it-works .step p {
+    color: var(--muted);
+
+    font-size: 13px;
+    line-height: 1.8;
+}
