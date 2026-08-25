@@ -1,0 +1,354 @@
+<!-- ================= SCHEDULING MODAL ================= -->
+
+<div class="modal" id="scheduleModal">
+
+    <div class="modal-content">
+
+        <button class="modal-close" id="closeModal" type="button">
+            &times;
+        </button>
+
+        <div class="modal-header">
+
+            <p class="eyebrow">
+                PLAN YOUR MYSTERY
+            </p>
+
+            <h2>
+                Schedule a Game
+            </h2>
+
+            <p>
+                Tell me a little about your event and I'll get back
+                to you to work out the details.
+            </p>
+
+        </div>
+
+
+        <form
+            id="scheduleForm"
+            action="YOUR-FORM-ACTION-HERE"
+            method="POST"
+        >
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="schedule-name">
+                        Your Name *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="schedule-name"
+                        name="name"
+                        required
+                    >
+
+                </div>
+
+ 	<div class="form-group">
+
+                <label for="schedule-phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="schedule-phone"
+                    name="phone"
+                >
+
+            </div>
+
+                <div class="form-group">
+
+                    <label for="schedule-email">
+                        Email *
+                    </label>
+
+                    <input
+                        type="email"
+                        id="schedule-email"
+                        name="email"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+           
+
+
+<div class="form-group">
+
+    <label for="game">
+        Which game would you like to play? *
+    </label>
+
+    <select
+        id="game"
+        name="game"
+        required
+    >
+
+        <option value="">
+            Select a game
+        </option>
+
+        <option value="Spellbound">
+            Spellbound
+        </option>
+
+    </select>
+
+</div>
+
+
+<div class="form-group">
+
+    <label for="players">
+        Number of Players *
+    </label>
+
+    <select
+        id="players"
+        name="players"
+        required
+    >
+
+        <option value="">
+            Choose number of players
+        </option>
+
+    </select>
+
+    <p
+        id="playerHelp"
+        class="form-help"
+    >
+        Select a game to see the available player numbers.
+    </p>
+
+</div>
+
+
+<div class="form-group">
+
+    <label>
+        How would you like character assignments handled? *
+    </label>
+
+    <div class="radio-group">
+
+        <label>
+            <input
+                type="radio"
+                name="characterAssignment"
+                value="ahead"
+                required
+            >
+            Ahead of time
+        </label>
+
+        <label>
+            <input
+                type="radio"
+                name="characterAssignment"
+                value="party"
+            >
+            At the party
+        </label>
+
+    </div>
+
+</div>
+
+
+<!-- CHARACTER INFORMATION -->
+
+<div
+    id="character-info"
+    class="form-group"
+    style="display: none;"
+>
+
+    <label>
+        Player Information
+    </label>
+
+    <p class="form-help">
+        Enter the name and email address for each player.
+        I'll use this information to send character assignments
+        and any necessary instructions before the game.
+    </p>
+
+
+    <div id="character-players"></div>
+
+
+    <div class="form-group character-notes">
+
+        <label for="couples">
+            Couples
+        </label>
+
+        <p class="form-help">
+            Are any of the players married, dating, or otherwise
+            a couple? Please list their names.
+        </p>
+
+        <textarea
+            id="couples"
+            name="couples"
+            rows="2"
+            placeholder="Example: Sarah & Mike; Emily & Josh"
+        ></textarea>
+
+    </div>
+
+
+    <div class="form-group character-notes">
+
+        <label for="outgoing-players">
+            Outgoing Players
+        </label>
+
+        <p class="form-help">
+            Which players would you describe as especially
+            outgoing, talkative, or comfortable taking the lead?
+        </p>
+
+        <textarea
+            id="outgoing-players"
+            name="outgoingPlayers"
+            rows="2"
+            placeholder="Example: Sarah, Mike, and Taylor"
+        ></textarea>
+
+    </div>
+
+
+    <div class="form-group character-notes">
+
+        <label for="reserved-players">
+            More Reserved Players
+        </label>
+
+        <p class="form-help">
+            Which players tend to be quieter, more reserved,
+            or prefer not to be the center of attention?
+        </p>
+
+        <textarea
+            id="reserved-players"
+            name="reservedPlayers"
+            rows="2"
+            placeholder="Example: Alex and Jamie"
+        ></textarea>
+
+    </div>
+
+</div>
+
+
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="schedule-date">
+                        Preferred Date *
+                    </label>
+
+                    <input
+                        type="date"
+                        id="schedule-date"
+                        name="date"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="schedule-backup-date">
+                        Backup Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="schedule-backup-date"
+                        name="backupDate"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="schedule-time">
+                    Preferred Start Time
+                </label>
+
+                <input
+                    type="time"
+                    id="schedule-time"
+                    name="time"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="schedule-location">
+                    Where would you like to play?
+                </label>
+
+                <input
+                    type="text"
+                    id="schedule-location"
+                    name="location"
+                    placeholder="Event address"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="schedule-message">
+                    Tell me about your event
+                </label>
+
+                <textarea
+                    id="schedule-message"
+                    name="message"
+                    rows="5"
+                    placeholder="Anything you'd like me to know?"
+                ></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="button form-submit"
+            >
+                Send Scheduling Request
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

@@ -1,4 +1,9 @@
 /* =========================================
+   PART OF THE PLOT
+   JavaScript
+========================================= */
+
+
 /* =========================================
    LOAD SHARED HEADER
 ========================================= */
@@ -17,6 +22,7 @@ if (siteHeader) {
             return response.text();
 
         })
+
         .then(html => {
 
             siteHeader.innerHTML = html;
@@ -24,6 +30,7 @@ if (siteHeader) {
             initializeNavigation();
 
         })
+
         .catch(error => {
 
             console.error("Header loading error:", error);
@@ -51,11 +58,13 @@ if (siteFooter) {
             return response.text();
 
         })
+
         .then(html => {
 
             siteFooter.innerHTML = html;
 
         })
+
         .catch(error => {
 
             console.error("Footer loading error:", error);
@@ -63,12 +72,6 @@ if (siteFooter) {
         });
 
 }
-
-
-/* =========================================
-   PART OF THE PLOT
-   JavaScript
-========================================= */
 
 
 /* =========================================
@@ -118,10 +121,6 @@ function initializeNavigation() {
 
             link.addEventListener("click", () => {
 
-                /*
-                 * On mobile, the Games title opens
-                 * the dropdown instead of navigating.
-                 */
                 if (
                     link.classList.contains(
                         "nav-dropdown-title"
@@ -178,16 +177,22 @@ function initializeNavigation() {
    FAQ ACCORDION
 ========================================= */
 
-const faqQuestions = document.querySelectorAll(".faq-question");
+const faqQuestions =
+    document.querySelectorAll(".faq-question");
 
 faqQuestions.forEach(question => {
 
     question.addEventListener("click", () => {
 
-        const faqItem = question.parentElement;
-        const answer = faqItem.querySelector(".faq-answer");
+        const faqItem =
+            question.parentElement;
 
-        // Close all other FAQ items
+        const answer =
+            faqItem.querySelector(".faq-answer");
+
+
+        /* Close all other FAQ items */
+
         document.querySelectorAll(".faq-item").forEach(item => {
 
             if (item !== faqItem) {
@@ -205,13 +210,22 @@ faqQuestions.forEach(question => {
 
         });
 
-        // Toggle selected FAQ item
+
+        /* Toggle selected FAQ item */
+
         faqItem.classList.toggle("active");
 
         if (faqItem.classList.contains("active")) {
-            answer.style.maxHeight = answer.scrollHeight + "px";
-        } else {
+
+            answer.style.maxHeight =
+                answer.scrollHeight + "px";
+
+        }
+
+        else {
+
             answer.style.maxHeight = null;
+
         }
 
     });
@@ -223,41 +237,49 @@ faqQuestions.forEach(question => {
    FADE-IN ANIMATIONS
 ========================================= */
 
-const sections = document.querySelectorAll(
-    ".section, .how-it-works, .faq, .contact"
-);
+const sections =
+    document.querySelectorAll(
+        ".section, .how-it-works, .faq, .contact"
+    );
 
 if ("IntersectionObserver" in window) {
 
-    const observer = new IntersectionObserver(
+    const observer =
+        new IntersectionObserver(
 
-        entries => {
+            entries => {
 
-            entries.forEach(entry => {
+                entries.forEach(entry => {
 
-                if (entry.isIntersecting) {
+                    if (entry.isIntersecting) {
 
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
+                        entry.target.style.opacity = "1";
 
-                    observer.unobserve(entry.target);
+                        entry.target.style.transform =
+                            "translateY(0)";
 
-                }
+                        observer.unobserve(entry.target);
 
-            });
+                    }
 
-        },
+                });
 
-        {
-            threshold: 0.1
-        }
+            },
 
-    );
+            {
+                threshold: 0.1
+            }
+
+        );
+
 
     sections.forEach(section => {
 
         section.style.opacity = "0";
-        section.style.transform = "translateY(25px)";
+
+        section.style.transform =
+            "translateY(25px)";
+
         section.style.transition =
             "opacity 0.8s ease, transform 0.8s ease";
 
@@ -269,95 +291,243 @@ if ("IntersectionObserver" in window) {
 
 
 /* =========================================
+   LOAD SHARED SCHEDULING MODAL
+========================================= */
+
+const scheduleContainer =
+    document.getElementById(
+        "schedule-modal-container"
+    );
+
+
+if (scheduleContainer) {
+
+    fetch("schedule.html")
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error(
+                    "Could not load schedule.html"
+                );
+            }
+
+            return response.text();
+
+        })
+
+        .then(html => {
+
+            scheduleContainer.innerHTML = html;
+
+	    initializeGamePlayerOptions();
+
+            initializeScheduling();
+
+            initializeSchedulingForm();
+
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "Scheduling modal loading error:",
+                error
+            );
+
+        });
+
+}
+
+
+/* =========================================
    SCHEDULING MODAL
 ========================================= */
 
-const scheduleModal =
-    document.getElementById("scheduleModal");
+function initializeScheduling() {
 
-const closeModal =
-    document.getElementById("closeModal");
+    const scheduleModal =
+        document.getElementById("scheduleModal");
 
-const scheduleButtons =
-    document.querySelectorAll(".schedule-button");
-
-
-/* -----------------------------------------
-   OPEN SCHEDULE MODAL
------------------------------------------ */
-
-function openScheduleModal() {
-
-    if (!scheduleModal) return;
-
-    scheduleModal.classList.add("active");
-
-    scheduleModal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-    document.body.style.overflow = "hidden";
-
-}
+    const closeModal =
+        document.getElementById("closeModal");
 
 
-/* -----------------------------------------
-   CLOSE SCHEDULE MODAL
------------------------------------------ */
+    /* -----------------------------------------
+       OPEN MODAL
+    ----------------------------------------- */
 
-function closeScheduleModal() {
+    function openScheduleModal() {
 
-    if (!scheduleModal) return;
+        if (!scheduleModal) {
 
-    scheduleModal.classList.remove("active");
+            console.error(
+                "scheduleModal was not found."
+            );
 
-    scheduleModal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
+            return;
 
-    document.body.style.overflow = "";
+        }
 
-}
+        scheduleModal.classList.add("active");
 
+        scheduleModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
 
-/* -----------------------------------------
-   SCHEDULE BUTTONS
------------------------------------------ */
+        document.body.style.overflow = "hidden";
 
-scheduleButtons.forEach(button => {
-
-    button.addEventListener("click", openScheduleModal);
-
-});
+    }
 
 
-/* -----------------------------------------
-   CLOSE BUTTON
------------------------------------------ */
+    /* -----------------------------------------
+       CLOSE MODAL
+    ----------------------------------------- */
 
-if (closeModal) {
+    function closeScheduleModal() {
 
-    closeModal.addEventListener(
-        "click",
-        closeScheduleModal
-    );
+        if (!scheduleModal) return;
 
-}
+        scheduleModal.classList.remove("active");
+
+        scheduleModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow = "";
+
+    }
 
 
-/* -----------------------------------------
-   CLICK OUTSIDE MODAL
------------------------------------------ */
+    /* -----------------------------------------
+       SCHEDULE BUTTONS
+    ----------------------------------------- */
 
-if (scheduleModal) {
+    const scheduleButtons =
+        document.querySelectorAll(
+            "#scheduleButton, .schedule-button"
+        );
 
-    scheduleModal.addEventListener(
-        "click",
+
+    scheduleButtons.forEach(button => {
+
+        button.addEventListener("click", event => {
+
+            event.preventDefault();
+
+
+            /* -----------------------------------------
+               PRESELECT GAME IF BUTTON SPECIFIES ONE
+            ----------------------------------------- */
+
+            const requestedGame =
+                button.dataset.game;
+
+            const gameSelect =
+                document.getElementById("game");
+
+
+            if (requestedGame && gameSelect) {
+
+                const gameOption =
+                    Array.from(
+                        gameSelect.options
+                    ).find(
+                        option =>
+                            option.value === requestedGame
+                    );
+
+
+                if (gameOption) {
+
+                    /*
+                     * Select the game.
+                     */
+
+                    gameSelect.value =
+                        requestedGame;
+
+
+                    /*
+                     * Trigger the existing game
+                     * change code.
+                     *
+                     * This will populate the
+                     * player choices exactly as
+                     * before.
+                     */
+
+                    gameSelect.dispatchEvent(
+                        new Event("change")
+                    );
+
+                }
+
+            }
+
+
+            /* Open the modal */
+
+            openScheduleModal();
+
+        });
+
+    });
+
+
+    /* -----------------------------------------
+       CLOSE BUTTON
+    ----------------------------------------- */
+
+    if (closeModal) {
+
+        closeModal.addEventListener(
+            "click",
+            closeScheduleModal
+        );
+
+    }
+
+
+    /* -----------------------------------------
+       CLICK OUTSIDE MODAL
+    ----------------------------------------- */
+
+    if (scheduleModal) {
+
+        scheduleModal.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target === scheduleModal
+                ) {
+
+                    closeScheduleModal();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------
+       ESCAPE KEY
+    ----------------------------------------- */
+
+    document.addEventListener(
+        "keydown",
         event => {
 
-            if (event.target === scheduleModal) {
+            if (
+                event.key === "Escape" &&
+                scheduleModal &&
+                scheduleModal.classList.contains("active")
+            ) {
 
                 closeScheduleModal();
 
@@ -369,70 +539,402 @@ if (scheduleModal) {
 }
 
 
+/* =========================================
+   SCHEDULING FORM
+========================================= */
+
+function initializeSchedulingForm() {
+
+    const scheduleForm =
+        document.getElementById("scheduleForm");
+
+    const scheduleSuccess =
+        document.getElementById("schedule-success");
+
+    const dateInput =
+        document.getElementById("schedule-date");
+
+    const backupDateInput =
+        document.getElementById(
+            "schedule-backup-date"
+        );
+
+
+    if (!scheduleForm) return;
+
+
 /* -----------------------------------------
-   ESCAPE KEY
+   CHARACTER ASSIGNMENT
 ----------------------------------------- */
 
-document.addEventListener(
-    "keydown",
-    event => {
+const assignmentRadios =
+    document.querySelectorAll(
+        'input[name="characterAssignment"]'
+    );
 
-        if (
-            event.key === "Escape" &&
-            scheduleModal &&
-            scheduleModal.classList.contains("active")
-        ) {
+const characterInfo =
+    document.getElementById("character-info");
 
-            closeScheduleModal();
+const characterPlayers =
+    document.getElementById("character-players");
 
-        }
+const playersSelect =
+    document.getElementById("players");
+
+
+function updateCharacterFields() {
+
+    const selectedAssignment =
+        document.querySelector(
+            'input[name="characterAssignment"]:checked'
+        );
+
+    if (
+        !selectedAssignment ||
+        selectedAssignment.value !== "ahead"
+    ) {
+
+        characterInfo.style.display = "none";
+
+        characterPlayers.innerHTML = "";
+
+        return;
 
     }
-);
+
+
+    characterInfo.style.display = "block";
+
+    const numberOfPlayers =
+        parseInt(playersSelect.value);
+
+
+    if (
+        !numberOfPlayers ||
+        numberOfPlayers < 1
+    ) {
+
+        characterPlayers.innerHTML =
+            "<p class=\"form-help\">Choose the number of players above first.</p>";
+
+        return;
+
+    }
+
+
+    characterPlayers.innerHTML = "";
+
+
+    for (
+        let i = 1;
+        i <= numberOfPlayers;
+        i++
+    ) {
+
+        const playerGroup =
+            document.createElement("div");
+
+        playerGroup.className =
+            "character-player";
+
+
+        playerGroup.innerHTML = `
+
+            <h4>
+                Player ${i}
+            </h4>
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="player-${i}-name">
+                        Name *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="player-${i}-name"
+                        name="player${i}Name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="player-${i}-email">
+                        Email *
+                    </label>
+
+                    <input
+                        type="email"
+                        id="player-${i}-email"
+                        name="player${i}Email"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        characterPlayers.appendChild(
+            playerGroup
+        );
+
+    }
+
+}
+
+
+/* Watch for assignment choice */
+
+assignmentRadios.forEach(radio => {
+
+    radio.addEventListener(
+        "change",
+        updateCharacterFields
+    );
+
+});
+
+
+/* Watch for number of players */
+
+if (playersSelect) {
+
+    playersSelect.addEventListener(
+        "change",
+        () => {
+
+            const selectedAssignment =
+                document.querySelector(
+                    'input[name="characterAssignment"]:checked'
+                );
+
+            if (
+                selectedAssignment &&
+                selectedAssignment.value === "ahead"
+            ) {
+
+                updateCharacterFields();
+
+            }
+
+        }
+    );
+
+}
+
+
+
+
+
+    /* -----------------------------------------
+       SET MINIMUM DATES
+    ----------------------------------------- */
+
+    const todayString =
+        getTodayString();
+
+
+    if (dateInput) {
+        dateInput.min = todayString;
+    }
+
+
+    if (backupDateInput) {
+        backupDateInput.min = todayString;
+    }
+
+
+    /* -----------------------------------------
+       VALIDATE PREFERRED DATE
+    ----------------------------------------- */
+
+    if (dateInput) {
+
+        dateInput.addEventListener(
+            "blur",
+            () => {
+
+                validateDateInput(
+                    dateInput
+                );
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------
+       VALIDATE BACKUP DATE
+    ----------------------------------------- */
+
+    if (backupDateInput) {
+
+        backupDateInput.addEventListener(
+            "blur",
+            () => {
+
+                validateDateInput(
+                    backupDateInput
+                );
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------
+       FORM SUBMISSION
+    ----------------------------------------- */
+
+    scheduleForm.addEventListener(
+        "submit",
+        event => {
+
+            event.preventDefault();
+
+
+            /* Check preferred date */
+
+            if (
+                dateInput &&
+                dateInput.value < todayString
+            ) {
+
+                alert(
+                    "Please choose today or a future date."
+                );
+
+                dateInput.focus();
+
+                return;
+
+            }
+
+
+            /* Check backup date */
+
+            if (
+                backupDateInput &&
+                backupDateInput.value &&
+                backupDateInput.value < todayString
+            ) {
+
+                alert(
+                    "Please choose today or a future date."
+                );
+
+                backupDateInput.focus();
+
+                return;
+
+            }
+
+
+            submitForm(
+                scheduleForm,
+                scheduleSuccess,
+                {
+
+                    hideForm: true,
+
+                    successMessage:
+                        "Scheduling Request Sent! Thank you! Your request has been received. I'll review your details and get back to you soon to work out the perfect date, game, and location.",
+
+                    successButtonText:
+                        "Request Sent"
+
+                }
+            );
+
+        }
+    );
+
+}
+
 
 /* =========================================
    FORM SUBMISSION HELPER
 ========================================= */
 
-async function submitForm(form, successElement, options = {}) {
+async function submitForm(
+    form,
+    successElement,
+    options = {}
+) {
 
     const submitButton =
-        form.querySelector("button[type='submit']");
+        form.querySelector(
+            "button[type='submit']"
+        );
+
 
     if (!submitButton) return;
+
 
     const originalButtonText =
         submitButton.textContent;
 
-    submitButton.textContent = "Sending...";
+
+    submitButton.textContent =
+        "Sending...";
+
     submitButton.disabled = true;
 
-    const formData = new FormData(form);
+
+    const formData =
+        new FormData(form);
+
 
     try {
 
-        const response = await fetch(form.action, {
+        const response =
+            await fetch(
+                form.action,
+                {
 
-            method: "POST",
+                    method: "POST",
 
-            body: formData,
+                    body: formData,
 
-            headers: {
-                "Accept": "application/json"
-            }
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
 
-        });
+                }
+            );
+
 
         if (!response.ok) {
-            throw new Error("Form submission failed.");
+
+            throw new Error(
+                "Form submission failed."
+            );
+
         }
 
-        // Successful submission
+
+        /* Successful submission */
+
         form.reset();
 
+
         if (options.hideForm) {
+
             form.style.display = "none";
+
         }
+
 
         if (successElement) {
 
@@ -440,25 +942,41 @@ async function submitForm(form, successElement, options = {}) {
                 options.successMessage ||
                 "Message sent! Thank you for reaching out.";
 
-            successElement.style.display = "block";
+            successElement.style.display =
+                "block";
 
         }
 
-        submitButton.textContent =
-            options.successButtonText || "Sent";
 
-    } catch (error) {
+        submitButton.textContent =
+            options.successButtonText ||
+            "Sent";
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Form submission error:",
+            error
+        );
+
 
         if (successElement) {
 
             successElement.textContent =
                 "Something went wrong. Please try again.";
 
-            successElement.style.display = "block";
+            successElement.style.display =
+                "block";
 
         }
 
-        submitButton.textContent = originalButtonText;
+
+        submitButton.textContent =
+            originalButtonText;
+
         submitButton.disabled = false;
 
     }
@@ -467,286 +985,187 @@ async function submitForm(form, successElement, options = {}) {
 
 
 /* =========================================
-   CONTACT FORM
-========================================= */
-
-const contactForm =
-    document.getElementById("contact-form");
-
-const contactSuccess =
-    document.getElementById("contact-success");
-
-
-if (contactForm) {
-
-    contactForm.addEventListener("submit", event => {
-
-        event.preventDefault();
-
-        submitForm(
-            contactForm,
-            contactSuccess,
-            {
-                successMessage:
-                    "Message Sent! Thank you for reaching out. I'll be in touch soon.",
-
-                successButtonText:
-                    "Message Sent"
-            }
-        );
-
-    });
-
-}
-
-
-/* =========================================
-   SCHEDULING FORM
-========================================= */
-
-const scheduleForm =
-    document.getElementById("scheduleForm");
-
-const scheduleSuccess =
-    document.getElementById("schedule-success");
-
-
-if (scheduleForm) {
-
-    scheduleForm.addEventListener("submit", event => {
-
-        event.preventDefault();
-
-
-        const today = new Date();
-
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, "0");
-        const day = String(today.getDate()).padStart(2, "0");
-
-        const todayString = `${year}-${month}-${day}`;
-
-
-        if (dateInput && dateInput.value < todayString) {
-
-            alert("Please choose today or a future date.");
-
-            dateInput.focus();
-
-            return;
-        }
-
-
-        if (
-            backupDateInput &&
-            backupDateInput.value &&
-            backupDateInput.value < todayString
-        ) {
-
-            alert("Please choose today or a future date.");
-
-            backupDateInput.focus();
-
-            return;
-        }
-
-
-        submitForm(
-            scheduleForm,
-            scheduleSuccess,
-            {
-                hideForm: true,
-
-                successMessage:
-                    "Scheduling Request Sent! Thank you! Your request has been received. I'll review your details and get back to you soon to work out the perfect date, game, and location.",
-
-                successButtonText:
-                    "Request Sent"
-            }
-        );
-
-    });
-
-}
-
-
-/* =========================================
    GAME PLAYER OPTIONS
 ========================================= */
 
-const gameSelect = document.getElementById("game");
-const playersSelect = document.getElementById("players");
-const playerHelp = document.getElementById("playerHelp");
+function initializeGamePlayerOptions() {
+
+    const gameSelect =
+        document.getElementById("game");
+
+    const playersSelect =
+        document.getElementById("players");
+
+    const playerHelp =
+        document.getElementById("playerHelp");
 
 
-if (gameSelect && playersSelect) {
-
-    gameSelect.addEventListener("change", function () {
-
-        const game = this.value;
-
-        // Clear current options
-        playersSelect.innerHTML = "";
-
-if (!game) {
-
-    const option = document.createElement("option");
-
-    option.value = "";
-    option.textContent = "Choose number of players";
-
-    playersSelect.appendChild(option);
-
-    playerHelp.textContent =
-        "Select a game to see the available player numbers.";
-
-    return;
-
-}
+    if (!gameSelect || !playersSelect) {
+        return;
+    }
 
 
-        let minimum;
-        let maximum;
-        let genderRequirement = "";
+    gameSelect.addEventListener(
+        "change",
+        function () {
+
+            const game =
+                this.value;
 
 
-        /* SPELLBOUND */
+            /* -----------------------------------------
+               CLEAR CURRENT PLAYER OPTIONS
+            ----------------------------------------- */
 
-        if (game === "Spellbound") {
-
-            minimum = 13;
-            maximum = 17;
-
-            genderRequirement =
-                "At least 5 female and 4 male players are required.";
-
-        }
+            playersSelect.innerHTML = "";
 
 
-        /* WAY OUT WEST */
+            /* -----------------------------------------
+               NO GAME SELECTED
+            ----------------------------------------- */
 
-        else if (game === "Way Out West") {
+            if (!game) {
 
-            // Change these numbers when you decide
-            // how many players this game will support.
+                const option =
+                    document.createElement("option");
 
-            minimum = 10;
-            maximum = 20;
+                option.value = "";
 
-        }
+                option.textContent =
+                    "Choose number of players";
 
-
-        /* DEAD MAN'S CHEST */
-
-        else if (game === "A Dead Man's Chest") {
-
-            minimum = 12;
-            maximum = 16;
-
-        }
+                playersSelect.appendChild(option);
 
 
-// Add placeholder so no player count is selected automatically
+                if (playerHelp) {
 
-const placeholder = document.createElement("option");
+                    playerHelp.textContent =
+                        "Select a game to see the available player numbers.";
 
-placeholder.value = "";
-placeholder.textContent = "Select number of players";
-placeholder.disabled = true;
-placeholder.selected = true;
+                }
 
-playersSelect.appendChild(placeholder);
+                return;
 
-
-// Create valid player choices
-
-for (
-    let number = minimum;
-    number <= maximum;
-    number++
-) {
-
-    const option =
-        document.createElement("option");
-
-    option.value = number;
-    option.textContent = number + " players";
-
-    playersSelect.appendChild(option);
-
-}
+            }
 
 
-playerHelp.textContent =
-    minimum +
-    "–" +
-    maximum +
-    " players. At least 5 female and 4 male players are required.";
+            let minimum;
+            let maximum;
+            let genderRequirement = "";
 
 
-        // Help text below the dropdown
+            /* -----------------------------------------
+               SPELLBOUND
+            ----------------------------------------- */
 
-        if (genderRequirement) {
+            if (game === "Spellbound") {
 
-            playerHelp.textContent =
-                genderRequirement;
+                minimum = 13;
+                maximum = 17;
 
-        }
+                genderRequirement =
+                    "At least 5 female and 4 male players are required.";
 
-        else {
-
-            playerHelp.textContent =
-                "This game can accommodate " +
-                minimum +
-                "–" +
-                maximum +
-                " players.";
-
-        }
-
-    });
-
-}
+            }
 
 
-/* =========================================
-   PRESELECT GAME FROM URL
-========================================= */
+            /* -----------------------------------------
+               WAY OUT WEST
+            ----------------------------------------- */
 
-if (gameSelect) {
+            else if (game === "Way Out West") {
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const requestedGame = urlParams.get("game");
+                minimum = 10;
+                maximum = 20;
 
-    if (requestedGame) {
+            }
 
-        const gameOption =
-            Array.from(gameSelect.options).find(
-                option => option.value === requestedGame
+
+            /* -----------------------------------------
+               A DEAD MAN'S CHEST
+            ----------------------------------------- */
+
+            else if (game === "A Dead Man's Chest") {
+
+                minimum = 12;
+                maximum = 16;
+
+            }
+
+
+            /* -----------------------------------------
+               PLAYER PLACEHOLDER
+            ----------------------------------------- */
+
+            const placeholder =
+                document.createElement("option");
+
+            placeholder.value = "";
+
+            placeholder.textContent =
+                "Select number of players";
+
+            placeholder.disabled = true;
+
+            placeholder.selected = true;
+
+            playersSelect.appendChild(
+                placeholder
             );
 
-        if (gameOption) {
 
-            gameSelect.value = requestedGame;
+            /* -----------------------------------------
+               CREATE PLAYER OPTIONS
+            ----------------------------------------- */
 
-            // Trigger the change event so the
-            // player dropdown is populated too.
-            gameSelect.dispatchEvent(
-                new Event("change")
-            );
+            for (
+                let number = minimum;
+                number <= maximum;
+                number++
+            ) {
 
-            // Open the scheduling form automatically
-            if (scheduleModal) {
-                openScheduleModal();
+                const option =
+                    document.createElement("option");
+
+                option.value =
+                    number;
+
+                option.textContent =
+                    number + " players";
+
+                playersSelect.appendChild(
+                    option
+                );
+
+            }
+
+
+            /* -----------------------------------------
+               HELP TEXT
+            ----------------------------------------- */
+
+            if (genderRequirement) {
+
+                playerHelp.textContent =
+                    genderRequirement;
+
+            }
+
+            else {
+
+                playerHelp.textContent =
+                    "This game can accommodate " +
+                    minimum +
+                    "–" +
+                    maximum +
+                    " players.";
+
             }
 
         }
-
-    }
+    );
 
 }
-
-
 
 /* =========================================
    CHARACTER INFORMATION TIMING
@@ -758,89 +1177,119 @@ const characterTiming =
     );
 
 const characterEmailsGroup =
-    document.getElementById("characterEmailsGroup");
+    document.getElementById(
+        "characterEmailsGroup"
+    );
 
 
-characterTiming.forEach(radio => {
+if (
+    characterTiming.length > 0 &&
+    characterEmailsGroup
+) {
 
-    radio.addEventListener("change", function () {
+    characterTiming.forEach(radio => {
 
-        if (
-            this.value === "Before the party" &&
-            this.checked
-        ) {
+        radio.addEventListener(
+            "change",
+            function () {
 
-            characterEmailsGroup.style.display = "block";
+                if (
+                    this.value ===
+                        "Before the party" &&
+                    this.checked
+                ) {
 
-        }
+                    characterEmailsGroup.style.display =
+                        "block";
 
-        else if (
-            this.value === "At the party" &&
-            this.checked
-        ) {
+                }
 
-            characterEmailsGroup.style.display = "none";
+                else if (
+                    this.value ===
+                        "At the party" &&
+                    this.checked
+                ) {
 
-        }
+                    characterEmailsGroup.style.display =
+                        "none";
+
+                }
+
+            }
+        );
 
     });
 
-});
+}
+
 
 /* =========================================
-   PREVENT PAST DATES
+   DATE HELPERS
 ========================================= */
-
-const dateInput = document.getElementById("date");
-const backupDateInput = document.getElementById("backupDate");
-
 
 function getTodayString() {
 
-    const today = new Date();
+    const today =
+        new Date();
 
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const day = String(today.getDate()).padStart(2, "0");
 
-    return `${year}-${month}-${day}`;
+    const year =
+        today.getFullYear();
+
+
+    const month =
+        String(
+            today.getMonth() + 1
+        ).padStart(2, "0");
+
+
+    const day =
+        String(
+            today.getDate()
+        ).padStart(2, "0");
+
+
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
 
 }
 
 
-/* -----------------------------------------
-   SET CALENDAR MINIMUM DATE
------------------------------------------ */
-
-function setMinimumDates() {
-
-    const todayString = getTodayString();
-
-    if (dateInput) {
-        dateInput.min = todayString;
-    }
-
-    if (backupDateInput) {
-        backupDateInput.min = todayString;
-    }
-
-}
-
-
-/* -----------------------------------------
-   VALIDATE DATE WHEN USER LEAVES FIELD
------------------------------------------ */
+/* =========================================
+   VALIDATE DATE INPUT
+========================================= */
 
 function validateDateInput(input) {
 
-    if (!input || !input.value) {
-        input.setCustomValidity("");
+    if (
+        !input ||
+        !input.value
+    ) {
+
+        if (input) {
+
+            input.setCustomValidity("");
+
+        }
+
         return true;
+
     }
 
-    const todayString = getTodayString();
 
-    if (input.value < todayString) {
+    const todayString =
+        getTodayString();
+
+
+    if (
+        input.value <
+        todayString
+    ) {
 
         input.setCustomValidity(
             "Please choose today or a future date."
@@ -852,6 +1301,7 @@ function validateDateInput(input) {
 
     }
 
+
     input.setCustomValidity("");
 
     return true;
@@ -859,40 +1309,45 @@ function validateDateInput(input) {
 }
 
 
-/* -----------------------------------------
-   PREFERRED DATE
------------------------------------------ */
+/* =========================================
+   CONTACT FORM
+========================================= */
 
-if (dateInput) {
+const contactForm =
+    document.getElementById(
+        "contact-form"
+    );
 
-    dateInput.addEventListener("blur", function () {
+const contactSuccess =
+    document.getElementById(
+        "contact-success"
+    );
 
-        validateDateInput(dateInput);
 
-    });
+if (contactForm) {
+
+    contactForm.addEventListener(
+        "submit",
+        event => {
+
+            event.preventDefault();
+
+
+            submitForm(
+                contactForm,
+                contactSuccess,
+                {
+
+                    successMessage:
+                        "Message Sent! Thank you for reaching out. I'll be in touch soon.",
+
+                    successButtonText:
+                        "Message Sent"
+
+                }
+            );
+
+        }
+    );
 
 }
-
-
-/* -----------------------------------------
-   BACKUP DATE
------------------------------------------ */
-
-if (backupDateInput) {
-
-    backupDateInput.addEventListener("blur", function () {
-
-        validateDateInput(backupDateInput);
-
-    });
-
-}
-
-
-/* -----------------------------------------
-   SET MINIMUM DATES
------------------------------------------ */
-
-setMinimumDates();
-
-
