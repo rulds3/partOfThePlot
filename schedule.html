@@ -143,6 +143,73 @@
 
 			</div>
 
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="schedule-date">
+                        Preferred Date *
+                    </label>
+
+                    <input
+                        type="date"
+                        id="schedule-date"
+                        name="date"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="schedule-backup-date">
+                        Backup Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="schedule-backup-date"
+                        name="backupDate"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="schedule-time">
+                    Preferred Start Time *
+                </label>
+
+                <input
+                    type="time"
+                    id="schedule-time"
+                    name="time"
+					required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="schedule-location">
+                    Where would you like to play? *
+                </label>
+
+                <input
+                    type="text"
+                    id="schedule-location"
+                    name="location"
+                    placeholder="Event address"
+					required
+                >
+
+            </div>
+
 
 			<div class="form-group">
 
@@ -176,11 +243,11 @@
 			</div>
 
 
-			<!-- CHARACTER INFORMATION -->
+			<!-- ================= CHARACTER INFORMATION ================= -->
 
 			<div
 				id="character-info"
-				class="form-group"
+				class="form-group character-information-section"
 				style="display: none;"
 			>
 
@@ -194,8 +261,23 @@
 					and any necessary instructions before the game.
 				</p>
 
-
 				<div id="character-players"></div>
+
+			</div>
+
+
+			<!-- ================= CHARACTER NOTES ================= -->
+
+			<div class="form-group character-notes-section">
+
+				<label>
+					Character Notes
+				</label>
+
+				<p class="form-help">
+					You don't have to fill out this section, but these details
+					will help me match characters to your group.
+				</p>
 
 
 				<div class="form-group character-notes">
@@ -263,85 +345,17 @@
 			</div>
 
 
-
-
-            <div class="form-row">
-
-                <div class="form-group">
-
-                    <label for="schedule-date">
-                        Preferred Date *
-                    </label>
-
-                    <input
-                        type="date"
-                        id="schedule-date"
-                        name="date"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="schedule-backup-date">
-                        Backup Date
-                    </label>
-
-                    <input
-                        type="date"
-                        id="schedule-backup-date"
-                        name="backupDate"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="schedule-time">
-                    Preferred Start Time
-                </label>
-
-                <input
-                    type="time"
-                    id="schedule-time"
-                    name="time"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="schedule-location">
-                    Where would you like to play?
-                </label>
-
-                <input
-                    type="text"
-                    id="schedule-location"
-                    name="location"
-                    placeholder="Event address"
-                >
-
-            </div>
-
-
             <div class="form-group">
 
                 <label for="schedule-message">
-                    Tell me about your event
+                    Anything else you'd like to share?
                 </label>
 
                 <textarea
                     id="schedule-message"
                     name="message"
                     rows="5"
-                    placeholder="Anything you'd like me to know?"
+                    placeholder="Questions, special requests, or anything else you'd like me to know."
                 ></textarea>
 
             </div>

@@ -2366,3 +2366,32 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .faq-answer ul ul li:last-child {
     margin-bottom: 0;
 }
+
+/* =========================================
+   CHARACTER NOTES
+========================================= */
+
+.character-notes-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.character-notes-section > label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.character-notes-section > .form-help {
+    margin-bottom: 1.5rem;
+}
+
+.character-notes-section .character-notes {
+    margin-bottom: 1.5rem;
+}
+
+.character-notes-section .character-notes:last-child {
+    margin-bottom: 0;
+}
