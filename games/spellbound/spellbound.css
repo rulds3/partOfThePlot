@@ -440,3 +440,63 @@
     font-weight: 600;
     color: var(--gold);
 }
+
+
+/* =========================================================
+   SPELLBOUND MOBILE WIDTH FIX
+========================================================= */
+
+.spellbound-hero,
+.spellbound-story-section,
+.spellbound-activities,
+.spellbound-included,
+.game-credit {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.spellbound-hero-content,
+.spellbound-story-container,
+.spellbound-activities-container,
+.spellbound-included-container {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.spellbound-price {
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+.spellbound-included-grid {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+
+    .spellbound-included {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .spellbound-included-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .spellbound-price {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .spellbound-included-item {
+        min-width: 0;
+    }
+
+    .spellbound-included-item > div:last-child {
+        min-width: 0;
+    }
+
+}
