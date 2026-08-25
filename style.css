@@ -2268,7 +2268,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .radio-group {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 25px;
     margin-top: 10px;
 }
@@ -2299,7 +2299,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 ========================================= */
 
 .form-help {
-    font-size: 11px;
+    font-size: 0.85rem;
     line-height: 1.5;
     margin-top: 6px;
     color: #aaa9a4;
@@ -2313,4 +2313,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding: 0 20px 80px;
 
     background: var(--dark);
+}
+
+.form-success {
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 1.1rem;
+    line-height: 1.7;
 }

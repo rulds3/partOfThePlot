@@ -847,8 +847,8 @@ if (playersSelect) {
 
                     hideForm: true,
 
-                    successMessage:
-                        "Scheduling Request Sent! Thank you! Your request has been received. I'll review your details and get back to you soon to work out the perfect date, game, and location.",
+           successMessage:
+    "Your scheduling request has been sent! Thank you for reaching out. I’ve received your request and will get back to you soon to work out the details of your game.",
 
                     successButtonText:
                         "Request Sent"
