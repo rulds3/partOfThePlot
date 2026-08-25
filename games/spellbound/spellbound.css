@@ -1,0 +1,442 @@
+/* =========================================================
+   SPELLBOUND GAME PAGE
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   Spellbound Title & Byline
+   --------------------------------------------------------- */
+
+.spellbound-title {
+    display: inline-block;
+    text-align: right;
+}
+
+.spellbound-title h1 {
+    margin-bottom: 0;
+}
+
+.game-byline {
+    margin: -25px 0 10px;
+
+    color: white;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+
+    text-align: right;
+    text-transform: uppercase;
+
+    transform: translateX(-7px);
+}
+
+
+/* ---------------------------------------------------------
+   Spellbound Hero
+   --------------------------------------------------------- */
+
+.spellbound-hero {
+    position: relative;
+
+    min-height: 700px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(9, 10, 20, 0.42),
+            rgba(12, 13, 25, 0.78)
+        ),
+        url("magicBackground.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+.spellbound-hero::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:        
+	radial-gradient(
+            circle at center,
+            rgba(198, 161, 91, 0.10),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 70% 30%,
+            rgba(81, 64, 111, 0.18),
+            transparent 50%
+        );
+}
+
+.spellbound-hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 850px;
+
+    padding: 100px 30px 40px;
+}
+
+.spellbound-hero h1 {
+    margin-bottom: 15px;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(55px, 9vw, 110px);
+    font-weight: 500;
+    line-height: 1;
+
+    letter-spacing: 5px;
+}
+
+.spellbound-hero h1 span {
+    color: var(--gold);
+}
+
+.spellbound-subtitle {
+    margin-bottom: 30px;
+
+    color: #d4d0c8;
+
+    font-size: 17px;
+    letter-spacing: 3px;
+}
+
+.spellbound-hero-details {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 30px;
+
+    margin-top: 35px;
+}
+
+.spellbound-hero-details div {
+    min-width: 120px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid var(--border-strong);
+}
+
+.spellbound-hero-details span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--gold);
+
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.spellbound-hero-details strong {
+    color: var(--cream);
+
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.spellbound-hero-content .button {
+    display: block;
+    width: fit-content;
+    margin: 45px auto 0;
+}
+
+
+/* ---------------------------------------------------------
+   Story Section
+   --------------------------------------------------------- */
+
+.spellbound-story-section {
+    padding: 120px 8%;
+    padding-bottom: 40px;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(81, 64, 111, 0.16),
+            transparent 35%
+        ),
+        #0d1017;
+}
+
+.spellbound-story-container {
+    max-width: 800px;
+
+    margin: auto;
+}
+
+.spellbound-story-text {
+    text-align: center;
+}
+
+.spellbound-story-text h2 {
+    margin-bottom: 30px;
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(35px, 5vw, 55px);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.spellbound-story-text h2 span {
+    color: var(--gold);
+}
+
+.spellbound-story-text p {
+    margin-bottom: 20px;
+
+    color: var(--muted);
+}
+
+
+
+/* ---------------------------------------------------------
+   What You'll Do
+   --------------------------------------------------------- */
+
+.spellbound-activities {
+    padding: 120px 8%;
+    padding-top: 40px;
+    background:
+        linear-gradient(
+            135deg,
+            #171c28,
+            #131725
+        );
+}
+
+.spellbound-activities-container {
+    max-width: 1000px;
+
+    margin: auto;
+}
+
+.spellbound-activities-list {
+    margin-top: 50px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px 60px;
+}
+
+.spellbound-activity {
+    display: flex;
+
+    gap: 18px;
+
+    padding: 20px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.spellbound-activity-number {
+    flex-shrink: 0;
+
+    color: var(--gold);
+
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+}
+
+.spellbound-activity h3 {
+    margin-bottom: 5px;
+
+    font-size: 18px;
+}
+
+.spellbound-activity p {
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SPELLBOUND MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .spellbound-activities-list {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .spellbound-hero {
+        min-height: 650px;
+    }
+
+    .spellbound-hero-content {
+        padding: 100px 20px 40px;
+    }
+
+	.spellbound-hero h1 {
+		font-size: clamp(42px, 13vw, 55px);
+		letter-spacing: 2px;
+	}
+
+    .spellbound-subtitle {
+        font-size: 13px;
+        letter-spacing: 2px;
+    }
+
+    .spellbound-hero-details {
+        gap: 15px;
+    }
+
+    .spellbound-hero-details div {
+        min-width: 100px;
+    }
+
+    .spellbound-story-section,
+    .spellbound-activities {
+        padding: 80px 20px;
+    }
+
+}
+
+
+/* =====================================================
+   WHAT'S INCLUDED
+===================================================== */
+
+.spellbound-included {
+    padding: 7rem 2rem;
+}
+
+.spellbound-included-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+/* ================= PRICE ================= */
+
+.spellbound-price {
+    max-width: 600px;
+    margin: 4rem auto 5rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    border: 1px solid rgba(198, 161, 91, 0.5);
+}
+
+.spellbound-price-eyebrow {
+    margin: 0 0 1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+}
+
+.spellbound-price-amount {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 4rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.spellbound-price-description {
+    margin: 1.25rem 0 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.spellbound-price-per-person {
+    margin: 1.5rem 0 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+
+/* ================= INCLUDED GRID ================= */
+
+.spellbound-included-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem 4rem;
+}
+
+.spellbound-included-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.spellbound-included-number {
+    flex-shrink: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.spellbound-included-item h3 {
+    margin: 0 0 0.75rem;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.spellbound-included-item p {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+
+/* ================= CTA ================= */
+
+.spellbound-included-cta {
+    margin-top: 5rem;
+    text-align: center;
+}
+
+.spellbound-included-cta p {
+    margin-bottom: 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 1.25rem;
+}
+
+.spellbound-included-item h3 {
+    color: var(--cream);
+}
+
+.spellbound-included-number {
+    color: var(--gold);
+}
+
+.spellbound-included .section-heading h2 span {
+    color: var(--gold);
+}
+
+.spellbound-deposit-note {
+    margin: 1rem 0 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--gold);
+}
