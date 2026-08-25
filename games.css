@@ -218,7 +218,7 @@
 
 .spellbound-card {
     background-image:
-        url("/games/spellbound/magicBackground.jpg");
+        url("games/spellbound/magicBackground.jpg");
 
     background-size: cover;
     background-position: center;
@@ -231,7 +231,7 @@
 
 .way-out-west {
     background-image:
-        url("/games/wayOutWest/wayOutWestBackground.jpg");
+        url("games/wayOutWest/wayOutWestBackground.jpg");
 
     background-size: cover;
     background-position: center;
@@ -244,7 +244,7 @@
 
 .dead-mans-chest {
     background-image:
-        url("/games/deadMansChest/deadMansChestBackground.jpg");
+        url("games/deadMansChest/deadMansChestBackground.jpg");
 
     background-size: cover;
     background-position: center;
