@@ -2321,3 +2321,48 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 1.1rem;
     line-height: 1.7;
 }
+
+
+
+/* =========================================
+   FAQ ANSWER LISTS
+========================================= */
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.faq-answer p {
+    max-width: 700px;
+    padding-bottom: 25px;
+    color: var(--muted);
+}
+
+.faq-answer > ul {
+    padding-left: 25px;
+    padding-bottom: 25px;
+}
+
+.faq-answer > ul > li {
+    margin-bottom: 28px;
+    color: var(--muted);
+}
+
+.faq-answer > ul > li:last-child {
+    margin-bottom: 0;
+}
+
+.faq-answer ul ul {
+    margin-top: 12px;
+    padding-left: 25px;
+}
+
+.faq-answer ul ul li {
+    margin-bottom: 10px;
+}
+
+.faq-answer ul ul li:last-child {
+    margin-bottom: 0;
+}

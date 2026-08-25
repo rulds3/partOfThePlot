@@ -5,18 +5,115 @@
 
 
 /* =========================================
+   SITE ROOT
+========================================= */
+
+/*
+ * Automatically determines the root folder
+ * of the website based on the current URL.
+ *
+ * Main pages:
+ *
+ * /partoftheplot/faq.html
+ * → /partoftheplot/
+ *
+ * Game pages:
+ *
+ * /partoftheplot/games/spellbound/spellbound.html
+ * → /partoftheplot/
+ *
+ * This means you do NOT need to hard-code
+ * /partoftheplot/ throughout your shared files.
+ */
+
+function getSiteRoot() {
+
+    const path =
+        window.location.pathname;
+
+
+    /*
+     * Find the /games/ folder.
+     */
+
+    const gamesFolder =
+        "/games/";
+
+
+    const gamesPosition =
+        path.indexOf(gamesFolder);
+
+
+    /*
+     * If this is a game page, everything
+     * before /games/ is the site root.
+     */
+
+    if (gamesPosition !== -1) {
+
+        return path.substring(
+            0,
+            gamesPosition
+        ) + "/";
+
+    }
+
+
+    /*
+     * Otherwise, use the folder containing
+     * the current page.
+     *
+     * Example:
+     *
+     * /partoftheplot/faq.html
+     *
+     * becomes:
+     *
+     * /partoftheplot/
+     */
+
+    const lastSlash =
+        path.lastIndexOf("/");
+
+
+    return path.substring(
+        0,
+        lastSlash + 1
+    );
+
+}
+
+
+const siteRoot =
+    getSiteRoot();
+
+
+
+/* =========================================
    LOAD SHARED HEADER
 ========================================= */
 
-const siteHeader = document.getElementById("site-header");
+const siteHeader =
+    document.getElementById(
+        "site-header"
+    );
+
 
 if (siteHeader) {
 
-    fetch("header.html")
+    fetch(
+        siteRoot +
+        "header.html"
+    )
+
         .then(response => {
 
             if (!response.ok) {
-                throw new Error("Could not load header.html");
+
+                throw new Error(
+                    "Could not load header.html"
+                );
+
             }
 
             return response.text();
@@ -25,7 +122,9 @@ if (siteHeader) {
 
         .then(html => {
 
-            siteHeader.innerHTML = html;
+            siteHeader.innerHTML =
+                html;
+
 
             initializeNavigation();
 
@@ -33,26 +132,42 @@ if (siteHeader) {
 
         .catch(error => {
 
-            console.error("Header loading error:", error);
+            console.error(
+                "Header loading error:",
+                error
+            );
 
         });
 
 }
 
 
+
 /* =========================================
    LOAD SHARED FOOTER
 ========================================= */
 
-const siteFooter = document.getElementById("site-footer");
+const siteFooter =
+    document.getElementById(
+        "site-footer"
+    );
+
 
 if (siteFooter) {
 
-    fetch("footer.html")
+    fetch(
+        siteRoot +
+        "footer.html"
+    )
+
         .then(response => {
 
             if (!response.ok) {
-                throw new Error("Could not load footer.html");
+
+                throw new Error(
+                    "Could not load footer.html"
+                );
+
             }
 
             return response.text();
@@ -61,17 +176,22 @@ if (siteFooter) {
 
         .then(html => {
 
-            siteFooter.innerHTML = html;
+            siteFooter.innerHTML =
+                html;
 
         })
 
         .catch(error => {
 
-            console.error("Footer loading error:", error);
+            console.error(
+                "Footer loading error:",
+                error
+            );
 
         });
 
 }
+
 
 
 /* =========================================
@@ -81,96 +201,241 @@ if (siteFooter) {
 function initializeNavigation() {
 
     const menuToggle =
-        document.getElementById("menuToggle");
+        document.getElementById(
+            "menuToggle"
+        );
+
 
     const navMenu =
-        document.getElementById("navMenu");
+        document.getElementById(
+            "navMenu"
+        );
+
 
     const gamesDropdown =
-        document.querySelector(".nav-dropdown");
+        document.querySelector(
+            ".nav-dropdown"
+        );
+
 
     const gamesTitle =
-        document.querySelector(".nav-dropdown-title");
+        document.querySelector(
+            ".nav-dropdown-title"
+        );
+
 
 
     /* -----------------------------------------
-       MOBILE MENU
+       NAVIGATION LINKS
     ----------------------------------------- */
 
-    if (menuToggle && navMenu) {
+    if (navMenu) {
 
-        menuToggle.addEventListener("click", () => {
-
-            const isOpen =
-                navMenu.classList.toggle("active");
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                isOpen ? "true" : "false"
+        const navLinks =
+            navMenu.querySelectorAll(
+                "a"
             );
+
+
+        /*
+         * Convert the relative paths from
+         * header.html into paths based on
+         * the automatically detected site root.
+         */
+
+        navLinks.forEach(link => {
+
+            const href =
+                link.getAttribute(
+                    "href"
+                );
+
+
+            if (
+                href &&
+                !href.startsWith(
+                    "http"
+                ) &&
+                !href.startsWith(
+                    "#"
+                )
+            ) {
+
+                link.href =
+                    siteRoot +
+                    href;
+
+            }
 
         });
 
 
-        /* Close menu when a regular link is clicked */
 
-        const navLinks =
-            navMenu.querySelectorAll("a");
+        /* -----------------------------------------
+           LOGO
+        ----------------------------------------- */
 
-        navLinks.forEach(link => {
+        const siteLogo =
+            document.getElementById(
+                "siteLogo"
+            );
 
-            link.addEventListener("click", () => {
 
-                if (
-                    link.classList.contains(
-                        "nav-dropdown-title"
-                    ) &&
-                    window.innerWidth <= 900
-                ) {
-                    return;
+        if (siteLogo) {
+
+            siteLogo.src =
+                siteRoot +
+                "partOfThePlotLogo.png";
+
+
+            /*
+             * Make the logo link to the
+             * actual home page.
+             */
+
+            const logoLink =
+                siteLogo.closest(
+                    "a"
+                );
+
+
+            if (logoLink) {
+
+                logoLink.href =
+                    siteRoot +
+                    "index.html";
+
+            }
+
+        }
+
+
+
+        /* -----------------------------------------
+           MOBILE MENU
+        ----------------------------------------- */
+
+        if (menuToggle) {
+
+            menuToggle.addEventListener(
+                "click",
+                () => {
+
+                    const isOpen =
+                        navMenu.classList.toggle(
+                            "active"
+                        );
+
+
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        isOpen
+                            ? "true"
+                            : "false"
+                    );
+
                 }
+            );
 
-                navMenu.classList.remove("active");
 
-                menuToggle.setAttribute(
-                    "aria-expanded",
-                    "false"
+            /*
+             * Close the mobile menu when a
+             * normal navigation link is clicked.
+             */
+
+            navLinks.forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        /*
+                         * On mobile, clicking the
+                         * Games title opens the
+                         * dropdown instead of
+                         * navigating immediately.
+                         */
+
+                        if (
+                            link.classList.contains(
+                                "nav-dropdown-title"
+                            ) &&
+                            window.innerWidth <= 900
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        navMenu.classList.remove(
+                            "active"
+                        );
+
+
+                        menuToggle.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+                    }
                 );
 
             });
 
-        });
+        }
 
     }
+
 
 
     /* -----------------------------------------
        GAMES DROPDOWN
     ----------------------------------------- */
 
-    if (gamesDropdown && gamesTitle) {
+    if (
+        gamesDropdown &&
+        gamesTitle
+    ) {
 
-        gamesTitle.addEventListener("click", event => {
+        gamesTitle.addEventListener(
+            "click",
+            event => {
 
-            if (window.innerWidth <= 900) {
+                /*
+                 * On mobile, clicking Games
+                 * opens/closes the dropdown.
+                 */
 
-                event.preventDefault();
+                if (
+                    window.innerWidth <= 900
+                ) {
 
-                const isOpen =
-                    gamesDropdown.classList.toggle("active");
+                    event.preventDefault();
 
-                gamesTitle.setAttribute(
-                    "aria-expanded",
-                    isOpen ? "true" : "false"
-                );
+
+                    const isOpen =
+                        gamesDropdown.classList.toggle(
+                            "active"
+                        );
+
+
+                    gamesTitle.setAttribute(
+                        "aria-expanded",
+                        isOpen
+                            ? "true"
+                            : "false"
+                    );
+
+                }
 
             }
-
-        });
+        );
 
     }
 
 }
+
 
 
 /* =========================================
@@ -178,59 +443,105 @@ function initializeNavigation() {
 ========================================= */
 
 const faqQuestions =
-    document.querySelectorAll(".faq-question");
-
-faqQuestions.forEach(question => {
-
-    question.addEventListener("click", () => {
-
-        const faqItem =
-            question.parentElement;
-
-        const answer =
-            faqItem.querySelector(".faq-answer");
+    document.querySelectorAll(
+        ".faq-question"
+    );
 
 
-        /* Close all other FAQ items */
+faqQuestions.forEach(
+    question => {
 
-        document.querySelectorAll(".faq-item").forEach(item => {
+        question.addEventListener(
+            "click",
+            () => {
 
-            if (item !== faqItem) {
+                const faqItem =
+                    question.parentElement;
 
-                item.classList.remove("active");
 
-                const otherAnswer =
-                    item.querySelector(".faq-answer");
+                const answer =
+                    faqItem.querySelector(
+                        ".faq-answer"
+                    );
 
-                if (otherAnswer) {
-                    otherAnswer.style.maxHeight = null;
+
+                /*
+                 * Close all other FAQ items.
+                 */
+
+                document
+                    .querySelectorAll(
+                        ".faq-item"
+                    )
+                    .forEach(
+                        item => {
+
+                            if (
+                                item !==
+                                faqItem
+                            ) {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+
+                                const otherAnswer =
+                                    item.querySelector(
+                                        ".faq-answer"
+                                    );
+
+
+                                if (
+                                    otherAnswer
+                                ) {
+
+                                    otherAnswer.style.maxHeight =
+                                        null;
+
+                                }
+
+                            }
+
+                        }
+                    );
+
+
+                /*
+                 * Toggle selected FAQ item.
+                 */
+
+                faqItem.classList.toggle(
+                    "active"
+                );
+
+
+                if (
+                    faqItem.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    answer.style.maxHeight =
+                        answer.scrollHeight +
+                        50 +
+                        "px";
+
+                }
+
+                else {
+
+                    answer.style.maxHeight =
+                        null;
+
                 }
 
             }
+        );
 
-        });
+    }
+);
 
-
-        /* Toggle selected FAQ item */
-
-        faqItem.classList.toggle("active");
-
-        if (faqItem.classList.contains("active")) {
-
-            answer.style.maxHeight =
-                answer.scrollHeight + "px";
-
-        }
-
-        else {
-
-            answer.style.maxHeight = null;
-
-        }
-
-    });
-
-});
 
 
 /* =========================================
@@ -242,27 +553,39 @@ const sections =
         ".section, .how-it-works, .faq, .contact"
     );
 
-if ("IntersectionObserver" in window) {
+
+if (
+    "IntersectionObserver" in window
+) {
 
     const observer =
         new IntersectionObserver(
 
             entries => {
 
-                entries.forEach(entry => {
+                entries.forEach(
+                    entry => {
 
-                    if (entry.isIntersecting) {
+                        if (
+                            entry.isIntersecting
+                        ) {
 
-                        entry.target.style.opacity = "1";
+                            entry.target.style.opacity =
+                                "1";
 
-                        entry.target.style.transform =
-                            "translateY(0)";
 
-                        observer.unobserve(entry.target);
+                            entry.target.style.transform =
+                                "translateY(0)";
+
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
 
                     }
-
-                });
+                );
 
             },
 
@@ -273,21 +596,30 @@ if ("IntersectionObserver" in window) {
         );
 
 
-    sections.forEach(section => {
+    sections.forEach(
+        section => {
 
-        section.style.opacity = "0";
+            section.style.opacity =
+                "0";
 
-        section.style.transform =
-            "translateY(25px)";
 
-        section.style.transition =
-            "opacity 0.8s ease, transform 0.8s ease";
+            section.style.transform =
+                "translateY(25px)";
 
-        observer.observe(section);
 
-    });
+            section.style.transition =
+                "opacity 0.8s ease, transform 0.8s ease";
+
+
+            observer.observe(
+                section
+            );
+
+        }
+    );
 
 }
+
 
 
 /* =========================================
@@ -302,13 +634,19 @@ const scheduleContainer =
 
 if (scheduleContainer) {
 
-    fetch("schedule.html")
+    fetch(
+        siteRoot +
+        "schedule.html"
+    )
+
         .then(response => {
 
             if (!response.ok) {
+
                 throw new Error(
                     "Could not load schedule.html"
                 );
+
             }
 
             return response.text();
@@ -317,14 +655,15 @@ if (scheduleContainer) {
 
         .then(html => {
 
-            scheduleContainer.innerHTML = html;
+            scheduleContainer.innerHTML =
+                html;
 
-	    initializeGamePlayerOptions();
+
+            initializeGamePlayerOptions();
 
             initializeScheduling();
 
             initializeSchedulingForm();
-
 
         })
 
@@ -340,6 +679,7 @@ if (scheduleContainer) {
 }
 
 
+
 /* =========================================
    SCHEDULING MODAL
 ========================================= */
@@ -347,10 +687,16 @@ if (scheduleContainer) {
 function initializeScheduling() {
 
     const scheduleModal =
-        document.getElementById("scheduleModal");
+        document.getElementById(
+            "scheduleModal"
+        );
+
 
     const closeModal =
-        document.getElementById("closeModal");
+        document.getElementById(
+            "closeModal"
+        );
+
 
 
     /* -----------------------------------------
@@ -369,16 +715,23 @@ function initializeScheduling() {
 
         }
 
-        scheduleModal.classList.add("active");
+
+        scheduleModal.classList.add(
+            "active"
+        );
+
 
         scheduleModal.setAttribute(
             "aria-hidden",
             "false"
         );
 
-        document.body.style.overflow = "hidden";
+
+        document.body.style.overflow =
+            "hidden";
 
     }
+
 
 
     /* -----------------------------------------
@@ -387,18 +740,27 @@ function initializeScheduling() {
 
     function closeScheduleModal() {
 
-        if (!scheduleModal) return;
+        if (!scheduleModal) {
+            return;
+        }
 
-        scheduleModal.classList.remove("active");
+
+        scheduleModal.classList.remove(
+            "active"
+        );
+
 
         scheduleModal.setAttribute(
             "aria-hidden",
             "true"
         );
 
-        document.body.style.overflow = "";
+
+        document.body.style.overflow =
+            "";
 
     }
+
 
 
     /* -----------------------------------------
@@ -411,70 +773,72 @@ function initializeScheduling() {
         );
 
 
-    scheduleButtons.forEach(button => {
+    scheduleButtons.forEach(
+        button => {
 
-        button.addEventListener("click", event => {
+            button.addEventListener(
+                "click",
+                event => {
 
-            event.preventDefault();
-
-
-            /* -----------------------------------------
-               PRESELECT GAME IF BUTTON SPECIFIES ONE
-            ----------------------------------------- */
-
-            const requestedGame =
-                button.dataset.game;
-
-            const gameSelect =
-                document.getElementById("game");
+                    event.preventDefault();
 
 
-            if (requestedGame && gameSelect) {
+                    /* -----------------------------------------
+                       PRESELECT GAME
+                    ----------------------------------------- */
 
-                const gameOption =
-                    Array.from(
-                        gameSelect.options
-                    ).find(
-                        option =>
-                            option.value === requestedGame
-                    );
+                    const requestedGame =
+                        button.dataset.game;
 
 
-                if (gameOption) {
-
-                    /*
-                     * Select the game.
-                     */
-
-                    gameSelect.value =
-                        requestedGame;
+                    const gameSelect =
+                        document.getElementById(
+                            "game"
+                        );
 
 
-                    /*
-                     * Trigger the existing game
-                     * change code.
-                     *
-                     * This will populate the
-                     * player choices exactly as
-                     * before.
-                     */
+                    if (
+                        requestedGame &&
+                        gameSelect
+                    ) {
 
-                    gameSelect.dispatchEvent(
-                        new Event("change")
-                    );
+                        const gameOption =
+                            Array.from(
+                                gameSelect.options
+                            ).find(
+                                option =>
+                                    option.value ===
+                                    requestedGame
+                            );
+
+
+                        if (gameOption) {
+
+                            gameSelect.value =
+                                requestedGame;
+
+
+                            gameSelect.dispatchEvent(
+                                new Event(
+                                    "change"
+                                )
+                            );
+
+                        }
+
+                    }
+
+
+                    /* Open modal */
+
+                    openScheduleModal();
 
                 }
+            );
 
-            }
+        }
+    );
 
-
-            /* Open the modal */
-
-            openScheduleModal();
-
-        });
-
-    });
 
 
     /* -----------------------------------------
@@ -491,6 +855,7 @@ function initializeScheduling() {
     }
 
 
+
     /* -----------------------------------------
        CLICK OUTSIDE MODAL
     ----------------------------------------- */
@@ -502,7 +867,8 @@ function initializeScheduling() {
             event => {
 
                 if (
-                    event.target === scheduleModal
+                    event.target ===
+                    scheduleModal
                 ) {
 
                     closeScheduleModal();
@@ -513,6 +879,7 @@ function initializeScheduling() {
         );
 
     }
+
 
 
     /* -----------------------------------------
@@ -526,7 +893,9 @@ function initializeScheduling() {
             if (
                 event.key === "Escape" &&
                 scheduleModal &&
-                scheduleModal.classList.contains("active")
+                scheduleModal.classList.contains(
+                    "active"
+                )
             ) {
 
                 closeScheduleModal();
@@ -539,6 +908,7 @@ function initializeScheduling() {
 }
 
 
+
 /* =========================================
    SCHEDULING FORM
 ========================================= */
@@ -546,13 +916,22 @@ function initializeScheduling() {
 function initializeSchedulingForm() {
 
     const scheduleForm =
-        document.getElementById("scheduleForm");
+        document.getElementById(
+            "scheduleForm"
+        );
+
 
     const scheduleSuccess =
-        document.getElementById("schedule-success");
+        document.getElementById(
+            "schedule-success"
+        );
+
 
     const dateInput =
-        document.getElementById("schedule-date");
+        document.getElementById(
+            "schedule-date"
+        );
+
 
     const backupDateInput =
         document.getElementById(
@@ -560,177 +939,219 @@ function initializeSchedulingForm() {
         );
 
 
-    if (!scheduleForm) return;
+    if (!scheduleForm) {
+        return;
+    }
 
 
-/* -----------------------------------------
-   CHARACTER ASSIGNMENT
------------------------------------------ */
 
-const assignmentRadios =
-    document.querySelectorAll(
-        'input[name="characterAssignment"]'
-    );
+    /* -----------------------------------------
+       CHARACTER ASSIGNMENT
+    ----------------------------------------- */
 
-const characterInfo =
-    document.getElementById("character-info");
-
-const characterPlayers =
-    document.getElementById("character-players");
-
-const playersSelect =
-    document.getElementById("players");
-
-
-function updateCharacterFields() {
-
-    const selectedAssignment =
-        document.querySelector(
-            'input[name="characterAssignment"]:checked'
+    const assignmentRadios =
+        document.querySelectorAll(
+            'input[name="characterAssignment"]'
         );
 
-    if (
-        !selectedAssignment ||
-        selectedAssignment.value !== "ahead"
-    ) {
 
-        characterInfo.style.display = "none";
-
-        characterPlayers.innerHTML = "";
-
-        return;
-
-    }
-
-
-    characterInfo.style.display = "block";
-
-    const numberOfPlayers =
-        parseInt(playersSelect.value);
-
-
-    if (
-        !numberOfPlayers ||
-        numberOfPlayers < 1
-    ) {
-
-        characterPlayers.innerHTML =
-            "<p class=\"form-help\">Choose the number of players above first.</p>";
-
-        return;
-
-    }
-
-
-    characterPlayers.innerHTML = "";
-
-
-    for (
-        let i = 1;
-        i <= numberOfPlayers;
-        i++
-    ) {
-
-        const playerGroup =
-            document.createElement("div");
-
-        playerGroup.className =
-            "character-player";
-
-
-        playerGroup.innerHTML = `
-
-            <h4>
-                Player ${i}
-            </h4>
-
-            <div class="form-row">
-
-                <div class="form-group">
-
-                    <label for="player-${i}-name">
-                        Name *
-                    </label>
-
-                    <input
-                        type="text"
-                        id="player-${i}-name"
-                        name="player${i}Name"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="player-${i}-email">
-                        Email *
-                    </label>
-
-                    <input
-                        type="email"
-                        id="player-${i}-email"
-                        name="player${i}Email"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        characterPlayers.appendChild(
-            playerGroup
+    const characterInfo =
+        document.getElementById(
+            "character-info"
         );
 
-    }
 
-}
-
-
-/* Watch for assignment choice */
-
-assignmentRadios.forEach(radio => {
-
-    radio.addEventListener(
-        "change",
-        updateCharacterFields
-    );
-
-});
+    const characterPlayers =
+        document.getElementById(
+            "character-players"
+        );
 
 
-/* Watch for number of players */
+    const playersSelect =
+        document.getElementById(
+            "players"
+        );
 
-if (playersSelect) {
 
-    playersSelect.addEventListener(
-        "change",
-        () => {
+    function updateCharacterFields() {
 
-            const selectedAssignment =
-                document.querySelector(
-                    'input[name="characterAssignment"]:checked'
-                );
+        const selectedAssignment =
+            document.querySelector(
+                'input[name="characterAssignment"]:checked'
+            );
 
-            if (
-                selectedAssignment &&
-                selectedAssignment.value === "ahead"
-            ) {
 
-                updateCharacterFields();
+        if (
+            !selectedAssignment ||
+            selectedAssignment.value !==
+            "ahead"
+        ) {
+
+            if (characterInfo) {
+
+                characterInfo.style.display =
+                    "none";
 
             }
+
+
+            if (characterPlayers) {
+
+                characterPlayers.innerHTML =
+                    "";
+
+            }
+
+
+            return;
+
+        }
+
+
+        if (characterInfo) {
+
+            characterInfo.style.display =
+                "block";
+
+        }
+
+
+        const numberOfPlayers =
+            parseInt(
+                playersSelect.value
+            );
+
+
+        if (
+            !numberOfPlayers ||
+            numberOfPlayers < 1
+        ) {
+
+            characterPlayers.innerHTML =
+                "<p class=\"form-help\">Choose the number of players above first.</p>";
+
+            return;
+
+        }
+
+
+        characterPlayers.innerHTML =
+            "";
+
+
+        for (
+            let i = 1;
+            i <= numberOfPlayers;
+            i++
+        ) {
+
+            const playerGroup =
+                document.createElement(
+                    "div"
+                );
+
+
+            playerGroup.className =
+                "character-player";
+
+
+            playerGroup.innerHTML = `
+
+                <h4>
+                    Player ${i}
+                </h4>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="player-${i}-name">
+                            Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="player-${i}-name"
+                            name="player${i}Name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="player-${i}-email">
+                            Email *
+                        </label>
+
+                        <input
+                            type="email"
+                            id="player-${i}-email"
+                            name="player${i}Email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            characterPlayers.appendChild(
+                playerGroup
+            );
+
+        }
+
+    }
+
+
+
+    /* Watch assignment choice */
+
+    assignmentRadios.forEach(
+        radio => {
+
+            radio.addEventListener(
+                "change",
+                updateCharacterFields
+            );
 
         }
     );
 
-}
 
 
+    /* Watch number of players */
+
+    if (playersSelect) {
+
+        playersSelect.addEventListener(
+            "change",
+            () => {
+
+                const selectedAssignment =
+                    document.querySelector(
+                        'input[name="characterAssignment"]:checked'
+                    );
+
+
+                if (
+                    selectedAssignment &&
+                    selectedAssignment.value ===
+                    "ahead"
+                ) {
+
+                    updateCharacterFields();
+
+                }
+
+            }
+        );
+
+    }
 
 
 
@@ -743,13 +1164,20 @@ if (playersSelect) {
 
 
     if (dateInput) {
-        dateInput.min = todayString;
+
+        dateInput.min =
+            todayString;
+
     }
 
 
     if (backupDateInput) {
-        backupDateInput.min = todayString;
+
+        backupDateInput.min =
+            todayString;
+
     }
+
 
 
     /* -----------------------------------------
@@ -772,6 +1200,7 @@ if (playersSelect) {
     }
 
 
+
     /* -----------------------------------------
        VALIDATE BACKUP DATE
     ----------------------------------------- */
@@ -792,6 +1221,7 @@ if (playersSelect) {
     }
 
 
+
     /* -----------------------------------------
        FORM SUBMISSION
     ----------------------------------------- */
@@ -807,12 +1237,14 @@ if (playersSelect) {
 
             if (
                 dateInput &&
-                dateInput.value < todayString
+                dateInput.value <
+                todayString
             ) {
 
                 alert(
                     "Please choose today or a future date."
                 );
+
 
                 dateInput.focus();
 
@@ -826,12 +1258,14 @@ if (playersSelect) {
             if (
                 backupDateInput &&
                 backupDateInput.value &&
-                backupDateInput.value < todayString
+                backupDateInput.value <
+                todayString
             ) {
 
                 alert(
                     "Please choose today or a future date."
                 );
+
 
                 backupDateInput.focus();
 
@@ -847,8 +1281,8 @@ if (playersSelect) {
 
                     hideForm: true,
 
-           successMessage:
-    "Your scheduling request has been sent! Thank you for reaching out. I’ve received your request and will get back to you soon to work out the details of your game.",
+                    successMessage:
+                        "Your scheduling request has been sent! Thank you for reaching out. I’ve received your request and will get back to you soon to work out the details.",
 
                     successButtonText:
                         "Request Sent"
@@ -860,6 +1294,7 @@ if (playersSelect) {
     );
 
 }
+
 
 
 /* =========================================
@@ -878,7 +1313,9 @@ async function submitForm(
         );
 
 
-    if (!submitButton) return;
+    if (!submitButton) {
+        return;
+    }
 
 
     const originalButtonText =
@@ -888,11 +1325,15 @@ async function submitForm(
     submitButton.textContent =
         "Sending...";
 
-    submitButton.disabled = true;
+
+    submitButton.disabled =
+        true;
 
 
     const formData =
-        new FormData(form);
+        new FormData(
+            form
+        );
 
 
     try {
@@ -931,7 +1372,8 @@ async function submitForm(
 
         if (options.hideForm) {
 
-            form.style.display = "none";
+            form.style.display =
+                "none";
 
         }
 
@@ -941,6 +1383,7 @@ async function submitForm(
             successElement.textContent =
                 options.successMessage ||
                 "Message sent! Thank you for reaching out.";
+
 
             successElement.style.display =
                 "block";
@@ -968,6 +1411,7 @@ async function submitForm(
             successElement.textContent =
                 "Something went wrong. Please try again.";
 
+
             successElement.style.display =
                 "block";
 
@@ -977,11 +1421,14 @@ async function submitForm(
         submitButton.textContent =
             originalButtonText;
 
-        submitButton.disabled = false;
+
+        submitButton.disabled =
+            false;
 
     }
 
 }
+
 
 
 /* =========================================
@@ -991,17 +1438,30 @@ async function submitForm(
 function initializeGamePlayerOptions() {
 
     const gameSelect =
-        document.getElementById("game");
+        document.getElementById(
+            "game"
+        );
+
 
     const playersSelect =
-        document.getElementById("players");
+        document.getElementById(
+            "players"
+        );
+
 
     const playerHelp =
-        document.getElementById("playerHelp");
+        document.getElementById(
+            "playerHelp"
+        );
 
 
-    if (!gameSelect || !playersSelect) {
+    if (
+        !gameSelect ||
+        !playersSelect
+    ) {
+
         return;
+
     }
 
 
@@ -1017,7 +1477,8 @@ function initializeGamePlayerOptions() {
                CLEAR CURRENT PLAYER OPTIONS
             ----------------------------------------- */
 
-            playersSelect.innerHTML = "";
+            playersSelect.innerHTML =
+                "";
 
 
             /* -----------------------------------------
@@ -1027,14 +1488,22 @@ function initializeGamePlayerOptions() {
             if (!game) {
 
                 const option =
-                    document.createElement("option");
+                    document.createElement(
+                        "option"
+                    );
 
-                option.value = "";
+
+                option.value =
+                    "";
+
 
                 option.textContent =
                     "Choose number of players";
 
-                playersSelect.appendChild(option);
+
+                playersSelect.appendChild(
+                    option
+                );
 
 
                 if (playerHelp) {
@@ -1054,14 +1523,21 @@ function initializeGamePlayerOptions() {
             let genderRequirement = "";
 
 
+
             /* -----------------------------------------
                SPELLBOUND
             ----------------------------------------- */
 
-            if (game === "Spellbound") {
+            if (
+                game ===
+                "Spellbound"
+            ) {
 
-                minimum = 13;
-                maximum = 17;
+                minimum =
+                    13;
+
+                maximum =
+                    17;
 
                 genderRequirement =
                     "At least 5 female and 4 male players are required.";
@@ -1069,28 +1545,43 @@ function initializeGamePlayerOptions() {
             }
 
 
+
             /* -----------------------------------------
                WAY OUT WEST
             ----------------------------------------- */
 
-            else if (game === "Way Out West") {
+            else if (
+                game ===
+                "Way Out West"
+            ) {
 
-                minimum = 10;
-                maximum = 20;
+                minimum =
+                    10;
+
+                maximum =
+                    20;
 
             }
+
 
 
             /* -----------------------------------------
                A DEAD MAN'S CHEST
             ----------------------------------------- */
 
-            else if (game === "A Dead Man's Chest") {
+            else if (
+                game ===
+                "A Dead Man's Chest"
+            ) {
 
-                minimum = 12;
-                maximum = 16;
+                minimum =
+                    12;
+
+                maximum =
+                    16;
 
             }
+
 
 
             /* -----------------------------------------
@@ -1098,20 +1589,31 @@ function initializeGamePlayerOptions() {
             ----------------------------------------- */
 
             const placeholder =
-                document.createElement("option");
+                document.createElement(
+                    "option"
+                );
 
-            placeholder.value = "";
+
+            placeholder.value =
+                "";
+
 
             placeholder.textContent =
                 "Select number of players";
 
-            placeholder.disabled = true;
 
-            placeholder.selected = true;
+            placeholder.disabled =
+                true;
+
+
+            placeholder.selected =
+                true;
+
 
             playersSelect.appendChild(
                 placeholder
             );
+
 
 
             /* -----------------------------------------
@@ -1125,13 +1627,19 @@ function initializeGamePlayerOptions() {
             ) {
 
                 const option =
-                    document.createElement("option");
+                    document.createElement(
+                        "option"
+                    );
+
 
                 option.value =
                     number;
 
+
                 option.textContent =
-                    number + " players";
+                    number +
+                    " players";
+
 
                 playersSelect.appendChild(
                     option
@@ -1140,11 +1648,14 @@ function initializeGamePlayerOptions() {
             }
 
 
+
             /* -----------------------------------------
                HELP TEXT
             ----------------------------------------- */
 
-            if (genderRequirement) {
+            if (
+                genderRequirement
+            ) {
 
                 playerHelp.textContent =
                     genderRequirement;
@@ -1167,6 +1678,8 @@ function initializeGamePlayerOptions() {
 
 }
 
+
+
 /* =========================================
    CHARACTER INFORMATION TIMING
 ========================================= */
@@ -1175,6 +1688,7 @@ const characterTiming =
     document.querySelectorAll(
         'input[name="characterTiming"]'
     );
+
 
 const characterEmailsGroup =
     document.getElementById(
@@ -1187,40 +1701,43 @@ if (
     characterEmailsGroup
 ) {
 
-    characterTiming.forEach(radio => {
+    characterTiming.forEach(
+        radio => {
 
-        radio.addEventListener(
-            "change",
-            function () {
+            radio.addEventListener(
+                "change",
+                function () {
 
-                if (
-                    this.value ===
+                    if (
+                        this.value ===
                         "Before the party" &&
-                    this.checked
-                ) {
+                        this.checked
+                    ) {
 
-                    characterEmailsGroup.style.display =
-                        "block";
+                        characterEmailsGroup.style.display =
+                            "block";
 
-                }
+                    }
 
-                else if (
-                    this.value ===
+                    else if (
+                        this.value ===
                         "At the party" &&
-                    this.checked
-                ) {
+                        this.checked
+                    ) {
 
-                    characterEmailsGroup.style.display =
-                        "none";
+                        characterEmailsGroup.style.display =
+                            "none";
+
+                    }
 
                 }
+            );
 
-            }
-        );
-
-    });
+        }
+    );
 
 }
+
 
 
 /* =========================================
@@ -1240,13 +1757,19 @@ function getTodayString() {
     const month =
         String(
             today.getMonth() + 1
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const day =
         String(
             today.getDate()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     return (
@@ -1260,11 +1783,14 @@ function getTodayString() {
 }
 
 
+
 /* =========================================
    VALIDATE DATE INPUT
 ========================================= */
 
-function validateDateInput(input) {
+function validateDateInput(
+    input
+) {
 
     if (
         !input ||
@@ -1273,7 +1799,9 @@ function validateDateInput(input) {
 
         if (input) {
 
-            input.setCustomValidity("");
+            input.setCustomValidity(
+                ""
+            );
 
         }
 
@@ -1295,18 +1823,24 @@ function validateDateInput(input) {
             "Please choose today or a future date."
         );
 
+
         input.reportValidity();
+
 
         return false;
 
     }
 
 
-    input.setCustomValidity("");
+    input.setCustomValidity(
+        "" 
+    );
+
 
     return true;
 
 }
+
 
 
 /* =========================================
@@ -1317,6 +1851,7 @@ const contactForm =
     document.getElementById(
         "contact-form"
     );
+
 
 const contactSuccess =
     document.getElementById(

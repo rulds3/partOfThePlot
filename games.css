@@ -218,7 +218,7 @@
 
 .spellbound-card {
     background-image:
-        url("magicBackground.jpg");
+        url("/games/spellbound/magicBackground.jpg");
 
     background-size: cover;
     background-position: center;
@@ -229,14 +229,12 @@
    6. COMING SOON CARD — WESTERN
    ========================================================= */
 
-.coming-soon-card {
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            #4a4035 0%,
-            #29251f 45%,
-            #15161b 100%
-        );
+.way-out-west {
+    background-image:
+        url("/games/wayOutWest/wayOutWestBackground.jpg");
+
+    background-size: cover;
+    background-position: center;
 }
 
 
@@ -244,14 +242,12 @@
    7. COMING SOON CARD — PIRATE
    ========================================================= */
 
-.coming-soon-card-two {
-    background:
-        radial-gradient(
-            circle at 65% 30%,
-            #35434a 0%,
-            #202b31 45%,
-            #11151a 100%
-        );
+.dead-mans-chest {
+    background-image:
+        url("/games/deadMansChest/deadMansChestBackground.jpg");
+
+    background-size: cover;
+    background-position: center;
 }
 
 
@@ -549,4 +545,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
 
     filter: invert(72%) sepia(25%) saturate(700%) hue-rotate(5deg);
+}
+
+
+
+.game-card-price {
+    margin: 1.25rem 0;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-align: center;
 }
