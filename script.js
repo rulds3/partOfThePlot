@@ -1232,6 +1232,29 @@ function initializeSchedulingForm() {
 
             event.preventDefault();
 
+			/* -----------------------------------------
+			   HONEYPOT CHECK
+			----------------------------------------- */
+
+			const honeypot =
+				scheduleForm.querySelector(
+					'input[name="_gotcha"]'
+				);
+
+
+			if (
+				honeypot &&
+				honeypot.value.trim() !== ""
+			) {
+
+				console.warn(
+					"Spam submission blocked."
+				);
+
+				return;
+
+			}
+
 
             /* Check preferred date */
 
@@ -1852,7 +1875,6 @@ const contactForm =
         "contact-form"
     );
 
-
 const contactSuccess =
     document.getElementById(
         "contact-success"
@@ -1861,12 +1883,82 @@ const contactSuccess =
 
 if (contactForm) {
 
+    /*
+     * Record when the form was loaded.
+     * This helps identify automated submissions
+     * that happen almost instantly.
+     */
+
+    const contactFormLoadedAt =
+        Date.now();
+
+
     contactForm.addEventListener(
         "submit",
         event => {
 
             event.preventDefault();
 
+
+            /* -----------------------------------------
+               HONEYPOT CHECK
+            ----------------------------------------- */
+
+            const honeypot =
+                contactForm.querySelector(
+                    'input[name="_gotcha"]'
+                );
+
+
+            if (
+                honeypot &&
+                honeypot.value.trim() !== ""
+            ) {
+
+                /*
+                 * Do not send the form.
+                 *
+                 * We intentionally don't tell the bot
+                 * that it was caught.
+                 */
+
+                console.warn(
+                    "Spam submission blocked."
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               MINIMUM SUBMISSION TIME
+            ----------------------------------------- */
+
+            const timeOnPage =
+                Date.now() -
+                contactFormLoadedAt;
+
+
+            /*
+             * Reject submissions made less than
+             * 3 seconds after the form loaded.
+             */
+
+            if (timeOnPage < 3000) {
+
+                console.warn(
+                    "Suspiciously fast submission blocked."
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               SUBMIT FORM
+            ----------------------------------------- */
 
             submitForm(
                 contactForm,
