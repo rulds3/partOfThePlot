@@ -32,10 +32,6 @@ function getSiteRoot() {
         window.location.pathname;
 
 
-    /*
-     * Find the /games/ folder.
-     */
-
     const gamesFolder =
         "/games/";
 
@@ -62,14 +58,6 @@ function getSiteRoot() {
     /*
      * Otherwise, use the folder containing
      * the current page.
-     *
-     * Example:
-     *
-     * /partoftheplot/faq.html
-     *
-     * becomes:
-     *
-     * /partoftheplot/
      */
 
     const lastSlash =
@@ -144,6 +132,43 @@ if (siteHeader) {
 
 
 /* =========================================
+   FIX SHARED HEADER / FOOTER LINKS
+========================================= */
+
+function fixSharedLinks(container) {
+
+    const links =
+        container.querySelectorAll("a");
+
+
+    links.forEach(link => {
+
+        const href =
+            link.getAttribute("href");
+
+
+        if (
+            href &&
+            !href.startsWith("http") &&
+            !href.startsWith("#") &&
+            !href.startsWith("mailto:") &&
+            !href.startsWith("tel:") &&
+            !href.startsWith("/")
+        ) {
+
+            link.href =
+                siteRoot +
+                href;
+
+        }
+
+    });
+
+}
+
+
+
+/* =========================================
    LOAD SHARED FOOTER
 ========================================= */
 
@@ -178,6 +203,11 @@ if (siteFooter) {
 
             siteFooter.innerHTML =
                 html;
+
+
+            fixSharedLinks(
+                siteFooter
+            );
 
         })
 
@@ -258,6 +288,15 @@ function initializeNavigation() {
                 ) &&
                 !href.startsWith(
                     "#"
+                ) &&
+                !href.startsWith(
+                    "mailto:"
+                ) &&
+                !href.startsWith(
+                    "tel:"
+                ) &&
+                !href.startsWith(
+                    "/"
                 )
             ) {
 
@@ -287,11 +326,6 @@ function initializeNavigation() {
                 siteRoot +
                 "partOfThePlotLogo.png";
 
-
-            /*
-             * Make the logo link to the
-             * actual home page.
-             */
 
             const logoLink =
                 siteLogo.closest(
@@ -829,8 +863,6 @@ function initializeScheduling() {
                     }
 
 
-                    /* Open modal */
-
                     openScheduleModal();
 
                 }
@@ -973,6 +1005,39 @@ function initializeSchedulingForm() {
         );
 
 
+    const characterNotes =
+        characterInfo
+            ? characterInfo.querySelector(
+                ".character-notes-section"
+            )
+            : null;
+
+
+    /*
+     * These are the "Player Information"
+     * elements inside character-info.
+     *
+     * Character Notes are kept visible
+     * regardless of assignment choice.
+     */
+
+    const playerInformationLabel =
+        characterInfo
+            ? characterInfo.querySelector(
+                ":scope > label"
+            )
+            : null;
+
+
+    const playerInformationHelp =
+        characterInfo
+            ? characterInfo.querySelector(
+                ":scope > .form-help"
+            )
+            : null;
+
+
+
     function updateCharacterFields() {
 
         const selectedAssignment =
@@ -981,15 +1046,51 @@ function initializeSchedulingForm() {
             );
 
 
-        if (
-            !selectedAssignment ||
-            selectedAssignment.value !==
-            "ahead"
-        ) {
+        const isAheadOfTime =
+            selectedAssignment &&
+            selectedAssignment.value ===
+            "ahead";
 
-            if (characterInfo) {
 
-                characterInfo.style.display =
+        /*
+         * Character Notes are ALWAYS visible.
+         */
+
+        if (characterInfo) {
+
+            characterInfo.style.display =
+                "block";
+
+        }
+
+
+        if (characterNotes) {
+
+            characterNotes.style.display =
+                "block";
+
+        }
+
+
+        /*
+         * Player Information is only shown
+         * when assignments are being handled
+         * ahead of time.
+         */
+
+        if (!isAheadOfTime) {
+
+            if (playerInformationLabel) {
+
+                playerInformationLabel.style.display =
+                    "none";
+
+            }
+
+
+            if (playerInformationHelp) {
+
+                playerInformationHelp.style.display =
                     "none";
 
             }
@@ -1000,6 +1101,9 @@ function initializeSchedulingForm() {
                 characterPlayers.innerHTML =
                     "";
 
+                characterPlayers.style.display =
+                    "none";
+
             }
 
 
@@ -1008,9 +1112,30 @@ function initializeSchedulingForm() {
         }
 
 
-        if (characterInfo) {
+        /*
+         * Show Player Information when
+         * "Ahead of time" is selected.
+         */
 
-            characterInfo.style.display =
+        if (playerInformationLabel) {
+
+            playerInformationLabel.style.display =
+                "";
+
+        }
+
+
+        if (playerInformationHelp) {
+
+            playerInformationHelp.style.display =
+                "";
+
+        }
+
+
+        if (characterPlayers) {
+
+            characterPlayers.style.display =
                 "block";
 
         }
@@ -1027,8 +1152,12 @@ function initializeSchedulingForm() {
             numberOfPlayers < 1
         ) {
 
-            characterPlayers.innerHTML =
-                "<p class=\"form-help\">Choose the number of players above first.</p>";
+            if (characterPlayers) {
+
+                characterPlayers.innerHTML =
+                    "<p class=\"form-help\">Choose the number of players above first.</p>";
+
+            }
 
             return;
 
@@ -1109,7 +1238,9 @@ function initializeSchedulingForm() {
 
 
 
-    /* Watch assignment choice */
+    /* -----------------------------------------
+       WATCH ASSIGNMENT CHOICE
+    ----------------------------------------- */
 
     assignmentRadios.forEach(
         radio => {
@@ -1124,7 +1255,9 @@ function initializeSchedulingForm() {
 
 
 
-    /* Watch number of players */
+    /* -----------------------------------------
+       WATCH NUMBER OF PLAYERS
+    ----------------------------------------- */
 
     if (playersSelect) {
 
@@ -1152,6 +1285,15 @@ function initializeSchedulingForm() {
         );
 
     }
+
+
+
+    /*
+     * Run once when the form loads so that
+     * Character Notes are immediately visible.
+     */
+
+    updateCharacterFields();
 
 
 
@@ -1232,31 +1374,35 @@ function initializeSchedulingForm() {
 
             event.preventDefault();
 
-			/* -----------------------------------------
-			   HONEYPOT CHECK
-			----------------------------------------- */
 
-			const honeypot =
-				scheduleForm.querySelector(
-					'input[name="_gotcha"]'
-				);
+            /* -----------------------------------------
+               HONEYPOT CHECK
+            ----------------------------------------- */
 
-
-			if (
-				honeypot &&
-				honeypot.value.trim() !== ""
-			) {
-
-				console.warn(
-					"Spam submission blocked."
-				);
-
-				return;
-
-			}
+            const honeypot =
+                scheduleForm.querySelector(
+                    'input[name="_gotcha"]'
+                );
 
 
-            /* Check preferred date */
+            if (
+                honeypot &&
+                honeypot.value.trim() !== ""
+            ) {
+
+                console.warn(
+                    "Spam submission blocked."
+                );
+
+                return;
+
+            }
+
+
+
+            /* -----------------------------------------
+               CHECK PREFERRED DATE
+            ----------------------------------------- */
 
             if (
                 dateInput &&
@@ -1276,7 +1422,10 @@ function initializeSchedulingForm() {
             }
 
 
-            /* Check backup date */
+
+            /* -----------------------------------------
+               CHECK BACKUP DATE
+            ----------------------------------------- */
 
             if (
                 backupDateInput &&
@@ -1295,6 +1444,7 @@ function initializeSchedulingForm() {
                 return;
 
             }
+
 
 
             submitForm(
@@ -1704,66 +1854,6 @@ function initializeGamePlayerOptions() {
 
 
 /* =========================================
-   CHARACTER INFORMATION TIMING
-========================================= */
-
-const characterTiming =
-    document.querySelectorAll(
-        'input[name="characterTiming"]'
-    );
-
-
-const characterEmailsGroup =
-    document.getElementById(
-        "characterEmailsGroup"
-    );
-
-
-if (
-    characterTiming.length > 0 &&
-    characterEmailsGroup
-) {
-
-    characterTiming.forEach(
-        radio => {
-
-            radio.addEventListener(
-                "change",
-                function () {
-
-                    if (
-                        this.value ===
-                        "Before the party" &&
-                        this.checked
-                    ) {
-
-                        characterEmailsGroup.style.display =
-                            "block";
-
-                    }
-
-                    else if (
-                        this.value ===
-                        "At the party" &&
-                        this.checked
-                    ) {
-
-                        characterEmailsGroup.style.display =
-                            "none";
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================
    DATE HELPERS
 ========================================= */
 
@@ -1856,7 +1946,7 @@ function validateDateInput(
 
 
     input.setCustomValidity(
-        "" 
+        ""
     );
 
 
@@ -1874,6 +1964,7 @@ const contactForm =
     document.getElementById(
         "contact-form"
     );
+
 
 const contactSuccess =
     document.getElementById(
@@ -1915,13 +2006,6 @@ if (contactForm) {
                 honeypot.value.trim() !== ""
             ) {
 
-                /*
-                 * Do not send the form.
-                 *
-                 * We intentionally don't tell the bot
-                 * that it was caught.
-                 */
-
                 console.warn(
                     "Spam submission blocked."
                 );
@@ -1939,11 +2023,6 @@ if (contactForm) {
                 Date.now() -
                 contactFormLoadedAt;
 
-
-            /*
-             * Reject submissions made less than
-             * 3 seconds after the form loaded.
-             */
 
             if (timeOnPage < 3000) {
 
@@ -1978,3 +2057,4 @@ if (contactForm) {
     );
 
 }
+
