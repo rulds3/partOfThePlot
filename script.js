@@ -476,105 +476,327 @@ function initializeNavigation() {
    FAQ ACCORDION
 ========================================= */
 
-const faqQuestions =
-    document.querySelectorAll(
-        ".faq-question"
+function initializeFAQ() {
+
+    const faqQuestions =
+        document.querySelectorAll(
+            ".faq-question"
+        );
+
+
+    /*
+     * Open a specific FAQ item.
+     */
+
+    function openFAQ(faqItem, scrollToItem = false) {
+
+        if (!faqItem) {
+            return;
+        }
+
+
+        const answer =
+            faqItem.querySelector(
+                ".faq-answer"
+            );
+
+
+        const question =
+            faqItem.querySelector(
+                ".faq-question"
+            );
+
+
+        if (!answer || !question) {
+            return;
+        }
+
+
+        /*
+         * Close all other FAQ items.
+         */
+
+        document
+            .querySelectorAll(
+                ".faq-item"
+            )
+            .forEach(
+                item => {
+
+                    if (
+                        item !== faqItem
+                    ) {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+
+                        const otherAnswer =
+                            item.querySelector(
+                                ".faq-answer"
+                            );
+
+
+                        if (otherAnswer) {
+
+                            otherAnswer.style.maxHeight =
+                                null;
+
+                        }
+
+
+                        const otherQuestion =
+                            item.querySelector(
+                                ".faq-question"
+                            );
+
+
+                        if (otherQuestion) {
+
+                            otherQuestion.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+        /*
+         * Open the selected FAQ.
+         */
+
+        faqItem.classList.add(
+            "active"
+        );
+
+
+        question.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+
+        answer.style.maxHeight =
+            answer.scrollHeight +
+            50 +
+            "px";
+
+
+        /*
+         * Scroll to the FAQ when opened
+         * from a page link.
+         */
+
+        if (scrollToItem) {
+
+            setTimeout(
+                () => {
+
+                    faqItem.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+                },
+                100
+            );
+
+        }
+
+    }
+
+
+
+    /*
+     * FAQ button clicks.
+     */
+
+    faqQuestions.forEach(
+        question => {
+
+            question.addEventListener(
+                "click",
+                () => {
+
+                    const faqItem =
+                        question.closest(
+                            ".faq-item"
+                        );
+
+
+                    if (!faqItem) {
+                        return;
+                    }
+
+
+                    const isCurrentlyOpen =
+                        faqItem.classList.contains(
+                            "active"
+                        );
+
+
+                    /*
+                     * If the FAQ is already open,
+                     * close it.
+                     */
+
+                    if (
+                        isCurrentlyOpen
+                    ) {
+
+                        faqItem.classList.remove(
+                            "active"
+                        );
+
+
+                        question.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+
+                        const answer =
+                            faqItem.querySelector(
+                                ".faq-answer"
+                            );
+
+
+                        if (answer) {
+
+                            answer.style.maxHeight =
+                                null;
+
+                        }
+
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * Otherwise open it.
+                     */
+
+                    openFAQ(
+                        faqItem
+                    );
+
+                }
+            );
+
+        }
     );
 
 
-faqQuestions.forEach(
-    question => {
 
-        question.addEventListener(
-            "click",
-            () => {
+    /*
+     * Automatically open an FAQ when the URL
+     * contains a matching ID.
+     *
+     * Example:
+     *
+     * faq.html#payment
+     *
+     * will automatically open:
+     *
+     * <div class="faq-item" id="payment">
+     */
 
-                const faqItem =
-                    question.parentElement;
+    function openFAQFromHash() {
 
-
-                const answer =
-                    faqItem.querySelector(
-                        ".faq-answer"
-                    );
-
-
-                /*
-                 * Close all other FAQ items.
-                 */
-
-                document
-                    .querySelectorAll(
-                        ".faq-item"
-                    )
-                    .forEach(
-                        item => {
-
-                            if (
-                                item !==
-                                faqItem
-                            ) {
-
-                                item.classList.remove(
-                                    "active"
-                                );
+        const hash =
+            window.location.hash;
 
 
-                                const otherAnswer =
-                                    item.querySelector(
-                                        ".faq-answer"
-                                    );
+        if (!hash) {
+            return;
+        }
 
 
-                                if (
-                                    otherAnswer
-                                ) {
-
-                                    otherAnswer.style.maxHeight =
-                                        null;
-
-                                }
-
-                            }
-
-                        }
-                    );
+        const id =
+            decodeURIComponent(
+                hash.substring(1)
+            );
 
 
-                /*
-                 * Toggle selected FAQ item.
-                 */
-
-                faqItem.classList.toggle(
-                    "active"
-                );
+        if (!id) {
+            return;
+        }
 
 
-                if (
-                    faqItem.classList.contains(
-                        "active"
-                    )
-                ) {
+        const faqItem =
+            document.getElementById(
+                id
+            );
 
-                    answer.style.maxHeight =
-                        answer.scrollHeight +
-                        50 +
-                        "px";
 
-                }
+        if (
+            faqItem &&
+            faqItem.classList.contains(
+                "faq-item"
+            )
+        ) {
 
-                else {
+            openFAQ(
+                faqItem,
+                true
+            );
 
-                    answer.style.maxHeight =
-                        null;
-
-                }
-
-            }
-        );
+        }
 
     }
-);
+
+
+    /*
+     * Check for an FAQ hash when the page loads.
+     */
+
+    openFAQFromHash();
+
+
+    /*
+     * Also handle someone clicking a link that
+     * changes the FAQ hash while already on
+     * the FAQ page.
+     */
+
+    window.addEventListener(
+        "hashchange",
+        openFAQFromHash
+    );
+
+}
+
+
+
+/*
+ * Initialize FAQ after the page has loaded.
+ */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeFAQ
+    );
+
+}
+
+else {
+
+    initializeFAQ();
+
+}
 
 
 
@@ -977,6 +1199,27 @@ function initializeSchedulingForm() {
 
 
 
+    /*
+     * Record when the scheduling form was loaded.
+     *
+     * This helps identify automated submissions
+     * that happen almost immediately.
+     */
+
+    const scheduleFormLoadedAt =
+        Date.now();
+
+
+    /*
+     * Prevent multiple rapid submissions
+     * from the same form.
+     */
+
+    let scheduleSubmissionLocked =
+        false;
+
+
+
     /* -----------------------------------------
        CHARACTER ASSIGNMENT
     ----------------------------------------- */
@@ -1375,6 +1618,7 @@ function initializeSchedulingForm() {
             event.preventDefault();
 
 
+
             /* -----------------------------------------
                HONEYPOT CHECK
             ----------------------------------------- */
@@ -1401,6 +1645,57 @@ function initializeSchedulingForm() {
 
 
             /* -----------------------------------------
+               MINIMUM SUBMISSION TIME
+            ----------------------------------------- */
+
+            const timeOnPage =
+                Date.now() -
+                scheduleFormLoadedAt;
+
+
+            /*
+             * Reject submissions made less than
+             * 3 seconds after the form loaded.
+             */
+
+            if (
+                timeOnPage <
+                3000
+            ) {
+
+                console.warn(
+                    "Suspiciously fast scheduling submission blocked."
+                );
+
+                return;
+
+            }
+
+
+
+            /* -----------------------------------------
+               SUBMISSION COOLDOWN
+            ----------------------------------------- */
+
+            if (
+                scheduleSubmissionLocked
+            ) {
+
+                console.warn(
+                    "Duplicate scheduling submission blocked."
+                );
+
+                return;
+
+            }
+
+
+            scheduleSubmissionLocked =
+                true;
+
+
+
+            /* -----------------------------------------
                CHECK PREFERRED DATE
             ----------------------------------------- */
 
@@ -1416,6 +1711,11 @@ function initializeSchedulingForm() {
 
 
                 dateInput.focus();
+
+
+                scheduleSubmissionLocked =
+                    false;
+
 
                 return;
 
@@ -1441,6 +1741,11 @@ function initializeSchedulingForm() {
 
                 backupDateInput.focus();
 
+
+                scheduleSubmissionLocked =
+                    false;
+
+
                 return;
 
             }
@@ -1462,6 +1767,7 @@ function initializeSchedulingForm() {
 
                 }
             );
+
 
         }
     );
@@ -1488,6 +1794,21 @@ async function submitForm(
 
     if (!submitButton) {
         return;
+    }
+
+
+    /*
+     * Prevent the submit button from being
+     * used repeatedly while the request is
+     * being processed.
+     */
+
+    if (
+        submitButton.disabled
+    ) {
+
+        return;
+
     }
 
 
@@ -1984,11 +2305,21 @@ if (contactForm) {
         Date.now();
 
 
+    /*
+     * Prevent multiple rapid submissions
+     * from the same form.
+     */
+
+    let contactSubmissionLocked =
+        false;
+
+
     contactForm.addEventListener(
         "submit",
         event => {
 
             event.preventDefault();
+
 
 
             /* -----------------------------------------
@@ -2015,6 +2346,7 @@ if (contactForm) {
             }
 
 
+
             /* -----------------------------------------
                MINIMUM SUBMISSION TIME
             ----------------------------------------- */
@@ -2024,15 +2356,46 @@ if (contactForm) {
                 contactFormLoadedAt;
 
 
-            if (timeOnPage < 3000) {
+            /*
+             * Reject submissions made less than
+             * 3 seconds after the form loaded.
+             */
+
+            if (
+                timeOnPage <
+                3000
+            ) {
 
                 console.warn(
-                    "Suspiciously fast submission blocked."
+                    "Suspiciously fast contact submission blocked."
                 );
 
                 return;
 
             }
+
+
+
+            /* -----------------------------------------
+               SUBMISSION COOLDOWN
+            ----------------------------------------- */
+
+            if (
+                contactSubmissionLocked
+            ) {
+
+                console.warn(
+                    "Duplicate contact submission blocked."
+                );
+
+                return;
+
+            }
+
+
+            contactSubmissionLocked =
+                true;
+
 
 
             /* -----------------------------------------
@@ -2057,4 +2420,3 @@ if (contactForm) {
     );
 
 }
-

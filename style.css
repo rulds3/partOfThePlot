@@ -2395,3 +2395,1065 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .character-notes-section .character-notes:last-child {
     margin-bottom: 0;
 }
+
+
+
+
+.game-card-price {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.game-card-price span {
+    font-size: 0.7rem;
+    font-weight: 400;
+    font-style: italic;
+    opacity: 0.75;
+}
+
+
+
+
+
+.schedule-availability {
+    margin: 10px 0 0;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-align: center;
+    color: var(--cream);
+    opacity: 0.75;
+}
+
+.schedule-day-note {
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+/* =========================================================
+   GUEST GUIDELINES PAGE
+   ========================================================= */
+
+.guest-guidelines-page {
+    width: 100%;
+    box-sizing: border-box;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(81, 64, 111, 0.14),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(198, 161, 91, 0.06),
+            transparent 35%
+        ),
+        #181d27;
+}
+
+
+/* ---------------------------------------------------------
+   Main Section
+   --------------------------------------------------------- */
+
+.guest-guidelines {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 110px 20px 100px;
+}
+
+
+/* ---------------------------------------------------------
+   Container
+   --------------------------------------------------------- */
+
+.guest-guidelines-container {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+
+/* ---------------------------------------------------------
+   Page Heading
+   --------------------------------------------------------- */
+
+.guest-guidelines-container > .eyebrow {
+    margin-bottom: 12px;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    letter-spacing: 0.18em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+.guest-guidelines-container > h1 {
+    margin: 0;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 7vw, 70px);
+    font-weight: 500;
+    line-height: 1.1;
+
+    text-align: center;
+}
+
+
+/* ---------------------------------------------------------
+   Intro
+   --------------------------------------------------------- */
+
+.guest-guidelines-intro {
+    max-width: 650px;
+
+    margin: 45px auto 55px;
+
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid var(--border-strong);
+
+    text-align: center;
+}
+
+
+.guest-guidelines-intro h2 {
+    margin: 0 0 12px;
+
+    color: var(--gold);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(25px, 4vw, 34px);
+    font-weight: 500;
+}
+
+
+.guest-guidelines-intro p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+
+/* ---------------------------------------------------------
+   Guideline List
+   --------------------------------------------------------- */
+
+.guideline-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   Individual Guideline
+   --------------------------------------------------------- */
+
+.guideline-item {
+    padding: 24px 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(81, 64, 111, 0.12),
+            rgba(13, 16, 23, 0.22)
+        );
+
+    border: 1px solid rgba(198, 161, 91, 0.16);
+
+    border-radius: 2px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.guideline-item:hover {
+    border-color: rgba(198, 161, 91, 0.32);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(81, 64, 111, 0.18),
+            rgba(13, 16, 23, 0.28)
+        );
+}
+
+
+/* ---------------------------------------------------------
+   Guideline Heading
+   --------------------------------------------------------- */
+
+.guideline-item h3 {
+    margin: 0 0 10px;
+
+    color: var(--cream);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+
+    line-height: 1.4;
+}
+
+
+.guideline-item h3::first-letter {
+    font-size: 1.1em;
+}
+
+
+/* ---------------------------------------------------------
+   Guideline Text
+   --------------------------------------------------------- */
+
+.guideline-item p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+
+.guideline-item strong {
+    color: var(--cream);
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   GUEST GUIDELINES — CLOSING MESSAGE
+   ========================================================= */
+
+.guest-guidelines-closing {
+    max-width: 650px;
+    margin: 65px auto 0;
+    padding-top: 45px;
+
+    border-top: 1px solid var(--border-strong);
+
+    text-align: center;
+}
+
+/* "That's it!" */
+.guest-guidelines-closing h2 {
+    margin: 0 0 6px;
+
+    color: var(--gold);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+/* "Take care of these few things..." */
+.guest-guidelines-closing .closing-message {
+    margin: 0;
+
+    color: var(--cream);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* "Get your group together..." */
+.guest-guidelines-closing .closing-message + .closing-message {
+    margin-top: 2px;
+}
+
+/* Organizer note, if present */
+.guest-guidelines-closing .organizer-note {
+    margin-top: 35px;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+    line-height: 1.7;
+
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   GUEST GUIDELINES — CLOSING MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .guest-guidelines-closing {
+        margin-top: 50px;
+        padding-top: 35px;
+    }
+
+    .guest-guidelines-closing h2 {
+        margin-bottom: 6px;
+    }
+
+    .guest-guidelines-closing .closing-message {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .guest-guidelines-closing .closing-message + .closing-message {
+        margin-top: 2px;
+    }
+
+}
+
+
+/* =========================================================
+   CONFIRM & PAY PAGE
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   PAGE
+   --------------------------------------------------------- */
+
+.confirm-page {
+    width: 100%;
+    box-sizing: border-box;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(81, 64, 111, 0.14),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(198, 161, 91, 0.06),
+            transparent 35%
+        ),
+        #181d27;
+}
+
+
+.confirm-section {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 90px 20px 120px;
+}
+
+
+.confirm-container {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+
+/* ---------------------------------------------------------
+   INTRO
+   --------------------------------------------------------- */
+
+.confirm-intro {
+    max-width: 700px;
+
+    margin: 0 auto 60px;
+
+    text-align: center;
+}
+
+
+.confirm-intro h1 {
+    margin: 10px 0 20px;
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(38px, 6vw, 62px);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+
+.confirm-intro h1 span {
+    color: var(--gold);
+}
+
+
+.confirm-intro .divider {
+    margin: 25px auto;
+}
+
+
+.confirm-intro > p:last-child {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: var(--muted);
+
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+
+/* ---------------------------------------------------------
+   GENERAL HEADINGS
+   --------------------------------------------------------- */
+
+.reservation-summary h2,
+.confirm-information h2,
+.confirmation-box h2,
+.payment-box h2 {
+    margin-top: 0;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+
+/* ---------------------------------------------------------
+   RESERVATION SUMMARY
+   --------------------------------------------------------- */
+
+.reservation-summary {
+    margin-bottom: 30px;
+
+    padding: 35px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(81, 64, 111, 0.22),
+            rgba(13, 16, 23, 0.82)
+        );
+
+    border: 1px solid rgba(198, 161, 91, 0.35);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.18);
+}
+
+
+.reservation-summary h2 {
+    margin-bottom: 25px;
+
+    text-align: center;
+}
+
+
+.reservation-details {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 0;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.reservation-detail {
+    padding: 18px 15px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.reservation-detail:nth-child(odd) {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.reservation-detail span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+
+.reservation-detail strong {
+    display: block;
+
+    color: var(--cream);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    line-height: 1.5;
+}
+
+
+/* Highlight the money fields */
+
+.reservation-detail:nth-last-child(3) strong,
+.reservation-detail:nth-last-child(2) strong,
+.reservation-detail:nth-last-child(1) strong {
+    color: var(--gold);
+
+    font-size: 1rem;
+}
+
+
+/* ---------------------------------------------------------
+   BEFORE YOU CONFIRM
+   --------------------------------------------------------- */
+
+.confirm-information {
+    margin-bottom: 30px;
+
+    padding: 30px 35px;
+
+    background: rgba(13, 16, 23, 0.45);
+
+    border-left: 3px solid var(--gold);
+}
+
+
+.confirm-information h2 {
+    margin-bottom: 10px;
+}
+
+
+.confirm-information > p {
+    margin-bottom: 22px;
+
+    color: var(--muted);
+
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+
+.confirm-links {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+
+.confirm-links a {
+    display: inline-block;
+
+    padding: 10px 15px;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    letter-spacing: 0.04em;
+    text-decoration: none;
+
+    background: rgba(198, 161, 91, 0.07);
+
+    border: 1px solid rgba(198, 161, 91, 0.3);
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.confirm-links a:hover {
+    background: rgba(198, 161, 91, 0.14);
+
+    border-color: rgba(198, 161, 91, 0.6);
+
+    transform: translateY(-1px);
+}
+
+
+/* ---------------------------------------------------------
+   CONFIRMATION BOX
+   --------------------------------------------------------- */
+
+.confirmation-box {
+    margin-bottom: 30px;
+
+    padding: 40px 45px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(81, 64, 111, 0.16),
+            rgba(13, 16, 23, 0.9)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+
+.confirmation-box h2 {
+    margin-bottom: 10px;
+
+    text-align: center;
+}
+
+
+.confirmation-box > p {
+    max-width: 650px;
+
+    margin: 0 auto 30px;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+    line-height: 1.7;
+
+    text-align: center;
+}
+
+
+/* ---------------------------------------------------------
+   FORM
+   --------------------------------------------------------- */
+
+#confirmation-form label:not(.checkbox-label) {
+    display: block;
+
+    margin: 0 0 7px;
+
+    color: var(--cream);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    letter-spacing: 0.05em;
+}
+
+
+#confirmation-form input[type="text"],
+#confirmation-form input[type="email"] {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-bottom: 20px;
+
+    padding: 13px 15px;
+
+    color: var(--cream);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+
+    background: rgba(255, 255, 255, 0.045);
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+
+    border-radius: 2px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+#confirmation-form input[type="text"]:focus,
+#confirmation-form input[type="email"]:focus {
+    background: rgba(255, 255, 255, 0.07);
+
+    border-color: rgba(198, 161, 91, 0.7);
+}
+
+
+/* ---------------------------------------------------------
+   ACKNOWLEDGMENTS
+   --------------------------------------------------------- */
+
+.acknowledgments {
+    margin: 15px 0 30px;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.14);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+.checkbox-label {
+    display: flex !important;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 17px !important;
+
+    color: var(--muted) !important;
+
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.78rem !important;
+    font-weight: 400 !important;
+
+    line-height: 1.6;
+
+    letter-spacing: 0 !important;
+}
+
+
+.checkbox-label:last-child {
+    margin-bottom: 0 !important;
+}
+
+
+.checkbox-label input[type="checkbox"] {
+    flex: 0 0 auto;
+
+    width: 17px;
+    height: 17px;
+
+    margin: 2px 0 0;
+
+    accent-color: var(--gold);
+}
+
+
+.checkbox-label a {
+    color: var(--gold);
+
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+
+/* ---------------------------------------------------------
+   CONFIRM BUTTON
+   --------------------------------------------------------- */
+
+#confirmation-form .button {
+    display: block;
+
+    width: fit-content;
+
+    min-width: 230px;
+
+    margin: 0 auto;
+}
+
+
+/* ---------------------------------------------------------
+   FORM MESSAGE
+   --------------------------------------------------------- */
+
+.form-message {
+    margin: 15px 0 0;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+
+    text-align: center;
+}
+
+
+.form-message.error {
+    color: #d99a9a;
+}
+
+
+/* ---------------------------------------------------------
+   PAYMENT SECTION
+   --------------------------------------------------------- */
+
+.payment-section {
+    margin-top: 40px;
+}
+
+
+.payment-success {
+    margin-bottom: 30px;
+
+    padding: 40px 30px;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(198, 161, 91, 0.10),
+            transparent 65%
+        );
+
+    border-top: 1px solid rgba(198, 161, 91, 0.35);
+    border-bottom: 1px solid rgba(198, 161, 91, 0.35);
+}
+
+
+.payment-success h2 {
+    margin: 10px 0 15px;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 500;
+}
+
+
+.payment-success > p:last-child {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+
+/* ---------------------------------------------------------
+   PAYMENT BOX
+   --------------------------------------------------------- */
+
+.payment-box {
+    padding: 40px 45px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(81, 64, 111, 0.22),
+            rgba(13, 16, 23, 0.94)
+        );
+
+    border: 1px solid rgba(198, 161, 91, 0.45);
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.25);
+}
+
+
+.payment-box > h2 {
+    margin-bottom: 8px;
+
+    text-align: center;
+}
+
+
+.payment-box > p {
+    margin-bottom: 30px;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+
+    text-align: center;
+}
+
+
+/* ---------------------------------------------------------
+   PAYMENT OPTIONS
+   --------------------------------------------------------- */
+
+.payment-option {
+    margin-top: 18px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.payment-option h3 {
+    margin: 0 0 8px;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+.payment-option p {
+    margin: 0 0 18px;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+
+    line-height: 1.6;
+}
+
+
+.payment-option .button {
+    display: inline-block;
+}
+
+
+.payment-note {
+    margin-top: 15px !important;
+    margin-bottom: 0 !important;
+
+    font-size: 0.7rem !important;
+
+    font-style: italic;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .confirm-section {
+        padding: 65px 15px 90px;
+    }
+
+
+    .confirm-intro {
+        margin-bottom: 40px;
+    }
+
+
+    .reservation-summary {
+        padding: 25px 18px;
+    }
+
+
+    .reservation-details {
+        grid-template-columns: 1fr;
+    }
+
+
+    .reservation-detail:nth-child(odd) {
+        border-right: none;
+    }
+
+
+    .reservation-detail {
+        padding: 15px 5px;
+    }
+
+
+    .confirm-information {
+        padding: 25px 20px;
+    }
+
+
+    .confirm-links {
+        flex-direction: column;
+    }
+
+
+    .confirm-links a {
+        text-align: center;
+    }
+
+
+    .confirmation-box {
+        padding: 30px 20px;
+    }
+
+
+    .acknowledgments {
+        padding: 18px 15px;
+    }
+
+
+    .checkbox-label {
+        font-size: 0.75rem !important;
+    }
+
+
+    #confirmation-form .button {
+        width: 100%;
+    }
+
+
+    .payment-success {
+        padding: 35px 20px;
+    }
+
+
+    .payment-box {
+        padding: 30px 20px;
+    }
+
+
+    .payment-option {
+        padding: 22px 15px;
+    }
+
+
+    .payment-option .button {
+        width: 100%;
+        box-sizing: border-box;
+
+        text-align: center;
+    }
+
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    if (window.location.hash) {
+
+        const target = document.querySelector(window.location.hash);
+
+        if (target && target.classList.contains("faq-item")) {
+
+            const button = target.querySelector(".faq-question");
+
+            if (button) {
+                button.click();
+
+                setTimeout(function () {
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }, 100);
+            }
+
+        }
+
+    }
+
+});
