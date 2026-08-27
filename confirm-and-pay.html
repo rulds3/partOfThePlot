@@ -554,127 +554,312 @@
 <!-- ================= JAVASCRIPT ================= -->
 
 <script src="script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
 
-
 /* =========================================================
-   RESERVATION INFORMATION
-   =========================================================
-
-   Replace these example values with the actual reservation
-   information when creating the confirmation link.
-
-   Example URL:
-
-   confirm-and-pay.html
-   ?date=September%2012%2C%202026
-   &time=6%3A00%20PM
-   &location=Idaho%20Falls
-   &guests=12
-   &total=%24300
-   &deposit=%24150
-   &balance=%24150
-
+   CONFIRM-AND-PAY RESERVATION LOADING
    ========================================================= */
-
-
-const params = new URLSearchParams(window.location.search);
-
-
-const reservation = {
-
-    date: params.get("date") || "",
-    time: params.get("time") || "",
-    location: params.get("location") || "",
-    guests: params.get("guests") || "",
-    total: params.get("total") || "",
-    deposit: params.get("deposit") || "",
-    balance: params.get("balance") || "",
-    game: params.get("game") || "",
-    confirmationToken:
-        params.get("token") || ""
-
-};
 
 const CONFIRM_RESERVATION_URL =
     "https://fqcabbpvevtlzzwsvezi.supabase.co/functions/v1/confirm-reservation";
 
+
 /* =========================================================
-   DISPLAY RESERVATION INFORMATION
+   GET TOKEN FROM URL
    ========================================================= */
 
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
-document.getElementById("reservation-date").textContent =
-    reservation.date;
 
-document.getElementById("reservation-time").textContent =
-    reservation.time;
-
-document.getElementById("reservation-location").textContent =
-    reservation.location;
-
-document.getElementById("reservation-guests").textContent =
-    reservation.guests;
-
-document.getElementById("reservation-total").textContent =
-    reservation.total;
-
-document.getElementById("reservation-deposit").textContent =
-    reservation.deposit;
-
-document.getElementById("reservation-balance").textContent =
-    reservation.balance;
-
+const confirmationToken =
+    params.get("token");
 
 
 /* =========================================================
-   PUT RESERVATION INFORMATION INTO FORM
+   PAGE ELEMENTS
    ========================================================= */
-document.getElementById("form-game").value =
-    reservation.game;
 
-document.getElementById("form-token").value =
-    reservation.confirmationToken;
+const confirmationForm =
+    document.getElementById(
+        "confirmation-form"
+    );
 
-document.getElementById("form-date").value =
-    reservation.date;
 
-document.getElementById("form-time").value =
-    reservation.time;
+const confirmationMessage =
+    document.getElementById(
+        "confirmation-message"
+    );
 
-document.getElementById("form-location").value =
-    reservation.location;
 
-document.getElementById("form-guests").value =
-    reservation.guests;
+const paymentSection =
+    document.getElementById(
+        "payment-section"
+    );
 
-document.getElementById("form-total").value =
-    reservation.total;
 
-document.getElementById("form-deposit").value =
-    reservation.deposit;
+/* =========================================================
+   LOAD RESERVATION
+   ========================================================= */
 
-document.getElementById("form-balance").value =
-    reservation.balance;
+async function loadReservation() {
 
+    if (!confirmationToken) {
+
+        confirmationMessage.textContent =
+            "This confirmation link is missing its reservation token.";
+
+        confirmationMessage.className =
+            "form-message error";
+
+        confirmationForm.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    try {
+
+        confirmationMessage.textContent =
+            "Loading your reservation...";
+
+
+        const response =
+            await fetch(
+                CONFIRM_RESERVATION_URL +
+                "?token=" +
+                encodeURIComponent(
+                    confirmationToken
+                ),
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "Reservation lookup:",
+            response.status,
+            result
+        );
+
+
+        if (
+            !response.ok ||
+            !result.success ||
+            !result.reservation
+        ) {
+
+            throw new Error(
+                result.error ||
+                "Reservation could not be found."
+            );
+
+        }
+
+
+        const reservation =
+            result.reservation;
+
+
+        /* =================================================
+           DISPLAY RESERVATION INFORMATION
+           ================================================= */
+
+        document.getElementById(
+            "reservation-date"
+        ).textContent =
+            reservation.reservation_date || "";
+
+
+        document.getElementById(
+            "reservation-time"
+        ).textContent =
+            reservation.reservation_time || "";
+
+
+        document.getElementById(
+            "reservation-location"
+        ).textContent =
+            reservation.location || "";
+
+
+        document.getElementById(
+            "reservation-guests"
+        ).textContent =
+            reservation.number_of_guests || "";
+
+
+        document.getElementById(
+            "reservation-total"
+        ).textContent =
+            "$" +
+            Number(
+                reservation.total
+            ).toFixed(2);
+
+
+        document.getElementById(
+            "reservation-deposit"
+        ).textContent =
+            "$" +
+            Number(
+                reservation.deposit_due
+            ).toFixed(2);
+
+
+        document.getElementById(
+            "reservation-balance"
+        ).textContent =
+            "$" +
+            Number(
+                reservation.remaining_balance
+            ).toFixed(2);
+
+
+        /* =================================================
+           FILL HIDDEN FORM FIELDS
+           ================================================= */
+
+        document.getElementById(
+            "form-game"
+        ).value =
+            reservation.game || "";
+
+
+        document.getElementById(
+            "form-token"
+        ).value =
+            reservation.confirmation_token || "";
+
+
+        document.getElementById(
+            "form-date"
+        ).value =
+            reservation.reservation_date || "";
+
+
+        document.getElementById(
+            "form-time"
+        ).value =
+            reservation.reservation_time || "";
+
+
+        document.getElementById(
+            "form-location"
+        ).value =
+            reservation.location || "";
+
+
+        document.getElementById(
+            "form-guests"
+        ).value =
+            reservation.number_of_guests || "";
+
+
+        document.getElementById(
+            "form-total"
+        ).value =
+            reservation.total || "";
+
+
+        document.getElementById(
+            "form-deposit"
+        ).value =
+            reservation.deposit_due || "";
+
+
+        document.getElementById(
+            "form-balance"
+        ).value =
+            reservation.remaining_balance || "";
+
+
+        /* =================================================
+           FILL ORGANIZER INFORMATION
+           ================================================= */
+
+        document.getElementById(
+            "organizer-name"
+        ).value =
+            reservation.organizer_name || "";
+
+
+        document.getElementById(
+            "organizer-email"
+        ).value =
+            reservation.organizer_email || "";
+
+
+        /* =================================================
+           CLEAR LOADING MESSAGE
+           ================================================= */
+
+        confirmationMessage.textContent =
+            "";
+
+
+        /* =================================================
+           ALREADY CONFIRMED
+           ================================================= */
+
+        if (
+            reservation.status ===
+            "confirmed"
+        ) {
+
+            confirmationForm.style.display =
+                "none";
+
+            paymentSection.hidden =
+                false;
+
+            return;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Reservation loading error:",
+            error
+        );
+
+
+        confirmationMessage.textContent =
+            error.message ||
+            "We couldn't load your reservation.";
+
+        confirmationMessage.className =
+            "form-message error";
+
+
+        confirmationForm.style.display =
+            "none";
+
+    }
+
+}
 
 
 /* =========================================================
    CONFIRMATION FORM
    ========================================================= */
-
-
-const confirmationForm =
-    document.getElementById("confirmation-form");
-
-const confirmationMessage =
-    document.getElementById("confirmation-message");
-
-const paymentSection =
-    document.getElementById("payment-section");
-
 
 confirmationForm.addEventListener(
     "submit",
@@ -691,89 +876,131 @@ confirmationForm.addEventListener(
             "form-message";
 
 
-		const formData =
-			new FormData(confirmationForm);
+        const formData =
+            new FormData(
+                confirmationForm
+            );
 
 
-		const confirmationData = {
+        const confirmationData = {
 
-			confirmation_token:
-				formData.get("confirmation_token"),
+            confirmation_token:
+                formData.get(
+                    "confirmation_token"
+                ),
 
-			organizer_name:
-				formData.get("organizer_name"),
+            organizer_name:
+                formData.get(
+                    "organizer_name"
+                ),
 
-			organizer_email:
-				formData.get("organizer_email")
+            organizer_email:
+                formData.get(
+                    "organizer_email"
+                )
 
-		};
-
-
-		try {
-
-			const response =
-				await fetch(
-					CONFIRM_RESERVATION_URL,					{
-						method: "POST",
-
-						headers: {
-							"Content-Type":
-								"application/json"
-						},
-
-						body:
-							JSON.stringify(
-								confirmationData
-							)
-					}
-				);
+        };
 
 
-			const result = await response.json();
+        try {
 
-			console.log("Confirmation response:", response.status, result);
+            const response =
+                await fetch(
+                    CONFIRM_RESERVATION_URL,
+                    {
 
-			if (response.ok && result.success) {
+                        method: "POST",
 
-				confirmationMessage.textContent = "";
+                        headers: {
+                            "Content-Type":
+                                "application/json",
 
-				confirmationForm.style.display = "none";
+                            "Accept":
+                                "application/json"
+                        },
 
-				paymentSection.hidden = false;
+                        body:
+                            JSON.stringify(
+                                confirmationData
+                            )
 
-				paymentSection.scrollIntoView({
-					behavior: "smooth",
-					block: "start"
-				});
+                    }
+                );
 
-			} else {
 
-				confirmationMessage.textContent =
-					result.error ||
-					"Something went wrong while confirming the reservation.";
+            const result =
+                await response.json();
 
-				confirmationMessage.className =
-					"form-message error";
 
-			}
+            console.log(
+                "Confirmation response:",
+                response.status,
+                result
+            );
+
+
+            if (
+                response.ok &&
+                result.success
+            ) {
+
+                confirmationMessage.textContent =
+                    "";
+
+
+                confirmationForm.style.display =
+                    "none";
+
+
+                paymentSection.hidden =
+                    false;
+
+
+                paymentSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+
+            } else {
+
+                confirmationMessage.textContent =
+                    result.error ||
+                    "Something went wrong while confirming the reservation.";
+
+
+                confirmationMessage.className =
+                    "form-message error";
+
+            }
 
 
         } catch (error) {
+
+            console.error(
+                "Confirmation submission error:",
+                error
+            );
 
 
             confirmationMessage.textContent =
                 "We couldn't submit your confirmation. Please check your internet connection and try again.";
 
+
             confirmationMessage.className =
                 "form-message error";
 
-
         }
-
 
     }
 );
 
+
+/* =========================================================
+   LOAD RESERVATION WHEN PAGE OPENS
+   ========================================================= */
+
+loadReservation();
 
 </script>
 
