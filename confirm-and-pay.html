@@ -713,8 +713,7 @@ confirmationForm.addEventListener(
 
 			const response =
 				await fetch(
-					"https://fqcabbpvevtlzzwsvezi.supabase.co/functions/v1/confirm-reservation",
-					{
+					CONFIRM_RESERVATION_URL,					{
 						method: "POST",
 
 						headers: {
@@ -730,38 +729,33 @@ confirmationForm.addEventListener(
 				);
 
 
-            if (response.ok) {
+			const result = await response.json();
 
+			console.log("Confirmation response:", response.status, result);
 
-                confirmationMessage.textContent =
-                    "";
+			if (response.ok && result.success) {
 
+				confirmationMessage.textContent = "";
 
-                confirmationForm.style.display =
-                    "none";
+				confirmationForm.style.display = "none";
 
+				paymentSection.hidden = false;
 
-                paymentSection.hidden =
-                    false;
+				paymentSection.scrollIntoView({
+					behavior: "smooth",
+					block: "start"
+				});
 
+			} else {
 
-                paymentSection.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
+				confirmationMessage.textContent =
+					result.error ||
+					"Something went wrong while confirming the reservation.";
 
+				confirmationMessage.className =
+					"form-message error";
 
-            } else {
-
-
-                confirmationMessage.textContent =
-                    "Something went wrong while submitting your confirmation. Please try again or contact us.";
-
-                confirmationMessage.className =
-                    "form-message error";
-
-
-            }
+			}
 
 
         } catch (error) {
