@@ -1480,6 +1480,186 @@ function initializeSchedulingForm() {
     }
 
 
+	/* =========================================
+	   CREATE RESERVATION IN SUPABASE
+	========================================= */
+
+	async function submitReservationToSupabase(
+		reservationData,
+		form,
+		successElement
+	) {
+
+		const submitButton =
+			form.querySelector(
+				"button[type='submit']"
+			);
+
+
+		if (!submitButton) {
+			return;
+		}
+
+
+		const originalButtonText =
+			submitButton.textContent;
+
+
+		submitButton.textContent =
+			"Sending...";
+
+
+		submitButton.disabled =
+			true;
+
+
+		try {
+
+			const response =
+				await fetch(
+					"https://fqcabbpvevtlzzwsvezi.supabase.co/functions/v1/create-reservation",
+					{
+
+						method: "POST",
+
+						headers: {
+							"Content-Type":
+								"application/json"
+						},
+
+						body:
+							JSON.stringify(
+								reservationData
+							)
+
+					}
+				);
+
+
+			const result =
+				await response.json();
+
+
+			console.log(
+				"Reservation response:",
+				response.status,
+				result
+			);
+
+
+			if (!response.ok) {
+
+				throw new Error(
+					result.error ||
+					"Unable to create reservation."
+				);
+
+			}
+
+
+			/* -----------------------------------------
+			   SUCCESS
+			----------------------------------------- */
+
+			console.log(
+				"Reservation created successfully:",
+				result.reservation
+			);
+
+
+			/*
+			 * Save the reservation information
+			 * for the next page.
+			 */
+
+			const reservation =
+				result.reservation;
+
+
+			/*
+			 * Hide the scheduling form.
+			 */
+
+			form.reset();
+
+
+			form.style.display =
+				"none";
+
+
+			/*
+			 * Show success message.
+			 */
+
+			if (successElement) {
+
+				successElement.textContent =
+					"Your scheduling request has been sent! Thank you for reaching out. I’ve received your request and will get back to you soon to work out the details.";
+
+				successElement.style.display =
+					"block";
+
+			}
+
+
+			submitButton.textContent =
+				"Request Sent";
+
+
+			/*
+			 * Make the reservation available to
+			 * the confirmation/payment page.
+			 *
+			 * We will use the confirmation token
+			 * for the next step.
+			 */
+
+			if (
+				reservation &&
+				reservation.confirmation_token
+			) {
+
+				console.log(
+					"Confirmation token:",
+					reservation.confirmation_token
+				);
+
+			}
+
+		}
+
+
+		catch (error) {
+
+			console.error(
+				"Reservation submission error:",
+				error
+			);
+
+
+			if (successElement) {
+
+				successElement.textContent =
+					error.message ||
+					"Something went wrong. Please try again.";
+
+				successElement.style.display =
+					"block";
+
+			}
+
+
+			submitButton.textContent =
+				originalButtonText;
+
+
+			submitButton.disabled =
+				false;
+
+		}
+
+	}
+
 
     /* -----------------------------------------
        WATCH ASSIGNMENT CHOICE
@@ -1752,21 +1932,43 @@ function initializeSchedulingForm() {
 
 
 
-            submitForm(
-                scheduleForm,
-                scheduleSuccess,
-                {
+			/* -----------------------------------------
+			   COLLECT FORM DATA
+			----------------------------------------- */
 
-                    hideForm: true,
+			const formData =
+				new FormData(
+					scheduleForm
+				);
 
-                    successMessage:
-                        "Your scheduling request has been sent! Thank you for reaching out. I’ve received your request and will get back to you soon to work out the details.",
 
-                    successButtonText:
-                        "Request Sent"
+			const reservationData = {};
 
-                }
-            );
+
+			/*
+			 * Copy the normal form fields.
+			 */
+
+			formData.forEach(
+				(value, key) => {
+
+					reservationData[key] =
+						value;
+
+				}
+			);
+
+
+			/*
+			 * Send the scheduling request
+			 * to the Supabase Edge Function.
+			 */
+
+			submitReservationToSupabase(
+				reservationData,
+				scheduleForm,
+				scheduleSuccess
+			);
 
 
         }
