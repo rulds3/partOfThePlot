@@ -1,0 +1,794 @@
+/* =====================================================
+   ADMIN PAGE
+===================================================== */
+
+.admin-dashboard {
+	min-height: 100vh;
+	padding: 110px 30px 80px;
+	background: #10131a;
+}
+
+
+.admin-container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.admin-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 30px;
+	margin-bottom: 45px;
+}
+
+
+.admin-header h1 {
+	margin: 0;
+	color: var(--cream);
+	font-family: 'Cinzel', serif;
+	font-size: clamp(40px, 6vw, 65px);
+	font-weight: 500;
+}
+
+
+.admin-header p:not(.eyebrow) {
+	margin-top: 8px;
+	color: var(--muted);
+}
+
+
+.logout-button {
+	width: auto;
+	flex-shrink: 0;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.admin-message {
+	margin-bottom: 25px;
+	color: var(--muted);
+}
+
+
+/* =====================================================
+   RESERVATION LIST
+===================================================== */
+
+.reservation-list {
+	display: grid;
+	gap: 12px;
+}
+
+
+/* =====================================================
+   RESERVATION ITEM
+===================================================== */
+
+.reservation-item {
+	overflow: hidden;
+
+	background: #181c26;
+
+	border:
+		1px solid
+		rgba(198, 161, 91, 0.22);
+
+	transition:
+		border-color 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+
+.reservation-item:hover {
+	border-color:
+		rgba(198, 161, 91, 0.40);
+}
+
+
+/* =====================================================
+   COLLAPSED ROW
+===================================================== */
+
+.reservation-summary-row {
+	width: 100%;
+
+	display: grid;
+
+	grid-template-columns:
+		150px
+		1.2fr
+		1fr
+		1fr
+		80px
+		35px;
+
+	align-items: center;
+
+	gap: 20px;
+
+	padding: 22px 25px;
+
+	border: none;
+
+	background: transparent;
+
+	color: inherit;
+
+	text-align: left;
+
+	cursor: pointer;
+}
+
+
+.reservation-summary-row:hover {
+	background:
+		rgba(198, 161, 91, 0.035);
+}
+
+
+.reservation-summary-row:focus-visible {
+	outline:
+		2px solid
+		var(--gold);
+
+	outline-offset:
+		-2px;
+}
+
+
+.summary-field span {
+	display: block;
+
+	margin-bottom: 5px;
+
+	color: var(--gold);
+
+	font-size: 8px;
+
+	letter-spacing: 1.5px;
+
+	text-transform: uppercase;
+}
+
+
+.summary-field strong {
+	display: block;
+
+	color: var(--cream);
+
+	font-size: 13px;
+
+	font-weight: 400;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.reservation-status {
+	display: inline-block;
+
+	width: fit-content;
+
+	padding: 6px 9px;
+
+	border:
+		1px solid
+		rgba(198, 161, 91, 0.30);
+
+	color: var(--gold);
+
+	font-size: 8px;
+
+	letter-spacing: 1.5px;
+
+	text-transform: uppercase;
+}
+
+
+/* =====================================================
+   EXPAND ICON
+===================================================== */
+
+.expand-icon {
+	color: var(--gold);
+
+	font-size: 22px;
+
+	text-align: center;
+
+	transition:
+		transform 0.25s ease;
+}
+
+
+.reservation-item.expanded
+.expand-icon {
+	transform:
+		rotate(180deg);
+}
+
+
+/* =====================================================
+   EXPANDED CONTENT
+===================================================== */
+
+.reservation-details-panel {
+	display: none;
+
+	padding:
+		0 25px
+		30px;
+
+	border-top:
+		1px solid
+		rgba(198, 161, 91, 0.15);
+}
+
+
+.reservation-item.expanded
+.reservation-details-panel {
+	display: block;
+}
+
+
+.details-section {
+	margin-top: 30px;
+}
+
+
+.details-section:first-child {
+	margin-top: 25px;
+}
+
+
+.details-section h3 {
+	margin: 0 0 18px;
+
+	color: var(--gold);
+
+	font-family: 'Cinzel', serif;
+
+	font-size: 17px;
+
+	font-weight: 500;
+
+	letter-spacing: 0.05em;
+}
+
+
+/* =====================================================
+   DETAILS GRID
+===================================================== */
+
+.details-grid {
+	display: grid;
+
+	grid-template-columns:
+		repeat(3, 1fr);
+
+	gap: 18px 25px;
+}
+
+
+.detail-field {
+	padding-top: 10px;
+
+	border-top:
+		1px solid
+		rgba(198, 161, 91, 0.12);
+}
+
+
+.detail-field span {
+	display: block;
+
+	margin-bottom: 5px;
+
+	color: var(--gold);
+
+	font-size: 8px;
+
+	letter-spacing: 1.5px;
+
+	text-transform: uppercase;
+}
+
+
+.detail-field strong {
+	display: block;
+
+	color: var(--cream);
+
+	font-size: 13px;
+
+	font-weight: 400;
+
+	line-height: 1.6;
+
+	word-break: break-word;
+}
+
+
+/* =====================================================
+   MESSAGE / LONG TEXT
+===================================================== */
+
+.detail-message {
+	padding: 15px;
+
+	background:
+		rgba(16, 19, 26, 0.50);
+
+	border:
+		1px solid
+		rgba(198, 161, 91, 0.12);
+
+	color: #c3beb4;
+
+	font-size: 13px;
+
+	line-height: 1.7;
+
+	white-space: pre-wrap;
+}
+
+
+/* =====================================================
+   NOTES
+===================================================== */
+
+.notes-grid {
+	display: grid;
+
+	grid-template-columns:
+		repeat(2, 1fr);
+
+	gap: 25px;
+}
+
+
+.notes-box {
+	padding: 20px;
+
+	background:
+		rgba(16, 19, 26, 0.55);
+
+	border:
+		1px solid
+		rgba(198, 161, 91, 0.18);
+}
+
+
+.notes-box h4 {
+	margin: 0 0 12px;
+
+	color: var(--cream);
+
+	font-family: 'Cinzel', serif;
+
+	font-size: 15px;
+
+	font-weight: 500;
+}
+
+
+.notes-box p {
+	margin: 0;
+
+	min-height: 60px;
+
+	color: #aaa9a4;
+
+	font-size: 13px;
+
+	line-height: 1.7;
+
+	white-space: pre-wrap;
+}
+
+
+/* =====================================================
+   PLAYER LIST
+===================================================== */
+
+.player-list {
+	display: grid;
+
+	gap: 10px;
+}
+
+
+.player-row {
+	display: grid;
+
+	grid-template-columns:
+		50px
+		1fr
+		1fr;
+
+	gap: 15px;
+
+	padding: 12px 15px;
+
+	background:
+		rgba(16, 19, 26, 0.45);
+
+	border:
+		1px solid
+		rgba(198, 161, 91, 0.10);
+}
+
+
+.player-number {
+	color: var(--gold);
+
+	font-size: 10px;
+
+	letter-spacing: 1px;
+}
+
+
+.player-row span {
+	color: #aaa9a4;
+
+	font-size: 12px;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.reservation-actions {
+	display: flex;
+
+	flex-wrap: wrap;
+
+	gap: 12px;
+
+	margin-top: 30px;
+
+	padding-top: 25px;
+
+	border-top:
+		1px solid
+		rgba(198, 161, 91, 0.15);
+}
+
+
+.reservation-actions .button {
+	width: auto;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-message {
+	padding: 60px 30px;
+
+	text-align: center;
+
+	color: var(--muted);
+
+	border:
+		1px solid
+		rgba(198, 161, 91, 0.18);
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 850px) {
+
+	.reservation-summary-row {
+
+		grid-template-columns:
+			1fr
+			1fr
+			35px;
+
+		gap: 15px;
+
+	}
+
+
+	.summary-field:nth-child(3),
+	.summary-field:nth-child(4) {
+
+		display: none;
+
+	}
+
+
+	.reservation-summary-row
+	.reservation-status {
+
+		grid-column: 1 / 2;
+
+	}
+
+
+	.expand-icon {
+
+		grid-column: 3;
+
+		grid-row: 1 / 3;
+
+	}
+
+
+	.details-grid {
+
+		grid-template-columns:
+			repeat(2, 1fr);
+
+	}
+
+}
+
+
+@media (max-width: 600px) {
+
+	.admin-dashboard {
+
+		padding:
+			85px
+			20px
+			60px;
+
+	}
+
+
+	.admin-header {
+
+		flex-direction: column;
+
+		align-items: flex-start;
+
+	}
+
+
+	.details-grid,
+	.notes-grid {
+
+		grid-template-columns: 1fr;
+
+	}
+
+
+	.player-row {
+
+		grid-template-columns:
+			40px
+			1fr;
+
+	}
+
+
+	.player-row span:last-child {
+
+		grid-column:
+			2;
+
+	}
+
+
+	.reservation-details-panel {
+
+		padding:
+			0
+			20px
+			25px;
+
+	}
+
+}
+
+/* =========================================================
+   CHARACTER ASSIGNMENT
+   ========================================================= */
+
+.character-assignment {
+
+	display: flex;
+
+	flex-direction: column;
+
+	gap: 7px;
+
+}
+
+
+.character-assignment label {
+
+	color: var(--gold);
+
+	font-size: 8px;
+
+	letter-spacing: 1.5px;
+
+	text-transform: uppercase;
+
+}
+
+
+.character-select {
+
+	width: 100%;
+
+	padding: 10px 12px;
+
+	background: #10131a;
+
+	border:
+		1px solid
+		rgba(198, 161, 91, 0.25);
+
+	color: var(--cream);
+
+	font-family: inherit;
+
+	font-size: 12px;
+
+	cursor: pointer;
+
+}
+
+
+.character-select:focus {
+
+	outline: none;
+
+	border-color:
+		var(--gold);
+
+}
+
+
+.character-select option {
+
+	background: #181c26;
+
+	color: var(--cream);
+
+}
+
+
+.character-assignment-status {
+
+	margin-top: 15px;
+
+	color: var(--muted);
+
+	font-size: 11px;
+
+}
+
+
+.character-save-row {
+
+	display: flex;
+
+	align-items: center;
+
+	flex-wrap: wrap;
+
+	gap: 15px;
+
+	margin-top: 20px;
+
+}
+
+
+.character-save-message {
+
+	color: var(--gold);
+
+	font-size: 11px;
+
+}
+
+
+.player-row {
+
+	grid-template-columns:
+		50px
+		1fr
+		1fr
+		1.2fr;
+
+}
+
+
+@media (max-width: 700px) {
+
+	.player-row {
+
+		grid-template-columns:
+			40px
+			1fr;
+
+	}
+
+
+	.player-row .character-assignment {
+
+		grid-column:
+			2;
+
+	}
+
+}
+
+.admin-page {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 40px 20px;
+	background: #10131a;
+}
+
+.admin-login {
+	width: 100%;
+	max-width: 450px;
+	padding: 45px 35px;
+	background: #181c26;
+	border: 1px solid rgba(198, 161, 91, 0.30);
+}
+
+.admin-login .eyebrow {
+	margin-bottom: 15px;
+	color: var(--gold);
+	text-align: center;
+}
+
+.admin-login h1 {
+	margin-bottom: 15px;
+	color: var(--cream);
+	font-family: 'Cinzel', serif;
+	text-align: center;
+}
+
+.admin-login p {
+	margin-bottom: 30px;
+	color: #aaa9a4;
+	text-align: center;
+}
+
+.admin-login label {
+	display: block;
+	margin-bottom: 8px;
+	color: var(--cream);
+}
+
+.admin-login input {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.admin-login button {
+	width: 100%;
+}
+
+.admin-message {
+	min-height: 24px;
+	margin-top: 20px;
+	color: #d98c8c;
+	text-align: center;
+}

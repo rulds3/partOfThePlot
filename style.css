@@ -2244,16 +2244,18 @@ footer {
 
 
 /* =========================================
-   DATE INPUT CALENDAR ICON
+   DATE AND TIME INPUT CALENDAR ICON
 ========================================= */
 
-input[type="date"] {
+input[type="date"],
+input[type="time"] {
     position: relative;
     cursor: pointer;
     color-scheme: dark;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
     display: block;
     opacity: 1;
     cursor: pointer;
@@ -2327,12 +2329,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* =========================================
    FAQ ANSWER LISTS
 ========================================= */
-
-.faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-}
 
 .faq-answer p {
     max-width: 700px;
@@ -2910,18 +2906,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     line-height: 1.5;
 }
 
-
-/* Highlight the money fields */
-
-.reservation-detail:nth-last-child(3) strong,
-.reservation-detail:nth-last-child(2) strong,
-.reservation-detail:nth-last-child(1) strong {
-    color: var(--gold);
-
-    font-size: 1rem;
-}
-
-
 /* ---------------------------------------------------------
    BEFORE YOU CONFIRM
    --------------------------------------------------------- */
@@ -3431,29 +3415,122 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
+/* =========================================================
+   PAYMENT SUMMARY
+   ========================================================= */
 
-    if (window.location.hash) {
+.payment-summary {
+    grid-column: 1 / -1;
 
-        const target = document.querySelector(window.location.hash);
+    margin-top: 1rem;
+    padding-top: 1.5rem;
 
-        if (target && target.classList.contains("faq-item")) {
+    border-top: 1px solid rgba(198, 161, 91, 0.35);
+}
 
-            const button = target.querySelector(".faq-question");
 
-            if (button) {
-                button.click();
+.payment-summary h3 {
+    margin: 0 0 1rem;
 
-                setTimeout(function () {
-                    target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-                }, 100);
-            }
+    font-family: "Cinzel", serif;
 
-        }
+    font-size: 1.1rem;
+    font-weight: 600;
 
+    letter-spacing: 0.04em;
+}
+
+
+.payment-amounts {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 1rem;
+}
+
+
+.payment-amount {
+    padding: 1rem;
+
+    text-align: center;
+
+    border: 1px solid rgba(198, 161, 91, 0.25);
+
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.03);
+}
+
+
+.payment-amount span {
+    display: block;
+
+    margin-bottom: 0.4rem;
+
+    font-size: 0.75rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+
+    opacity: 0.7;
+}
+
+
+.payment-amount strong {
+    display: block;
+
+    font-family: "Cinzel", serif;
+
+    font-size: 1.25rem;
+
+    font-weight: 600;
+}
+
+
+/* Deposit is the amount the customer needs
+   to pay now */
+
+.payment-amount.deposit {
+    border-color: #c6a15b;
+
+    background: rgba(198, 161, 91, 0.10);
+}
+
+
+.payment-amount.deposit span {
+    opacity: 1;
+}
+
+
+.payment-amount.deposit strong {
+    font-size: 1.5rem;
+}
+
+
+.payment-summary-note {
+    margin: 1rem 0 0;
+
+    font-size: 0.85rem;
+
+    line-height: 1.6;
+
+    opacity: 0.7;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .payment-amounts {
+        grid-template-columns: 1fr;
     }
 
-});
+}

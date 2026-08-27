@@ -505,31 +505,6 @@
 }
 
 /* =========================================
-   CHARACTER INFORMATION RADIO BUTTONS
-========================================= */
-
-.radio-group {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    margin-top: 10px;
-}
-
-.radio-group label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-    cursor: pointer;
-}
-
-.radio-group input[type="radio"] {
-    width: auto;
-    margin: 0;
-}
-
-
-/* =========================================
    DATE INPUT CALENDAR ICON
 ========================================= */
 
@@ -548,6 +523,106 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 
+
+
+/* =========================================
+   GAME LEVELS
+========================================= */
+
+.game-levels {
+    padding: 90px 20px 70px;
+    background: var(--dark-blue);
+}
+
+
+.game-levels-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+.game-levels .section-heading {
+    max-width: 700px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+
+.game-levels .section-heading p:last-child {
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.game-level-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 30px;
+}
+
+
+.game-level {
+    padding: 35px 30px;
+    text-align: center;
+    border: 1px solid rgba(198, 161, 91, 0.35);
+    background: rgba(16, 19, 26, 0.45);
+}
+
+
+.game-level-number {
+    margin: 0 0 12px;
+    color: var(--gold);
+    font-family: "Cinzel", serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+}
+
+
+.game-level h3 {
+    margin: 0 0 18px;
+    color: var(--light-gold);
+    font-family: "Cinzel", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+
+.game-level p:last-child {
+    margin: 0;
+    color: var(--cream);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+
+@media (max-width: 800px) {
+
+    .game-level-grid {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+}
+
+
+/* =========================================
+   GAME CARD LEVEL
+========================================= */
+
+.game-card-level {
+    margin: 0 0 8px;
+    color: var(--gold);
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
 
 .game-card-price {
     margin: 1.25rem 0;

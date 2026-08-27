@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Reservations | Part of the Plot</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+	
+	<link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<main class="admin-dashboard">
+
+    <div class="admin-container">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================= -->
+
+        <header class="admin-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    PART OF THE PLOT
+                </p>
+
+                <h1>
+                    Reservations
+                </h1>
+
+                <p>
+                    Manage your mystery party reservations.
+                </p>
+
+            </div>
+
+
+            <button
+                id="logout-button"
+                class="button logout-button"
+                type="button"
+            >
+                Log Out
+            </button>
+
+        </header>
+
+
+        <!-- =================================================
+             MESSAGE
+        ================================================= -->
+
+        <p
+            id="admin-message"
+            class="admin-message"
+            aria-live="polite"
+        >
+            Loading reservations...
+        </p>
+
+
+        <!-- =================================================
+             RESERVATION LIST
+        ================================================= -->
+
+        <div
+            id="reservation-list"
+            class="reservation-list"
+        ></div>
+
+
+    </div>
+
+</main>
+
+<script
+    type="module"
+    src="admin.js"
+></script>
+
+</body>
+
+</html>

@@ -13,139 +13,76 @@
  * of the website based on the current URL.
  *
  * Main pages:
- *
  * /partoftheplot/faq.html
  * → /partoftheplot/
  *
  * Game pages:
- *
  * /partoftheplot/games/spellbound/spellbound.html
  * → /partoftheplot/
  *
- * This means you do NOT need to hard-code
- * /partoftheplot/ throughout your shared files.
+ * This means you do not need to hard-code
+ * /partoftheplot/ throughout shared files.
  */
 
 function getSiteRoot() {
-
-    const path =
-        window.location.pathname;
-
-
-    const gamesFolder =
-        "/games/";
-
-
-    const gamesPosition =
-        path.indexOf(gamesFolder);
-
+    const path = window.location.pathname;
+    const gamesFolder = "/games/";
+    const gamesPosition = path.indexOf(gamesFolder);
 
     /*
      * If this is a game page, everything
      * before /games/ is the site root.
      */
-
     if (gamesPosition !== -1) {
-
-        return path.substring(
-            0,
-            gamesPosition
-        ) + "/";
-
+        return path.substring(0, gamesPosition) + "/";
     }
-
 
     /*
      * Otherwise, use the folder containing
      * the current page.
      */
+    const lastSlash = path.lastIndexOf("/");
 
-    const lastSlash =
-        path.lastIndexOf("/");
-
-
-    return path.substring(
-        0,
-        lastSlash + 1
-    );
-
+    return path.substring(0, lastSlash + 1);
 }
 
-
-const siteRoot =
-    getSiteRoot();
-
+const siteRoot = getSiteRoot();
 
 
 /* =========================================
    LOAD SHARED HEADER
 ========================================= */
 
-const siteHeader =
-    document.getElementById(
-        "site-header"
-    );
-
+const siteHeader = document.getElementById("site-header");
 
 if (siteHeader) {
-
-    fetch(
-        siteRoot +
-        "header.html"
-    )
-
+    fetch(siteRoot + "header.html")
         .then(response => {
-
             if (!response.ok) {
-
-                throw new Error(
-                    "Could not load header.html"
-                );
-
+                throw new Error("Could not load header.html");
             }
 
             return response.text();
-
         })
-
         .then(html => {
-
-            siteHeader.innerHTML =
-                html;
-
-
+            siteHeader.innerHTML = html;
             initializeNavigation();
-
         })
-
         .catch(error => {
-
-            console.error(
-                "Header loading error:",
-                error
-            );
-
+            console.error("Header loading error:", error);
         });
-
 }
 
 
-
 /* =========================================
-   FIX SHARED HEADER / FOOTER LINKS
+   FIX SHARED LINKS
 ========================================= */
 
 function fixSharedLinks(container) {
-
-    const links =
-        container.querySelectorAll("a");
-
+    const links = container.querySelectorAll("a");
 
     links.forEach(link => {
-
-        const href =
-            link.getAttribute("href");
-
+        const href = link.getAttribute("href");
 
         if (
             href &&
@@ -155,73 +92,35 @@ function fixSharedLinks(container) {
             !href.startsWith("tel:") &&
             !href.startsWith("/")
         ) {
-
-            link.href =
-                siteRoot +
-                href;
-
+            link.href = siteRoot + href;
         }
-
     });
-
 }
-
 
 
 /* =========================================
    LOAD SHARED FOOTER
 ========================================= */
 
-const siteFooter =
-    document.getElementById(
-        "site-footer"
-    );
-
+const siteFooter = document.getElementById("site-footer");
 
 if (siteFooter) {
-
-    fetch(
-        siteRoot +
-        "footer.html"
-    )
-
+    fetch(siteRoot + "footer.html")
         .then(response => {
-
             if (!response.ok) {
-
-                throw new Error(
-                    "Could not load footer.html"
-                );
-
+                throw new Error("Could not load footer.html");
             }
 
             return response.text();
-
         })
-
         .then(html => {
-
-            siteFooter.innerHTML =
-                html;
-
-
-            fixSharedLinks(
-                siteFooter
-            );
-
+            siteFooter.innerHTML = html;
+            fixSharedLinks(siteFooter);
         })
-
         .catch(error => {
-
-            console.error(
-                "Footer loading error:",
-                error
-            );
-
+            console.error("Footer loading error:", error);
         });
-
 }
-
 
 
 /* =========================================
@@ -229,120 +128,53 @@ if (siteFooter) {
 ========================================= */
 
 function initializeNavigation() {
-
-    const menuToggle =
-        document.getElementById(
-            "menuToggle"
-        );
-
-
-    const navMenu =
-        document.getElementById(
-            "navMenu"
-        );
-
-
-    const gamesDropdown =
-        document.querySelector(
-            ".nav-dropdown"
-        );
-
-
-    const gamesTitle =
-        document.querySelector(
-            ".nav-dropdown-title"
-        );
-
-
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+    const gamesDropdown = document.querySelector(".nav-dropdown");
+    const gamesTitle = document.querySelector(".nav-dropdown-title");
 
     /* -----------------------------------------
        NAVIGATION LINKS
     ----------------------------------------- */
 
     if (navMenu) {
-
-        const navLinks =
-            navMenu.querySelectorAll(
-                "a"
-            );
-
+        const navLinks = navMenu.querySelectorAll("a");
 
         /*
-         * Convert the relative paths from
-         * header.html into paths based on
-         * the automatically detected site root.
+         * Convert relative paths from header.html
+         * into paths based on the site root.
          */
-
         navLinks.forEach(link => {
-
-            const href =
-                link.getAttribute(
-                    "href"
-                );
-
+            const href = link.getAttribute("href");
 
             if (
                 href &&
-                !href.startsWith(
-                    "http"
-                ) &&
-                !href.startsWith(
-                    "#"
-                ) &&
-                !href.startsWith(
-                    "mailto:"
-                ) &&
-                !href.startsWith(
-                    "tel:"
-                ) &&
-                !href.startsWith(
-                    "/"
-                )
+                !href.startsWith("http") &&
+                !href.startsWith("#") &&
+                !href.startsWith("mailto:") &&
+                !href.startsWith("tel:") &&
+                !href.startsWith("/")
             ) {
-
-                link.href =
-                    siteRoot +
-                    href;
-
+                link.href = siteRoot + href;
             }
-
         });
-
 
 
         /* -----------------------------------------
            LOGO
         ----------------------------------------- */
 
-        const siteLogo =
-            document.getElementById(
-                "siteLogo"
-            );
-
+        const siteLogo = document.getElementById("siteLogo");
 
         if (siteLogo) {
+            siteLogo.src = siteRoot + "partOfThePlotLogo.png";
 
-            siteLogo.src =
-                siteRoot +
-                "partOfThePlotLogo.png";
-
-
-            const logoLink =
-                siteLogo.closest(
-                    "a"
-                );
-
+            const logoLink = siteLogo.closest("a");
 
             if (logoLink) {
-
-                logoLink.href =
-                    siteRoot +
-                    "index.html";
-
+                logoLink.href = siteRoot + "index.html";
             }
-
         }
-
 
 
         /* -----------------------------------------
@@ -350,126 +182,71 @@ function initializeNavigation() {
         ----------------------------------------- */
 
         if (menuToggle) {
+            menuToggle.addEventListener("click", () => {
+                const isOpen = navMenu.classList.toggle("active");
 
-            menuToggle.addEventListener(
-                "click",
-                () => {
-
-                    const isOpen =
-                        navMenu.classList.toggle(
-                            "active"
-                        );
-
-
-                    menuToggle.setAttribute(
-                        "aria-expanded",
-                        isOpen
-                            ? "true"
-                            : "false"
-                    );
-
-                }
-            );
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    isOpen ? "true" : "false"
+                );
+            });
 
 
             /*
-             * Close the mobile menu when a
-             * normal navigation link is clicked.
+             * Close the mobile menu when a normal
+             * navigation link is clicked.
              */
-
             navLinks.forEach(link => {
+                link.addEventListener("click", () => {
 
-                link.addEventListener(
-                    "click",
-                    () => {
-
-                        /*
-                         * On mobile, clicking the
-                         * Games title opens the
-                         * dropdown instead of
-                         * navigating immediately.
-                         */
-
-                        if (
-                            link.classList.contains(
-                                "nav-dropdown-title"
-                            ) &&
-                            window.innerWidth <= 900
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        navMenu.classList.remove(
-                            "active"
-                        );
-
-
-                        menuToggle.setAttribute(
-                            "aria-expanded",
-                            "false"
-                        );
-
+                    /*
+                     * On mobile, clicking Games opens
+                     * the dropdown instead of navigating.
+                     */
+                    if (
+                        link.classList.contains("nav-dropdown-title") &&
+                        window.innerWidth <= 900
+                    ) {
+                        return;
                     }
-                );
 
+                    navMenu.classList.remove("active");
+
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+                });
             });
-
         }
-
     }
-
 
 
     /* -----------------------------------------
        GAMES DROPDOWN
     ----------------------------------------- */
 
-    if (
-        gamesDropdown &&
-        gamesTitle
-    ) {
+    if (gamesDropdown && gamesTitle) {
+        gamesTitle.addEventListener("click", event => {
 
-        gamesTitle.addEventListener(
-            "click",
-            event => {
+            /*
+             * On mobile, clicking Games opens/closes
+             * the dropdown instead of navigating.
+             */
+            if (window.innerWidth <= 900) {
+                event.preventDefault();
 
-                /*
-                 * On mobile, clicking Games
-                 * opens/closes the dropdown.
-                 */
+                const isOpen =
+                    gamesDropdown.classList.toggle("active");
 
-                if (
-                    window.innerWidth <= 900
-                ) {
-
-                    event.preventDefault();
-
-
-                    const isOpen =
-                        gamesDropdown.classList.toggle(
-                            "active"
-                        );
-
-
-                    gamesTitle.setAttribute(
-                        "aria-expanded",
-                        isOpen
-                            ? "true"
-                            : "false"
-                    );
-
-                }
-
+                gamesTitle.setAttribute(
+                    "aria-expanded",
+                    isOpen ? "true" : "false"
+                );
             }
-        );
-
+        });
     }
-
 }
-
 
 
 /* =========================================
@@ -477,35 +254,24 @@ function initializeNavigation() {
 ========================================= */
 
 function initializeFAQ() {
-
     const faqQuestions =
-        document.querySelectorAll(
-            ".faq-question"
-        );
+        document.querySelectorAll(".faq-question");
 
 
-    /*
-     * Open a specific FAQ item.
-     */
+    /* -----------------------------------------
+       OPEN FAQ
+    ----------------------------------------- */
 
     function openFAQ(faqItem, scrollToItem = false) {
-
         if (!faqItem) {
             return;
         }
 
-
         const answer =
-            faqItem.querySelector(
-                ".faq-answer"
-            );
-
+            faqItem.querySelector(".faq-answer");
 
         const question =
-            faqItem.querySelector(
-                ".faq-question"
-            );
-
+            faqItem.querySelector(".faq-question");
 
         if (!answer || !question) {
             return;
@@ -515,367 +281,201 @@ function initializeFAQ() {
         /*
          * Close all other FAQ items.
          */
+        document.querySelectorAll(".faq-item").forEach(item => {
+            if (item !== faqItem) {
+                item.classList.remove("active");
 
-        document
-            .querySelectorAll(
-                ".faq-item"
-            )
-            .forEach(
-                item => {
+                const otherAnswer =
+                    item.querySelector(".faq-answer");
 
-                    if (
-                        item !== faqItem
-                    ) {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-
-                        const otherAnswer =
-                            item.querySelector(
-                                ".faq-answer"
-                            );
-
-
-                        if (otherAnswer) {
-
-                            otherAnswer.style.maxHeight =
-                                null;
-
-                        }
-
-
-                        const otherQuestion =
-                            item.querySelector(
-                                ".faq-question"
-                            );
-
-
-                        if (otherQuestion) {
-
-                            otherQuestion.setAttribute(
-                                "aria-expanded",
-                                "false"
-                            );
-
-                        }
-
-                    }
-
+                if (otherAnswer) {
+                    otherAnswer.style.maxHeight = null;
                 }
-            );
+
+                const otherQuestion =
+                    item.querySelector(".faq-question");
+
+                if (otherQuestion) {
+                    otherQuestion.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+                }
+            }
+        });
 
 
         /*
          * Open the selected FAQ.
          */
-
-        faqItem.classList.add(
-            "active"
-        );
-
+        faqItem.classList.add("active");
 
         question.setAttribute(
             "aria-expanded",
             "true"
         );
 
-
         answer.style.maxHeight =
-            answer.scrollHeight +
-            50 +
-            "px";
+            answer.scrollHeight + 50 + "px";
 
 
         /*
-         * Scroll to the FAQ when opened
-         * from a page link.
+         * Scroll to the FAQ when opened from
+         * a page link.
          */
-
         if (scrollToItem) {
-
-            setTimeout(
-                () => {
-
-                    faqItem.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center"
-                    });
-
-                },
-                100
-            );
-
+            setTimeout(() => {
+                faqItem.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }, 100);
         }
-
     }
 
 
+    /* -----------------------------------------
+       FAQ BUTTON CLICKS
+    ----------------------------------------- */
 
-    /*
-     * FAQ button clicks.
-     */
+    faqQuestions.forEach(question => {
+        question.addEventListener("click", () => {
+            const faqItem =
+                question.closest(".faq-item");
 
-    faqQuestions.forEach(
-        question => {
+            if (!faqItem) {
+                return;
+            }
 
-            question.addEventListener(
-                "click",
-                () => {
-
-                    const faqItem =
-                        question.closest(
-                            ".faq-item"
-                        );
-
-
-                    if (!faqItem) {
-                        return;
-                    }
+            const isCurrentlyOpen =
+                faqItem.classList.contains("active");
 
 
-                    const isCurrentlyOpen =
-                        faqItem.classList.contains(
-                            "active"
-                        );
+            /*
+             * Close the FAQ if it is already open.
+             */
+            if (isCurrentlyOpen) {
+                faqItem.classList.remove("active");
 
+                question.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
 
-                    /*
-                     * If the FAQ is already open,
-                     * close it.
-                     */
+                const answer =
+                    faqItem.querySelector(".faq-answer");
 
-                    if (
-                        isCurrentlyOpen
-                    ) {
-
-                        faqItem.classList.remove(
-                            "active"
-                        );
-
-
-                        question.setAttribute(
-                            "aria-expanded",
-                            "false"
-                        );
-
-
-                        const answer =
-                            faqItem.querySelector(
-                                ".faq-answer"
-                            );
-
-
-                        if (answer) {
-
-                            answer.style.maxHeight =
-                                null;
-
-                        }
-
-
-                        return;
-
-                    }
-
-
-                    /*
-                     * Otherwise open it.
-                     */
-
-                    openFAQ(
-                        faqItem
-                    );
-
+                if (answer) {
+                    answer.style.maxHeight = null;
                 }
-            );
 
-        }
-    );
-
+                return;
+            }
 
 
-    /*
-     * Automatically open an FAQ when the URL
-     * contains a matching ID.
-     *
-     * Example:
-     *
-     * faq.html#payment
-     *
-     * will automatically open:
-     *
-     * <div class="faq-item" id="payment">
-     */
+            /*
+             * Otherwise, open it.
+             */
+            openFAQ(faqItem);
+        });
+    });
+
+
+    /* -----------------------------------------
+       OPEN FAQ FROM URL HASH
+    ----------------------------------------- */
 
     function openFAQFromHash() {
-
-        const hash =
-            window.location.hash;
-
+        const hash = window.location.hash;
 
         if (!hash) {
             return;
         }
 
-
         const id =
-            decodeURIComponent(
-                hash.substring(1)
-            );
-
+            decodeURIComponent(hash.substring(1));
 
         if (!id) {
             return;
         }
 
-
         const faqItem =
-            document.getElementById(
-                id
-            );
-
+            document.getElementById(id);
 
         if (
             faqItem &&
-            faqItem.classList.contains(
-                "faq-item"
-            )
+            faqItem.classList.contains("faq-item")
         ) {
-
-            openFAQ(
-                faqItem,
-                true
-            );
-
+            openFAQ(faqItem, true);
         }
-
     }
 
 
     /*
      * Check for an FAQ hash when the page loads.
      */
-
     openFAQFromHash();
 
 
     /*
-     * Also handle someone clicking a link that
-     * changes the FAQ hash while already on
-     * the FAQ page.
+     * Also handle hash changes while already
+     * on the FAQ page.
      */
-
     window.addEventListener(
         "hashchange",
         openFAQFromHash
     );
-
 }
-
 
 
 /*
  * Initialize FAQ after the page has loaded.
  */
-
-if (
-    document.readyState ===
-    "loading"
-) {
-
+if (document.readyState === "loading") {
     document.addEventListener(
         "DOMContentLoaded",
         initializeFAQ
     );
-
-}
-
-else {
-
+} else {
     initializeFAQ();
-
 }
-
 
 
 /* =========================================
    FADE-IN ANIMATIONS
 ========================================= */
 
-const sections =
-    document.querySelectorAll(
-        ".section, .how-it-works, .faq, .contact"
-    );
+const sections = document.querySelectorAll(
+    ".section, .how-it-works, .faq, .contact"
+);
 
+if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform =
+                        "translateY(0)";
 
-if (
-    "IntersectionObserver" in window
-) {
-
-    const observer =
-        new IntersectionObserver(
-
-            entries => {
-
-                entries.forEach(
-                    entry => {
-
-                        if (
-                            entry.isIntersecting
-                        ) {
-
-                            entry.target.style.opacity =
-                                "1";
-
-
-                            entry.target.style.transform =
-                                "translateY(0)";
-
-
-                            observer.unobserve(
-                                entry.target
-                            );
-
-                        }
-
-                    }
-                );
-
-            },
-
-            {
-                threshold: 0.1
-            }
-
-        );
-
-
-    sections.forEach(
-        section => {
-
-            section.style.opacity =
-                "0";
-
-
-            section.style.transform =
-                "translateY(25px)";
-
-
-            section.style.transition =
-                "opacity 0.8s ease, transform 0.8s ease";
-
-
-            observer.observe(
-                section
-            );
-
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.1
         }
     );
 
-}
+    sections.forEach(section => {
+        section.style.opacity = "0";
+        section.style.transform = "translateY(25px)";
+        section.style.transition =
+            "opacity 0.8s ease, transform 0.8s ease";
 
+        observer.observe(section);
+    });
+}
 
 
 /* =========================================
@@ -883,57 +483,31 @@ if (
 ========================================= */
 
 const scheduleContainer =
-    document.getElementById(
-        "schedule-modal-container"
-    );
-
+    document.getElementById("schedule-modal-container");
 
 if (scheduleContainer) {
-
-    fetch(
-        siteRoot +
-        "schedule.html"
-    )
-
+    fetch(siteRoot + "schedule.html")
         .then(response => {
-
             if (!response.ok) {
-
-                throw new Error(
-                    "Could not load schedule.html"
-                );
-
+                throw new Error("Could not load schedule.html");
             }
 
             return response.text();
-
         })
-
         .then(html => {
-
-            scheduleContainer.innerHTML =
-                html;
-
+            scheduleContainer.innerHTML = html;
 
             initializeGamePlayerOptions();
-
             initializeScheduling();
-
             initializeSchedulingForm();
-
         })
-
         .catch(error => {
-
             console.error(
                 "Scheduling modal loading error:",
                 error
             );
-
         });
-
 }
-
 
 
 /* =========================================
@@ -941,18 +515,11 @@ if (scheduleContainer) {
 ========================================= */
 
 function initializeScheduling() {
-
     const scheduleModal =
-        document.getElementById(
-            "scheduleModal"
-        );
-
+        document.getElementById("scheduleModal");
 
     const closeModal =
-        document.getElementById(
-            "closeModal"
-        );
-
+        document.getElementById("closeModal");
 
 
     /* -----------------------------------------
@@ -960,34 +527,20 @@ function initializeScheduling() {
     ----------------------------------------- */
 
     function openScheduleModal() {
-
         if (!scheduleModal) {
-
-            console.error(
-                "scheduleModal was not found."
-            );
-
+            console.error("scheduleModal was not found.");
             return;
-
         }
 
-
-        scheduleModal.classList.add(
-            "active"
-        );
-
+        scheduleModal.classList.add("active");
 
         scheduleModal.setAttribute(
             "aria-hidden",
             "false"
         );
 
-
-        document.body.style.overflow =
-            "hidden";
-
+        document.body.style.overflow = "hidden";
     }
-
 
 
     /* -----------------------------------------
@@ -995,28 +548,19 @@ function initializeScheduling() {
     ----------------------------------------- */
 
     function closeScheduleModal() {
-
         if (!scheduleModal) {
             return;
         }
 
-
-        scheduleModal.classList.remove(
-            "active"
-        );
-
+        scheduleModal.classList.remove("active");
 
         scheduleModal.setAttribute(
             "aria-hidden",
             "true"
         );
 
-
-        document.body.style.overflow =
-            "";
-
+        document.body.style.overflow = "";
     }
-
 
 
     /* -----------------------------------------
@@ -1028,71 +572,39 @@ function initializeScheduling() {
             "#scheduleButton, .schedule-button"
         );
 
-
-    scheduleButtons.forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                event => {
-
-                    event.preventDefault();
+    scheduleButtons.forEach(button => {
+        button.addEventListener("click", event => {
+            event.preventDefault();
 
 
-                    /* -----------------------------------------
-                       PRESELECT GAME
-                    ----------------------------------------- */
+            /*
+             * Preselect game if the button specifies one.
+             */
+            const requestedGame =
+                button.dataset.game;
 
-                    const requestedGame =
-                        button.dataset.game;
+            const gameSelect =
+                document.getElementById("game");
 
+            if (requestedGame && gameSelect) {
+                const gameOption =
+                    Array.from(gameSelect.options).find(
+                        option =>
+                            option.value === requestedGame
+                    );
 
-                    const gameSelect =
-                        document.getElementById(
-                            "game"
-                        );
+                if (gameOption) {
+                    gameSelect.value = requestedGame;
 
-
-                    if (
-                        requestedGame &&
-                        gameSelect
-                    ) {
-
-                        const gameOption =
-                            Array.from(
-                                gameSelect.options
-                            ).find(
-                                option =>
-                                    option.value ===
-                                    requestedGame
-                            );
-
-
-                        if (gameOption) {
-
-                            gameSelect.value =
-                                requestedGame;
-
-
-                            gameSelect.dispatchEvent(
-                                new Event(
-                                    "change"
-                                )
-                            );
-
-                        }
-
-                    }
-
-
-                    openScheduleModal();
-
+                    gameSelect.dispatchEvent(
+                        new Event("change")
+                    );
                 }
-            );
+            }
 
-        }
-    );
-
+            openScheduleModal();
+        });
+    });
 
 
     /* -----------------------------------------
@@ -1100,14 +612,11 @@ function initializeScheduling() {
     ----------------------------------------- */
 
     if (closeModal) {
-
         closeModal.addEventListener(
             "click",
             closeScheduleModal
         );
-
     }
-
 
 
     /* -----------------------------------------
@@ -1115,52 +624,31 @@ function initializeScheduling() {
     ----------------------------------------- */
 
     if (scheduleModal) {
-
         scheduleModal.addEventListener(
             "click",
             event => {
-
-                if (
-                    event.target ===
-                    scheduleModal
-                ) {
-
+                if (event.target === scheduleModal) {
                     closeScheduleModal();
-
                 }
-
             }
         );
-
     }
-
 
 
     /* -----------------------------------------
        ESCAPE KEY
     ----------------------------------------- */
 
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Escape" &&
-                scheduleModal &&
-                scheduleModal.classList.contains(
-                    "active"
-                )
-            ) {
-
-                closeScheduleModal();
-
-            }
-
+    document.addEventListener("keydown", event => {
+        if (
+            event.key === "Escape" &&
+            scheduleModal &&
+            scheduleModal.classList.contains("active")
+        ) {
+            closeScheduleModal();
         }
-    );
-
+    });
 }
-
 
 
 /* =========================================
@@ -1168,85 +656,54 @@ function initializeScheduling() {
 ========================================= */
 
 function initializeSchedulingForm() {
-
     const scheduleForm =
-        document.getElementById(
-            "scheduleForm"
-        );
-
+        document.getElementById("scheduleForm");
 
     const scheduleSuccess =
-        document.getElementById(
-            "schedule-success"
-        );
-
+        document.getElementById("schedule-success");
 
     const dateInput =
-        document.getElementById(
-            "schedule-date"
-        );
-
+        document.getElementById("schedule-date");
 
     const backupDateInput =
-        document.getElementById(
-            "schedule-backup-date"
-        );
-
+        document.getElementById("schedule-backup-date");
 
     if (!scheduleForm) {
         return;
     }
 
 
-
     /*
      * Record when the scheduling form was loaded.
-     *
      * This helps identify automated submissions
      * that happen almost immediately.
      */
-
-    const scheduleFormLoadedAt =
-        Date.now();
+    const scheduleFormLoadedAt = Date.now();
 
 
     /*
-     * Prevent multiple rapid submissions
-     * from the same form.
+     * Prevent multiple rapid submissions.
      */
-
-    let scheduleSubmissionLocked =
-        false;
+    let scheduleSubmissionLocked = false;
 
 
-
-    /* -----------------------------------------
+    /* =========================================
        CHARACTER ASSIGNMENT
-    ----------------------------------------- */
+    ========================================= */
 
     const assignmentRadios =
         document.querySelectorAll(
             'input[name="characterAssignment"]'
         );
 
-
     const characterInfo =
-        document.getElementById(
-            "character-info"
-        );
-
+        document.getElementById("character-info");
 
     const characterPlayers =
-        document.getElementById(
-            "character-players"
-        );
-
+        document.getElementById("character-players");
 
     const playersSelect =
-        document.getElementById(
-            "players"
-        );
-
+        document.getElementById("players");
 
     const characterNotes =
         characterInfo
@@ -1255,22 +712,17 @@ function initializeSchedulingForm() {
             )
             : null;
 
-
     /*
-     * These are the "Player Information"
-     * elements inside character-info.
+     * Player Information elements inside
+     * character-info.
      *
-     * Character Notes are kept visible
-     * regardless of assignment choice.
+     * Character Notes remain visible regardless
+     * of assignment choice.
      */
-
     const playerInformationLabel =
         characterInfo
-            ? characterInfo.querySelector(
-                ":scope > label"
-            )
+            ? characterInfo.querySelector(":scope > label")
             : null;
-
 
     const playerInformationHelp =
         characterInfo
@@ -1280,78 +732,48 @@ function initializeSchedulingForm() {
             : null;
 
 
-
     function updateCharacterFields() {
-
         const selectedAssignment =
             document.querySelector(
                 'input[name="characterAssignment"]:checked'
             );
 
-
         const isAheadOfTime =
             selectedAssignment &&
-            selectedAssignment.value ===
-            "ahead";
+            selectedAssignment.value === "ahead";
 
 
         /*
-         * Character Notes are ALWAYS visible.
+         * Character Notes are always visible.
          */
-
         if (characterInfo) {
-
-            characterInfo.style.display =
-                "block";
-
+            characterInfo.style.display = "block";
         }
-
 
         if (characterNotes) {
-
-            characterNotes.style.display =
-                "block";
-
+            characterNotes.style.display = "block";
         }
 
 
         /*
-         * Player Information is only shown
-         * when assignments are being handled
-         * ahead of time.
+         * Player Information is only shown when
+         * assignments are handled ahead of time.
          */
-
         if (!isAheadOfTime) {
-
             if (playerInformationLabel) {
-
-                playerInformationLabel.style.display =
-                    "none";
-
+                playerInformationLabel.style.display = "none";
             }
-
 
             if (playerInformationHelp) {
-
-                playerInformationHelp.style.display =
-                    "none";
-
+                playerInformationHelp.style.display = "none";
             }
-
 
             if (characterPlayers) {
-
-                characterPlayers.innerHTML =
-                    "";
-
-                characterPlayers.style.display =
-                    "none";
-
+                characterPlayers.innerHTML = "";
+                characterPlayers.style.display = "none";
             }
 
-
             return;
-
         }
 
 
@@ -1359,56 +781,33 @@ function initializeSchedulingForm() {
          * Show Player Information when
          * "Ahead of time" is selected.
          */
-
         if (playerInformationLabel) {
-
-            playerInformationLabel.style.display =
-                "";
-
+            playerInformationLabel.style.display = "";
         }
-
 
         if (playerInformationHelp) {
-
-            playerInformationHelp.style.display =
-                "";
-
+            playerInformationHelp.style.display = "";
         }
 
-
         if (characterPlayers) {
-
-            characterPlayers.style.display =
-                "block";
-
+            characterPlayers.style.display = "block";
         }
 
 
         const numberOfPlayers =
-            parseInt(
-                playersSelect.value
-            );
+            parseInt(playersSelect.value);
 
-
-        if (
-            !numberOfPlayers ||
-            numberOfPlayers < 1
-        ) {
-
+        if (!numberOfPlayers || numberOfPlayers < 1) {
             if (characterPlayers) {
-
                 characterPlayers.innerHTML =
-                    "<p class=\"form-help\">Choose the number of players above first.</p>";
-
+                    '<p class="form-help">Choose the number of players above first.</p>';
             }
 
             return;
-
         }
 
 
-        characterPlayers.innerHTML =
-            "";
+        characterPlayers.innerHTML = "";
 
 
         for (
@@ -1416,27 +815,18 @@ function initializeSchedulingForm() {
             i <= numberOfPlayers;
             i++
         ) {
-
             const playerGroup =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             playerGroup.className =
                 "character-player";
 
-
             playerGroup.innerHTML = `
-
-                <h4>
-                    Player ${i}
-                </h4>
+                <h4>Player ${i}</h4>
 
                 <div class="form-row">
 
                     <div class="form-group">
-
                         <label for="player-${i}-name">
                             Name *
                         </label>
@@ -1447,12 +837,9 @@ function initializeSchedulingForm() {
                             name="player${i}Name"
                             required
                         >
-
                     </div>
 
-
                     <div class="form-group">
-
                         <label for="player-${i}-email">
                             Email *
                         </label>
@@ -1463,219 +850,157 @@ function initializeSchedulingForm() {
                             name="player${i}Email"
                             required
                         >
-
                     </div>
 
                 </div>
-
             `;
 
-
-            characterPlayers.appendChild(
-                playerGroup
-            );
-
+            characterPlayers.appendChild(playerGroup);
         }
-
     }
 
 
-	/* =========================================
-	   CREATE RESERVATION IN SUPABASE
-	========================================= */
+    /* =========================================
+       CREATE RESERVATION IN SUPABASE
+    ========================================= */
 
-	async function submitReservationToSupabase(
-		reservationData,
-		form,
-		successElement
-	) {
+    async function submitReservationToSupabase(
+        reservationData,
+        form,
+        successElement
+    ) {
+        const submitButton =
+            form.querySelector("button[type='submit']");
 
-		const submitButton =
-			form.querySelector(
-				"button[type='submit']"
-			);
+        if (!submitButton) {
+            return;
+        }
 
 
-		if (!submitButton) {
-			return;
-		}
+        const originalButtonText =
+            submitButton.textContent;
 
+        submitButton.textContent = "Sending...";
+        submitButton.disabled = true;
 
-		const originalButtonText =
-			submitButton.textContent;
 
+        try {
+            const response = await fetch(
+                "https://fqcabbpvevtlzzwsvezi.supabase.co/functions/v1/create-reservation",
+                {
+                    method: "POST",
 
-		submitButton.textContent =
-			"Sending...";
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
 
+                    body: JSON.stringify(reservationData)
+                }
+            );
 
-		submitButton.disabled =
-			true;
 
+            const result = await response.json();
 
-		try {
+            console.log(
+                "Reservation response:",
+                response.status,
+                result
+            );
 
-			const response =
-				await fetch(
-					"https://fqcabbpvevtlzzwsvezi.supabase.co/functions/v1/create-reservation",
-					{
 
-						method: "POST",
+            if (!response.ok) {
+                throw new Error(
+                    result.error ||
+                    "Unable to create reservation."
+                );
+            }
 
-						headers: {
-							"Content-Type":
-								"application/json"
-						},
 
-						body:
-							JSON.stringify(
-								reservationData
-							)
+            /* -----------------------------------------
+               SUCCESS
+            ----------------------------------------- */
 
-					}
-				);
+            console.log(
+                "Reservation created successfully:",
+                result.reservation
+            );
 
 
-			const result =
-				await response.json();
+            const reservation =
+                result.reservation;
 
 
-			console.log(
-				"Reservation response:",
-				response.status,
-				result
-			);
+            /*
+             * Hide the scheduling form.
+             */
+            form.reset();
+            form.style.display = "none";
 
 
-			if (!response.ok) {
+            /*
+             * Show success message.
+             */
+            if (successElement) {
+                successElement.textContent =
+                    "Your scheduling request has been sent! Thank you for reaching out. I’ve received your request and will get back to you soon to work out the details.";
 
-				throw new Error(
-					result.error ||
-					"Unable to create reservation."
-				);
+                successElement.style.display = "block";
+            }
 
-			}
 
+            submitButton.textContent = "Request Sent";
 
-			/* -----------------------------------------
-			   SUCCESS
-			----------------------------------------- */
 
-			console.log(
-				"Reservation created successfully:",
-				result.reservation
-			);
+            /*
+             * The confirmation token is available
+             * here if it is needed later.
+             */
+            if (
+                reservation &&
+                reservation.confirmation_token
+            ) {
+                console.log(
+                    "Confirmation token:",
+                    reservation.confirmation_token
+                );
+            }
+        }
 
 
-			/*
-			 * Save the reservation information
-			 * for the next page.
-			 */
+        catch (error) {
+            console.error(
+                "Reservation submission error:",
+                error
+            );
 
-			const reservation =
-				result.reservation;
 
+            if (successElement) {
+                successElement.textContent =
+                    error.message ||
+                    "Something went wrong. Please try again.";
 
-			/*
-			 * Hide the scheduling form.
-			 */
+                successElement.style.display = "block";
+            }
 
-			form.reset();
 
+            submitButton.textContent =
+                originalButtonText;
 
-			form.style.display =
-				"none";
-
-
-			/*
-			 * Show success message.
-			 */
-
-			if (successElement) {
-
-				successElement.textContent =
-					"Your scheduling request has been sent! Thank you for reaching out. I’ve received your request and will get back to you soon to work out the details.";
-
-				successElement.style.display =
-					"block";
-
-			}
-
-
-			submitButton.textContent =
-				"Request Sent";
-
-
-			/*
-			 * Make the reservation available to
-			 * the confirmation/payment page.
-			 *
-			 * We will use the confirmation token
-			 * for the next step.
-			 */
-
-			if (
-				reservation &&
-				reservation.confirmation_token
-			) {
-
-				console.log(
-					"Confirmation token:",
-					reservation.confirmation_token
-				);
-
-			}
-
-		}
-
-
-		catch (error) {
-
-			console.error(
-				"Reservation submission error:",
-				error
-			);
-
-
-			if (successElement) {
-
-				successElement.textContent =
-					error.message ||
-					"Something went wrong. Please try again.";
-
-				successElement.style.display =
-					"block";
-
-			}
-
-
-			submitButton.textContent =
-				originalButtonText;
-
-
-			submitButton.disabled =
-				false;
-
-		}
-
-	}
+            submitButton.disabled = false;
+        }
+    }
 
 
     /* -----------------------------------------
        WATCH ASSIGNMENT CHOICE
     ----------------------------------------- */
 
-    assignmentRadios.forEach(
-        radio => {
-
-            radio.addEventListener(
-                "change",
-                updateCharacterFields
-            );
-
-        }
-    );
-
+    assignmentRadios.forEach(radio => {
+        radio.addEventListener(
+            "change",
+            updateCharacterFields
+        );
+    });
 
 
     /* -----------------------------------------
@@ -1683,66 +1008,42 @@ function initializeSchedulingForm() {
     ----------------------------------------- */
 
     if (playersSelect) {
+        playersSelect.addEventListener("change", () => {
+            const selectedAssignment =
+                document.querySelector(
+                    'input[name="characterAssignment"]:checked'
+                );
 
-        playersSelect.addEventListener(
-            "change",
-            () => {
-
-                const selectedAssignment =
-                    document.querySelector(
-                        'input[name="characterAssignment"]:checked'
-                    );
-
-
-                if (
-                    selectedAssignment &&
-                    selectedAssignment.value ===
-                    "ahead"
-                ) {
-
-                    updateCharacterFields();
-
-                }
-
+            if (
+                selectedAssignment &&
+                selectedAssignment.value === "ahead"
+            ) {
+                updateCharacterFields();
             }
-        );
-
+        });
     }
-
 
 
     /*
      * Run once when the form loads so that
      * Character Notes are immediately visible.
      */
-
     updateCharacterFields();
-
 
 
     /* -----------------------------------------
        SET MINIMUM DATES
     ----------------------------------------- */
 
-    const todayString =
-        getTodayString();
-
+    const todayString = getTodayString();
 
     if (dateInput) {
-
-        dateInput.min =
-            todayString;
-
+        dateInput.min = todayString;
     }
-
 
     if (backupDateInput) {
-
-        backupDateInput.min =
-            todayString;
-
+        backupDateInput.min = todayString;
     }
-
 
 
     /* -----------------------------------------
@@ -1750,20 +1051,10 @@ function initializeSchedulingForm() {
     ----------------------------------------- */
 
     if (dateInput) {
-
-        dateInput.addEventListener(
-            "blur",
-            () => {
-
-                validateDateInput(
-                    dateInput
-                );
-
-            }
-        );
-
+        dateInput.addEventListener("blur", () => {
+            validateDateInput(dateInput);
+        });
     }
-
 
 
     /* -----------------------------------------
@@ -1771,360 +1062,134 @@ function initializeSchedulingForm() {
     ----------------------------------------- */
 
     if (backupDateInput) {
-
-        backupDateInput.addEventListener(
-            "blur",
-            () => {
-
-                validateDateInput(
-                    backupDateInput
-                );
-
-            }
-        );
-
+        backupDateInput.addEventListener("blur", () => {
+            validateDateInput(backupDateInput);
+        });
     }
-
 
 
     /* -----------------------------------------
        FORM SUBMISSION
     ----------------------------------------- */
 
-    scheduleForm.addEventListener(
-        "submit",
-        event => {
+    scheduleForm.addEventListener("submit", event => {
+        event.preventDefault();
 
-            event.preventDefault();
 
+        /* -----------------------------------------
+           HONEYPOT CHECK
+        ----------------------------------------- */
 
-
-            /* -----------------------------------------
-               HONEYPOT CHECK
-            ----------------------------------------- */
-
-            const honeypot =
-                scheduleForm.querySelector(
-                    'input[name="_gotcha"]'
-                );
-
-
-            if (
-                honeypot &&
-                honeypot.value.trim() !== ""
-            ) {
-
-                console.warn(
-                    "Spam submission blocked."
-                );
-
-                return;
-
-            }
-
-
-
-            /* -----------------------------------------
-               MINIMUM SUBMISSION TIME
-            ----------------------------------------- */
-
-            const timeOnPage =
-                Date.now() -
-                scheduleFormLoadedAt;
-
-
-            /*
-             * Reject submissions made less than
-             * 3 seconds after the form loaded.
-             */
-
-            if (
-                timeOnPage <
-                3000
-            ) {
-
-                console.warn(
-                    "Suspiciously fast scheduling submission blocked."
-                );
-
-                return;
-
-            }
-
-
-
-            /* -----------------------------------------
-               SUBMISSION COOLDOWN
-            ----------------------------------------- */
-
-            if (
-                scheduleSubmissionLocked
-            ) {
-
-                console.warn(
-                    "Duplicate scheduling submission blocked."
-                );
-
-                return;
-
-            }
-
-
-            scheduleSubmissionLocked =
-                true;
-
-
-
-            /* -----------------------------------------
-               CHECK PREFERRED DATE
-            ----------------------------------------- */
-
-            if (
-                dateInput &&
-                dateInput.value <
-                todayString
-            ) {
-
-                alert(
-                    "Please choose today or a future date."
-                );
-
-
-                dateInput.focus();
-
-
-                scheduleSubmissionLocked =
-                    false;
-
-
-                return;
-
-            }
-
-
-
-            /* -----------------------------------------
-               CHECK BACKUP DATE
-            ----------------------------------------- */
-
-            if (
-                backupDateInput &&
-                backupDateInput.value &&
-                backupDateInput.value <
-                todayString
-            ) {
-
-                alert(
-                    "Please choose today or a future date."
-                );
-
-
-                backupDateInput.focus();
-
-
-                scheduleSubmissionLocked =
-                    false;
-
-
-                return;
-
-            }
-
-
-
-			/* -----------------------------------------
-			   COLLECT FORM DATA
-			----------------------------------------- */
-
-			const formData =
-				new FormData(
-					scheduleForm
-				);
-
-
-			const reservationData = {};
-
-
-			/*
-			 * Copy the normal form fields.
-			 */
-
-			formData.forEach(
-				(value, key) => {
-
-					reservationData[key] =
-						value;
-
-				}
-			);
-
-
-			/*
-			 * Send the scheduling request
-			 * to the Supabase Edge Function.
-			 */
-
-			submitReservationToSupabase(
-				reservationData,
-				scheduleForm,
-				scheduleSuccess
-			);
-
-
-        }
-    );
-
-}
-
-
-
-/* =========================================
-   FORM SUBMISSION HELPER
-========================================= */
-
-async function submitForm(
-    form,
-    successElement,
-    options = {}
-) {
-
-    const submitButton =
-        form.querySelector(
-            "button[type='submit']"
-        );
-
-
-    if (!submitButton) {
-        return;
-    }
-
-
-    /*
-     * Prevent the submit button from being
-     * used repeatedly while the request is
-     * being processed.
-     */
-
-    if (
-        submitButton.disabled
-    ) {
-
-        return;
-
-    }
-
-
-    const originalButtonText =
-        submitButton.textContent;
-
-
-    submitButton.textContent =
-        "Sending...";
-
-
-    submitButton.disabled =
-        true;
-
-
-    const formData =
-        new FormData(
-            form
-        );
-
-
-    try {
-
-        const response =
-            await fetch(
-                form.action,
-                {
-
-                    method: "POST",
-
-                    body: formData,
-
-                    headers: {
-                        "Accept":
-                            "application/json"
-                    }
-
-                }
+        const honeypot =
+            scheduleForm.querySelector(
+                'input[name="_gotcha"]'
             );
 
+        if (
+            honeypot &&
+            honeypot.value.trim() !== ""
+        ) {
+            console.warn("Spam submission blocked.");
+            return;
+        }
 
-        if (!response.ok) {
 
-            throw new Error(
-                "Form submission failed."
+        /* -----------------------------------------
+           MINIMUM SUBMISSION TIME
+        ----------------------------------------- */
+
+        const timeOnPage =
+            Date.now() - scheduleFormLoadedAt;
+
+        if (timeOnPage < 3000) {
+            console.warn(
+                "Suspiciously fast scheduling submission blocked."
             );
 
+            return;
         }
 
 
-        /* Successful submission */
+        /* -----------------------------------------
+           SUBMISSION COOLDOWN
+        ----------------------------------------- */
 
-        form.reset();
+        if (scheduleSubmissionLocked) {
+            console.warn(
+                "Duplicate scheduling submission blocked."
+            );
+
+            return;
+        }
+
+        scheduleSubmissionLocked = true;
 
 
-        if (options.hideForm) {
+        /* -----------------------------------------
+           CHECK PREFERRED DATE
+        ----------------------------------------- */
 
-            form.style.display =
-                "none";
+        if (
+            dateInput &&
+            dateInput.value < todayString
+        ) {
+            alert(
+                "Please choose today or a future date."
+            );
 
+            dateInput.focus();
+
+            scheduleSubmissionLocked = false;
+            return;
         }
 
 
-        if (successElement) {
+        /* -----------------------------------------
+           CHECK BACKUP DATE
+        ----------------------------------------- */
 
-            successElement.textContent =
-                options.successMessage ||
-                "Message sent! Thank you for reaching out.";
+        if (
+            backupDateInput &&
+            backupDateInput.value &&
+            backupDateInput.value < todayString
+        ) {
+            alert(
+                "Please choose today or a future date."
+            );
 
+            backupDateInput.focus();
 
-            successElement.style.display =
-                "block";
-
+            scheduleSubmissionLocked = false;
+            return;
         }
 
 
-        submitButton.textContent =
-            options.successButtonText ||
-            "Sent";
+        /* -----------------------------------------
+           COLLECT FORM DATA
+        ----------------------------------------- */
 
-    }
+        const formData =
+            new FormData(scheduleForm);
+
+        const reservationData = {};
 
 
-    catch (error) {
+        formData.forEach((value, key) => {
+            reservationData[key] = value;
+        });
 
-        console.error(
-            "Form submission error:",
-            error
+
+        /*
+         * Send the scheduling request to
+         * the Supabase Edge Function.
+         */
+        submitReservationToSupabase(
+            reservationData,
+            scheduleForm,
+            scheduleSuccess
         );
-
-
-        if (successElement) {
-
-            successElement.textContent =
-                "Something went wrong. Please try again.";
-
-
-            successElement.style.display =
-                "block";
-
-        }
-
-
-        submitButton.textContent =
-            originalButtonText;
-
-
-        submitButton.disabled =
-            false;
-
-    }
-
+    });
 }
-
 
 
 /* =========================================
@@ -2132,248 +1197,148 @@ async function submitForm(
 ========================================= */
 
 function initializeGamePlayerOptions() {
-
     const gameSelect =
-        document.getElementById(
-            "game"
-        );
-
+        document.getElementById("game");
 
     const playersSelect =
-        document.getElementById(
-            "players"
-        );
-
+        document.getElementById("players");
 
     const playerHelp =
-        document.getElementById(
-            "playerHelp"
-        );
+        document.getElementById("playerHelp");
 
-
-    if (
-        !gameSelect ||
-        !playersSelect
-    ) {
-
+    if (!gameSelect || !playersSelect) {
         return;
-
     }
 
 
-    gameSelect.addEventListener(
-        "change",
-        function () {
-
-            const game =
-                this.value;
+    gameSelect.addEventListener("change", function () {
+        const game = this.value;
 
 
-            /* -----------------------------------------
-               CLEAR CURRENT PLAYER OPTIONS
-            ----------------------------------------- */
+        /* -----------------------------------------
+           CLEAR CURRENT PLAYER OPTIONS
+        ----------------------------------------- */
 
-            playersSelect.innerHTML =
-                "";
-
-
-            /* -----------------------------------------
-               NO GAME SELECTED
-            ----------------------------------------- */
-
-            if (!game) {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
+        playersSelect.innerHTML = "";
 
 
-                option.value =
-                    "";
+        /* -----------------------------------------
+           NO GAME SELECTED
+        ----------------------------------------- */
 
+        if (!game) {
+            const option =
+                document.createElement("option");
 
-                option.textContent =
-                    "Choose number of players";
+            option.value = "";
+            option.textContent =
+                "Choose number of players";
 
+            playersSelect.appendChild(option);
 
-                playersSelect.appendChild(
-                    option
-                );
-
-
-                if (playerHelp) {
-
-                    playerHelp.textContent =
-                        "Select a game to see the available player numbers.";
-
-                }
-
-                return;
-
+            if (playerHelp) {
+                playerHelp.textContent =
+                    "Select a game to see the available player numbers.";
             }
 
-
-            let minimum;
-            let maximum;
-            let genderRequirement = "";
+            return;
+        }
 
 
-
-            /* -----------------------------------------
-               SPELLBOUND
-            ----------------------------------------- */
-
-            if (
-                game ===
-                "Spellbound"
-            ) {
-
-                minimum =
-                    13;
-
-                maximum =
-                    17;
-
-                genderRequirement =
-                    "At least 5 female and 4 male players are required.";
-
-            }
+        let minimum;
+        let maximum;
+        let genderRequirement = "";
 
 
+        /* -----------------------------------------
+           SPELLBOUND
+        ----------------------------------------- */
 
-            /* -----------------------------------------
-               WAY OUT WEST
-            ----------------------------------------- */
+        if (game === "Spellbound") {
+            minimum = 13;
+            maximum = 17;
 
-            else if (
-                game ===
-                "Way Out West"
-            ) {
-
-                minimum =
-                    10;
-
-                maximum =
-                    20;
-
-            }
+            genderRequirement =
+                "At least 5 female and 4 male players are required.";
+        }
 
 
+        /* -----------------------------------------
+           WAY OUT WEST
+        ----------------------------------------- */
 
-            /* -----------------------------------------
-               A DEAD MAN'S CHEST
-            ----------------------------------------- */
-
-            else if (
-                game ===
-                "A Dead Man's Chest"
-            ) {
-
-                minimum =
-                    12;
-
-                maximum =
-                    16;
-
-            }
+        else if (game === "Way Out West") {
+            minimum = 10;
+            maximum = 20;
+        }
 
 
+        /* -----------------------------------------
+           A DEAD MAN'S CHEST
+        ----------------------------------------- */
 
-            /* -----------------------------------------
-               PLAYER PLACEHOLDER
-            ----------------------------------------- */
-
-            const placeholder =
-                document.createElement(
-                    "option"
-                );
-
-
-            placeholder.value =
-                "";
+        else if (game === "A Dead Man's Chest") {
+            minimum = 12;
+            maximum = 16;
+        }
 
 
-            placeholder.textContent =
-                "Select number of players";
+        /* -----------------------------------------
+           PLAYER PLACEHOLDER
+        ----------------------------------------- */
+
+        const placeholder =
+            document.createElement("option");
+
+        placeholder.value = "";
+        placeholder.textContent =
+            "Select number of players";
+
+        placeholder.disabled = true;
+        placeholder.selected = true;
+
+        playersSelect.appendChild(placeholder);
 
 
-            placeholder.disabled =
-                true;
+        /* -----------------------------------------
+           CREATE PLAYER OPTIONS
+        ----------------------------------------- */
+
+        for (
+            let number = minimum;
+            number <= maximum;
+            number++
+        ) {
+            const option =
+                document.createElement("option");
+
+            option.value = number;
+            option.textContent =
+                number + " players";
+
+            playersSelect.appendChild(option);
+        }
 
 
-            placeholder.selected =
-                true;
+        /* -----------------------------------------
+           HELP TEXT
+        ----------------------------------------- */
 
-
-            playersSelect.appendChild(
-                placeholder
-            );
-
-
-
-            /* -----------------------------------------
-               CREATE PLAYER OPTIONS
-            ----------------------------------------- */
-
-            for (
-                let number = minimum;
-                number <= maximum;
-                number++
-            ) {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-
-                option.value =
-                    number;
-
-
-                option.textContent =
-                    number +
-                    " players";
-
-
-                playersSelect.appendChild(
-                    option
-                );
-
-            }
-
-
-
-            /* -----------------------------------------
-               HELP TEXT
-            ----------------------------------------- */
-
-            if (
-                genderRequirement
-            ) {
-
+        if (playerHelp) {
+            if (genderRequirement) {
                 playerHelp.textContent =
                     genderRequirement;
-
-            }
-
-            else {
-
+            } else {
                 playerHelp.textContent =
                     "This game can accommodate " +
                     minimum +
                     "–" +
                     maximum +
                     " players.";
-
             }
-
         }
-    );
-
+    });
 }
-
 
 
 /* =========================================
@@ -2381,68 +1346,32 @@ function initializeGamePlayerOptions() {
 ========================================= */
 
 function getTodayString() {
-
-    const today =
-        new Date();
-
+    const today = new Date();
 
     const year =
         today.getFullYear();
 
-
     const month =
-        String(
-            today.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
+        String(today.getMonth() + 1).padStart(2, "0");
 
     const day =
-        String(
-            today.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
+        String(today.getDate()).padStart(2, "0");
 
-
-    return (
-        year +
-        "-" +
-        month +
-        "-" +
-        day
-    );
-
+    return `${year}-${month}-${day}`;
 }
-
 
 
 /* =========================================
    VALIDATE DATE INPUT
 ========================================= */
 
-function validateDateInput(
-    input
-) {
-
-    if (
-        !input ||
-        !input.value
-    ) {
-
+function validateDateInput(input) {
+    if (!input || !input.value) {
         if (input) {
-
-            input.setCustomValidity(
-                ""
-            );
-
+            input.setCustomValidity("");
         }
 
         return true;
-
     }
 
 
@@ -2450,33 +1379,21 @@ function validateDateInput(
         getTodayString();
 
 
-    if (
-        input.value <
-        todayString
-    ) {
-
+    if (input.value < todayString) {
         input.setCustomValidity(
             "Please choose today or a future date."
         );
 
-
         input.reportValidity();
 
-
         return false;
-
     }
 
 
-    input.setCustomValidity(
-        ""
-    );
-
+    input.setCustomValidity("");
 
     return true;
-
 }
-
 
 
 /* =========================================
@@ -2484,44 +1401,33 @@ function validateDateInput(
 ========================================= */
 
 const contactForm =
-    document.getElementById(
-        "contact-form"
-    );
-
+    document.getElementById("contact-form");
 
 const contactSuccess =
-    document.getElementById(
-        "contact-success"
-    );
+    document.getElementById("contact-success");
 
 
 if (contactForm) {
 
     /*
-     * Record when the form was loaded.
+     * Record when the contact form was loaded.
      * This helps identify automated submissions
-     * that happen almost instantly.
+     * that happen almost immediately.
      */
-
-    const contactFormLoadedAt =
-        Date.now();
+    const contactFormLoadedAt = Date.now();
 
 
     /*
-     * Prevent multiple rapid submissions
-     * from the same form.
+     * Prevent multiple submissions.
      */
-
-    let contactSubmissionLocked =
-        false;
+    let contactSubmissionLocked = false;
 
 
     contactForm.addEventListener(
         "submit",
-        event => {
+        async event => {
 
             event.preventDefault();
-
 
 
             /* -----------------------------------------
@@ -2533,20 +1439,16 @@ if (contactForm) {
                     'input[name="_gotcha"]'
                 );
 
-
             if (
                 honeypot &&
                 honeypot.value.trim() !== ""
             ) {
-
                 console.warn(
                     "Spam submission blocked."
                 );
 
                 return;
-
             }
-
 
 
             /* -----------------------------------------
@@ -2554,71 +1456,167 @@ if (contactForm) {
             ----------------------------------------- */
 
             const timeOnPage =
-                Date.now() -
-                contactFormLoadedAt;
+                Date.now() - contactFormLoadedAt;
 
-
-            /*
-             * Reject submissions made less than
-             * 3 seconds after the form loaded.
-             */
-
-            if (
-                timeOnPage <
-                3000
-            ) {
-
+            if (timeOnPage < 3000) {
                 console.warn(
                     "Suspiciously fast contact submission blocked."
                 );
 
                 return;
-
             }
-
 
 
             /* -----------------------------------------
                SUBMISSION COOLDOWN
             ----------------------------------------- */
 
-            if (
-                contactSubmissionLocked
-            ) {
-
+            if (contactSubmissionLocked) {
                 console.warn(
                     "Duplicate contact submission blocked."
                 );
 
                 return;
-
             }
 
-
-            contactSubmissionLocked =
-                true;
-
+            contactSubmissionLocked = true;
 
 
             /* -----------------------------------------
-               SUBMIT FORM
+               GET SUBMIT BUTTON
             ----------------------------------------- */
 
-            submitForm(
-                contactForm,
-                contactSuccess,
-                {
+            const submitButton =
+                contactForm.querySelector(
+                    "button[type='submit']"
+                );
 
-                    successMessage:
-                        "Message Sent! Thank you for reaching out. I'll be in touch soon.",
+            const originalButtonText =
+                submitButton
+                    ? submitButton.textContent
+                    : "Send Message";
 
-                    successButtonText:
-                        "Message Sent"
 
+            if (submitButton) {
+                submitButton.textContent = "Sending...";
+                submitButton.disabled = true;
+            }
+
+
+            /* -----------------------------------------
+               COLLECT FORM DATA
+            ----------------------------------------- */
+
+            const formData =
+                new FormData(contactForm);
+
+            const contactData = {
+                name: formData.get("name"),
+                email: formData.get("email"),
+                message: formData.get("message"),
+                _gotcha: formData.get("_gotcha")
+            };
+
+
+            /* -----------------------------------------
+               SEND TO SUPABASE
+            ----------------------------------------- */
+
+            try {
+                const response =
+                    await fetch(
+                        "https://fqcabbpvevtlzzwsvezi.supabase.co/functions/v1/send-contact-message",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(contactData)
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+                console.log(
+                    "Contact response:",
+                    response.status,
+                    result
+                );
+
+
+                /* -----------------------------------------
+                   HANDLE ERROR
+                ----------------------------------------- */
+
+                if (!response.ok) {
+                    throw new Error(
+                        result.error ||
+                        "Unable to send your message."
+                    );
                 }
-            );
 
+
+                /* -----------------------------------------
+                   SUCCESS
+                ----------------------------------------- */
+
+                contactForm.reset();
+
+
+                if (contactSuccess) {
+                    contactSuccess.textContent =
+                        "Message Sent! Thank you for reaching out. I'll be in touch soon.";
+
+                    contactSuccess.style.display = "block";
+                }
+
+
+                if (submitButton) {
+                    submitButton.textContent =
+                        "Message Sent";
+                }
+            }
+
+
+            /* -----------------------------------------
+               ERROR
+            ----------------------------------------- */
+
+            catch (error) {
+                console.error(
+                    "Contact submission error:",
+                    error
+                );
+
+
+                if (contactSuccess) {
+                    contactSuccess.textContent =
+                        error.message ||
+                        "Something went wrong. Please try again.";
+
+                    contactSuccess.style.display = "block";
+                }
+
+
+                if (submitButton) {
+                    submitButton.textContent =
+                        originalButtonText;
+
+                    submitButton.disabled = false;
+                }
+
+
+                /*
+                 * Allow the user to try again.
+                 */
+                contactSubmissionLocked = false;
+            }
         }
     );
-
 }
