@@ -349,7 +349,7 @@ h3 {
 
     min-height: 700px;
     height: 100vh;
-    padding: 160px 30px 80px;
+    padding: 80px 30px 80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -385,6 +385,8 @@ h3 {
     z-index: 2;
 
     animation: fadeUp 1.2s ease forwards;
+	
+    top: 40px;
 }
 
 .hero h1 {
