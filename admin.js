@@ -890,264 +890,6 @@ function createReservationCard(
 
     }
 
-	/* =====================================================
-	   RESEND CHARACTER EMAIL
-	===================================================== */
-
-	const resendCharacterEmailButtons =
-		detailsPanel.querySelectorAll(
-			'[data-action="resend-character-email"]'
-		);
-
-
-	resendCharacterEmailButtons.forEach(
-		function(button) {
-
-			button.addEventListener(
-				"click",
-				async function(event) {
-
-					event.stopPropagation();
-
-
-					const playerId =
-						button.dataset.playerId;
-
-
-					if (!playerId) {
-
-						return;
-
-					}
-
-
-					const player =
-						players.find(
-							function(item) {
-
-								return String(item.id) ===
-									String(playerId);
-
-							}
-						);
-
-
-					if (!player) {
-
-						return;
-
-					}
-
-
-					if (!player.assigned_character_id) {
-
-						alert(
-							"This player does not have a character assigned."
-						);
-
-						return;
-
-					}
-
-
-					const confirmed =
-						confirm(
-							"Resend the character email to " +
-							(player.player_name || player.player_email) +
-							"?"
-						);
-
-
-					if (!confirmed) {
-
-						return;
-
-					}
-
-
-					const originalText =
-						button.textContent;
-
-
-					const message =
-						button
-							.parentElement
-							.querySelector(
-								"[data-character-email-message]"
-							);
-
-
-					button.disabled =
-						true;
-
-
-					button.textContent =
-						"Sending...";
-
-
-					if (message) {
-
-						message.textContent =
-							"";
-
-					}
-
-
-					try {
-
-						/* -----------------------------------------
-						   GET SESSION
-						----------------------------------------- */
-
-						const {
-							data: {
-								session
-							}
-						} =
-							await supabase.auth.getSession();
-
-
-						if (!session) {
-
-							window.location.href =
-								"admin.html";
-
-							return;
-
-						}
-
-
-						/* -----------------------------------------
-						   SEND REQUEST
-						----------------------------------------- */
-
-						const response =
-							await fetch(
-
-								SUPABASE_URL +
-								"/functions/v1/admin-resend-character-email",
-
-								{
-
-									method:
-										"POST",
-
-									headers: {
-
-										"Authorization":
-											"Bearer " +
-											session.access_token,
-
-										"apikey":
-											SUPABASE_PUBLISHABLE_KEY,
-
-										"Content-Type":
-											"application/json"
-
-									},
-
-									body:
-										JSON.stringify({
-
-											reservation_id:
-												reservation.id,
-
-											player_id:
-												player.id
-
-										})
-
-								}
-
-							);
-
-
-						const result =
-							await response.json();
-
-
-						/* -----------------------------------------
-						   CHECK RESPONSE
-						----------------------------------------- */
-
-						if (
-							!response.ok ||
-							!result.success
-						) {
-
-							throw new Error(
-								result.error ||
-								"Could not resend character email."
-							);
-
-						}
-
-
-						/* -----------------------------------------
-						   SUCCESS
-						----------------------------------------- */
-
-						if (message) {
-
-							message.textContent =
-								"Email sent.";
-
-						}
-
-
-						button.textContent =
-							"Sent";
-
-
-						/*
-						 * Reload after a short delay so the
-						 * email timestamp/status is refreshed.
-						 */
-
-						setTimeout(
-							function() {
-
-								loadReservations();
-
-							},
-							1000
-						);
-
-					}
-
-
-					catch (error) {
-
-						console.error(
-							"Resend character email error:",
-							error
-						);
-
-
-						if (message) {
-
-							message.textContent =
-								error.message ||
-								"Could not resend character email.";
-
-						}
-
-
-						button.disabled =
-							false;
-
-
-						button.textContent =
-							originalText;
-
-					}
-
-				}
-			);
-
-		}
-	);
-
     /* =====================================================
        DETAILS
     ===================================================== */
@@ -1156,298 +898,271 @@ function createReservationCard(
 
         <!-- RESERVATION -->
 
-        <section class="details-section">
-
-            <h3>
-                Reservation Details
-            </h3>
-
-
-            <div class="details-grid">
-
-                ${detail(
-                    "Game",
-                    reservation.game
-                )}
-
-
-                ${detail(
-                    "Date",
-                    reservation.reservation_date
-                )}
-
-
-                ${detail(
-                    "Time",
-                    reservation.reservation_time
-                )}
-
-
-                ${detail(
-                    "Location",
-                    reservation.location
-                )}
-
-
-                ${detail(
-                    "Number of Guests",
-                    reservation.number_of_guests
-                )}
-
-
-                ${detail(
-                    "Character Assignment",
-                    reservation.character_assignment ||
-                    "Not specified"
-                )}
-
-            </div>
-
-        </section>
-
-
-        <!-- ORGANIZER -->
-
-        <section class="details-section">
-
-            <h3>
-                Organizer
-            </h3>
-
-
-            <div class="details-grid">
-
-                ${detail(
-                    "Name",
-                    reservation.organizer_name
-                )}
-
-
-                ${detail(
-                    "Email",
-                    reservation.organizer_email
-                )}
-
-
-                ${detail(
-                    "Phone",
-                    reservation.organizer_phone ||
-                    "Not provided"
-                )}
-
-            </div>
-
-        </section>
-
-
-        <!-- ADDITIONAL INFORMATION -->
-
-        <section class="details-section">
-
-            <h3>
-                Additional Information
-            </h3>
-
-
-            <div class="details-grid">
-
-                ${detail(
-                    "Backup Date",
-                    reservation.backup_date ||
-                    "None provided"
-                )}
-
-
-                ${detail(
-                    "Couples",
-                    reservation.couples ||
-                    "None provided"
-                )}
-
-
-                ${detail(
-                    "Outgoing Players",
-                    reservation.outgoing_players ||
-                    "None provided"
-                )}
-
-
-                ${detail(
-                    "Reserved Players",
-                    reservation.reserved_players ||
-                    "None provided"
-                )}
-
-            </div>
-
-        </section>
-
-
-        <!-- MESSAGE -->
-
-        <section class="details-section">
-
-            <h3>
-                Organizer Message
-            </h3>
-
-
-            <div class="detail-message">
-
-                ${escapeHtml(
-                    reservation.message ||
-                    "No message provided."
-                )}
-
-            </div>
-
-        </section>
-
-
-        <!-- PRICING -->
-
-        <section class="details-section">
-
-            <h3>
-                Pricing
-            </h3>
-
-
-            <div class="details-grid">
-
-                ${detail(
-                    "Total",
-                    formatMoney(
-                        reservation.total
-                    )
-                )}
-
-
-                ${detail(
-                    "Deposit Due",
-                    formatMoney(
-                        reservation.deposit_due
-                    )
-                )}
-
-
-                ${detail(
-                    "Remaining Balance",
-                    formatMoney(
-                        reservation.remaining_balance
-                    )
-                )}
-
-
-                ${detail(
-                    "Deposit Paid",
-                    reservation.deposit_paid_at
-                        ? "Yes"
-                        : "No"
-                )}
-
-            </div>
-
-        </section>
-
-
-        <!-- NOTES -->
-
-        <section class="details-section">
-
-            <h3>
-                Notes
-            </h3>
-
-
-            <div class="notes-grid">
-
-
-                <div class="notes-box">
-
-                    <h4>
-                        Private Notes
-                    </h4>
-
-
-                    <p>
-
-                        ${escapeHtml(
-                            reservation.private_notes ||
-                            "No private notes yet."
-                        )}
-
-                    </p>
-
-                </div>
-
-
-                <div class="notes-box">
-
-                    <h4>
-                        Organizer Notes
-                    </h4>
-
-
-                    <p>
-
-                        ${escapeHtml(
-                            reservation.organizer_notes ||
-                            "No organizer notes yet."
-                        )}
-
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        ${playerSection}
-
+        ...
 
         <!-- ACTIONS -->
 
         <div class="reservation-actions">
 
-            <button
-                type="button"
-                class="button"
-                data-action="edit"
-            >
-
-                Edit Reservation
-
-            </button>
-
-
-            <button
-                type="button"
-                class="button"
-                data-action="approve"
-            >
-
-                Approve Reservation
-
-            </button>
-
-
-            <button
-                type="button"
-                class="button"
-                data-action="decline"
-            >
-
-                Decline Reservation
-
-            </button>
+            ...
 
         </div>
 
     `;
+
+
+    /* =====================================================
+       RESEND CHARACTER EMAIL
+    ===================================================== */
+
+    const resendCharacterEmailButtons =
+        detailsPanel.querySelectorAll(
+            '[data-action="resend-character-email"]'
+        );
+
+
+    resendCharacterEmailButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                async function(event) {
+
+                    event.stopPropagation();
+
+
+                    const playerId =
+                        button.dataset.playerId;
+
+
+                    if (!playerId) {
+
+                        return;
+
+                    }
+
+
+                    const player =
+                        players.find(
+                            function(item) {
+
+                                return String(item.id) ===
+                                    String(playerId);
+
+                            }
+                        );
+
+
+                    if (!player) {
+
+                        return;
+
+                    }
+
+
+                    if (!player.assigned_character_id) {
+
+                        alert(
+                            "This player does not have a character assigned."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const confirmed =
+                        confirm(
+                            "Resend the character email to " +
+                            (player.player_name || player.player_email) +
+                            "?"
+                        );
+
+
+                    if (!confirmed) {
+
+                        return;
+
+                    }
+
+
+                    const originalText =
+                        button.textContent;
+
+
+                    const message =
+                        button
+                            .parentElement
+                            .querySelector(
+                                "[data-character-email-message]"
+                            );
+
+
+                    button.disabled =
+                        true;
+
+
+                    button.textContent =
+                        "Sending...";
+
+
+                    if (message) {
+
+                        message.textContent =
+                            "";
+
+                    }
+
+
+                    try {
+
+                        /* -----------------------------------------
+                           GET SESSION
+                        ----------------------------------------- */
+
+                        const {
+                            data: {
+                                session
+                            }
+                        } =
+                            await supabase.auth.getSession();
+
+
+                        if (!session) {
+
+                            window.location.href =
+                                "admin.html";
+
+                            return;
+
+                        }
+
+
+                        /* -----------------------------------------
+                           SEND REQUEST
+                        ----------------------------------------- */
+
+                        const response =
+                            await fetch(
+
+                                SUPABASE_URL +
+                                "/functions/v1/admin-resend-character-email",
+
+                                {
+
+                                    method:
+                                        "POST",
+
+                                    headers: {
+
+                                        "Authorization":
+                                            "Bearer " +
+                                            session.access_token,
+
+                                        "apikey":
+                                            SUPABASE_PUBLISHABLE_KEY,
+
+                                        "Content-Type":
+                                            "application/json"
+
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+
+                                            reservation_id:
+                                                reservation.id,
+
+                                            player_id:
+                                                player.id
+
+                                        })
+
+                                }
+
+                            );
+
+
+                        const result =
+                            await response.json();
+
+
+                        /* -----------------------------------------
+                           CHECK RESPONSE
+                        ----------------------------------------- */
+
+                        if (
+                            !response.ok ||
+                            !result.success
+                        ) {
+
+                            throw new Error(
+                                result.error ||
+                                "Could not resend character email."
+                            );
+
+                        }
+
+
+                        /* -----------------------------------------
+                           SUCCESS
+                        ----------------------------------------- */
+
+                        if (message) {
+
+                            message.textContent =
+                                "Email sent.";
+
+                        }
+
+
+                        button.textContent =
+                            "Sent";
+
+
+                        setTimeout(
+                            function() {
+
+                                loadReservations();
+
+                            },
+                            1000
+                        );
+
+                    }
+
+
+                    catch (error) {
+
+                        console.error(
+                            "Resend character email error:",
+                            error
+                        );
+
+
+                        if (message) {
+
+                            message.textContent =
+                                error.message ||
+                                "Could not resend character email.";
+
+                        }
+
+
+                        button.disabled =
+                            false;
+
+
+                        button.textContent =
+                            originalText;
+
+                    }
+
+                }
+            );
+
+        }
+    );
 
 
     /* =====================================================
@@ -1458,11 +1173,9 @@ function createReservationCard(
         summaryButton
     );
 
-
     item.appendChild(
         detailsPanel
     );
-
 
     reservationList.appendChild(
         item
