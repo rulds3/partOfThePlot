@@ -901,13 +901,6 @@ function initializeSchedulingForm() {
 
             const result = await response.json();
 
-            console.log(
-                "Reservation response:",
-                response.status,
-                result
-            );
-
-
             if (!response.ok) {
                 throw new Error(
                     result.error ||
@@ -919,12 +912,6 @@ function initializeSchedulingForm() {
             /* -----------------------------------------
                SUCCESS
             ----------------------------------------- */
-
-            console.log(
-                "Reservation created successfully:",
-                result.reservation
-            );
-
 
             const reservation =
                 result.reservation;
@@ -950,19 +937,6 @@ function initializeSchedulingForm() {
 
             submitButton.textContent = "Request Sent";
 
-
-            /*
-             * The confirmation token is available
-             * here if it is needed later.
-             */
-            if (
-                reservation &&
-                reservation.confirmation_token
-            ) {
-                console.log(
-                    "Confirmation token:",
-                    reservation.confirmation_token
-                );
             }
         }
 
@@ -1549,13 +1523,6 @@ if (contactForm) {
 
                 const result =
                     await response.json();
-
-                console.log(
-                    "Contact response:",
-                    response.status,
-                    result
-                );
-
 
                 /* -----------------------------------------
                    HANDLE ERROR
