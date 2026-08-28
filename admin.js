@@ -2498,19 +2498,19 @@ function showEditForm(
 
                 /*
                  * Spellbound currently has a flat
-                 * $150 beta price.
+                 * $300 beta price.
                  */
 
                 updatedData.total =
-                    150;
+                    300;
 
 
                 updatedData.deposit_due =
-                    75;
+                    150;
 
 
                 updatedData.remaining_balance =
-                    75;
+                    150;
 
 
                 const totalInput =
@@ -2534,7 +2534,7 @@ function showEditForm(
                 if (totalInput) {
 
                     totalInput.value =
-                        "150.00";
+                        "300.00";
 
                 }
 
@@ -2542,7 +2542,7 @@ function showEditForm(
                 if (depositInput) {
 
                     depositInput.value =
-                        "75.00";
+                        "150.00";
 
                 }
 
@@ -2550,7 +2550,7 @@ function showEditForm(
                 if (balanceInput) {
 
                     balanceInput.value =
-                        "75.00";
+                        "150.00";
 
                 }
 
