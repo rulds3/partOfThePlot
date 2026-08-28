@@ -632,3 +632,44 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     letter-spacing: 0.08em;
     text-align: center;
 }
+
+/* =========================================
+   GAME LEVEL BADGE
+========================================= */
+
+.game-card-image {
+    position: relative;
+}
+
+
+.game-card-level-badge {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+
+    z-index: 5;
+
+    padding: 7px 12px;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+
+    border: 1px solid var(--light-gold);
+
+    background: rgba(16, 19, 26, 0.88);
+    color: var(--light-gold);
+}
+
+
+.game-card-level-badge.premium {
+    border-color: var(--light-gold);
+    color: var(--light-gold);
+}
+
+
+.game-card-level-badge.classic {
+    border-color: var(--cream);
+    color: var(--cream);
+}
