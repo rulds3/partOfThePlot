@@ -743,19 +743,43 @@ function createReservationCard(
                                     </div>
 
 
-                                    <div>
+									<div class="character-email-status">
 
-                                        <span>
+										<span>
 
-                                            ${
-                                                player.character_email_sent_at
-                                                    ? "Character email sent"
-                                                    : "Character email not sent"
-                                            }
+											${
+												player.character_email_sent_at
+													? "Character email sent"
+													: "Character email not sent"
+											}
 
-                                        </span>
+										</span>
 
-                                    </div>
+
+										<button
+											type="button"
+											class="button character-email-button"
+											data-action="resend-character-email"
+											data-player-id="${escapeHtml(player.id)}"
+											${
+												player.assigned_character_id
+													? ""
+													: "disabled"
+											}
+										>
+
+											Resend Character Email
+
+										</button>
+
+
+										<span
+											class="character-email-message"
+											data-character-email-message
+											aria-live="polite"
+										></span>
+
+									</div>
 
 
                                     <div class="character-assignment">
@@ -866,6 +890,263 @@ function createReservationCard(
 
     }
 
+	/* =====================================================
+	   RESEND CHARACTER EMAIL
+	===================================================== */
+
+	const resendCharacterEmailButtons =
+		detailsPanel.querySelectorAll(
+			'[data-action="resend-character-email"]'
+		);
+
+
+	resendCharacterEmailButtons.forEach(
+		function(button) {
+
+			button.addEventListener(
+				"click",
+				async function(event) {
+
+					event.stopPropagation();
+
+
+					const playerId =
+						button.dataset.playerId;
+
+
+					if (!playerId) {
+
+						return;
+
+					}
+
+
+					const player =
+						players.find(
+							function(item) {
+
+								return String(item.id) ===
+									String(playerId);
+
+							}
+						);
+
+
+					if (!player) {
+
+						return;
+
+					}
+
+
+					if (!player.assigned_character_id) {
+
+						alert(
+							"This player does not have a character assigned."
+						);
+
+						return;
+
+					}
+
+
+					const confirmed =
+						confirm(
+							"Resend the character email to " +
+							(player.player_name || player.player_email) +
+							"?"
+						);
+
+
+					if (!confirmed) {
+
+						return;
+
+					}
+
+
+					const originalText =
+						button.textContent;
+
+
+					const message =
+						button
+							.parentElement
+							.querySelector(
+								"[data-character-email-message]"
+							);
+
+
+					button.disabled =
+						true;
+
+
+					button.textContent =
+						"Sending...";
+
+
+					if (message) {
+
+						message.textContent =
+							"";
+
+					}
+
+
+					try {
+
+						/* -----------------------------------------
+						   GET SESSION
+						----------------------------------------- */
+
+						const {
+							data: {
+								session
+							}
+						} =
+							await supabase.auth.getSession();
+
+
+						if (!session) {
+
+							window.location.href =
+								"admin.html";
+
+							return;
+
+						}
+
+
+						/* -----------------------------------------
+						   SEND REQUEST
+						----------------------------------------- */
+
+						const response =
+							await fetch(
+
+								SUPABASE_URL +
+								"/functions/v1/admin-resend-character-email",
+
+								{
+
+									method:
+										"POST",
+
+									headers: {
+
+										"Authorization":
+											"Bearer " +
+											session.access_token,
+
+										"apikey":
+											SUPABASE_PUBLISHABLE_KEY,
+
+										"Content-Type":
+											"application/json"
+
+									},
+
+									body:
+										JSON.stringify({
+
+											reservation_id:
+												reservation.id,
+
+											player_id:
+												player.id
+
+										})
+
+								}
+
+							);
+
+
+						const result =
+							await response.json();
+
+
+						/* -----------------------------------------
+						   CHECK RESPONSE
+						----------------------------------------- */
+
+						if (
+							!response.ok ||
+							!result.success
+						) {
+
+							throw new Error(
+								result.error ||
+								"Could not resend character email."
+							);
+
+						}
+
+
+						/* -----------------------------------------
+						   SUCCESS
+						----------------------------------------- */
+
+						if (message) {
+
+							message.textContent =
+								"Email sent.";
+
+						}
+
+
+						button.textContent =
+							"Sent";
+
+
+						/*
+						 * Reload after a short delay so the
+						 * email timestamp/status is refreshed.
+						 */
+
+						setTimeout(
+							function() {
+
+								loadReservations();
+
+							},
+							1000
+						);
+
+					}
+
+
+					catch (error) {
+
+						console.error(
+							"Resend character email error:",
+							error
+						);
+
+
+						if (message) {
+
+							message.textContent =
+								error.message ||
+								"Could not resend character email.";
+
+						}
+
+
+						button.disabled =
+							false;
+
+
+						button.textContent =
+							originalText;
+
+					}
+
+				}
+			);
+
+		}
+	);
 
     /* =====================================================
        DETAILS
