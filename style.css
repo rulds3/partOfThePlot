@@ -3803,3 +3803,15 @@ input[type="time"]::-webkit-calendar-picker-indicator {
         font-size: 0.95rem;
     }
 }
+
+/* =========================================
+   DESKTOP HERO POSITION
+========================================= */
+
+@media (min-width: 901px) {
+
+    .hero-content {
+        top: 100px;
+    }
+
+}
