@@ -4,22 +4,26 @@
 
 <head>
 
-
 <meta charset="UTF-8">
 
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
 >
 
 <title>Plot Not Found | Part of the Plot</title>
 
-<link
-    rel="stylesheet"
-    href="style.css"
->
-
 <style>
+
+    :root {
+        --dark: #10131a;
+        --dark-blue: #171c28;
+        --gold: #c6a15b;
+        --light-gold: #e2c989;
+        --cream: #eee9df;
+    }
+
 
     /* =========================================
        404 PAGE
@@ -54,9 +58,10 @@
     ========================================= */
 
     .error-logo {
+        display: block;
         width: min(280px, 70vw);
         height: auto;
-        margin-bottom: 35px;
+        margin: 0 auto 35px;
     }
 
 
@@ -162,13 +167,6 @@
 
         color: rgba(226, 201, 137, 0.65);
     }
-	
-	.error-logo {
-    display: block;
-    width: min(280px, 70vw);
-    height: auto;
-    margin: 0 auto 35px;
-}
 
 </style>
 
@@ -178,49 +176,44 @@
 
 <main class="error-page">
 
-    <div class="error-content">
 
-        <img
-            src="partOfThePlotLogo.png"
-            alt="Part of the Plot"
-            class="error-logo"
-        >
+<div class="error-content">
 
+	<img
+		src="https://rulds3.github.io/partOfThePlot/partOfThePlotLogo.png"
+		alt="Part of the Plot"
+		class="error-logo"
+	>
 
-        <div class="error-number">
-            404
-        </div>
-
-
-        <h1 class="error-title">
-            The Plot Has Gone Missing.
-        </h1>
-
-
-        <p class="error-message">
-            It appears you've stumbled onto a scene
-            that isn't part of this story.
-            <br><br>
-            The page you're looking for may have been
-            moved, removed, or simply <strong>vanished
-            without a trace.</strong>
-        </p>
-
-
-        <a
-            href="index.html"
-            class="error-button"
-        >
-            Return to the Plot
-        </a>
-
-
-        <p class="error-clue">
-            Every mystery has a way back.
-        </p>
-
+    <div class="error-number">
+        404
     </div>
 
+    <h1 class="error-title">
+        The Plot Has Gone Missing.
+    </h1>
+
+    <p class="error-message">
+        It appears you've stumbled onto a scene
+        that isn't part of this story.
+        <br><br>
+        The page you're looking for may have been
+        moved, removed, or simply <strong>vanished
+        without a trace.</strong>
+    </p>
+
+	<a
+		href="https://rulds3.github.io/partOfThePlot/index.html"
+		class="error-button"
+	>
+		Return to the Plot
+	</a>
+
+    <p class="error-clue">
+        Every mystery has a way back.
+    </p>
+
+</div>
 </main>
 
 </body>
