@@ -364,13 +364,6 @@ async function loadReservations() {
             await response.json();
 
 
-        console.log(
-            "Admin reservations response:",
-            response.status,
-            result
-        );
-
-
         /* -------------------------------------------------
            CHECK RESPONSE
         ------------------------------------------------- */
@@ -1351,13 +1344,6 @@ function createReservationCard(
                         await response.json();
 
 
-                    console.log(
-                        "Approve reservation response:",
-                        response.status,
-                        result
-                    );
-
-
                     if (
                         !response.ok ||
                         !result.success
@@ -1505,13 +1491,6 @@ function createReservationCard(
 
                     const result =
                         await response.json();
-
-
-                    console.log(
-                        "Decline reservation response:",
-                        response.status,
-                        result
-                    );
 
 
                     if (
@@ -1869,13 +1848,6 @@ function createReservationCard(
 
                     const result =
                         await response.json();
-
-
-                    console.log(
-                        "Character assignment response:",
-                        response.status,
-                        result
-                    );
 
 
                     /* -----------------------------------------
@@ -2523,14 +2495,6 @@ function showEditForm(
 
                 const result =
                     await response.json();
-
-
-                console.log(
-                    "Update reservation response:",
-                    response.status,
-                    result
-                );
-
 
                 if (
                     !response.ok ||
