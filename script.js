@@ -967,27 +967,34 @@ function initializeSchedulingForm() {
         }
 
 
-        catch (error) {
-            console.error(
-                "Reservation submission error:",
-                error
-            );
+		catch (error) {
+			console.error(
+				"Reservation submission error:",
+				error
+			);
 
 
-            if (successElement) {
-                successElement.textContent =
-                    error.message ||
-                    "Something went wrong. Please try again.";
+			/* -----------------------------------------
+			   ALLOW USER TO CORRECT AND RESUBMIT
+			----------------------------------------- */
 
-                successElement.style.display = "block";
-            }
+			scheduleSubmissionLocked = false;
 
 
-            submitButton.textContent =
-                originalButtonText;
+			if (successElement) {
+				successElement.textContent =
+					error.message ||
+					"Something went wrong. Please try again.";
 
-            submitButton.disabled = false;
-        }
+				successElement.style.display = "block";
+			}
+
+
+			submitButton.textContent =
+				originalButtonText;
+
+			submitButton.disabled = false;
+		}
     }
 
 
