@@ -937,8 +937,8 @@ function initializeSchedulingForm() {
 
             submitButton.textContent = "Request Sent";
 
-            }
         }
+
 
 
 		catch (error) {
@@ -969,7 +969,7 @@ function initializeSchedulingForm() {
 
 			submitButton.disabled = false;
 		}
-    }
+	}
 
 
     /* -----------------------------------------
