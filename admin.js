@@ -894,21 +894,178 @@ function createReservationCard(
        DETAILS
     ===================================================== */
 
-    detailsPanel.innerHTML = `
+	detailsPanel.innerHTML = `
 
-        <!-- RESERVATION -->
+		<!-- RESERVATION -->
 
-        ...
+		<section class="details-section">
 
-        <!-- ACTIONS -->
+			<h3>
+				Reservation Details
+			</h3>
 
-        <div class="reservation-actions">
+			<div class="details-grid">
 
-            ...
+				${detail(
+					"Organizer",
+					reservation.organizer_name
+				)}
 
-        </div>
+				${detail(
+					"Email",
+					reservation.organizer_email
+				)}
 
-    `;
+				${detail(
+					"Phone",
+					reservation.organizer_phone
+				)}
+
+				${detail(
+					"Game",
+					reservation.game
+				)}
+
+				${detail(
+					"Date",
+					reservation.reservation_date
+				)}
+
+				${detail(
+					"Time",
+					reservation.reservation_time
+				)}
+
+				${detail(
+					"Location",
+					reservation.location
+				)}
+
+				${detail(
+					"Guests",
+					reservation.number_of_guests
+				)}
+
+				${detail(
+					"Total",
+					formatMoney(reservation.total)
+				)}
+
+				${detail(
+					"Deposit Due",
+					formatMoney(reservation.deposit_due)
+				)}
+
+				${detail(
+					"Remaining Balance",
+					formatMoney(reservation.remaining_balance)
+				)}
+
+			</div>
+
+		</section>
+
+
+		<!-- NOTES -->
+
+		<section class="details-section">
+
+			<h3>
+				Notes
+			</h3>
+
+			<div class="notes-grid">
+
+				<div class="notes-box">
+
+					<h4>
+						Private Notes
+					</h4>
+
+					<p>
+						${escapeHtml(
+							reservation.private_notes || "No private notes."
+						)}
+					</p>
+
+				</div>
+
+
+				<div class="notes-box">
+
+					<h4>
+						Organizer Notes
+					</h4>
+
+					<p>
+						${escapeHtml(
+							reservation.organizer_notes || "No organizer notes."
+						)}
+					</p>
+
+				</div>
+
+			</div>
+
+		</section>
+
+
+		<!-- PLAYER / CHARACTER ASSIGNMENTS -->
+
+		${playerSection}
+
+
+		<!-- ACTIONS -->
+
+		<div class="reservation-actions">
+
+			<button
+				type="button"
+				class="button"
+				data-action="edit"
+			>
+				Edit Reservation
+			</button>
+
+
+			<button
+				type="button"
+				class="button"
+				data-action="approve"
+				${
+					reservation.status === "approved"
+						? "disabled"
+						: ""
+				}
+			>
+				${
+					reservation.status === "approved"
+						? "Approved"
+						: "Approve Reservation"
+				}
+			</button>
+
+
+			<button
+				type="button"
+				class="button"
+				data-action="decline"
+				${
+					reservation.status === "declined"
+						? "disabled"
+						: ""
+				}
+			>
+				${
+					reservation.status === "declined"
+						? "Declined"
+						: "Decline Reservation"
+				}
+			</button>
+
+		</div>
+
+	`;
 
 
     /* =====================================================
