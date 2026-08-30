@@ -3815,3 +3815,224 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     }
 
 }
+
+/* =========================================
+   POST-GAME FEEDBACK
+========================================= */
+
+.feedback-page {
+    background: var(--dark);
+    color: var(--cream);
+    min-height: 100vh;
+    padding: 120px 20px 80px;
+}
+
+.feedback-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.feedback-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.feedback-header h1 {
+    color: var(--light-gold);
+    margin-bottom: 8px;
+}
+
+.feedback-header h2 {
+    color: var(--cream);
+    margin-bottom: 25px;
+}
+
+.feedback-header p {
+    max-width: 650px;
+    margin: 10px auto;
+    line-height: 1.7;
+}
+
+.feedback-question {
+    background: var(--dark-blue);
+    border: 1px solid rgba(198, 161, 91, 0.35);
+    border-radius: 8px;
+    padding: 28px;
+    margin-bottom: 25px;
+}
+
+.feedback-question > label:first-child,
+.feedback-question > label {
+    display: block;
+    color: var(--cream);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.feedback-question select,
+.feedback-question textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--dark);
+    color: var(--cream);
+    border: 1px solid rgba(198, 161, 91, 0.45);
+    border-radius: 5px;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.feedback-question select {
+    cursor: pointer;
+}
+
+.feedback-question textarea {
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.feedback-question select:focus,
+.feedback-question textarea:focus {
+    outline: none;
+    border-color: var(--light-gold);
+}
+
+.optional {
+    display: block;
+    color: #999;
+    font-size: 0.8rem;
+    margin-top: 8px;
+}
+
+.radio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-list label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: var(--cream);
+}
+
+.radio-list input {
+    accent-color: var(--gold);
+    width: 17px;
+    height: 17px;
+}
+
+.feedback-submit {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 40px auto 0;
+    padding: 14px 25px;
+    background: var(--gold);
+    color: var(--dark);
+    border: 2px solid var(--gold);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.feedback-submit:hover {
+    background: var(--light-gold);
+    border-color: var(--light-gold);
+}
+
+.feedback-success {
+    text-align: center;
+    background: var(--dark-blue);
+    border: 1px solid rgba(198, 161, 91, 0.45);
+    border-radius: 8px;
+    padding: 50px 30px;
+}
+
+.feedback-success h2 {
+    color: var(--light-gold);
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   FIVE STAR RATING
+========================================= */
+
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 8px;
+    margin: 15px 0 5px;
+}
+
+.star-rating input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.star-rating label {
+    display: block;
+    margin: 0;
+    padding: 4px;
+    color: #555;
+    font-size: 3rem;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        color 0.15s ease,
+        transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Hover */
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: var(--light-gold);
+}
+
+/* Selected rating */
+
+.star-rating input:checked ~ label {
+    color: var(--light-gold);
+}
+
+/* Touch/click feedback */
+
+.star-rating label:active {
+    transform: scale(0.9);
+}
+
+
+/* =========================================
+   FEEDBACK ERROR
+========================================= */
+
+.feedback-error {
+    max-width: 600px;
+    margin: 25px auto 0;
+    padding: 15px 20px;
+    text-align: center;
+    color: var(--cream);
+    background: rgba(120, 40, 40, 0.35);
+    border: 1px solid rgba(200, 100, 100, 0.5);
+    border-radius: 5px;
+}
+
+
+/* =========================================
+   DISABLED SUBMIT BUTTON
+========================================= */
+
+.feedback-submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}

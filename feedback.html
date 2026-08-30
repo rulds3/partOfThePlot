@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Tell Us What You Think | Part of the Plot</title>
+
+    <meta
+        name="description"
+        content="Tell us about your Part of the Plot mystery party experience."
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <!-- Google Fonts -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<div id="site-header"></div>
+
+
+<!-- ================= FEEDBACK ================= -->
+
+<section class="feedback-page">
+
+    <div class="feedback-container">
+
+        <div class="feedback-header">
+
+            <h1>Part of the Plot</h1>
+
+            <h2>Tell Us What You Think</h2>
+
+            <p>
+                Thank you for being <strong>Part of the Plot!</strong>
+            </p>
+
+            <p>
+                We'd love to hear about your experience. Your feedback helps us
+                make future Part of the Plot events the best they can be.
+            </p>
+
+        </div>
+
+
+        <!-- ================= FEEDBACK FORM ================= -->
+
+        <form id="feedbackForm">
+
+
+            <!-- Question 1 -->
+
+            <div class="feedback-question">
+
+                <label>
+                    1. Overall, how would you rate your experience?
+                </label>
+
+
+                <div
+                    class="star-rating"
+                    role="radiogroup"
+                    aria-label="Overall experience rating"
+                >
+
+                    <!-- 5 Stars -->
+
+                    <input
+                        type="radio"
+                        id="star5"
+                        name="overallRating"
+                        value="5"
+                        required
+                    >
+
+                    <label
+                        for="star5"
+                        title="5 stars"
+                        aria-label="5 stars"
+                    >★</label>
+
+
+                    <input
+                        type="radio"
+                        id="star4"
+                        name="overallRating"
+                        value="4"
+                    >
+
+                    <label
+                        for="star4"
+                        title="4 stars"
+                        aria-label="4 stars"
+                    >★</label>
+
+
+                    <input
+                        type="radio"
+                        id="star3"
+                        name="overallRating"
+                        value="3"
+                    >
+
+                    <label
+                        for="star3"
+                        title="3 stars"
+                        aria-label="3 stars"
+                    >★</label>
+
+
+                    <input
+                        type="radio"
+                        id="star2"
+                        name="overallRating"
+                        value="2"
+                    >
+
+                    <label
+                        for="star2"
+                        title="2 stars"
+                        aria-label="2 stars"
+                    >★</label>
+
+
+                    <input
+                        type="radio"
+                        id="star1"
+                        name="overallRating"
+                        value="1"
+                    >
+
+                    <label
+                        for="star1"
+                        title="1 star"
+                        aria-label="1 star"
+                    >★</label>
+
+                </div>
+
+            </div>
+
+
+            <!-- Question 2 -->
+
+            <div class="feedback-question">
+
+                <label for="clarity">
+
+                    2. How easy was it to understand what you were supposed
+                    to do during the game?
+
+                </label>
+
+
+                <select
+                    id="clarity"
+                    name="clarity"
+                    required
+                >
+
+                    <option value="">
+                        Please select...
+                    </option>
+
+                    <option value="Very easy">
+                        Very easy
+                    </option>
+
+                    <option value="Mostly easy">
+                        Mostly easy
+                    </option>
+
+                    <option value="Sometimes confusing">
+                        Sometimes confusing
+                    </option>
+
+                    <option value="Often confusing">
+                        Often confusing
+                    </option>
+
+                    <option value="I wasn't sure what I was supposed to do">
+                        I wasn't sure what I was supposed to do
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Question 3 -->
+
+            <div class="feedback-question">
+
+                <label for="favoritePart">
+
+                    3. What was your favorite part of the experience?
+
+                </label>
+
+
+                <textarea
+                    id="favoritePart"
+                    name="favoritePart"
+                    rows="5"
+                    placeholder="Tell us what you enjoyed most..."
+                ></textarea>
+
+
+                <span class="optional">
+                    Optional
+                </span>
+
+            </div>
+
+
+            <!-- Question 4 -->
+
+            <div class="feedback-question">
+
+                <label for="improvements">
+
+                    4. Was there anything about the event that was confusing,
+                    frustrating, or could have been better?
+
+                </label>
+
+
+                <textarea
+                    id="improvements"
+                    name="improvements"
+                    rows="5"
+                    placeholder="We'd love your honest feedback..."
+                ></textarea>
+
+
+                <span class="optional">
+                    Optional
+                </span>
+
+            </div>
+
+
+            <!-- Question 5 -->
+
+            <div class="feedback-question">
+
+                <label>
+
+                    5. Would you play another Part of the Plot mystery?
+
+                </label>
+
+
+                <div class="radio-list">
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="playAgain"
+                            value="Absolutely!"
+                            required
+                        >
+
+                        Absolutely!
+
+                    </label>
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="playAgain"
+                            value="Probably"
+                        >
+
+                        Probably
+
+                    </label>
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="playAgain"
+                            value="Maybe, depending on the mystery"
+                        >
+
+                        Maybe, depending on the mystery
+
+                    </label>
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="playAgain"
+                            value="Probably not"
+                        >
+
+                        Probably not
+
+                    </label>
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="playAgain"
+                            value="No"
+                        >
+
+                        No
+
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Question 6 -->
+
+            <div class="feedback-question">
+
+                <label>
+
+                    6. Would you recommend Part of the Plot to your friends
+                    or family?
+
+                </label>
+
+
+                <div class="radio-list">
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="recommend"
+                            value="Definitely"
+                            required
+                        >
+
+                        Definitely
+
+                    </label>
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="recommend"
+                            value="Probably"
+                        >
+
+                        Probably
+
+                    </label>
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="recommend"
+                            value="Maybe"
+                        >
+
+                        Maybe
+
+                    </label>
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="recommend"
+                            value="Probably not"
+                        >
+
+                        Probably not
+
+                    </label>
+
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="recommend"
+                            value="Definitely not"
+                        >
+
+                        Definitely not
+
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= SUBMIT ================= -->
+
+            <button
+                type="submit"
+                class="feedback-submit"
+                id="feedbackSubmit"
+            >
+                Submit Feedback
+            </button>
+
+
+            <!-- Error Message -->
+
+            <div
+                id="feedbackError"
+                class="feedback-error"
+                hidden
+            >
+                Something went wrong while submitting your feedback.
+                Please try again.
+            </div>
+
+
+        </form>
+
+
+        <!-- ================= SUCCESS MESSAGE ================= -->
+
+        <div
+            id="feedbackSuccess"
+            class="feedback-success"
+            hidden
+        >
+
+            <h2>Thank You! 🎭</h2>
+
+            <p>
+                We appreciate you taking the time to share your thoughts.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= SUPABASE + FORM SCRIPT ================= -->
+
+<script>
+
+    /* =========================================
+       SUPABASE CONNECTION
+    ========================================= */
+
+    const SUPABASE_URL =
+        "https://fqcabbpvevtlzzwsvezi.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_5FNoD9eo9A29lEjvsSKgkQ_sZdRqXQ7";
+
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+    /* =========================================
+       FEEDBACK FORM
+    ========================================= */
+
+    const feedbackForm =
+        document.getElementById("feedbackForm");
+
+    const feedbackSuccess =
+        document.getElementById("feedbackSuccess");
+
+    const feedbackError =
+        document.getElementById("feedbackError");
+
+    const feedbackSubmit =
+        document.getElementById("feedbackSubmit");
+
+
+    feedbackForm.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+
+        /* Hide any previous error */
+
+        feedbackError.hidden = true;
+
+
+        /* Prevent double submissions */
+
+        feedbackSubmit.disabled = true;
+
+        feedbackSubmit.textContent = "Submitting...";
+
+
+        /* Get the selected values */
+
+        const formData =
+            new FormData(feedbackForm);
+
+
+        const overallRating =
+            Number(formData.get("overallRating"));
+
+        const clarity =
+            formData.get("clarity");
+
+        const favoritePart =
+            formData.get("favoritePart")?.trim() || null;
+
+        const improvements =
+            formData.get("improvements")?.trim() || null;
+
+        const playAgain =
+            formData.get("playAgain");
+
+        const recommend =
+            formData.get("recommend");
+
+
+        /* =========================================
+           SAVE TO SUPABASE
+        ========================================= */
+
+        const { error } = await supabaseClient
+            .from("post_game_feedback")
+            .insert({
+                overall_rating: overallRating,
+                game_clarity: clarity,
+                favorite_part: favoritePart,
+                improvements: improvements,
+                play_again: playAgain,
+                recommend: recommend
+            });
+
+
+        /* =========================================
+           HANDLE RESULT
+        ========================================= */
+
+        if (error) {
+
+            console.error(
+                "Feedback submission error:",
+                error
+            );
+
+            feedbackError.hidden = false;
+
+            feedbackSubmit.disabled = false;
+
+            feedbackSubmit.textContent =
+                "Submit Feedback";
+
+            return;
+        }
+
+
+        /* =========================================
+           SUCCESS
+        ========================================= */
+
+        feedbackForm.hidden = true;
+
+        feedbackSuccess.hidden = false;
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+</script>
+
+
+<!-- ================= SITE SCRIPT ================= -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
