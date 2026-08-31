@@ -1,0 +1,731 @@
+/* =========================================================
+   A DEAD MAN'S CHEST GAME PAGE
+   Dark / Nautical / Antique Theme
+   ========================================================= */
+
+
+/* =========================================================
+   TITLE & BYLINE
+   ========================================================= */
+
+.deadMansChest-title {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.deadMansChest-title h1 {
+    margin-bottom: 0;
+
+    white-space: nowrap;
+}
+
+.deadMansChest-title h1 span {
+    white-space: nowrap;
+}
+
+.deadMansChest-byline {
+    margin: -25px 0 10px;
+
+    color: #d8d2c7;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+
+    text-align: right;
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.95);
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.deadMansChest-hero {
+    position: relative;
+
+    min-height: 700px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(8, 10, 12, 0.28),
+            rgba(8, 10, 12, 0.80)
+        ),
+        url("deadMansChestBackground.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* ---------------------------------------------------------
+   Hero Overlay
+   --------------------------------------------------------- */
+
+.deadMansChest-hero::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent 40%,
+            rgba(7, 9, 11, 0.30) 100%
+        );
+}
+
+
+.deadMansChest-hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 850px;
+
+    padding: 100px 30px 40px;
+}
+
+
+/* =========================================================
+   HERO EYEBROW
+   ========================================================= */
+
+.deadMansChest-hero .eyebrow {
+    display: inline-block;
+
+    margin: 0 0 25px;
+    padding: 7px 16px;
+
+    color: #e8e6df;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+
+    background: rgba(10, 12, 14, 0.76);
+
+    border: 1px solid rgba(198, 161, 91, 0.48);
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.95);
+}
+
+
+/* =========================================================
+   MAIN TITLE
+   ========================================================= */
+
+.deadMansChest-hero h1 {
+    margin-bottom: 15px;
+
+    color: #f4f0e8;
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 500;
+    line-height: 1;
+
+    letter-spacing: 3px;
+
+    text-align: center;
+
+    text-shadow:
+        0 2px 2px rgba(0, 0, 0, 0.98),
+        0 4px 9px rgba(0, 0, 0, 0.85);
+}
+
+
+.deadMansChest-hero h1 span {
+    color: var(--light-gold);
+
+    text-shadow:
+        0 2px 2px rgba(0, 0, 0, 0.98),
+        0 4px 9px rgba(0, 0, 0, 0.85);
+}
+
+
+/* =========================================================
+   SUBTITLE
+   ========================================================= */
+
+.deadMansChest-subtitle {
+    margin-bottom: 30px;
+
+    color: #ddd8cf;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+
+    letter-spacing: 3px;
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.95),
+        0 3px 7px rgba(0, 0, 0, 0.80);
+}
+
+
+/* =========================================================
+   TAGLINE
+   ========================================================= */
+
+.deadMansChest-hero .tagline {
+    color: #e8e6df;
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.98),
+        0 3px 7px rgba(0, 0, 0, 0.80);
+}
+
+
+.deadMansChest-hero .tagline strong {
+    color: #fffaf0;
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.98),
+        0 3px 7px rgba(0, 0, 0, 0.80);
+}
+
+
+/* =========================================================
+   HERO DETAILS
+   ========================================================= */
+
+.deadMansChest-hero-details {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 30px;
+
+    margin-top: 35px;
+}
+
+
+.deadMansChest-hero-details div {
+    min-width: 120px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid rgba(198, 161, 91, 0.65);
+}
+
+
+.deadMansChest-hero-details span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #d4b778;
+
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+.deadMansChest-hero-details strong {
+    display: block;
+
+    color: #e8e6df;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.25;
+
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+
+/* =========================================================
+   HERO SCHEDULE BUTTON
+   ========================================================= */
+
+.deadMansChest-hero-content .button {
+    display: block;
+    width: fit-content;
+
+    margin: 45px auto 0;
+}
+
+
+/* =========================================================
+   SCHEDULE AVAILABILITY
+   ========================================================= */
+
+.deadMansChest-hero .schedule-availability {
+    color: #bdb7ad;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+
+    letter-spacing: 0.04em;
+    text-align: center;
+}
+
+
+.deadMansChest-hero-content > .schedule-availability {
+    margin: 0.75rem 0 0;
+}
+
+
+/* =========================================================
+   STORY SECTION
+   ========================================================= */
+
+.deadMansChest-story-section {
+    position: relative;
+
+    padding: 70px 8% 55px;
+
+    background: #242526;
+}
+
+
+.deadMansChest-story-container {
+    max-width: 800px;
+
+    margin: auto;
+}
+
+
+.deadMansChest-story-text {
+    text-align: center;
+}
+
+
+/* =========================================================
+   STORY EYEBROW
+   ========================================================= */
+
+.deadMansChest-story-text .eyebrow {
+    color: var(--gold);
+}
+
+
+/* =========================================================
+   STORY HEADING
+   ========================================================= */
+
+.deadMansChest-story-text h2 {
+    margin-bottom: 30px;
+
+    color: #e8e6df;
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(35px, 5vw, 55px);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+
+.deadMansChest-story-text h2 span {
+    color: var(--gold);
+}
+
+
+/* ---------------------------------------------------------
+   Divider
+   --------------------------------------------------------- */
+
+.deadMansChest-story-text h2::after {
+    content: "";
+
+    display: block;
+
+    width: 70px;
+    height: 1px;
+
+    margin: 25px auto 0;
+
+    background: var(--gold);
+}
+
+
+.deadMansChest-story-text p {
+    margin-bottom: 20px;
+
+    color: #d2d0ca;
+}
+
+
+/* =========================================================
+   BETA / PRICING SECTION
+   ========================================================= */
+
+.deadMansChest-included {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 0 2rem 4rem;
+
+    background: #242526;
+}
+
+
+.deadMansChest-included-container {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PRICE BOX
+   ========================================================= */
+
+.deadMansChest-price {
+    position: relative;
+
+    width: 100%;
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    padding: 3.5rem 3rem;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    background: #101a1b;
+
+    border: 1px solid rgba(198, 161, 91, 0.70);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.42);
+}
+
+
+/* ---------------------------------------------------------
+   Inner Border
+   --------------------------------------------------------- */
+
+.deadMansChest-price::before {
+    content: "";
+
+    position: absolute;
+    inset: 8px;
+
+    border: 1px solid rgba(198, 161, 91, 0.18);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   BETA HEADING
+   ========================================================= */
+
+.deadMansChest-price-eyebrow {
+    margin: 0 0 0.5rem;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   REMAINING SPOTS
+   ========================================================= */
+
+.deadMansChest-spots-remaining {
+    margin: 0 0 1.75rem;
+
+    color: #aaa59d;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PRICE
+   ========================================================= */
+
+.deadMansChest-price-amount {
+    margin: 0;
+
+    color: #e8e6df;
+
+    font-family: 'Cinzel', serif;
+    font-size: 4.5rem;
+    font-weight: 600;
+    line-height: 1;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================================
+   TAX NOTE
+   ========================================================= */
+
+.deadMansChest-tax-note {
+    margin: 0.45rem 0 1.25rem;
+
+    color: #96918a;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   DEPOSIT
+   ========================================================= */
+
+.deadMansChest-deposit-note {
+    margin: 0 0 1.25rem;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   BETA EXPLANATION
+   ========================================================= */
+
+.deadMansChest-beta-note {
+    max-width: 470px;
+
+    margin: 0 auto 1.5rem;
+
+    color: #aaa59d;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   PRICE DESCRIPTION
+   ========================================================= */
+
+.deadMansChest-price-description {
+    margin: 0;
+
+    color: #e5dfd5;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   PER PERSON
+   ========================================================= */
+
+.deadMansChest-price-per-person {
+    margin: 1rem 0 0;
+
+    color: #96918a;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   PRICE SCHEDULE BUTTON
+   ========================================================= */
+
+.deadMansChest-price .schedule-button {
+    margin-top: 2rem;
+}
+
+
+.deadMansChest-price .schedule-availability {
+    margin: 0.75rem 0 0;
+}
+
+
+/* =========================================================
+   ACCENT DETAILS
+   ========================================================= */
+
+.deadMansChest-story-text strong {
+    color: var(--gold);
+}
+
+
+.deadMansChest-story-text a {
+    color: var(--light-gold);
+
+    text-decoration-color: rgba(226, 201, 137, 0.45);
+    text-underline-offset: 3px;
+}
+
+
+.deadMansChest-story-text a:hover {
+    color: #f0dfad;
+}
+
+
+/* =========================================================
+   MOBILE WIDTH FIX
+   ========================================================= */
+
+.deadMansChest-hero,
+.deadMansChest-story-section,
+.deadMansChest-included,
+.game-credit {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.deadMansChest-hero-content,
+.deadMansChest-story-container,
+.deadMansChest-included-container {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    /* -----------------------------------------------------
+       Hero
+       ----------------------------------------------------- */
+
+    .deadMansChest-hero {
+        min-height: 650px;
+    }
+
+
+    .deadMansChest-hero-content {
+        padding: 90px 20px 40px;
+    }
+
+
+    .deadMansChest-hero .eyebrow {
+        font-size: 0.62rem;
+        letter-spacing: 0.13em;
+
+        padding: 6px 12px;
+    }
+
+
+    .deadMansChest-hero h1 {
+        font-size: clamp(42px, 12vw, 55px);
+        letter-spacing: 2px;
+    }
+
+
+    .deadMansChest-subtitle {
+        font-size: 13px;
+        letter-spacing: 2px;
+    }
+
+
+    /* -----------------------------------------------------
+       Hero Details
+       ----------------------------------------------------- */
+
+    .deadMansChest-hero-details {
+        gap: 15px;
+    }
+
+
+    .deadMansChest-hero-details div {
+        min-width: 100px;
+    }
+
+
+    /* -----------------------------------------------------
+       Story
+       ----------------------------------------------------- */
+
+    .deadMansChest-story-section {
+        padding: 75px 20px 45px;
+    }
+
+
+    .deadMansChest-story-text h2 {
+        font-size: clamp(32px, 10vw, 45px);
+    }
+
+
+    /* -----------------------------------------------------
+       Pricing
+       ----------------------------------------------------- */
+
+    .deadMansChest-included {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 5rem;
+    }
+
+
+    .deadMansChest-price {
+        padding: 3rem 1.5rem;
+    }
+
+
+    .deadMansChest-price-amount {
+        font-size: 3.75rem;
+    }
+
+}
+
+
+/* =========================================================
+   GAME CREDIT
+   ========================================================= */
+
+.game-credit {
+    text-align: center;
+}
+
+
+/* =========================================================
+   END
+   ========================================================= */
