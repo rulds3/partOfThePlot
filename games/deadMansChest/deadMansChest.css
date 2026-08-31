@@ -242,7 +242,12 @@
 
     color: #e8e6df;
 
-    overflow-wrap: break-word;
+    /*
+       Keep the entire tagline on one line.
+       The responsive font sizes below prevent it
+       from causing horizontal page overflow.
+    */
+    white-space: nowrap;
 
     text-shadow:
         0 1px 2px rgba(0, 0, 0, 0.98),
@@ -785,6 +790,26 @@
 
 
     /* -----------------------------------------------------
+       TAGLINE
+       ----------------------------------------------------- */
+
+    .deadMansChest-hero .tagline {
+        /*
+           Keep tagline on a single line.
+           3.4vw scales it down automatically on
+           narrower phones.
+        */
+        font-size: clamp(9px, 3.4vw, 16px);
+
+        letter-spacing: 0;
+
+        white-space: nowrap;
+
+        max-width: 100%;
+    }
+
+
+    /* -----------------------------------------------------
        Title / Byline
        ----------------------------------------------------- */
 
@@ -920,6 +945,19 @@
     }
 
 
+    /* -----------------------------------------------------
+       Very Small Phone Tagline
+       ----------------------------------------------------- */
+
+    .deadMansChest-hero .tagline {
+        font-size: 9px;
+
+        letter-spacing: -0.1px;
+
+        white-space: nowrap;
+    }
+
+
     .deadMansChest-hero-details {
         gap: 15px 8px;
     }
@@ -945,7 +983,6 @@
     .deadMansChest-price-eyebrow {
         font-size: 0.7rem;
     }
-
 
 }
 
