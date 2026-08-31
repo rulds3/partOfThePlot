@@ -1,6 +1,7 @@
 /* =========================================================
    WAY OUT WEST GAME PAGE
    Western / Frontier / Parchment Theme
+   Responsive / Mobile-Safe Version
    ========================================================= */
 
 
@@ -19,6 +20,14 @@
 }
 
 
+.wayOutWest-hero *,
+.wayOutWest-story-section *,
+.wayOutWest-included *,
+.game-credit * {
+    box-sizing: border-box;
+}
+
+
 .wayOutWest-hero-content,
 .wayOutWest-story-container,
 .wayOutWest-included-container {
@@ -34,7 +43,8 @@
 
 .wayOutWest-title {
     display: block;
-    width: fit-content;
+
+    width: 100%;
     max-width: 100%;
 
     margin: 0 auto;
@@ -48,11 +58,10 @@
 .wayOutWest-title h1 {
     margin-bottom: 0;
 
-    /*
-     * Allow the title to wrap if necessary.
-     * This prevents mobile horizontal overflow.
-     */
+    max-width: 100%;
+
     white-space: normal;
+    overflow-wrap: normal;
 }
 
 
@@ -69,6 +78,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 0.6rem;
     font-weight: 500;
+
     letter-spacing: 0.08em;
 
     text-align: right;
@@ -123,6 +133,8 @@
             transparent 45%,
             rgba(18, 12, 8, 0.28) 100%
         );
+
+    pointer-events: none;
 }
 
 
@@ -146,7 +158,6 @@
     display: inline-block;
 
     max-width: 100%;
-    box-sizing: border-box;
 
     margin: 0 0 25px;
     padding: 7px 16px;
@@ -189,7 +200,7 @@
 
     text-align: center;
 
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     word-break: normal;
 
     text-shadow:
@@ -241,7 +252,14 @@
 
     color: #f4ead9;
 
-    overflow-wrap: break-word;
+    /*
+     * The HTML contains an intentional <br>.
+     * Keep each side of that break together.
+     */
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: clip;
 
     text-shadow:
         0 1px 2px rgba(0, 0, 0, 0.95),
@@ -268,6 +286,7 @@
 
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     flex-wrap: wrap;
 
     gap: 30px;
@@ -279,10 +298,6 @@
 
 
 .wayOutWest-hero-details div {
-    /*
-     * flex-basis keeps these from forcing the page wider
-     * than the viewport on small screens.
-     */
     min-width: 120px;
     max-width: 180px;
 
@@ -332,6 +347,7 @@
 
 .wayOutWest-hero-content .button {
     display: block;
+
     width: fit-content;
     max-width: 100%;
 
@@ -528,6 +544,8 @@
    ========================================================= */
 
 .wayOutWest-price-eyebrow {
+    max-width: 100%;
+
     margin: 0 0 0.5rem;
 
     color: var(--gold);
@@ -548,6 +566,8 @@
    ========================================================= */
 
 .wayOutWest-spots-remaining {
+    max-width: 100%;
+
     margin: 0 0 1.75rem;
 
     color: #b7a995;
@@ -591,6 +611,8 @@
    ========================================================= */
 
 .wayOutWest-tax-note {
+    max-width: 100%;
+
     margin: 0.45rem 0 1.25rem;
 
     color: #9f9383;
@@ -609,6 +631,8 @@
    ========================================================= */
 
 .wayOutWest-deposit-note {
+    max-width: 100%;
+
     margin: 0 0 1.25rem;
 
     color: var(--gold);
@@ -646,6 +670,8 @@
    ========================================================= */
 
 .wayOutWest-price-description {
+    max-width: 100%;
+
     margin: 0;
 
     color: #eadfce;
@@ -663,6 +689,8 @@
    ========================================================= */
 
 .wayOutWest-price-per-person {
+    max-width: 100%;
+
     margin: 1rem 0 0;
 
     color: #a69a89;
@@ -680,6 +708,8 @@
    ========================================================= */
 
 .wayOutWest-price .schedule-button {
+    display: inline-block;
+
     max-width: 100%;
 
     margin-top: 2rem;
@@ -723,6 +753,15 @@
 
 .game-credit {
     text-align: center;
+}
+
+
+.game-credit p,
+.game-credit h2,
+.game-credit a {
+    max-width: 100%;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -775,10 +814,6 @@
 
 
     .wayOutWest-hero h1 {
-        /*
-         * Smaller mobile title prevents long words/letter
-         * spacing from creating a wider layout.
-         */
         font-size: clamp(38px, 12vw, 55px);
 
         letter-spacing: 1px;
@@ -791,6 +826,23 @@
         font-size: 13px;
 
         letter-spacing: 1.5px;
+
+        line-height: 1.5;
+    }
+
+
+    /* -----------------------------------------------------
+       Tagline
+       ----------------------------------------------------- */
+
+    .wayOutWest-hero .tagline {
+        /*
+         * Do NOT allow the two intentional tagline lines
+         * to wrap onto additional lines.
+         */
+        white-space: nowrap;
+
+        font-size: 0.95rem;
 
         line-height: 1.5;
     }
@@ -942,6 +994,25 @@
         font-size: 12px;
 
         letter-spacing: 1px;
+    }
+
+
+    /* -----------------------------------------------------
+       Smaller Tagline
+       ----------------------------------------------------- */
+
+    .wayOutWest-hero .tagline {
+        /*
+         * Keep the tagline on exactly the two lines
+         * defined by the HTML <br>.
+         */
+        white-space: nowrap;
+
+        font-size: 0.82rem;
+
+        line-height: 1.5;
+
+        letter-spacing: -0.01em;
     }
 
 
