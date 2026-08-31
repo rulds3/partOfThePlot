@@ -1,0 +1,739 @@
+/* =========================================================
+   WAY OUT WEST GAME PAGE
+   Western / Frontier / Parchment Theme
+   ========================================================= */
+
+
+/* =========================================================
+   TITLE & BYLINE
+   ========================================================= */
+
+.wayOutWest-title {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.wayOutWest-title h1 {
+    margin-bottom: 0;
+
+    white-space: nowrap;
+}
+
+.wayOutWest-title h1 span {
+    white-space: nowrap;
+}
+
+.game-byline {
+    margin: -25px 0 10px;
+
+    color: #d8cbb8;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+
+    text-align: right;
+
+    transform: none;
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+
+/* =========================================================
+   WAY OUT WEST HERO
+   ========================================================= */
+
+.wayOutWest-hero {
+    position: relative;
+
+    min-height: 700px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(20, 14, 9, 0.28),
+            rgba(20, 14, 9, 0.78)
+        ),
+        url("wayOutWestBackground.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* ---------------------------------------------------------
+   Hero Overlay
+   --------------------------------------------------------- */
+
+.wayOutWest-hero::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent 45%,
+            rgba(18, 12, 8, 0.28) 100%
+        );
+}
+
+
+.wayOutWest-hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 850px;
+
+    padding: 100px 30px 40px;
+}
+
+
+/* =========================================================
+   HERO EYEBROW
+   ========================================================= */
+
+.wayOutWest-hero .eyebrow {
+    display: inline-block;
+
+    margin: 0 0 25px;
+    padding: 7px 16px;
+
+    color: #f4ead9;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+
+    background: rgba(25, 18, 12, 0.72);
+
+    border: 1px solid rgba(198, 161, 91, 0.45);
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+
+/* =========================================================
+   MAIN TITLE
+   ========================================================= */
+
+.wayOutWest-hero h1 {
+    margin-bottom: 15px;
+
+    color: #fff8eb;
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(50px, 8vw, 100px);
+    font-weight: 500;
+    line-height: 1;
+
+    letter-spacing: 4px;
+
+    text-align: center;
+
+    text-shadow:
+        0 2px 2px rgba(0, 0, 0, 0.95),
+        0 4px 8px rgba(0, 0, 0, 0.75);
+}
+
+
+.wayOutWest-hero h1 span {
+    color: var(--light-gold);
+
+    text-shadow:
+        0 2px 2px rgba(0, 0, 0, 0.95),
+        0 4px 8px rgba(0, 0, 0, 0.75);
+}
+
+
+/* =========================================================
+   HERO SUBTITLE
+   ========================================================= */
+
+.wayOutWest-subtitle {
+    margin-bottom: 30px;
+
+    color: #eadcc5;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+
+    letter-spacing: 3px;
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.95),
+        0 3px 7px rgba(0, 0, 0, 0.75);
+}
+
+
+/* =========================================================
+   HERO TAGLINE
+   ========================================================= */
+
+.wayOutWest-hero .tagline {
+    color: #f4ead9;
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.95),
+        0 3px 7px rgba(0, 0, 0, 0.75);
+}
+
+
+.wayOutWest-hero .tagline strong {
+    color: #fff4df;
+
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.95),
+        0 3px 7px rgba(0, 0, 0, 0.75);
+}
+
+
+/* =========================================================
+   HERO DETAILS
+   ========================================================= */
+
+.wayOutWest-hero-details {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 30px;
+
+    margin-top: 35px;
+}
+
+
+.wayOutWest-hero-details div {
+    min-width: 120px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid rgba(198, 161, 91, 0.65);
+}
+
+
+.wayOutWest-hero-details span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #d4ae70;
+
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+.wayOutWest-hero-details strong {
+    color: #eee2cf;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+
+/* =========================================================
+   HERO SCHEDULE BUTTON
+   ========================================================= */
+
+.wayOutWest-hero-content .button {
+    display: block;
+    width: fit-content;
+
+    margin: 45px auto 0;
+}
+
+
+/* =========================================================
+   SCHEDULE AVAILABILITY
+   ========================================================= */
+
+.schedule-availability {
+    color: #b8aa97;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+
+    letter-spacing: 0.04em;
+    text-align: center;
+}
+
+
+.wayOutWest-hero-content > .schedule-availability {
+    margin: 0.75rem 0 0;
+}
+
+
+/* =========================================================
+   STORY SECTION
+   ========================================================= */
+
+.wayOutWest-story-section {
+    position: relative;
+
+    padding: 70px 8% 55px;
+
+    background: #2d241a;
+}
+
+
+/* ---------------------------------------------------------
+   Story Container
+   --------------------------------------------------------- */
+
+.wayOutWest-story-container {
+    max-width: 800px;
+
+    margin: auto;
+}
+
+
+.wayOutWest-story-text {
+    text-align: center;
+}
+
+
+/* =========================================================
+   STORY EYEBROW
+   ========================================================= */
+
+.wayOutWest-story-text .eyebrow {
+    color: #c6a15b;
+}
+
+
+/* =========================================================
+   STORY HEADING
+   ========================================================= */
+
+.wayOutWest-story-text h2 {
+    margin-bottom: 30px;
+
+    color: #eee2cf;
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(35px, 5vw, 55px);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+
+.wayOutWest-story-text h2 span {
+    color: var(--gold);
+}
+
+
+/* ---------------------------------------------------------
+   Western Divider
+   --------------------------------------------------------- */
+
+.wayOutWest-story-text h2::after {
+    content: "";
+
+    display: block;
+
+    width: 70px;
+    height: 1px;
+
+    margin: 25px auto 0;
+
+    background: var(--gold);
+}
+
+
+/* ---------------------------------------------------------
+   Story Paragraphs
+   --------------------------------------------------------- */
+
+.wayOutWest-story-text p {
+    margin-bottom: 20px;
+
+    color: #d4c6b3;
+}
+
+
+/* =========================================================
+   WHAT'S INCLUDED / BETA OFFER
+   ========================================================= */
+
+.wayOutWest-included {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 0 2rem 4rem;
+
+    background: #2d241a;
+}
+
+
+.wayOutWest-included-container {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BETA OFFER / PRICE BOX
+   ========================================================= */
+
+.wayOutWest-price {
+    position: relative;
+
+    width: 100%;
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    padding: 3.5rem 3rem;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    background: #241c15;
+
+    border: 1px solid rgba(198, 161, 91, 0.7);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ---------------------------------------------------------
+   Inner Border
+   --------------------------------------------------------- */
+
+.wayOutWest-price::before {
+    content: "";
+
+    position: absolute;
+    inset: 8px;
+
+    border: 1px solid rgba(198, 161, 91, 0.18);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   BETA HEADING
+   ========================================================= */
+
+.wayOutWest-price-eyebrow {
+    margin: 0 0 0.5rem;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   REMAINING BETA SPOTS
+   ========================================================= */
+
+.wayOutWest-spots-remaining {
+    margin: 0 0 1.75rem;
+
+    color: #b7a995;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   MAIN PRICE
+   ========================================================= */
+
+.wayOutWest-price-amount {
+    margin: 0;
+
+    color: #eadcc5;
+
+    font-family: 'Cinzel', serif;
+    font-size: 4.5rem;
+    font-weight: 600;
+    line-height: 1;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.45);
+}
+
+
+/* =========================================================
+   SALES TAX
+   ========================================================= */
+
+.wayOutWest-tax-note {
+    margin: 0.45rem 0 1.25rem;
+
+    color: #9f9383;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   DEPOSIT
+   ========================================================= */
+
+.wayOutWest-deposit-note {
+    margin: 0 0 1.25rem;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   BETA EXPLANATION
+   ========================================================= */
+
+.wayOutWest-beta-note {
+    max-width: 470px;
+
+    margin: 0 auto 1.5rem;
+
+    color: #b9ac9a;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   PRICE DESCRIPTION
+   ========================================================= */
+
+.wayOutWest-price-description {
+    margin: 0;
+
+    color: #eadfce;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   PER PERSON NOTE
+   ========================================================= */
+
+.wayOutWest-price-per-person {
+    margin: 1rem 0 0;
+
+    color: #a69a89;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   PRICE BOX SCHEDULE BUTTON
+   ========================================================= */
+
+.wayOutWest-price .schedule-button {
+    margin-top: 2rem;
+}
+
+
+.wayOutWest-price .schedule-availability {
+    margin: 0.75rem 0 0;
+}
+
+
+/* =========================================================
+   WESTERN ACCENTS
+   ========================================================= */
+
+.wayOutWest-story-text strong {
+    color: var(--gold);
+}
+
+
+.wayOutWest-story-text a {
+    color: var(--light-gold);
+
+    text-decoration-color: rgba(226, 201, 137, 0.45);
+    text-underline-offset: 3px;
+}
+
+
+.wayOutWest-story-text a:hover {
+    color: #f0dfad;
+}
+
+
+/* =========================================================
+   MOBILE WIDTH FIX
+   ========================================================= */
+
+.wayOutWest-hero,
+.wayOutWest-story-section,
+.wayOutWest-included,
+.game-credit {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.wayOutWest-hero-content,
+.wayOutWest-story-container,
+.wayOutWest-included-container {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    /* -----------------------------------------------------
+       Hero
+       ----------------------------------------------------- */
+
+    .wayOutWest-hero {
+        min-height: 650px;
+    }
+
+
+    .wayOutWest-hero-content {
+        padding: 90px 20px 40px;
+    }
+
+
+    .wayOutWest-hero .eyebrow {
+        font-size: 0.62rem;
+        letter-spacing: 0.13em;
+
+        padding: 6px 12px;
+    }
+
+
+    .wayOutWest-hero h1 {
+        font-size: clamp(42px, 13vw, 55px);
+        letter-spacing: 2px;
+    }
+
+
+    .wayOutWest-subtitle {
+        font-size: 13px;
+        letter-spacing: 2px;
+    }
+
+
+    /* -----------------------------------------------------
+       Hero Details
+       ----------------------------------------------------- */
+
+    .wayOutWest-hero-details {
+        gap: 15px;
+    }
+
+
+    .wayOutWest-hero-details div {
+        min-width: 100px;
+    }
+
+
+    /* -----------------------------------------------------
+       Story
+       ----------------------------------------------------- */
+
+    .wayOutWest-story-section {
+        padding: 75px 20px 45px;
+    }
+
+
+    .wayOutWest-story-text h2 {
+        font-size: clamp(32px, 10vw, 45px);
+    }
+
+
+    /* -----------------------------------------------------
+       Pricing
+       ----------------------------------------------------- */
+
+    .wayOutWest-included {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 5rem;
+    }
+
+
+    .wayOutWest-price {
+        padding: 3rem 1.5rem;
+    }
+
+
+    .wayOutWest-price-amount {
+        font-size: 3.75rem;
+    }
+
+}
+
+
+/* =========================================================
+   GAME CREDIT
+   ========================================================= */
+
+.game-credit {
+    text-align: center;
+}
+
+
+/* =========================================================
+   END
+   ========================================================= */
+   
+   
