@@ -1,7 +1,31 @@
 /* =========================================================
    A DEAD MAN'S CHEST GAME PAGE
    Dark / Nautical / Antique Theme
+   Responsive / Mobile-Safe Version
    ========================================================= */
+
+
+/* =========================================================
+   GLOBAL WIDTH SAFETY
+   ========================================================= */
+
+.deadMansChest-hero,
+.deadMansChest-story-section,
+.deadMansChest-included,
+.game-credit {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+
+.deadMansChest-hero *,
+.deadMansChest-story-section *,
+.deadMansChest-included *,
+.game-credit * {
+    box-sizing: border-box;
+}
 
 
 /* =========================================================
@@ -10,23 +34,31 @@
 
 .deadMansChest-title {
     display: block;
-    width: fit-content;
+
+    width: 100%;
     max-width: 100%;
 
     margin: 0 auto;
 
     text-align: center;
+    box-sizing: border-box;
 }
+
 
 .deadMansChest-title h1 {
     margin-bottom: 0;
 
-    white-space: nowrap;
+    max-width: 100%;
+
+    white-space: normal;
+    overflow-wrap: normal;
 }
 
+
 .deadMansChest-title h1 span {
-    white-space: nowrap;
+    white-space: normal;
 }
+
 
 .deadMansChest-byline {
     margin: -25px 0 10px;
@@ -89,6 +121,8 @@
             transparent 40%,
             rgba(7, 9, 11, 0.30) 100%
         );
+
+    pointer-events: none;
 }
 
 
@@ -96,9 +130,14 @@
     position: relative;
     z-index: 2;
 
+    width: 100%;
     max-width: 850px;
 
+    margin: 0 auto;
+
     padding: 100px 30px 40px;
+
+    box-sizing: border-box;
 }
 
 
@@ -108,6 +147,8 @@
 
 .deadMansChest-hero .eyebrow {
     display: inline-block;
+
+    max-width: 100%;
 
     margin: 0 0 25px;
     padding: 7px 16px;
@@ -135,6 +176,8 @@
    ========================================================= */
 
 .deadMansChest-hero h1 {
+    max-width: 100%;
+
     margin-bottom: 15px;
 
     color: #f4f0e8;
@@ -147,6 +190,8 @@
     letter-spacing: 3px;
 
     text-align: center;
+
+    overflow-wrap: normal;
 
     text-shadow:
         0 2px 2px rgba(0, 0, 0, 0.98),
@@ -168,6 +213,8 @@
    ========================================================= */
 
 .deadMansChest-subtitle {
+    max-width: 100%;
+
     margin-bottom: 30px;
 
     color: #ddd8cf;
@@ -177,6 +224,8 @@
     font-weight: 500;
 
     letter-spacing: 3px;
+
+    overflow-wrap: break-word;
 
     text-shadow:
         0 1px 2px rgba(0, 0, 0, 0.95),
@@ -189,7 +238,11 @@
    ========================================================= */
 
 .deadMansChest-hero .tagline {
+    max-width: 100%;
+
     color: #e8e6df;
+
+    overflow-wrap: break-word;
 
     text-shadow:
         0 1px 2px rgba(0, 0, 0, 0.98),
@@ -211,8 +264,12 @@
    ========================================================= */
 
 .deadMansChest-hero-details {
+    width: 100%;
+    max-width: 100%;
+
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     flex-wrap: wrap;
 
     gap: 30px;
@@ -222,7 +279,10 @@
 
 
 .deadMansChest-hero-details div {
-    min-width: 120px;
+    flex: 1 1 120px;
+
+    min-width: 0;
+    max-width: 220px;
 
     padding-top: 12px;
 
@@ -253,6 +313,8 @@
 
     line-height: 1.25;
 
+    overflow-wrap: break-word;
+
     text-shadow:
         0 1px 3px rgba(0, 0, 0, 0.9);
 }
@@ -264,7 +326,9 @@
 
 .deadMansChest-hero-content .button {
     display: block;
+
     width: fit-content;
+    max-width: 100%;
 
     margin: 45px auto 0;
 }
@@ -275,6 +339,8 @@
    ========================================================= */
 
 .deadMansChest-hero .schedule-availability {
+    max-width: 100%;
+
     color: #bdb7ad;
 
     font-family: 'Montserrat', sans-serif;
@@ -282,6 +348,8 @@
 
     letter-spacing: 0.04em;
     text-align: center;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -304,13 +372,17 @@
 
 
 .deadMansChest-story-container {
+    width: 100%;
     max-width: 800px;
 
-    margin: auto;
+    margin: 0 auto;
 }
 
 
 .deadMansChest-story-text {
+    width: 100%;
+    max-width: 100%;
+
     text-align: center;
 }
 
@@ -329,6 +401,8 @@
    ========================================================= */
 
 .deadMansChest-story-text h2 {
+    max-width: 100%;
+
     margin-bottom: 30px;
 
     color: #e8e6df;
@@ -337,6 +411,8 @@
     font-size: clamp(35px, 5vw, 55px);
     font-weight: 500;
     line-height: 1.2;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -363,10 +439,18 @@
 }
 
 
+/* ---------------------------------------------------------
+   Story Paragraphs
+   --------------------------------------------------------- */
+
 .deadMansChest-story-text p {
+    max-width: 100%;
+
     margin-bottom: 20px;
 
     color: #d2d0ca;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -375,9 +459,6 @@
    ========================================================= */
 
 .deadMansChest-included {
-    width: 100%;
-    box-sizing: border-box;
-
     padding: 0 2rem 4rem;
 
     background: #242526;
@@ -389,8 +470,6 @@
     max-width: 1100px;
 
     margin: 0 auto;
-
-    box-sizing: border-box;
 }
 
 
@@ -442,6 +521,8 @@
    ========================================================= */
 
 .deadMansChest-price-eyebrow {
+    max-width: 100%;
+
     margin: 0 0 0.5rem;
 
     color: var(--gold);
@@ -452,6 +533,8 @@
 
     letter-spacing: 0.15em;
     text-transform: uppercase;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -460,6 +543,8 @@
    ========================================================= */
 
 .deadMansChest-spots-remaining {
+    max-width: 100%;
+
     margin: 0 0 1.75rem;
 
     color: #aaa59d;
@@ -470,6 +555,8 @@
 
     letter-spacing: 0.08em;
     text-transform: uppercase;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -478,6 +565,8 @@
    ========================================================= */
 
 .deadMansChest-price-amount {
+    max-width: 100%;
+
     margin: 0;
 
     color: #e8e6df;
@@ -486,6 +575,8 @@
     font-size: 4.5rem;
     font-weight: 600;
     line-height: 1;
+
+    overflow-wrap: break-word;
 
     text-shadow:
         0 2px 4px rgba(0, 0, 0, 0.5);
@@ -512,6 +603,8 @@
    ========================================================= */
 
 .deadMansChest-deposit-note {
+    max-width: 100%;
+
     margin: 0 0 1.25rem;
 
     color: var(--gold);
@@ -519,6 +612,8 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 0.85rem;
     font-weight: 600;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -527,6 +622,7 @@
    ========================================================= */
 
 .deadMansChest-beta-note {
+    width: 100%;
     max-width: 470px;
 
     margin: 0 auto 1.5rem;
@@ -536,6 +632,8 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 0.82rem;
     line-height: 1.6;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -544,6 +642,8 @@
    ========================================================= */
 
 .deadMansChest-price-description {
+    max-width: 100%;
+
     margin: 0;
 
     color: #e5dfd5;
@@ -551,6 +651,8 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 0.95rem;
     line-height: 1.7;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -559,6 +661,8 @@
    ========================================================= */
 
 .deadMansChest-price-per-person {
+    max-width: 100%;
+
     margin: 1rem 0 0;
 
     color: #96918a;
@@ -566,6 +670,8 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 0.85rem;
     font-style: italic;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -574,12 +680,20 @@
    ========================================================= */
 
 .deadMansChest-price .schedule-button {
+    display: inline-block;
+
+    max-width: 100%;
+
     margin-top: 2rem;
 }
 
 
 .deadMansChest-price .schedule-availability {
+    max-width: 100%;
+
     margin: 0.75rem 0 0;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -597,6 +711,8 @@
 
     text-decoration-color: rgba(226, 201, 137, 0.45);
     text-underline-offset: 3px;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -606,23 +722,20 @@
 
 
 /* =========================================================
-   MOBILE WIDTH FIX
+   GAME CREDIT
    ========================================================= */
 
-.deadMansChest-hero,
-.deadMansChest-story-section,
-.deadMansChest-included,
 .game-credit {
-    width: 100%;
-    box-sizing: border-box;
+    text-align: center;
 }
 
 
-.deadMansChest-hero-content,
-.deadMansChest-story-container,
-.deadMansChest-included-container {
-    width: 100%;
-    box-sizing: border-box;
+.game-credit p,
+.game-credit h2,
+.game-credit a {
+    max-width: 100%;
+
+    overflow-wrap: break-word;
 }
 
 
@@ -631,6 +744,7 @@
    ========================================================= */
 
 @media (max-width: 600px) {
+
 
     /* -----------------------------------------------------
        Hero
@@ -655,8 +769,12 @@
 
 
     .deadMansChest-hero h1 {
-        font-size: clamp(42px, 12vw, 55px);
-        letter-spacing: 2px;
+        font-size: clamp(38px, 11vw, 55px);
+        letter-spacing: 1.5px;
+
+        line-height: 1.05;
+
+        white-space: normal;
     }
 
 
@@ -667,16 +785,58 @@
 
 
     /* -----------------------------------------------------
+       Title / Byline
+       ----------------------------------------------------- */
+
+    .deadMansChest-title {
+        width: 100%;
+        max-width: 100%;
+    }
+
+
+    .deadMansChest-byline {
+        margin-top: -12px;
+
+        font-size: 0.55rem;
+
+        letter-spacing: 0.07em;
+    }
+
+
+    /* -----------------------------------------------------
        Hero Details
        ----------------------------------------------------- */
 
     .deadMansChest-hero-details {
-        gap: 15px;
+        gap: 18px 12px;
+
+        margin-top: 30px;
     }
 
 
     .deadMansChest-hero-details div {
-        min-width: 100px;
+        flex: 1 1 90px;
+
+        min-width: 90px;
+        max-width: 180px;
+    }
+
+
+    .deadMansChest-hero-details strong {
+        font-size: 11px;
+    }
+
+
+    /* -----------------------------------------------------
+       Hero Button
+       ----------------------------------------------------- */
+
+    .deadMansChest-hero-content .button {
+        max-width: calc(100% - 10px);
+
+        white-space: normal;
+
+        text-align: center;
     }
 
 
@@ -685,7 +845,7 @@
        ----------------------------------------------------- */
 
     .deadMansChest-story-section {
-        padding: 75px 20px 45px;
+        padding: 65px 20px 45px;
     }
 
 
@@ -714,15 +874,79 @@
         font-size: 3.75rem;
     }
 
+
+    .deadMansChest-price::before {
+        inset: 6px;
+    }
+
+
+    /* -----------------------------------------------------
+       Game Credit
+       ----------------------------------------------------- */
+
+    .game-credit {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
 }
 
 
 /* =========================================================
-   GAME CREDIT
+   VERY SMALL PHONES
    ========================================================= */
 
-.game-credit {
-    text-align: center;
+@media (max-width: 380px) {
+
+
+    .deadMansChest-hero-content {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+
+    .deadMansChest-hero h1 {
+        font-size: 36px;
+        letter-spacing: 1px;
+    }
+
+
+    .deadMansChest-hero .eyebrow {
+        font-size: 0.56rem;
+        letter-spacing: 0.10em;
+
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+
+    .deadMansChest-hero-details {
+        gap: 15px 8px;
+    }
+
+
+    .deadMansChest-hero-details div {
+        flex: 1 1 80px;
+        min-width: 80px;
+    }
+
+
+    .deadMansChest-price {
+        padding-left: 1.15rem;
+        padding-right: 1.15rem;
+    }
+
+
+    .deadMansChest-price-amount {
+        font-size: 3.25rem;
+    }
+
+
+    .deadMansChest-price-eyebrow {
+        font-size: 0.7rem;
+    }
+
+
 }
 
 
