@@ -50,7 +50,8 @@
 
 .games-intro .eyebrow,
 .games-intro h2,
-.games-intro .schedule-button {
+.games-intro .schedule-button,
+.games-intro .schedule-availability {
     position: relative;
     z-index: 1;
 }
@@ -85,6 +86,7 @@
     margin-top: 35px;
 }
 
+
 /* =========================================================
    GAMES INTRO — MOBILE
    ========================================================= */
@@ -106,7 +108,113 @@
 
 
 /* =========================================================
-   2. GAME LIBRARY
+   2. GAME LEVELS
+   ========================================================= */
+
+.game-levels {
+    padding: 90px 20px 70px;
+
+    background: var(--dark-blue);
+}
+
+
+.game-levels-container {
+    max-width: 1100px;
+
+    margin: 0 auto;
+}
+
+
+.game-levels .section-heading {
+    max-width: 700px;
+
+    margin: 0 auto 55px;
+
+    text-align: center;
+}
+
+
+.game-levels .section-heading p:last-child {
+    max-width: 650px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.game-level-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 30px;
+}
+
+
+.game-level {
+    padding: 35px 30px;
+
+    text-align: center;
+
+    border: 1px solid rgba(198, 161, 91, 0.35);
+
+    background: rgba(16, 19, 26, 0.45);
+}
+
+
+.game-level-number {
+    margin: 0 0 12px;
+
+    color: var(--gold);
+
+    font-family: "Cinzel", serif;
+    font-size: 0.85rem;
+
+    letter-spacing: 0.2em;
+}
+
+
+.game-level h3 {
+    margin: 0 0 18px;
+
+    color: var(--light-gold);
+
+    font-family: "Cinzel", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+
+.game-level p:last-child {
+    margin: 0;
+
+    color: var(--cream);
+
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+
+@media (max-width: 800px) {
+
+    .game-level-grid {
+        grid-template-columns: 1fr;
+
+        max-width: 600px;
+
+        margin: 0 auto;
+    }
+
+}
+
+
+/* =========================================================
+   3. GAME LIBRARY
    ========================================================= */
 
 .games-library {
@@ -115,28 +223,41 @@
     background: #10131a;
 }
 
+
 .game-grid {
     max-width: 1200px;
 
     margin: auto;
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 35px;
 }
 
 
 /* =========================================================
-   3. GAME CARD
+   4. GAME CARD — BASE
    ========================================================= */
 
 .game-card {
+
+    /* Default theme */
+
+    --card-accent: #c6a15b;
+    --card-accent-light: #e2c989;
+    --card-background: #181c26;
+    --card-border: rgba(198, 161, 91, 0.22);
+    --card-detail-border: rgba(198, 161, 91, 0.18);
+    --card-description: #aaa9a4;
+
     overflow: hidden;
 
-    background: #181c26;
+    background: var(--card-background);
 
-    border: 1px solid rgba(198, 161, 91, 0.22);
+    border: 1px solid var(--card-border);
 
     transition:
         transform 0.35s ease,
@@ -144,10 +265,12 @@
         box-shadow 0.35s ease;
 }
 
+
 .game-card:hover {
+
     transform: translateY(-6px);
 
-    border-color: rgba(198, 161, 91, 0.50);
+    border-color: var(--card-accent);
 
     box-shadow:
         0 20px 50px rgba(0, 0, 0, 0.40);
@@ -155,7 +278,52 @@
 
 
 /* =========================================================
-   4. GAME CARD IMAGE
+   5. SPELLBOUND THEME
+   ========================================================= */
+
+.spellbound-game-card {
+
+    --card-accent: #9a7bc4;
+    --card-accent-light: #c4a9e8;
+    --card-background: #191522;
+    --card-border: rgba(154, 123, 196, 0.35);
+    --card-detail-border: rgba(154, 123, 196, 0.25);
+    --card-description: #b8b2c0;
+}
+
+
+/* =========================================================
+   6. WAY OUT WEST THEME
+   ========================================================= */
+
+.way-out-west-game-card {
+
+    --card-accent: #c6a15b;
+    --card-accent-light: #e2c989;
+    --card-background: #241d17;
+    --card-border: rgba(198, 161, 91, 0.38);
+    --card-detail-border: rgba(198, 161, 91, 0.25);
+    --card-description: #b9afa1;
+}
+
+
+/* =========================================================
+   7. A DEAD MAN'S CHEST THEME
+   ========================================================= */
+
+.dead-mans-chest-game-card {
+
+    --card-accent: #aaa79f;
+    --card-accent-light: #ddd9cf;
+    --card-background: #1b1d1f;
+    --card-border: rgba(170, 167, 159, 0.30);
+    --card-detail-border: rgba(170, 167, 159, 0.20);
+    --card-description: #b5b4b0;
+}
+
+
+/* =========================================================
+   8. GAME CARD IMAGE
    ========================================================= */
 
 .game-card-image {
@@ -173,7 +341,9 @@
 }
 
 
-/* Dark fade at bottom of image */
+/* ---------------------------------------------------------
+   Dark Fade
+   --------------------------------------------------------- */
 
 .game-card-image::before {
     content: "";
@@ -193,7 +363,9 @@
 }
 
 
-/* Very subtle brand tint */
+/* ---------------------------------------------------------
+   Very Subtle Theme Tint
+   --------------------------------------------------------- */
 
 .game-card-image::after {
     content: "";
@@ -204,8 +376,12 @@
     background:
         linear-gradient(
             135deg,
-            rgba(198, 161, 91, 0.04),
-            transparent 55%
+            color-mix(
+                in srgb,
+                var(--card-accent) 8%,
+                transparent
+            ),
+            transparent 60%
         );
 
     z-index: 1;
@@ -213,7 +389,7 @@
 
 
 /* =========================================================
-   5. SPELLBOUND CARD
+   9. GAME CARD BACKGROUND IMAGES
    ========================================================= */
 
 .spellbound-card {
@@ -225,10 +401,6 @@
 }
 
 
-/* =========================================================
-   6. COMING SOON CARD — WESTERN
-   ========================================================= */
-
 .way-out-west {
     background-image:
         url("games/wayOutWest/wayOutWestBackground.jpg");
@@ -237,10 +409,6 @@
     background-position: center;
 }
 
-
-/* =========================================================
-   7. COMING SOON CARD — PIRATE
-   ========================================================= */
 
 .dead-mans-chest {
     background-image:
@@ -252,7 +420,7 @@
 
 
 /* =========================================================
-   8. CARD OVERLAY
+   10. CARD OVERLAY
    ========================================================= */
 
 .game-card-overlay {
@@ -264,18 +432,20 @@
     padding: 35px;
 }
 
+
 .game-card-status {
     display: block;
 
     margin-bottom: 10px;
 
-    color: var(--gold);
+    color: var(--card-accent);
 
     font-size: 10px;
     font-weight: 600;
 
     letter-spacing: 3px;
 }
+
 
 .game-card-overlay h2 {
     margin-bottom: 3px;
@@ -287,28 +457,34 @@
     font-weight: 500;
 
     line-height: 1.1;
+
+    text-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.70);
 }
+
 
 .game-card-overlay p {
     color: #c3beb4;
 
     font-size: 12px;
+
     letter-spacing: 2px;
 }
 
 
 /* =========================================================
-   9. CARD CONTENT
+   11. CARD CONTENT
    ========================================================= */
 
 .game-card-content {
     padding: 35px;
 }
 
+
 .game-card-eyebrow {
     margin-bottom: 15px;
 
-    color: var(--gold);
+    color: var(--card-accent);
 
     font-size: 9px;
     font-weight: 600;
@@ -316,12 +492,13 @@
     letter-spacing: 2.5px;
 }
 
+
 .game-card-description {
     min-height: 95px;
 
     margin-bottom: 30px;
 
-    color: #aaa9a4;
+    color: var(--card-description);
 
     font-size: 14px;
     line-height: 1.8;
@@ -329,34 +506,73 @@
 
 
 /* =========================================================
-   10. CARD DETAILS
+   12. CARD PRICE
+   ========================================================= */
+
+.game-card-price {
+    margin: 1.25rem 0;
+
+    color: var(--card-accent);
+
+    font-family: 'Cinzel', serif;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+
+    text-align: center;
+}
+
+
+.game-card-price span {
+    color: var(--card-description);
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 0.7rem;
+    font-weight: 400;
+
+    letter-spacing: 0;
+}
+
+
+/* =========================================================
+   13. CARD DETAILS
    ========================================================= */
 
 .game-card-details {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 15px;
 
     margin-bottom: 30px;
 }
 
+
 .game-card-details div {
     padding-top: 12px;
 
-    border-top: 1px solid rgba(198, 161, 91, 0.18);
+    border-top:
+        1px solid var(--card-detail-border);
 }
+
 
 .game-card-details span {
     display: block;
 
     margin-bottom: 3px;
 
-    color: var(--gold);
+    color: var(--card-accent);
 
     font-size: 8px;
+
     letter-spacing: 1.5px;
 }
+
 
 .game-card-details strong {
     color: var(--cream);
@@ -367,7 +583,7 @@
 
 
 /* =========================================================
-   11. CARD BUTTON
+   14. CARD BUTTON
    ========================================================= */
 
 .game-card-button {
@@ -377,8 +593,33 @@
 }
 
 
+/* ---------------------------------------------------------
+   Theme button accents
+   --------------------------------------------------------- */
+
+.spellbound-game-card .game-card-button {
+    border-color: var(--card-accent);
+
+    color: var(--card-accent-light);
+}
+
+
+.way-out-west-game-card .game-card-button {
+    border-color: var(--card-accent);
+
+    color: var(--card-accent-light);
+}
+
+
+.dead-mans-chest-game-card .game-card-button {
+    border-color: var(--card-accent);
+
+    color: var(--card-accent-light);
+}
+
+
 /* =========================================================
-   12. DISABLED BUTTON
+   15. DISABLED BUTTON
    ========================================================= */
 
 .disabled-button {
@@ -388,6 +629,7 @@
 
     cursor: default;
 }
+
 
 .disabled-button:hover {
     background: transparent;
@@ -401,7 +643,65 @@
 
 
 /* =========================================================
-   13. BOOKING CTA
+   16. GAME LEVEL BADGE
+   ========================================================= */
+
+.game-card-level-badge {
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+
+    z-index: 5;
+
+    padding: 7px 12px;
+
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+
+    background: rgba(16, 19, 26, 0.88);
+}
+
+
+/* ---------------------------------------------------------
+   Spellbound Badge
+   --------------------------------------------------------- */
+
+.spellbound-game-card .game-card-level-badge {
+    border: 1px solid var(--card-accent-light);
+
+    color: var(--card-accent-light);
+}
+
+
+/* ---------------------------------------------------------
+   Way Out West Badge
+   --------------------------------------------------------- */
+
+.way-out-west-game-card .game-card-level-badge {
+    border: 1px solid var(--card-accent-light);
+
+    color: var(--card-accent-light);
+}
+
+
+/* ---------------------------------------------------------
+   Dead Man's Chest Badge
+   --------------------------------------------------------- */
+
+.dead-mans-chest-game-card .game-card-level-badge {
+    border: 1px solid var(--card-accent-light);
+
+    color: var(--card-accent-light);
+}
+
+
+/* =========================================================
+   17. BOOKING CTA
    ========================================================= */
 
 .game-booking {
@@ -424,9 +724,11 @@
         );
 }
 
+
 .game-booking > div {
     max-width: 650px;
 }
+
 
 .game-booking h2 {
     margin-bottom: 20px;
@@ -434,11 +736,13 @@
     color: var(--cream);
 
     font-family: 'Cinzel', serif;
+
     font-size: clamp(45px, 7vw, 75px);
     font-weight: 500;
 
     line-height: 1.1;
 }
+
 
 .game-booking p:not(.eyebrow) {
     margin-bottom: 35px;
@@ -448,7 +752,35 @@
 
 
 /* =========================================================
-   14. MOBILE
+   18. DATE INPUT CALENDAR ICON
+   ========================================================= */
+
+input[type="date"] {
+    position: relative;
+
+    cursor: pointer;
+
+    color-scheme: dark;
+}
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: block;
+
+    opacity: 1;
+
+    cursor: pointer;
+
+    filter:
+        invert(72%)
+        sepia(25%)
+        saturate(700%)
+        hue-rotate(5deg);
+}
+
+
+/* =========================================================
+   19. MOBILE — TABLET
    ========================================================= */
 
 @media (max-width: 900px) {
@@ -462,35 +794,46 @@
 }
 
 
+/* =========================================================
+   20. MOBILE
+   ========================================================= */
+
 @media (max-width: 600px) {
 
     .games-intro {
         padding: 125px 20px 65px;
     }
 
+
     .games-library {
         padding: 25px 20px 90px;
     }
+
 
     .game-card-image {
         min-height: 300px;
     }
 
+
     .game-card-overlay {
         padding: 25px;
     }
+
 
     .game-card-overlay h2 {
         font-size: 34px;
     }
 
+
     .game-card-content {
         padding: 28px 22px;
     }
 
+
     .game-card-description {
         min-height: 0;
     }
+
 
     .game-card-details {
         grid-template-columns: 1fr;
@@ -498,178 +841,14 @@
         gap: 15px;
     }
 
+
     .game-booking {
         min-height: 400px;
     }
 
 }
 
-/* =========================================
-   DATE INPUT CALENDAR ICON
-========================================= */
 
-input[type="date"] {
-    position: relative;
-    cursor: pointer;
-    color-scheme: dark;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-    display: block;
-    opacity: 1;
-    cursor: pointer;
-
-    filter: invert(72%) sepia(25%) saturate(700%) hue-rotate(5deg);
-}
-
-
-
-
-/* =========================================
-   GAME LEVELS
-========================================= */
-
-.game-levels {
-    padding: 90px 20px 70px;
-    background: var(--dark-blue);
-}
-
-
-.game-levels-container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-
-.game-levels .section-heading {
-    max-width: 700px;
-    margin: 0 auto 55px;
-    text-align: center;
-}
-
-
-.game-levels .section-heading p:last-child {
-    max-width: 650px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
-.game-level-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(3, 1fr);
-    gap: 30px;
-}
-
-
-.game-level {
-    padding: 35px 30px;
-    text-align: center;
-    border: 1px solid rgba(198, 161, 91, 0.35);
-    background: rgba(16, 19, 26, 0.45);
-}
-
-
-.game-level-number {
-    margin: 0 0 12px;
-    color: var(--gold);
-    font-family: "Cinzel", serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-}
-
-
-.game-level h3 {
-    margin: 0 0 18px;
-    color: var(--light-gold);
-    font-family: "Cinzel", serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
-
-
-.game-level p:last-child {
-    margin: 0;
-    color: var(--cream);
-    font-size: 0.95rem;
-    line-height: 1.8;
-}
-
-
-@media (max-width: 800px) {
-
-    .game-level-grid {
-        grid-template-columns: 1fr;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-}
-
-
-/* =========================================
-   GAME CARD LEVEL
-========================================= */
-
-.game-card-level {
-    margin: 0 0 8px;
-    color: var(--gold);
-    font-family: "Montserrat", sans-serif;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-}
-
-.game-card-price {
-    margin: 1.25rem 0;
-    font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-align: center;
-}
-
-/* =========================================
-   GAME LEVEL BADGE
-========================================= */
-
-.game-card-image {
-    position: relative;
-}
-
-
-.game-card-level-badge {
-    position: absolute;
-    top: 18px;
-    left: 18px;
-
-    z-index: 5;
-
-    padding: 7px 12px;
-
-    font-family: "Montserrat", sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-
-    border: 1px solid var(--light-gold);
-
-    background: rgba(16, 19, 26, 0.88);
-    color: var(--light-gold);
-}
-
-
-.game-card-level-badge.premium {
-    border-color: var(--light-gold);
-    color: var(--light-gold);
-}
-
-
-.game-card-level-badge.classic {
-    border-color: var(--cream);
-    color: var(--cream);
-}
+/* =========================================================
+   END
+   ========================================================= */

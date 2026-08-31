@@ -8,45 +8,41 @@
    SITE ROOT
 ========================================= */
 
-/*
- * Automatically determines the root folder
- * of the website based on the current URL.
- *
- * Main pages:
- * /partoftheplot/faq.html
- * → /partoftheplot/
- *
- * Game pages:
- * /partoftheplot/games/spellbound/spellbound.html
- * → /partoftheplot/
- *
- * This means you do not need to hard-code
- * /partoftheplot/ throughout shared files.
- */
-
 function getSiteRoot() {
     const path = window.location.pathname;
     const gamesFolder = "/games/";
     const gamesPosition = path.indexOf(gamesFolder);
 
-    /*
-     * If this is a game page, everything
-     * before /games/ is the site root.
-     */
     if (gamesPosition !== -1) {
         return path.substring(0, gamesPosition) + "/";
     }
 
-    /*
-     * Otherwise, use the folder containing
-     * the current page.
-     */
     const lastSlash = path.lastIndexOf("/");
 
     return path.substring(0, lastSlash + 1);
 }
 
 const siteRoot = getSiteRoot();
+
+
+/* =========================================
+   GAME PRICING
+========================================= */
+
+/*
+ * CHANGE GAME PRICES HERE.
+ *
+ * These prices are used throughout the website.
+ */
+
+const GAME_PRICES = {
+    "Spellbound": 300,
+		//300, 450, 600
+    "Way Out West": 225,
+		//225, 325, 425
+    "A Dead Man's Chest": 225
+		//225, 325, 425
+};
 
 
 /* =========================================
@@ -79,6 +75,10 @@ if (siteHeader) {
 ========================================= */
 
 function fixSharedLinks(container) {
+    if (!container) {
+        return;
+    }
+
     const links = container.querySelectorAll("a");
 
     links.forEach(link => {
@@ -133,92 +133,83 @@ function initializeNavigation() {
     const gamesDropdown = document.querySelector(".nav-dropdown");
     const gamesTitle = document.querySelector(".nav-dropdown-title");
 
+    if (!navMenu) {
+        return;
+    }
+
+
     /* -----------------------------------------
        NAVIGATION LINKS
     ----------------------------------------- */
 
-    if (navMenu) {
-        const navLinks = navMenu.querySelectorAll("a");
+    const navLinks = navMenu.querySelectorAll("a");
 
-        /*
-         * Convert relative paths from header.html
-         * into paths based on the site root.
-         */
-        navLinks.forEach(link => {
-            const href = link.getAttribute("href");
+    navLinks.forEach(link => {
+        const href = link.getAttribute("href");
 
-            if (
-                href &&
-                !href.startsWith("http") &&
-                !href.startsWith("#") &&
-                !href.startsWith("mailto:") &&
-                !href.startsWith("tel:") &&
-                !href.startsWith("/")
-            ) {
-                link.href = siteRoot + href;
-            }
+        if (
+            href &&
+            !href.startsWith("http") &&
+            !href.startsWith("#") &&
+            !href.startsWith("mailto:") &&
+            !href.startsWith("tel:") &&
+            !href.startsWith("/")
+        ) {
+            link.href = siteRoot + href;
+        }
+    });
+
+
+    /* -----------------------------------------
+       LOGO
+    ----------------------------------------- */
+
+    const siteLogo = document.getElementById("siteLogo");
+
+    if (siteLogo) {
+        siteLogo.src = siteRoot + "partOfThePlotLogo.png";
+
+        const logoLink = siteLogo.closest("a");
+
+        if (logoLink) {
+            logoLink.href = siteRoot + "index.html";
+        }
+    }
+
+
+    /* -----------------------------------------
+       MOBILE MENU
+    ----------------------------------------- */
+
+    if (menuToggle) {
+        menuToggle.addEventListener("click", () => {
+            const isOpen = navMenu.classList.toggle("active");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                isOpen ? "true" : "false"
+            );
         });
 
 
-        /* -----------------------------------------
-           LOGO
-        ----------------------------------------- */
+        navLinks.forEach(link => {
+            link.addEventListener("click", () => {
 
-        const siteLogo = document.getElementById("siteLogo");
+                if (
+                    link.classList.contains("nav-dropdown-title") &&
+                    window.innerWidth <= 900
+                ) {
+                    return;
+                }
 
-        if (siteLogo) {
-            siteLogo.src = siteRoot + "partOfThePlotLogo.png";
-
-            const logoLink = siteLogo.closest("a");
-
-            if (logoLink) {
-                logoLink.href = siteRoot + "index.html";
-            }
-        }
-
-
-        /* -----------------------------------------
-           MOBILE MENU
-        ----------------------------------------- */
-
-        if (menuToggle) {
-            menuToggle.addEventListener("click", () => {
-                const isOpen = navMenu.classList.toggle("active");
+                navMenu.classList.remove("active");
 
                 menuToggle.setAttribute(
                     "aria-expanded",
-                    isOpen ? "true" : "false"
+                    "false"
                 );
             });
-
-
-            /*
-             * Close the mobile menu when a normal
-             * navigation link is clicked.
-             */
-            navLinks.forEach(link => {
-                link.addEventListener("click", () => {
-
-                    /*
-                     * On mobile, clicking Games opens
-                     * the dropdown instead of navigating.
-                     */
-                    if (
-                        link.classList.contains("nav-dropdown-title") &&
-                        window.innerWidth <= 900
-                    ) {
-                        return;
-                    }
-
-                    navMenu.classList.remove("active");
-
-                    menuToggle.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-                });
-            });
-        }
+        });
     }
 
 
@@ -229,10 +220,6 @@ function initializeNavigation() {
     if (gamesDropdown && gamesTitle) {
         gamesTitle.addEventListener("click", event => {
 
-            /*
-             * On mobile, clicking Games opens/closes
-             * the dropdown instead of navigating.
-             */
             if (window.innerWidth <= 900) {
                 event.preventDefault();
 
@@ -258,10 +245,6 @@ function initializeFAQ() {
         document.querySelectorAll(".faq-question");
 
 
-    /* -----------------------------------------
-       OPEN FAQ
-    ----------------------------------------- */
-
     function openFAQ(faqItem, scrollToItem = false) {
         if (!faqItem) {
             return;
@@ -278,9 +261,6 @@ function initializeFAQ() {
         }
 
 
-        /*
-         * Close all other FAQ items.
-         */
         document.querySelectorAll(".faq-item").forEach(item => {
             if (item !== faqItem) {
                 item.classList.remove("active");
@@ -305,9 +285,6 @@ function initializeFAQ() {
         });
 
 
-        /*
-         * Open the selected FAQ.
-         */
         faqItem.classList.add("active");
 
         question.setAttribute(
@@ -319,10 +296,6 @@ function initializeFAQ() {
             answer.scrollHeight + 50 + "px";
 
 
-        /*
-         * Scroll to the FAQ when opened from
-         * a page link.
-         */
         if (scrollToItem) {
             setTimeout(() => {
                 faqItem.scrollIntoView({
@@ -333,10 +306,6 @@ function initializeFAQ() {
         }
     }
 
-
-    /* -----------------------------------------
-       FAQ BUTTON CLICKS
-    ----------------------------------------- */
 
     faqQuestions.forEach(question => {
         question.addEventListener("click", () => {
@@ -351,9 +320,6 @@ function initializeFAQ() {
                 faqItem.classList.contains("active");
 
 
-            /*
-             * Close the FAQ if it is already open.
-             */
             if (isCurrentlyOpen) {
                 faqItem.classList.remove("active");
 
@@ -373,17 +339,10 @@ function initializeFAQ() {
             }
 
 
-            /*
-             * Otherwise, open it.
-             */
             openFAQ(faqItem);
         });
     });
 
-
-    /* -----------------------------------------
-       OPEN FAQ FROM URL HASH
-    ----------------------------------------- */
 
     function openFAQFromHash() {
         const hash = window.location.hash;
@@ -411,16 +370,8 @@ function initializeFAQ() {
     }
 
 
-    /*
-     * Check for an FAQ hash when the page loads.
-     */
     openFAQFromHash();
 
-
-    /*
-     * Also handle hash changes while already
-     * on the FAQ page.
-     */
     window.addEventListener(
         "hashchange",
         openFAQFromHash
@@ -428,16 +379,58 @@ function initializeFAQ() {
 }
 
 
-/*
- * Initialize FAQ after the page has loaded.
- */
+/* =========================================
+   DISPLAY GAME PRICES
+========================================= */
+
+function initializeGamePrices() {
+    const priceElements =
+        document.querySelectorAll(
+            ".game-price, .spellbound-price-amount"
+        );
+
+    priceElements.forEach(element => {
+        const gameName =
+            element.dataset.game;
+
+        if (!gameName) {
+            return;
+        }
+
+        const price =
+            GAME_PRICES[gameName];
+
+        if (price === undefined) {
+            console.warn(
+                "No price found for:",
+                gameName
+            );
+
+            return;
+        }
+
+        element.textContent =
+            "$" + price.toLocaleString();
+    });
+}
+
+
+/* =========================================
+   INITIALIZE PAGE FUNCTIONS
+========================================= */
+
+function initializePage() {
+    initializeFAQ();
+    initializeGamePrices();
+}
+
 if (document.readyState === "loading") {
     document.addEventListener(
         "DOMContentLoaded",
-        initializeFAQ
+        initializePage
     );
 } else {
-    initializeFAQ();
+    initializePage();
 }
 
 
@@ -576,10 +569,6 @@ function initializeScheduling() {
         button.addEventListener("click", event => {
             event.preventDefault();
 
-
-            /*
-             * Preselect game if the button specifies one.
-             */
             const requestedGame =
                 button.dataset.game;
 
@@ -673,17 +662,8 @@ function initializeSchedulingForm() {
     }
 
 
-    /*
-     * Record when the scheduling form was loaded.
-     * This helps identify automated submissions
-     * that happen almost immediately.
-     */
     const scheduleFormLoadedAt = Date.now();
 
-
-    /*
-     * Prevent multiple rapid submissions.
-     */
     let scheduleSubmissionLocked = false;
 
 
@@ -712,13 +692,6 @@ function initializeSchedulingForm() {
             )
             : null;
 
-    /*
-     * Player Information elements inside
-     * character-info.
-     *
-     * Character Notes remain visible regardless
-     * of assignment choice.
-     */
     const playerInformationLabel =
         characterInfo
             ? characterInfo.querySelector(":scope > label")
@@ -743,9 +716,6 @@ function initializeSchedulingForm() {
             selectedAssignment.value === "ahead";
 
 
-        /*
-         * Character Notes are always visible.
-         */
         if (characterInfo) {
             characterInfo.style.display = "block";
         }
@@ -755,10 +725,6 @@ function initializeSchedulingForm() {
         }
 
 
-        /*
-         * Player Information is only shown when
-         * assignments are handled ahead of time.
-         */
         if (!isAheadOfTime) {
             if (playerInformationLabel) {
                 playerInformationLabel.style.display = "none";
@@ -777,10 +743,6 @@ function initializeSchedulingForm() {
         }
 
 
-        /*
-         * Show Player Information when
-         * "Ahead of time" is selected.
-         */
         if (playerInformationLabel) {
             playerInformationLabel.style.display = "";
         }
@@ -909,24 +871,11 @@ function initializeSchedulingForm() {
             }
 
 
-            /* -----------------------------------------
-               SUCCESS
-            ----------------------------------------- */
+            /* SUCCESS */
 
-            const reservation =
-                result.reservation;
-
-
-            /*
-             * Hide the scheduling form.
-             */
             form.reset();
             form.style.display = "none";
 
-
-            /*
-             * Show success message.
-             */
             if (successElement) {
                 successElement.textContent =
                     "Your scheduling request has been sent! Thank you for reaching out. I’ve received your request and will get back to you soon to work out the details.";
@@ -934,42 +883,34 @@ function initializeSchedulingForm() {
                 successElement.style.display = "block";
             }
 
-
             submitButton.textContent = "Request Sent";
-
         }
 
 
+        /* ERROR */
 
-		catch (error) {
-			console.error(
-				"Reservation submission error:",
-				error
-			);
+        catch (error) {
+            console.error(
+                "Reservation submission error:",
+                error
+            );
 
+            scheduleSubmissionLocked = false;
 
-			/* -----------------------------------------
-			   ALLOW USER TO CORRECT AND RESUBMIT
-			----------------------------------------- */
+            if (successElement) {
+                successElement.textContent =
+                    error.message ||
+                    "Something went wrong. Please try again.";
 
-			scheduleSubmissionLocked = false;
+                successElement.style.display = "block";
+            }
 
+            submitButton.textContent =
+                originalButtonText;
 
-			if (successElement) {
-				successElement.textContent =
-					error.message ||
-					"Something went wrong. Please try again.";
-
-				successElement.style.display = "block";
-			}
-
-
-			submitButton.textContent =
-				originalButtonText;
-
-			submitButton.disabled = false;
-		}
-	}
+            submitButton.disabled = false;
+        }
+    }
 
 
     /* -----------------------------------------
@@ -989,26 +930,25 @@ function initializeSchedulingForm() {
     ----------------------------------------- */
 
     if (playersSelect) {
-        playersSelect.addEventListener("change", () => {
-            const selectedAssignment =
-                document.querySelector(
-                    'input[name="characterAssignment"]:checked'
-                );
+        playersSelect.addEventListener(
+            "change",
+            () => {
+                const selectedAssignment =
+                    document.querySelector(
+                        'input[name="characterAssignment"]:checked'
+                    );
 
-            if (
-                selectedAssignment &&
-                selectedAssignment.value === "ahead"
-            ) {
-                updateCharacterFields();
+                if (
+                    selectedAssignment &&
+                    selectedAssignment.value === "ahead"
+                ) {
+                    updateCharacterFields();
+                }
             }
-        });
+        );
     }
 
 
-    /*
-     * Run once when the form loads so that
-     * Character Notes are immediately visible.
-     */
     updateCharacterFields();
 
 
@@ -1028,24 +968,21 @@ function initializeSchedulingForm() {
 
 
     /* -----------------------------------------
-       VALIDATE PREFERRED DATE
+       VALIDATE DATES
     ----------------------------------------- */
 
     if (dateInput) {
-        dateInput.addEventListener("blur", () => {
-            validateDateInput(dateInput);
-        });
+        dateInput.addEventListener(
+            "blur",
+            () => validateDateInput(dateInput)
+        );
     }
 
-
-    /* -----------------------------------------
-       VALIDATE BACKUP DATE
-    ----------------------------------------- */
-
     if (backupDateInput) {
-        backupDateInput.addEventListener("blur", () => {
-            validateDateInput(backupDateInput);
-        });
+        backupDateInput.addEventListener(
+            "blur",
+            () => validateDateInput(backupDateInput)
+        );
     }
 
 
@@ -1053,128 +990,135 @@ function initializeSchedulingForm() {
        FORM SUBMISSION
     ----------------------------------------- */
 
-    scheduleForm.addEventListener("submit", event => {
-        event.preventDefault();
+    scheduleForm.addEventListener(
+        "submit",
+        event => {
+            event.preventDefault();
 
 
-        /* -----------------------------------------
-           HONEYPOT CHECK
-        ----------------------------------------- */
+            /* HONEYPOT CHECK */
 
-        const honeypot =
-            scheduleForm.querySelector(
-                'input[name="_gotcha"]'
+            const honeypot =
+                scheduleForm.querySelector(
+                    'input[name="_gotcha"]'
+                );
+
+            if (
+                honeypot &&
+                honeypot.value.trim() !== ""
+            ) {
+                console.warn(
+                    "Spam submission blocked."
+                );
+
+                return;
+            }
+
+
+            /* MINIMUM SUBMISSION TIME */
+
+            const timeOnPage =
+                Date.now() - scheduleFormLoadedAt;
+
+            if (timeOnPage < 3000) {
+                console.warn(
+                    "Suspiciously fast scheduling submission blocked."
+                );
+
+                return;
+            }
+
+
+            /* SUBMISSION COOLDOWN */
+
+            if (scheduleSubmissionLocked) {
+                console.warn(
+                    "Duplicate scheduling submission blocked."
+                );
+
+                return;
+            }
+
+            scheduleSubmissionLocked = true;
+
+
+            /* CHECK PREFERRED DATE */
+
+            if (
+                dateInput &&
+                dateInput.value < todayString
+            ) {
+                alert(
+                    "Please choose today or a future date."
+                );
+
+                dateInput.focus();
+
+                scheduleSubmissionLocked = false;
+                return;
+            }
+
+
+            /* CHECK BACKUP DATE */
+
+            if (
+                backupDateInput &&
+                backupDateInput.value &&
+                backupDateInput.value < todayString
+            ) {
+                alert(
+                    "Please choose today or a future date."
+                );
+
+                backupDateInput.focus();
+
+                scheduleSubmissionLocked = false;
+                return;
+            }
+
+
+            /* COLLECT FORM DATA */
+
+            const formData =
+                new FormData(scheduleForm);
+
+            const reservationData = {};
+
+            formData.forEach((value, key) => {
+                reservationData[key] = value;
+            });
+
+
+            /* INCLUDE PRICE */
+
+            const selectedGame =
+                formData.get("game");
+
+            if (selectedGame) {
+                const selectedPrice =
+                    GAME_PRICES[selectedGame];
+
+                if (selectedPrice !== undefined) {
+                    reservationData.price =
+                        selectedPrice;
+                }
+            }
+
+
+            /* SEND TO SUPABASE */
+
+            submitReservationToSupabase(
+                reservationData,
+                scheduleForm,
+                scheduleSuccess
             );
-
-        if (
-            honeypot &&
-            honeypot.value.trim() !== ""
-        ) {
-            console.warn("Spam submission blocked.");
-            return;
         }
-
-
-        /* -----------------------------------------
-           MINIMUM SUBMISSION TIME
-        ----------------------------------------- */
-
-        const timeOnPage =
-            Date.now() - scheduleFormLoadedAt;
-
-        if (timeOnPage < 3000) {
-            console.warn(
-                "Suspiciously fast scheduling submission blocked."
-            );
-
-            return;
-        }
-
-
-        /* -----------------------------------------
-           SUBMISSION COOLDOWN
-        ----------------------------------------- */
-
-        if (scheduleSubmissionLocked) {
-            console.warn(
-                "Duplicate scheduling submission blocked."
-            );
-
-            return;
-        }
-
-        scheduleSubmissionLocked = true;
-
-
-        /* -----------------------------------------
-           CHECK PREFERRED DATE
-        ----------------------------------------- */
-
-        if (
-            dateInput &&
-            dateInput.value < todayString
-        ) {
-            alert(
-                "Please choose today or a future date."
-            );
-
-            dateInput.focus();
-
-            scheduleSubmissionLocked = false;
-            return;
-        }
-
-
-        /* -----------------------------------------
-           CHECK BACKUP DATE
-        ----------------------------------------- */
-
-        if (
-            backupDateInput &&
-            backupDateInput.value &&
-            backupDateInput.value < todayString
-        ) {
-            alert(
-                "Please choose today or a future date."
-            );
-
-            backupDateInput.focus();
-
-            scheduleSubmissionLocked = false;
-            return;
-        }
-
-
-        /* -----------------------------------------
-           COLLECT FORM DATA
-        ----------------------------------------- */
-
-        const formData =
-            new FormData(scheduleForm);
-
-        const reservationData = {};
-
-
-        formData.forEach((value, key) => {
-            reservationData[key] = value;
-        });
-
-
-        /*
-         * Send the scheduling request to
-         * the Supabase Edge Function.
-         */
-        submitReservationToSupabase(
-            reservationData,
-            scheduleForm,
-            scheduleSuccess
-        );
-    });
+    );
 }
 
 
 /* =========================================
-   GAME PLAYER OPTIONS
+   GAME PLAYER OPTIONS + SCHEDULE PRICE
 ========================================= */
 
 function initializeGamePlayerOptions() {
@@ -1187,138 +1131,192 @@ function initializeGamePlayerOptions() {
     const playerHelp =
         document.getElementById("playerHelp");
 
+    const priceAmount =
+        document.getElementById("schedule-price-amount");
+
     if (!gameSelect || !playersSelect) {
         return;
     }
 
 
-    gameSelect.addEventListener("change", function () {
-        const game = this.value;
+    /* -----------------------------------------
+       UPDATE SCHEDULE PRICE
+    ----------------------------------------- */
 
+    function updateSchedulePrice(game) {
 
-        /* -----------------------------------------
-           CLEAR CURRENT PLAYER OPTIONS
-        ----------------------------------------- */
-
-        playersSelect.innerHTML = "";
-
-
-        /* -----------------------------------------
-           NO GAME SELECTED
-        ----------------------------------------- */
-
-        if (!game) {
-            const option =
-                document.createElement("option");
-
-            option.value = "";
-            option.textContent =
-                "Choose number of players";
-
-            playersSelect.appendChild(option);
-
-            if (playerHelp) {
-                playerHelp.textContent =
-                    "Select a game to see the available player numbers.";
-            }
-
+        if (!priceAmount) {
             return;
         }
 
+        const price =
+            GAME_PRICES[game];
 
-        let minimum;
-        let maximum;
-        let genderRequirement = "";
-
-
-        /* -----------------------------------------
-           SPELLBOUND
-        ----------------------------------------- */
-
-        if (game === "Spellbound") {
-            minimum = 13;
-            maximum = 17;
-
-            genderRequirement =
-                "At least 5 female and 4 male players are required.";
+        if (!game || price === undefined) {
+            priceAmount.textContent = "";
+            return;
         }
 
-
-        /* -----------------------------------------
-           WAY OUT WEST
-        ----------------------------------------- */
-
-        else if (game === "Way Out West") {
-            minimum = 10;
-            maximum = 20;
-        }
+        priceAmount.textContent =
+            "$" + price.toLocaleString();
+    }
 
 
-        /* -----------------------------------------
-           A DEAD MAN'S CHEST
-        ----------------------------------------- */
+    /* -----------------------------------------
+       GAME CHANGE
+    ----------------------------------------- */
 
-        else if (game === "A Dead Man's Chest") {
-            minimum = 12;
-            maximum = 16;
-        }
-
-
-        /* -----------------------------------------
-           PLAYER PLACEHOLDER
-        ----------------------------------------- */
-
-        const placeholder =
-            document.createElement("option");
-
-        placeholder.value = "";
-        placeholder.textContent =
-            "Select number of players";
-
-        placeholder.disabled = true;
-        placeholder.selected = true;
-
-        playersSelect.appendChild(placeholder);
+    gameSelect.addEventListener(
+        "change",
+        function () {
+            const game = this.value;
 
 
-        /* -----------------------------------------
-           CREATE PLAYER OPTIONS
-        ----------------------------------------- */
+            /* UPDATE PRICE */
 
-        for (
-            let number = minimum;
-            number <= maximum;
-            number++
-        ) {
-            const option =
+            updateSchedulePrice(game);
+
+
+            /* CLEAR CURRENT PLAYER OPTIONS */
+
+            playersSelect.innerHTML = "";
+
+
+            /* NO GAME SELECTED */
+
+            if (!game) {
+                const option =
+                    document.createElement("option");
+
+                option.value = "";
+                option.textContent =
+                    "Choose number of players";
+
+                playersSelect.appendChild(option);
+
+                if (playerHelp) {
+                    playerHelp.textContent =
+                        "Select a game to see the available player numbers.";
+                }
+
+                return;
+            }
+
+
+            let minimum;
+            let maximum;
+            let genderRequirement = "";
+
+
+            /* -----------------------------------------
+               SPELLBOUND
+            ----------------------------------------- */
+
+            if (game === "Spellbound") {
+                minimum = 13;
+                maximum = 17;
+
+                genderRequirement =
+                    "At least 5 female and 4 male players are required.";
+            }
+
+
+            /* -----------------------------------------
+               WAY OUT WEST
+            ----------------------------------------- */
+
+			else if (game === "Way Out West") {
+				minimum = 10;
+				maximum = 14;
+
+				genderRequirement =
+					"10 players - at least 3 Female · 5 Male<br>" +
+					"11 players - at least 4 Female · 5 Male<br>" +
+					"12+ players - at least 4 Female · 6 Male";
+			}
+
+
+            /* -----------------------------------------
+               A DEAD MAN'S CHEST
+            ----------------------------------------- */
+
+            else if (game === "A Dead Man's Chest") {
+                minimum = 12;
+                maximum = 16;
+				
+				genderRequirement =
+                    "At least 4 female and 6 male players are required.";
+            }
+
+
+            /* -----------------------------------------
+               PLAYER PLACEHOLDER
+            ----------------------------------------- */
+
+            const placeholder =
                 document.createElement("option");
 
-            option.value = number;
-            option.textContent =
-                number + " players";
+            placeholder.value = "";
+            placeholder.textContent =
+                "Select number of players";
 
-            playersSelect.appendChild(option);
-        }
+            placeholder.disabled = true;
+            placeholder.selected = true;
+
+            playersSelect.appendChild(placeholder);
 
 
-        /* -----------------------------------------
-           HELP TEXT
-        ----------------------------------------- */
+            /* -----------------------------------------
+               CREATE PLAYER OPTIONS
+            ----------------------------------------- */
 
-        if (playerHelp) {
-            if (genderRequirement) {
-                playerHelp.textContent =
-                    genderRequirement;
-            } else {
-                playerHelp.textContent =
-                    "This game can accommodate " +
-                    minimum +
-                    "–" +
-                    maximum +
-                    " players.";
+            for (
+                let number = minimum;
+                number <= maximum;
+                number++
+            ) {
+                const option =
+                    document.createElement("option");
+
+                option.value = number;
+                option.textContent =
+                    number + " players";
+
+                playersSelect.appendChild(option);
+            }
+
+
+            /* -----------------------------------------
+               HELP TEXT
+            ----------------------------------------- */
+
+            if (playerHelp) {
+                if (genderRequirement) {
+                    playerHelp.innerHTML =
+                        genderRequirement;
+                } else {
+                    playerHelp.textContent =
+                        "This game can accommodate " +
+                        minimum +
+                        "–" +
+                        maximum +
+                        " players.";
+                }
             }
         }
-    });
+    );
+
+
+    /*
+     * If a game was already selected when the
+     * modal opened, update the price and players.
+     */
+
+    if (gameSelect.value) {
+        gameSelect.dispatchEvent(
+            new Event("change")
+        );
+    }
 }
 
 
@@ -1333,10 +1331,12 @@ function getTodayString() {
         today.getFullYear();
 
     const month =
-        String(today.getMonth() + 1).padStart(2, "0");
+        String(today.getMonth() + 1)
+            .padStart(2, "0");
 
     const day =
-        String(today.getDate()).padStart(2, "0");
+        String(today.getDate())
+            .padStart(2, "0");
 
     return `${year}-${month}-${day}`;
 }
@@ -1387,20 +1387,10 @@ const contactForm =
 const contactSuccess =
     document.getElementById("contact-success");
 
-
 if (contactForm) {
 
-    /*
-     * Record when the contact form was loaded.
-     * This helps identify automated submissions
-     * that happen almost immediately.
-     */
     const contactFormLoadedAt = Date.now();
 
-
-    /*
-     * Prevent multiple submissions.
-     */
     let contactSubmissionLocked = false;
 
 
@@ -1411,9 +1401,7 @@ if (contactForm) {
             event.preventDefault();
 
 
-            /* -----------------------------------------
-               HONEYPOT CHECK
-            ----------------------------------------- */
+            /* HONEYPOT CHECK */
 
             const honeypot =
                 contactForm.querySelector(
@@ -1432,9 +1420,7 @@ if (contactForm) {
             }
 
 
-            /* -----------------------------------------
-               MINIMUM SUBMISSION TIME
-            ----------------------------------------- */
+            /* MINIMUM SUBMISSION TIME */
 
             const timeOnPage =
                 Date.now() - contactFormLoadedAt;
@@ -1448,9 +1434,7 @@ if (contactForm) {
             }
 
 
-            /* -----------------------------------------
-               SUBMISSION COOLDOWN
-            ----------------------------------------- */
+            /* SUBMISSION COOLDOWN */
 
             if (contactSubmissionLocked) {
                 console.warn(
@@ -1463,9 +1447,7 @@ if (contactForm) {
             contactSubmissionLocked = true;
 
 
-            /* -----------------------------------------
-               GET SUBMIT BUTTON
-            ----------------------------------------- */
+            /* GET SUBMIT BUTTON */
 
             const submitButton =
                 contactForm.querySelector(
@@ -1484,9 +1466,7 @@ if (contactForm) {
             }
 
 
-            /* -----------------------------------------
-               COLLECT FORM DATA
-            ----------------------------------------- */
+            /* COLLECT FORM DATA */
 
             const formData =
                 new FormData(contactForm);
@@ -1499,9 +1479,7 @@ if (contactForm) {
             };
 
 
-            /* -----------------------------------------
-               SEND TO SUPABASE
-            ----------------------------------------- */
+            /* SEND TO SUPABASE */
 
             try {
                 const response =
@@ -1524,9 +1502,8 @@ if (contactForm) {
                 const result =
                     await response.json();
 
-                /* -----------------------------------------
-                   HANDLE ERROR
-                ----------------------------------------- */
+
+                /* HANDLE ERROR */
 
                 if (!response.ok) {
                     throw new Error(
@@ -1536,20 +1513,17 @@ if (contactForm) {
                 }
 
 
-                /* -----------------------------------------
-                   SUCCESS
-                ----------------------------------------- */
+                /* SUCCESS */
 
                 contactForm.reset();
-
 
                 if (contactSuccess) {
                     contactSuccess.textContent =
                         "Message Sent! Thank you for reaching out. I'll be in touch soon.";
 
-                    contactSuccess.style.display = "block";
+                    contactSuccess.style.display =
+                        "block";
                 }
-
 
                 if (submitButton) {
                     submitButton.textContent =
@@ -1558,9 +1532,7 @@ if (contactForm) {
             }
 
 
-            /* -----------------------------------------
-               ERROR
-            ----------------------------------------- */
+            /* ERROR */
 
             catch (error) {
                 console.error(
@@ -1568,15 +1540,14 @@ if (contactForm) {
                     error
                 );
 
-
                 if (contactSuccess) {
                     contactSuccess.textContent =
                         error.message ||
                         "Something went wrong. Please try again.";
 
-                    contactSuccess.style.display = "block";
+                    contactSuccess.style.display =
+                        "block";
                 }
-
 
                 if (submitButton) {
                     submitButton.textContent =
@@ -1586,9 +1557,8 @@ if (contactForm) {
                 }
 
 
-                /*
-                 * Allow the user to try again.
-                 */
+                /* Allow another attempt */
+
                 contactSubmissionLocked = false;
             }
         }
