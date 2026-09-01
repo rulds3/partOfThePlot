@@ -16,7 +16,7 @@
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 
@@ -50,8 +50,6 @@
     margin: 0 auto;
 
     text-align: center;
-
-    box-sizing: border-box;
 }
 
 
@@ -60,13 +58,13 @@
 
     max-width: 100%;
 
-    white-space: normal;
+    white-space: nowrap;
     overflow-wrap: normal;
 }
 
 
 .wayOutWest-title h1 span {
-    white-space: normal;
+    white-space: nowrap;
 }
 
 
@@ -82,8 +80,6 @@
     letter-spacing: 0.08em;
 
     text-align: right;
-
-    transform: none;
 
     text-shadow:
         0 1px 2px rgba(0, 0, 0, 0.9);
@@ -138,10 +134,15 @@
 }
 
 
+/* ---------------------------------------------------------
+   Hero Content
+   --------------------------------------------------------- */
+
 .wayOutWest-hero-content {
     position: relative;
     z-index: 2;
 
+    width: 100%;
     max-width: 850px;
 
     padding: 100px 30px 40px;
@@ -200,6 +201,7 @@
 
     text-align: center;
 
+    white-space: nowrap;
     overflow-wrap: normal;
     word-break: normal;
 
@@ -211,6 +213,8 @@
 
 .wayOutWest-hero h1 span {
     color: var(--light-gold);
+
+    white-space: nowrap;
 
     text-shadow:
         0 2px 2px rgba(0, 0, 0, 0.95),
@@ -252,10 +256,6 @@
 
     color: #f4ead9;
 
-    /*
-     * The HTML contains an intentional <br>.
-     * Keep each side of that break together.
-     */
     white-space: nowrap;
 
     overflow: hidden;
@@ -287,7 +287,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 
     gap: 30px;
 
@@ -297,9 +297,14 @@
 }
 
 
+/* ---------------------------------------------------------
+   Individual Detail Blocks
+   --------------------------------------------------------- */
+
 .wayOutWest-hero-details div {
+    flex: 0 1 auto;
+
     min-width: 120px;
-    max-width: 180px;
 
     padding-top: 12px;
 
@@ -308,6 +313,30 @@
     box-sizing: border-box;
 }
 
+
+/* ---------------------------------------------------------
+   Players Block
+   --------------------------------------------------------- */
+
+.wayOutWest-hero-details div:first-child {
+    min-width: 360px;
+    max-width: 390px;
+}
+
+
+/* ---------------------------------------------------------
+   Other Detail Blocks
+   --------------------------------------------------------- */
+
+.wayOutWest-hero-details div:not(:first-child) {
+    min-width: 130px;
+    max-width: 160px;
+}
+
+
+/* ---------------------------------------------------------
+   Detail Labels
+   --------------------------------------------------------- */
 
 .wayOutWest-hero-details span {
     display: block;
@@ -320,9 +349,13 @@
     letter-spacing: 2px;
     text-transform: uppercase;
 
-    overflow-wrap: break-word;
+    white-space: nowrap;
 }
 
+
+/* ---------------------------------------------------------
+   Detail Values
+   --------------------------------------------------------- */
 
 .wayOutWest-hero-details strong {
     display: block;
@@ -334,7 +367,7 @@
 
     line-height: 1.25;
 
-    overflow-wrap: break-word;
+    white-space: nowrap;
 
     text-shadow:
         0 1px 3px rgba(0, 0, 0, 0.9);
@@ -393,10 +426,6 @@
     background: #2d241a;
 }
 
-
-/* ---------------------------------------------------------
-   Story Container
-   --------------------------------------------------------- */
 
 .wayOutWest-story-container {
     max-width: 800px;
@@ -771,7 +800,6 @@
 
 @media (max-width: 600px) {
 
-
     /* -----------------------------------------------------
        PAGE OVERFLOW PROTECTION
        ----------------------------------------------------- */
@@ -819,6 +847,8 @@
         letter-spacing: 1px;
 
         line-height: 1.05;
+
+        white-space: nowrap;
     }
 
 
@@ -836,10 +866,6 @@
        ----------------------------------------------------- */
 
     .wayOutWest-hero .tagline {
-        /*
-         * Do NOT allow the two intentional tagline lines
-         * to wrap onto additional lines.
-         */
         white-space: nowrap;
 
         font-size: 0.95rem;
@@ -855,21 +881,33 @@
     .wayOutWest-hero-details {
         width: 100%;
 
-        gap: 15px;
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 18px 12px;
 
         margin-top: 30px;
     }
 
 
     .wayOutWest-hero-details div {
-        /*
-         * Two columns on most phones without forcing
-         * horizontal overflow.
-         */
         flex: 1 1 100px;
 
         min-width: 0;
         max-width: 150px;
+    }
+
+
+    /*
+       Players remains wide enough for its requirement
+       lines on normal phones.
+    */
+
+    .wayOutWest-hero-details div:first-child {
+        flex: 1 1 100%;
+
+        min-width: 0;
+        max-width: 100%;
     }
 
 
@@ -882,6 +920,8 @@
 
     .wayOutWest-hero-details strong {
         font-size: 11px;
+
+        white-space: normal;
     }
 
 
@@ -976,7 +1016,6 @@
 
 @media (max-width: 380px) {
 
-
     .wayOutWest-hero-content {
         padding-left: 15px;
         padding-right: 15px;
@@ -1002,10 +1041,6 @@
        ----------------------------------------------------- */
 
     .wayOutWest-hero .tagline {
-        /*
-         * Keep the tagline on exactly the two lines
-         * defined by the HTML <br>.
-         */
         white-space: nowrap;
 
         font-size: 0.82rem;
@@ -1017,12 +1052,19 @@
 
 
     .wayOutWest-hero-details {
-        gap: 10px;
+        gap: 15px 8px;
     }
 
 
-    .wayOutWest-hero-details div {
-        flex-basis: 90px;
+    .wayOutWest-hero-details div:first-child {
+        flex-basis: 100%;
+    }
+
+
+    .wayOutWest-hero-details div:not(:first-child) {
+        flex: 1 1 90px;
+
+        min-width: 90px;
     }
 
 
