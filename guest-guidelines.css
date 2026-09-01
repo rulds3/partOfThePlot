@@ -1,0 +1,280 @@
+/* =========================================================
+   PART OF THE PLOT
+   Guest Guidelines Page Styles
+   Guest-guidelines-specific styles only
+   ========================================================= */
+
+
+/* =========================================================
+   1. PAGE
+   ========================================================= */
+
+.guest-guidelines-page {
+    width: 100%;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(81, 64, 111, 0.14),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(198, 161, 91, 0.06),
+            transparent 35%
+        ),
+        #181d27;
+}
+
+
+/* =========================================================
+   2. MAIN SECTION
+   ========================================================= */
+
+.guest-guidelines {
+    width: 100%;
+
+    padding: 110px 20px 100px;
+}
+
+.guest-guidelines-container {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   3. PAGE HEADING
+   ========================================================= */
+
+.guest-guidelines-container > .eyebrow {
+    margin-bottom: 12px;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    letter-spacing: 0.18em;
+
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.guest-guidelines-container > h1 {
+    margin: 0;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 7vw, 70px);
+    font-weight: 500;
+    line-height: 1.1;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   4. INTRODUCTION
+   ========================================================= */
+
+.guest-guidelines-intro {
+    max-width: 650px;
+
+    margin: 45px auto 55px;
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid var(--border-strong);
+
+    text-align: center;
+}
+
+.guest-guidelines-intro h2 {
+    margin: 0 0 12px;
+
+    color: var(--gold);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(25px, 4vw, 34px);
+    font-weight: 500;
+}
+
+.guest-guidelines-intro p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   5. GUIDELINE LIST
+   ========================================================= */
+
+.guideline-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   6. GUIDELINE ITEMS
+   ========================================================= */
+
+.guideline-item {
+    padding: 24px 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(81, 64, 111, 0.12),
+            rgba(13, 16, 23, 0.22)
+        );
+
+    border: 1px solid rgba(198, 161, 91, 0.16);
+    border-radius: 2px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.guideline-item:hover {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(81, 64, 111, 0.18),
+            rgba(13, 16, 23, 0.28)
+        );
+
+    border-color: rgba(198, 161, 91, 0.32);
+}
+
+
+/* =========================================================
+   7. GUIDELINE TYPOGRAPHY
+   ========================================================= */
+
+.guideline-item h3 {
+    margin: 0 0 10px;
+
+    color: var(--cream);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.guideline-item h3::first-letter {
+    font-size: 1.1em;
+}
+
+.guideline-item p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+.guideline-item strong {
+    color: var(--cream);
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   8. CLOSING MESSAGE
+   ========================================================= */
+
+.guest-guidelines-closing {
+    max-width: 650px;
+
+    margin: 65px auto 0;
+    padding-top: 45px;
+
+    border-top: 1px solid var(--border-strong);
+
+    text-align: center;
+}
+
+.guest-guidelines-closing h2 {
+    margin: 0 0 6px;
+
+    color: var(--gold);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+.guest-guidelines-closing .closing-message {
+    margin: 0;
+
+    color: var(--cream);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.guest-guidelines-closing .closing-message + .closing-message {
+    margin-top: 2px;
+}
+
+.guest-guidelines-closing .organizer-note {
+    margin-top: 35px;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+    line-height: 1.7;
+
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   9. MOBILE — 600px AND BELOW
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .guest-guidelines-closing {
+        margin-top: 50px;
+        padding-top: 35px;
+    }
+
+    .guest-guidelines-closing h2 {
+        margin-bottom: 6px;
+    }
+
+    .guest-guidelines-closing .closing-message {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .guest-guidelines-closing .closing-message + .closing-message {
+        margin-top: 2px;
+    }
+
+}
+
+
+/* =========================================================
+   END OF GUEST GUIDELINES STYLESHEET
+   ========================================================= */

@@ -1,0 +1,729 @@
+/* =========================================================
+   PART OF THE PLOT
+   SCHEDULE & SCHEDULING STYLESHEET
+   Scheduling-specific styles only
+   ========================================================= */
+
+
+/* =========================================================
+   1. SCHEDULE CTA SECTION
+   ========================================================= */
+
+.schedule {
+    min-height: 500px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 80px 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(16, 19, 26, 0.90),
+            rgba(16, 19, 26, 0.90)
+        ),
+        radial-gradient(
+            circle,
+            #5d4d34,
+            #11141b
+        );
+}
+
+
+.schedule-content {
+    width: 100%;
+    max-width: 650px;
+}
+
+
+.schedule h2 {
+    margin-bottom: 25px;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(45px, 7vw, 75px);
+    font-weight: 500;
+
+    line-height: 1.1;
+}
+
+
+.schedule p {
+    margin-bottom: 35px;
+
+    color: var(--muted);
+}
+
+
+.schedule-availability {
+    margin: 10px 0 0;
+
+    color: var(--cream);
+
+    font-size: 0.75rem;
+    font-weight: 400;
+
+    letter-spacing: 0.05em;
+
+    text-align: center;
+
+    opacity: 0.75;
+}
+
+
+.schedule-day-note {
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   2. SCHEDULING MODAL
+   ========================================================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    overflow-y: auto;
+
+    background: rgba(5, 7, 12, 0.88);
+
+    backdrop-filter: blur(8px);
+}
+
+
+.modal.active {
+    display: flex;
+}
+
+
+/* =========================================================
+   3. MODAL CONTENT
+   ========================================================= */
+
+.modal-content {
+    position: relative;
+
+    width: 100%;
+    max-width: 750px;
+    max-height: 90vh;
+
+    padding: 60px;
+
+    overflow-y: auto;
+
+    background: var(--dark-blue);
+
+    border: 1px solid var(--border-strong);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.60);
+}
+
+
+/* =========================================================
+   4. MODAL CLOSE BUTTON
+   ========================================================= */
+
+.modal-close {
+    position: absolute;
+
+    top: 18px;
+    right: 22px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background: transparent;
+    color: var(--cream);
+
+    border: none;
+
+    font-size: 32px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.modal-close:hover {
+    color: var(--gold);
+
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   5. MODAL HEADER
+   ========================================================= */
+
+.modal-header {
+    margin-bottom: 45px;
+
+    text-align: center;
+}
+
+
+.modal-header h2 {
+    margin-bottom: 15px;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: 42px;
+    font-weight: 500;
+
+    line-height: 1.2;
+}
+
+
+.modal-header > p:last-child {
+    max-width: 550px;
+
+    margin: 0 auto;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   6. SCHEDULING FORM
+   ========================================================= */
+
+#scheduleForm {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   FORM ROW
+   ========================================================= */
+
+.form-row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.form-group label {
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    min-width: 0;
+
+    padding: 13px 15px;
+
+    background: #0e1118;
+    color: var(--cream);
+
+    border: 1px solid var(--border);
+    border-radius: 0;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #77766f;
+
+    opacity: 1;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    background: #11151e;
+
+    border-color: var(--gold);
+
+    box-shadow:
+        0 0 0 1px rgba(198, 161, 91, 0.10);
+}
+
+
+.form-group textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+
+/* =========================================================
+   7. RADIO GROUP
+   ========================================================= */
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    margin-top: 8px;
+}
+
+
+.radio-group label {
+    width: auto;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 9px;
+
+    margin: 0;
+
+    color: var(--cream);
+
+    font-size: 0.9rem;
+
+    letter-spacing: 0;
+
+    text-transform: none;
+
+    cursor: pointer;
+}
+
+
+.radio-group input[type="radio"] {
+    flex-shrink: 0;
+
+    width: auto;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    accent-color: var(--gold);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   8. FORM HELP TEXT
+   ========================================================= */
+
+.form-help {
+    margin-top: 6px;
+
+    color: #aaa9a4;
+
+    font-size: 0.85rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   9. CHARACTER NOTES
+   ========================================================= */
+
+.character-notes-section {
+    margin-top: 2rem;
+
+    padding: 1.5rem;
+
+    background: rgba(8, 10, 15, 0.20);
+
+    border: 1px solid var(--border);
+
+    border-radius: 0;
+}
+
+
+.character-notes-section > label {
+    display: block;
+
+    margin-bottom: 0.5rem;
+}
+
+
+.character-notes-section > .form-help {
+    margin-bottom: 1.5rem;
+}
+
+
+.character-notes-section .character-notes {
+    margin-bottom: 1.5rem;
+}
+
+
+.character-notes-section .character-notes:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   10. FORM SUBMIT BUTTON
+   ========================================================= */
+
+.form-submit {
+    align-self: center;
+
+    margin-top: 15px;
+
+    background: transparent;
+}
+
+
+.form-submit:hover {
+    background: var(--gold);
+
+    color: var(--dark);
+}
+
+
+/* =========================================================
+   11. DATE & TIME INPUTS
+   ========================================================= */
+
+input[type="date"],
+input[type="time"] {
+    position: relative;
+
+    color-scheme: dark;
+
+    cursor: pointer;
+}
+
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: block;
+
+    opacity: 1;
+
+    cursor: pointer;
+
+    filter:
+        invert(72%)
+        sepia(25%)
+        saturate(700%)
+        hue-rotate(5deg);
+}
+
+
+/* =========================================================
+   12. FORM MESSAGES
+   ========================================================= */
+
+.form-message {
+    margin: 15px 0 0;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+
+.form-message.error {
+    color: #d99a9a;
+}
+
+
+/* =========================================================
+   13. SUCCESS MESSAGE
+   ========================================================= */
+
+#schedule-success {
+    display: none;
+
+    margin-top: 20px;
+    padding: 25px 22px;
+
+    background:
+        rgba(198, 161, 91, 0.12);
+
+    border: 1px solid var(--gold);
+
+    border-radius: 3px;
+
+    color: var(--light-gold);
+
+    font-size: 16px;
+    font-weight: 600;
+
+    line-height: 1.5;
+
+    text-align: center;
+
+    animation:
+        successFadeIn 0.5s ease forwards;
+}
+
+
+/* =========================================================
+   14. SPAM-PROTECTION FIELD
+   ========================================================= */
+
+#scheduleForm input[name="_gotcha"] {
+    position: absolute !important;
+
+    left: -9999px !important;
+
+    width: 1px !important;
+    height: 1px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    opacity: 0 !important;
+
+    pointer-events: none !important;
+}
+
+
+/* =========================================================
+   15. MODAL SCROLLBAR
+   ========================================================= */
+
+.modal-content {
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        var(--gold)
+        rgba(8, 10, 15, 0.40);
+}
+
+
+.modal-content::-webkit-scrollbar {
+    width: 7px;
+}
+
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(8, 10, 15, 0.40);
+}
+
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: rgba(198, 161, 91, 0.45);
+}
+
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
+
+
+/* =========================================================
+   16. TABLET
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .modal {
+        padding: 20px;
+    }
+
+
+    .modal-content {
+        padding: 50px 35px 40px;
+    }
+
+
+    .modal-header {
+        margin-bottom: 35px;
+    }
+
+
+    .modal-header h2 {
+        font-size: 36px;
+    }
+
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   17. MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .schedule {
+        min-height: 400px;
+
+        padding: 70px 20px;
+    }
+
+
+    .schedule h2 {
+        font-size: clamp(38px, 12vw, 55px);
+    }
+
+
+    .schedule p {
+        margin-bottom: 30px;
+    }
+
+
+    .modal {
+        align-items: flex-start;
+
+        padding: 15px;
+    }
+
+
+    .modal-content {
+        max-height: calc(100vh - 30px);
+
+        padding: 50px 25px 35px;
+    }
+
+
+    .modal-header h2 {
+        font-size: 31px;
+    }
+
+
+    .modal-header > p:last-child {
+        font-size: 0.88rem;
+    }
+
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 13px 14px;
+
+        font-size: 0.88rem;
+    }
+
+
+    .character-notes-section {
+        padding: 1.25rem;
+    }
+
+
+    .form-submit {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   18. VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .modal {
+        padding: 10px;
+    }
+
+
+    .modal-content {
+        max-height: calc(100vh - 20px);
+
+        padding: 45px 20px 30px;
+    }
+
+
+    .modal-header h2 {
+        font-size: 28px;
+    }
+
+
+    .modal-close {
+        top: 12px;
+        right: 14px;
+
+        width: 35px;
+        height: 35px;
+
+        font-size: 28px;
+    }
+
+
+    .character-notes-section {
+        padding: 1rem;
+    }
+
+}
+
+
+/* =========================================================
+   END OF SCHEDULE STYLESHEET
+   ========================================================= */

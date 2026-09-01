@@ -1,0 +1,689 @@
+/* =========================================================
+   PART OF THE PLOT
+   FAQ PAGE STYLESHEET
+   Matches the structure of faq.html
+   ========================================================= */
+
+
+/* =========================================================
+   1. FAQ PAGE
+   ========================================================= */
+
+.faq-page {
+    width: 100%;
+
+    padding: 120px 8% 80px;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(81, 64, 111, 0.08),
+            transparent 35%
+        ),
+        var(--dark);
+}
+
+
+/* =========================================================
+   2. FAQ HERO
+   ========================================================= */
+
+.faq-page-hero {
+    position: relative;
+
+    min-height: 700px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 120px 30px;
+
+    text-align: center;
+
+    background:
+        var(--page-atmosphere),
+        var(--page-gradient);
+
+    overflow: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   Subtle atmospheric glow
+   --------------------------------------------------------- */
+
+.faq-page-hero::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(255, 255, 255, 0.025),
+            transparent 45%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   3. FAQ HERO CONTENT
+   ========================================================= */
+
+.faq-page-hero-content {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    animation: faqFadeUp 1.2s ease forwards;
+}
+
+
+/* ---------------------------------------------------------
+   Eyebrow
+   --------------------------------------------------------- */
+
+.faq-page-hero .eyebrow {
+    margin-bottom: 20px;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+}
+
+
+/* ---------------------------------------------------------
+   Main Heading
+   --------------------------------------------------------- */
+
+.faq-page-hero h1 {
+    margin: 0;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(50px, 8vw, 100px);
+    font-weight: 500;
+    line-height: 0.95;
+
+    letter-spacing: 6px;
+}
+
+
+/* ---------------------------------------------------------
+   Gold portion of heading
+   --------------------------------------------------------- */
+
+.faq-page-hero h1 span {
+    color: var(--gold);
+}
+
+
+/* ---------------------------------------------------------
+   Divider
+   --------------------------------------------------------- */
+
+.faq-page-hero .divider {
+    width: 100px;
+    height: 1px;
+
+    margin: 35px auto;
+
+    background: var(--gold);
+}
+
+
+/* ---------------------------------------------------------
+   Tagline
+   --------------------------------------------------------- */
+
+.faq-page-hero .tagline {
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    color: #d4d0c8;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.7;
+}
+
+
+/* ---------------------------------------------------------
+   Highlighted tagline text
+   --------------------------------------------------------- */
+
+.faq-page-hero .tagline strong {
+    color: var(--light-gold);
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   4. FAQ CONTENT COLUMN
+   ========================================================= */
+
+/*
+   IMPORTANT:
+   faq.html uses:
+
+       <section class="faq-page">
+           <div class="faq">
+
+   Therefore .faq is the actual FAQ container.
+
+   The entire FAQ column is centered on the page,
+   while the questions themselves remain LEFT-ALIGNED.
+*/
+
+.faq-page > .faq {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   5. FAQ ITEMS
+   ========================================================= */
+
+.faq-item {
+    width: 100%;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.faq-item:first-child {
+    border-top: 1px solid var(--border);
+}
+
+
+/* =========================================================
+   6. FAQ QUESTIONS
+   ========================================================= */
+
+.faq-question {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 14px;
+
+    padding: 25px 0;
+
+    margin: 0;
+
+    background: none;
+    color: var(--cream);
+
+    border: none;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        color 0.25s ease;
+}
+
+
+.faq-question:hover {
+    color: var(--light-gold);
+}
+
+
+/* ---------------------------------------------------------
+   Question text
+   --------------------------------------------------------- */
+
+.faq-question span:first-child {
+    flex: 0 1 auto;
+
+    min-width: 0;
+
+    text-align: left;
+}
+
+
+/* =========================================================
+   7. FAQ PLUS / MINUS ICON
+   ========================================================= */
+
+.faq-question span:last-child {
+    flex: 0 0 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 25px;
+    height: 25px;
+
+    margin: 0;
+
+    color: var(--gold);
+
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+
+    text-align: center;
+
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+}
+
+
+.faq-question:hover span:last-child {
+    color: var(--light-gold);
+}
+
+
+/* ---------------------------------------------------------
+   Rotate + into × when open
+   --------------------------------------------------------- */
+
+.faq-item.active .faq-question span:last-child {
+    transform: rotate(45deg);
+}
+
+
+/* =========================================================
+   8. FAQ ANSWERS
+   ========================================================= */
+
+.faq-answer {
+    max-height: 0;
+
+    overflow: hidden;
+
+    transition:
+        max-height 0.4s ease;
+}
+
+
+/* ---------------------------------------------------------
+   Answer paragraphs
+   --------------------------------------------------------- */
+
+.faq-answer p {
+    max-width: 700px;
+
+    margin: 0;
+
+    padding: 0 0 25px;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.8;
+
+    text-align: left;
+}
+
+
+/* =========================================================
+   9. FAQ LINKS
+   ========================================================= */
+
+.faq-answer a {
+    color: var(--light-gold);
+
+    text-decoration: underline;
+    text-decoration-color: rgba(226, 201, 137, 0.45);
+    text-underline-offset: 3px;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.faq-answer a:hover {
+    color: #fff;
+}
+
+
+/* =========================================================
+   10. FAQ LISTS
+   ========================================================= */
+
+.faq-answer > ul {
+    max-width: 700px;
+
+    margin: 0;
+
+    padding: 0 0 25px 25px;
+
+    text-align: left;
+}
+
+
+.faq-answer > ul > li {
+    margin-bottom: 28px;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+
+.faq-answer > ul > li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   Nested lists
+   --------------------------------------------------------- */
+
+.faq-answer ul ul {
+    margin-top: 12px;
+
+    padding-left: 25px;
+}
+
+
+.faq-answer ul ul li {
+    margin-bottom: 10px;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+
+.faq-answer ul ul li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   List bullets
+   --------------------------------------------------------- */
+
+.faq-answer li::marker {
+    color: var(--gold);
+}
+
+
+/* =========================================================
+   11. FAQ STRONG TEXT
+   ========================================================= */
+
+.faq-answer strong {
+    color: var(--cream);
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   12. FAQ NOTES
+   ========================================================= */
+
+.faq-note {
+    margin-top: 15px;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+    font-style: italic;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   13. FAQ ACCESSIBILITY
+   ========================================================= */
+
+.faq-question:focus-visible {
+    outline: 1px solid var(--gold);
+    outline-offset: 6px;
+}
+
+
+.faq-answer[hidden] {
+    display: block;
+}
+
+
+/* =========================================================
+   14. FAQ ANIMATION
+   ========================================================= */
+
+@keyframes faqFadeUp {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   15. TABLET — 900px AND BELOW
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .faq-page {
+        padding: 100px 6% 70px;
+    }
+
+
+    .faq-page-hero {
+        min-height: 650px;
+
+        padding: 110px 30px;
+    }
+
+
+    .faq-page > .faq {
+        max-width: 700px;
+    }
+
+}
+
+
+/* =========================================================
+   16. MOBILE — 700px AND BELOW
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .faq-page {
+        padding: 80px 20px 60px;
+    }
+
+
+    .faq-page-hero {
+        min-height: 620px;
+
+        padding: 100px 20px;
+    }
+
+
+    .faq-page-hero h1 {
+        font-size: clamp(48px, 13vw, 70px);
+
+        letter-spacing: 3px;
+    }
+
+
+    .faq-page-hero .divider {
+        margin: 30px auto;
+    }
+
+
+    .faq-page-hero .tagline {
+        font-size: 17px;
+
+        line-height: 1.7;
+    }
+
+
+    /* -----------------------------------------------------
+       FAQ QUESTIONS
+       ----------------------------------------------------- */
+
+    .faq-question {
+        width: 100%;
+
+        gap: 12px;
+
+        padding: 22px 0;
+
+        font-size: 14px;
+    }
+
+
+    .faq-question span:first-child {
+        flex: 0 1 auto;
+
+        min-width: 0;
+    }
+
+
+    .faq-question span:last-child {
+        flex: 0 0 22px;
+
+        width: 22px;
+        height: 22px;
+
+        font-size: 20px;
+    }
+
+
+    /* -----------------------------------------------------
+       FAQ ANSWERS
+       ----------------------------------------------------- */
+
+    .faq-answer p {
+        padding-bottom: 22px;
+
+        font-size: 0.87rem;
+        line-height: 1.75;
+    }
+
+
+    .faq-answer > ul {
+        padding-bottom: 22px;
+        padding-left: 22px;
+    }
+
+
+    .faq-answer > ul > li {
+        margin-bottom: 22px;
+
+        font-size: 0.87rem;
+        line-height: 1.75;
+    }
+
+
+    .faq-answer ul ul {
+        padding-left: 20px;
+    }
+
+}
+
+
+/* =========================================================
+   17. SMALL MOBILE — 450px AND BELOW
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+    .faq-page {
+        padding: 70px 18px 50px;
+    }
+
+
+    .faq-page-hero {
+        min-height: 580px;
+
+        padding: 90px 18px;
+    }
+
+
+    .faq-page-hero h1 {
+        font-size: 46px;
+
+        letter-spacing: 2px;
+    }
+
+
+    .faq-page-hero .tagline {
+        font-size: 16px;
+    }
+
+
+    .faq-question {
+        gap: 10px;
+
+        padding: 20px 0;
+
+        font-size: 13px;
+    }
+
+
+    .faq-question span:last-child {
+        flex: 0 0 22px;
+
+        width: 22px;
+        height: 22px;
+
+        font-size: 19px;
+    }
+
+
+    .faq-answer p,
+    .faq-answer > ul > li {
+        font-size: 0.84rem;
+    }
+
+}
+
+
+/* =========================================================
+   END OF FAQ STYLESHEET
+   ========================================================= */
