@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /admin-dashboard.html
+Disallow: /confirm-and-pay.html
+
+Sitemap: https://partoftheplot.com/sitemap.xml
