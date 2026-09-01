@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+>
+
+    <!-- HOME -->
+    <url>
+        <loc>https://partoftheplot.com/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+
+    <!-- ABOUT -->
+    <url>
+        <loc>https://partoftheplot.com/about.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+
+    <!-- GAMES -->
+    <url>
+        <loc>https://partoftheplot.com/games.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+
+    <!-- SPELLBOUND -->
+    <url>
+        <loc>https://partoftheplot.com/games/spellbound/spellbound.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+
+    <!-- DEAD MAN'S CHEST -->
+    <url>
+        <loc>http://partoftheplot.com/games/deadMansChest/deadMansChest.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+
+    <!-- WAY OUT WEST -->
+    <url>
+        <loc>https://partoftheplot.com/games/wayOutWest/wayOutWest.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+
+    <!-- HOW IT WORKS -->
+    <url>
+        <loc>https://partoftheplot.com/howItWorks.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+
+    <!-- FAQ -->
+    <url>
+        <loc>https://partoftheplot.com/faq.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+
+    <!-- CONTACT -->
+    <url>
+        <loc>https://partoftheplot.com/contact.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+
+    <!-- PRIVACY POLICY -->
+    <url>
+        <loc>https://partoftheplot.com/privacy-policy.html</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+
+    <!-- ORGANIZER RESPONSIBILITIES -->
+    <url>
+        <loc>https://partoftheplot.com/organizer-responsibilities.html</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+
+    <!-- GUEST GUIDELINES -->
+    <url>
+        <loc>https://partoftheplot.com/guest-guidelines.html</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+</urlset>
