@@ -4,7 +4,6 @@
 
 <head>
 
-
 <meta charset="UTF-8">
 
 <meta
@@ -61,7 +60,7 @@
 
 <main class="confirm-page">
 
-
+```
 <section class="section confirm-section">
 
     <div class="confirm-container">
@@ -386,26 +385,28 @@
                         </h3>
 
 
-                        <!-- ORGANIZER RESPONSIBILITIES -->
+                        <!-- =================================================
+                             CLIENT AGREEMENT
+                             ================================================= -->
 
                         <label class="checkbox-label">
 
                             <input
                                 type="checkbox"
-                                name="organizer_responsibilities_acknowledged"
+                                name="client_agreement_acknowledged"
                                 value="Yes"
                                 required
                             >
 
                             <span>
 
-                                I have read and understand the
+                                I have read and agree to the
                                 <a
-                                    href="organizer-responsibilities.html"
+                                    href="client-agreement.html"
                                     target="_blank"
                                     rel="noopener"
                                 >
-                                    Organizer Responsibilities
+                                    Part of the Plot Client Agreement
                                 </a>.
 
                             </span>
@@ -413,36 +414,9 @@
                         </label>
 
 
-                        <!-- GUEST GUIDELINES -->
-
-                        <label class="checkbox-label">
-
-                            <input
-                                type="checkbox"
-                                name="guest_guidelines_acknowledged"
-                                value="Yes"
-                                required
-                            >
-
-                            <span>
-
-                                I have read and understand the
-                                <a
-                                    href="guest-guidelines.html"
-                                    target="_blank"
-                                    rel="noopener"
-                                >
-                                    Guest Guidelines
-                                </a>
-                                and will make them available
-                                to my guests.
-
-                            </span>
-
-                        </label>
-
-
-                        <!-- CANCELLATION POLICY -->
+                        <!-- =================================================
+                             CANCELLATION & PAYMENT POLICY
+                             ================================================= -->
 
                         <label class="checkbox-label">
 
@@ -471,34 +445,9 @@
                         </label>
 
 
-                        <!-- CLIENT AGREEMENT -->
-
-                        <label class="checkbox-label">
-
-                            <input
-                                type="checkbox"
-                                name="client_agreement_acknowledged"
-                                value="Yes"
-                                required
-                            >
-
-                            <span>
-
-                                I have read and agree to the
-                                <a
-                                    href="client-agreement.html"
-                                    target="_blank"
-                                    rel="noopener"
-                                >
-                                    Part of the Plot Client Agreement
-                                </a>.
-
-                            </span>
-
-                        </label>
-
-
-                        <!-- RESERVATION CONFIRMATION -->
+                        <!-- =================================================
+                             RESERVATION CONFIRMATION
+                             ================================================= -->
 
                         <label class="checkbox-label">
 
@@ -643,7 +592,7 @@
     </div>
 
 </section>
-
+```
 
 </main>
 
@@ -661,9 +610,10 @@
        GET RESERVATION TOKEN
        ========================================================= */
 
-    const urlParams = new URLSearchParams(
-        window.location.search
-    );
+    const urlParams =
+        new URLSearchParams(
+            window.location.search
+        );
 
     const confirmationToken =
         urlParams.get("token");
@@ -720,7 +670,9 @@
         }
 
         const date =
-            new Date(dateString + "T00:00:00");
+            new Date(
+                dateString + "T00:00:00"
+            );
 
         return date.toLocaleDateString(
             "en-US",
@@ -796,11 +748,14 @@
                 await fetch(
                     CONFIRM_RESERVATION_URL +
                     "?token=" +
-                    encodeURIComponent(confirmationToken),
+                    encodeURIComponent(
+                        confirmationToken
+                    ),
                     {
                         method: "GET",
                         headers: {
-                            "Content-Type": "application/json"
+                            "Content-Type":
+                                "application/json"
                         }
                     }
                 );
@@ -810,7 +765,10 @@
                 await response.json();
 
 
-            if (!response.ok || !data.success) {
+            if (
+                !response.ok ||
+                !data.success
+            ) {
 
                 throw new Error(
                     data.error ||
@@ -893,7 +851,8 @@
 
             document.getElementById("confirmation_token")
                 .value =
-                reservation.confirmation_token || confirmationToken;
+                reservation.confirmation_token ||
+                confirmationToken;
 
 
             document.getElementById("reservation_date")
@@ -978,7 +937,8 @@
 
                     "<p>" +
                     "This reservation has already been confirmed. " +
-                    "If you need assistance, please contact Part of the Plot." +
+                    "If you need assistance, please contact " +
+                    "Part of the Plot." +
                     "</p>";
 
 
