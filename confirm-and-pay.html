@@ -322,65 +322,6 @@
 
 
             <!-- =================================================
-                 IMPORTANT INFORMATION
-                 ================================================= -->
-
-            <div
-                id="confirmation-information"
-                class="confirm-information"
-                style="display: none;"
-            >
-
-                <h2>
-                    Before You Confirm
-                </h2>
-
-                <p>
-                    Please review the following information before
-                    confirming your reservation.
-                </p>
-
-
-                <div class="confirm-links">
-
-                    <a
-                        href="client-agreement.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Client Agreement
-                    </a>
-
-                    <a
-                        href="faq.html#payment"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Payment Information
-                    </a>
-
-                    <a
-                        href="organizer-responsibilities.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Organizer Responsibilities
-                    </a>
-
-                    <a
-                        href="guest-guidelines.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Guest Guidelines
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
                  CONFIRMATION FORM
                  ================================================= -->
 
@@ -453,7 +394,7 @@
 
 
                     <!-- =============================================
-                         ACKNOWLEDGMENTS
+                         REQUIRED CONFIRMATIONS
                          ============================================= -->
 
                     <div class="acknowledgments">
@@ -475,7 +416,7 @@
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    Client Agreement
+                                    Part of the Plot Client Agreement
                                 </a>.
                             </span>
 
@@ -493,7 +434,14 @@
 
                             <span>
                                 I have read and understand the
-                                cancellation and rescheduling policy.
+                                <a
+                                    href="faq.html#payment"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    cancellation and payment policies
+                                </a>
+                                described in the FAQ.
                             </span>
 
                         </label>
@@ -509,8 +457,9 @@
                             >
 
                             <span>
-                                I confirm that the reservation details
-                                shown above are correct.
+                                I confirm that the reservation and details
+                                above are correct and authorize Part of
+                                the Plot to proceed with this reservation.
                             </span>
 
                         </label>
@@ -710,9 +659,6 @@
     const reservationSummary =
         document.getElementById("reservation-summary");
 
-    const confirmationInformation =
-        document.getElementById("confirmation-information");
-
     const confirmationBox =
         document.getElementById("confirmation-box");
 
@@ -727,7 +673,7 @@
 
 
     /* =========================================================
-       HELPER FUNCTIONS
+       GET CONFIRMATION TOKEN
        ========================================================= */
 
     function getConfirmationToken() {
@@ -740,9 +686,16 @@
     }
 
 
+    /* =========================================================
+       ESCAPE HTML
+       ========================================================= */
+
     function escapeHtml(value) {
 
-        if (value === null || value === undefined) {
+        if (
+            value === null ||
+            value === undefined
+        ) {
             return "";
         }
 
@@ -757,7 +710,7 @@
 
 
     /* =========================================================
-       DATE FORMATTING
+       FORMAT DATE
        ========================================================= */
 
     function formatDate(dateValue) {
@@ -775,13 +728,14 @@
 
 
         /*
-         * Handle PostgreSQL-style YYYY-MM-DD dates
-         * manually so browser timezone handling cannot
-         * shift the date.
+         * Handle YYYY-MM-DD manually.
+         * This prevents browser timezone conversion
+         * from changing the displayed date.
          */
 
         const isoMatch =
             value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
 
         if (isoMatch) {
 
@@ -794,8 +748,14 @@
             const day =
                 Number(isoMatch[3]);
 
+
             const date =
-                new Date(year, month - 1, day);
+                new Date(
+                    year,
+                    month - 1,
+                    day
+                );
+
 
             if (
                 date.getFullYear() === year &&
@@ -814,6 +774,7 @@
                 );
 
             }
+
 
             return value;
 
@@ -827,6 +788,7 @@
         const slashMatch =
             value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
 
+
         if (slashMatch) {
 
             const month =
@@ -838,8 +800,14 @@
             const year =
                 Number(slashMatch[3]);
 
+
             const date =
-                new Date(year, month - 1, day);
+                new Date(
+                    year,
+                    month - 1,
+                    day
+                );
+
 
             if (
                 date.getFullYear() === year &&
@@ -859,19 +827,25 @@
 
             }
 
+
             return value;
 
         }
 
 
         /*
-         * Final fallback for other valid date formats.
+         * Final fallback.
          */
 
         const parsedDate =
             new Date(value);
 
-        if (!Number.isNaN(parsedDate.getTime())) {
+
+        if (
+            !Number.isNaN(
+                parsedDate.getTime()
+            )
+        ) {
 
             return parsedDate.toLocaleDateString(
                 undefined,
@@ -888,8 +862,6 @@
 
         /*
          * Never display "Invalid Date."
-         * If the database gives us an unexpected format,
-         * display the original value instead.
          */
 
         return value;
@@ -898,7 +870,7 @@
 
 
     /* =========================================================
-       TIME FORMATTING
+       FORMAT TIME
        ========================================================= */
 
     function formatTime(timeValue) {
@@ -915,12 +887,11 @@
         }
 
 
-        /*
-         * Handle HH:MM and HH:MM:SS directly.
-         */
-
         const match =
-            value.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+            value.match(
+                /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/
+            );
+
 
         if (match) {
 
@@ -930,6 +901,7 @@
             const minutes =
                 Number(match[2]);
 
+
             if (
                 hours >= 0 &&
                 hours <= 23 &&
@@ -938,10 +910,14 @@
             ) {
 
                 const period =
-                    hours >= 12 ? "PM" : "AM";
+                    hours >= 12
+                        ? "PM"
+                        : "AM";
+
 
                 const displayHour =
                     hours % 12 || 12;
+
 
                 return (
                     displayHour +
@@ -953,14 +929,8 @@
 
             }
 
-            return value;
-
         }
 
-
-        /*
-         * Final fallback.
-         */
 
         return value;
 
@@ -968,7 +938,7 @@
 
 
     /* =========================================================
-       CURRENCY FORMATTING
+       FORMAT CURRENCY
        ========================================================= */
 
     function formatCurrency(amount) {
@@ -981,12 +951,15 @@
             return "$0.00";
         }
 
+
         const number =
             Number(amount);
+
 
         if (Number.isNaN(number)) {
             return "$0.00";
         }
+
 
         return number.toLocaleString(
             "en-US",
@@ -1000,26 +973,37 @@
 
 
     /* =========================================================
-       SET TEXT SAFELY
+       SET TEXT
        ========================================================= */
 
-    function setText(elementId, value, fallback = "—") {
+    function setText(
+        elementId,
+        value,
+        fallback = "—"
+    ) {
 
         const element =
             document.getElementById(elementId);
 
+
         if (!element) {
             return;
         }
+
 
         if (
             value === null ||
             value === undefined ||
             String(value).trim() === ""
         ) {
-            element.textContent = fallback;
+
+            element.textContent =
+                fallback;
+
             return;
+
         }
+
 
         element.textContent =
             String(value);
@@ -1031,61 +1015,83 @@
        DISPLAY RESERVATION
        ========================================================= */
 
-    function displayReservation(reservation) {
+    function displayReservation(
+        reservation
+    ) {
 
         setText(
             "display-game",
             reservation.game
         );
 
+
         setText(
             "display-date",
-            formatDate(reservation.reservation_date)
+            formatDate(
+                reservation.reservation_date
+            )
         );
+
 
         setText(
             "display-time",
-            formatTime(reservation.reservation_time)
+            formatTime(
+                reservation.reservation_time
+            )
         );
+
 
         setText(
             "display-location",
             reservation.location
         );
 
+
         setText(
             "display-guests",
             reservation.number_of_guests
         );
+
 
         setText(
             "display-organizer",
             reservation.organizer_name
         );
 
+
         setText(
             "display-email",
             reservation.organizer_email
         );
+
 
         setText(
             "display-phone",
             reservation.organizer_phone
         );
 
+
         setText(
             "display-total",
-            formatCurrency(reservation.total)
+            formatCurrency(
+                reservation.total
+            )
         );
+
 
         setText(
             "display-deposit",
-            formatCurrency(reservation.deposit_due)
+            formatCurrency(
+                reservation.deposit_due
+            )
         );
+
 
         setText(
             "display-remaining",
-            formatCurrency(reservation.remaining_balance)
+            formatCurrency(
+                reservation.remaining_balance
+            )
         );
 
     }
@@ -1105,6 +1111,7 @@
 
             loadingMessage.innerHTML = `
                 <h2>Reservation Link Invalid</h2>
+
                 <p>
                     This confirmation link is missing the reservation
                     token. Please use the confirmation link from the
@@ -1129,11 +1136,17 @@
 
             let data = null;
 
+
             try {
-                data = await response.json();
+
+                data =
+                    await response.json();
+
             }
             catch (jsonError) {
+
                 data = null;
+
             }
 
 
@@ -1145,70 +1158,82 @@
                         ? data.error
                         : "We were unable to retrieve your reservation.";
 
-                throw new Error(errorMessage);
+
+                throw new Error(
+                    errorMessage
+                );
 
             }
 
 
             const reservation =
-                data && data.reservation
+                data &&
+                data.reservation
                     ? data.reservation
                     : data;
 
 
             if (!reservation) {
+
                 throw new Error(
                     "No reservation information was returned."
                 );
+
             }
 
 
             /*
-             * Save the token in the hidden form field.
+             * Store the confirmation token.
              */
 
             const tokenField =
-                document.getElementById("confirmation-token");
+                document.getElementById(
+                    "confirmation-token"
+                );
+
 
             if (tokenField) {
-                tokenField.value = token;
+
+                tokenField.value =
+                    token;
+
             }
 
 
             /*
-             * Populate the reservation summary.
+             * Display reservation details.
              */
 
-            displayReservation(reservation);
+            displayReservation(
+                reservation
+            );
 
 
             /*
-             * Hide the loading message.
+             * Hide loading message.
              */
 
-            loadingMessage.style.display = "none";
+            loadingMessage.style.display =
+                "none";
 
 
             /*
-             * Show the reservation information.
+             * Show reservation summary.
              */
 
-            reservationSummary.style.display = "block";
+            reservationSummary.style.display =
+                "block";
 
 
             /*
-             * If the reservation has already been confirmed,
-             * do not show the confirmation form again.
+             * If already confirmed, don't show
+             * the confirmation form.
              */
 
             if (
                 reservation.status === "confirmed" ||
                 reservation.confirmed_at
             ) {
-
-                confirmationInformation.style.display = "block";
-
-                confirmationBox.style.display = "block";
 
                 confirmationBox.innerHTML = `
                     <h2>Reservation Already Confirmed</h2>
@@ -1224,32 +1249,44 @@
                     </p>
                 `;
 
+
+                confirmationBox.style.display =
+                    "block";
+
+
                 return;
 
             }
 
 
             /*
-             * Show the information and confirmation form.
+             * Show confirmation form.
              */
 
-            confirmationInformation.style.display = "block";
-
-            confirmationBox.style.display = "block";
+            confirmationBox.style.display =
+                "block";
 
 
             /*
-             * Pre-fill the organizer information when available.
+             * Pre-fill organizer information.
              */
 
             const organizerName =
-                document.getElementById("organizer-name");
+                document.getElementById(
+                    "organizer-name"
+                );
+
 
             const organizerEmail =
-                document.getElementById("organizer-email");
+                document.getElementById(
+                    "organizer-email"
+                );
 
 
-            if (organizerName && reservation.organizer_name) {
+            if (
+                organizerName &&
+                reservation.organizer_name
+            ) {
 
                 organizerName.value =
                     reservation.organizer_name;
@@ -1257,13 +1294,15 @@
             }
 
 
-            if (organizerEmail && reservation.organizer_email) {
+            if (
+                organizerEmail &&
+                reservation.organizer_email
+            ) {
 
                 organizerEmail.value =
                     reservation.organizer_email;
 
             }
-
 
         }
         catch (error) {
@@ -1308,39 +1347,55 @@
 
 
             const confirmButton =
-                document.getElementById("confirm-button");
+                document.getElementById(
+                    "confirm-button"
+                );
 
 
             const formData =
-                new FormData(confirmationForm);
+                new FormData(
+                    confirmationForm
+                );
 
 
             const payload = {
 
                 confirmation_token:
-                    formData.get("confirmation_token"),
+                    formData.get(
+                        "confirmation_token"
+                    ),
 
                 organizer_name:
-                    formData.get("organizer_name"),
+                    formData.get(
+                        "organizer_name"
+                    ),
 
                 organizer_email:
-                    formData.get("organizer_email"),
+                    formData.get(
+                        "organizer_email"
+                    ),
 
                 client_agreement_acknowledged:
-                    formData.get("client_agreement_acknowledged"),
+                    formData.get(
+                        "client_agreement_acknowledged"
+                    ),
 
                 cancellation_policy_acknowledged:
-                    formData.get("cancellation_policy_acknowledged"),
+                    formData.get(
+                        "cancellation_policy_acknowledged"
+                    ),
 
                 reservation_confirmation:
-                    formData.get("reservation_confirmation")
+                    formData.get(
+                        "reservation_confirmation"
+                    )
 
             };
 
 
             /*
-             * Make sure all required acknowledgments
-             * are present.
+             * Verify all three required
+             * confirmations.
              */
 
             if (
@@ -1349,14 +1404,17 @@
                 payload.reservation_confirmation !== "Yes"
             ) {
 
-                confirmationMessage.style.display = "block";
+                confirmationMessage.style.display =
+                    "block";
+
 
                 confirmationMessage.innerHTML = `
                     <p>
-                        Please complete all required confirmations
-                        before submitting your reservation.
+                        Please complete all three required
+                        confirmations before submitting your reservation.
                     </p>
                 `;
+
 
                 return;
 
@@ -1364,16 +1422,19 @@
 
 
             /*
-             * Disable the button while the request is processing.
+             * Disable button while processing.
              */
 
-            confirmButton.disabled = true;
+            confirmButton.disabled =
+                true;
+
 
             confirmButton.textContent =
                 "Confirming...";
 
 
-            confirmationMessage.style.display = "none";
+            confirmationMessage.style.display =
+                "none";
 
 
             try {
@@ -1385,22 +1446,31 @@
                             method: "POST",
 
                             headers: {
-                                "Content-Type": "application/json"
+                                "Content-Type":
+                                    "application/json"
                             },
 
                             body:
-                                JSON.stringify(payload)
+                                JSON.stringify(
+                                    payload
+                                )
                         }
                     );
 
 
                 let data = null;
 
+
                 try {
-                    data = await response.json();
+
+                    data =
+                        await response.json();
+
                 }
                 catch (jsonError) {
+
                     data = null;
+
                 }
 
 
@@ -1412,7 +1482,10 @@
                             ? data.error
                             : "We were unable to confirm your reservation.";
 
-                    throw new Error(errorMessage);
+
+                    throw new Error(
+                        errorMessage
+                    );
 
                 }
 
@@ -1454,7 +1527,7 @@
 
 
                 /*
-                 * Scroll gently to payment options.
+                 * Scroll to payment section.
                  */
 
                 setTimeout(
@@ -1501,6 +1574,7 @@
                 confirmButton.disabled =
                     false;
 
+
                 confirmButton.textContent =
                     "Confirm Reservation";
 
@@ -1519,10 +1593,12 @@
             "stripe-payment-button"
         );
 
+
     const venmoPaymentButton =
         document.getElementById(
             "venmo-payment-button"
         );
+
 
     const cashPaymentButton =
         document.getElementById(
@@ -1531,8 +1607,8 @@
 
 
     /*
-     * These buttons are intentionally left as placeholders
-     * until the payment destination is connected.
+     * Payment destinations will be connected
+     * separately.
      */
 
     if (stripePaymentButton) {
@@ -1584,7 +1660,7 @@
 
 
     /* =========================================================
-       INITIALIZE PAGE
+       INITIALIZE
        ========================================================= */
 
     document.addEventListener(
