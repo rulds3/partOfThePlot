@@ -1,226 +1,160 @@
-<!DOCTYPE html>
+<!-- =================================================
+     INTRO
+     ================================================= -->
 
-<html lang="en">
+<div class="confirm-intro">
 
-<head>
+    <p class="eyebrow">
+        PART OF THE PLOT
+    </p>
 
-<meta charset="UTF-8">
+    <h1>
+        Confirm Your Reservation
+    </h1>
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+    <p>
+        Please review the details of your reservation
+        below. When everything looks correct, complete
+        the required acknowledgments and confirm your
+        reservation.
+    </p>
 
+</div>
+
+
+<!-- =================================================
+     LOADING MESSAGE
+     ================================================= -->
+
+<div
+    id="loading-message"
+    class="confirmation-box"
 >
 
-<title>Confirm Your Reservation | Part of the Plot</title>
+    <p>
+        Loading your reservation...
+    </p>
 
-<link
-    rel="icon"
-    type="image/x-icon"
-    href="favicon.ico"
+</div>
+
+
+<!-- =================================================
+     RESERVATION SUMMARY
+     ================================================= -->
+
+<div
+    id="reservation-summary"
+    class="reservation-summary"
+    style="display: none;"
 >
 
-<meta
-name="description"
-content="Review and confirm your Part of the Plot mystery party reservation."
-
->
-
-<link
-    rel="stylesheet"
-    href="style.css"
->
-
-<link
-    rel="stylesheet"
-    href="confirm.css"
->
-
-<link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
->
-
-<link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
->
-
-<link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
-    rel="stylesheet"
->
-
-</head>
-
-<body>
-
-<!-- =========================================================
-     CONFIRMATION PAGE
-     ========================================================= -->
-
-<main class="confirm-page">
-
-<section class="section confirm-section">
+    <h2>
+        Reservation Details
+    </h2>
 
 
-<div class="confirm-container">
+    <div class="reservation-details">
 
 
-    <!-- =================================================
-         INTRO
-         ================================================= -->
+        <!-- GAME -->
 
-    <div class="confirm-intro">
+        <div class="reservation-detail">
 
-        <p class="eyebrow">
-            PART OF THE PLOT
-        </p>
+            <span class="detail-label">
+                Game
+            </span>
 
-        <h1>
-            Confirm Your Reservation
-        </h1>
-
-        <p>
-            Please review the details of your reservation
-            below. When everything looks correct, complete
-            the required acknowledgments and confirm your
-            reservation.
-        </p>
-
-    </div>
-
-
-    <!-- =================================================
-         LOADING MESSAGE
-         ================================================= -->
-
-    <div
-        id="loading-message"
-        class="confirmation-box"
-    >
-
-        <p>
-            Loading your reservation...
-        </p>
-
-    </div>
-
-
-    <!-- =================================================
-         RESERVATION SUMMARY
-         ================================================= -->
-
-    <div
-        id="reservation-summary"
-        class="reservation-summary"
-        style="display: none;"
-    >
-
-        <h2>
-            Reservation Details
-        </h2>
-
-
-        <div class="reservation-details">
-
-
-            <!-- GAME -->
-
-            <div class="reservation-detail">
-
-                <span class="detail-label">
-                    Game
-                </span>
-
-                <span
-                    id="game-display"
-                    class="detail-value"
-                ></span>
-
-            </div>
-
-
-            <!-- DATE -->
-
-            <div class="reservation-detail">
-
-                <span class="detail-label">
-                    Date
-                </span>
-
-                <span
-                    id="date-display"
-                    class="detail-value"
-                ></span>
-
-            </div>
-
-
-            <!-- TIME -->
-
-            <div class="reservation-detail">
-
-                <span class="detail-label">
-                    Time
-                </span>
-
-                <span
-                    id="time-display"
-                    class="detail-value"
-                ></span>
-
-            </div>
-
-
-            <!-- LOCATION -->
-
-            <div class="reservation-detail">
-
-                <span class="detail-label">
-                    Location
-                </span>
-
-                <span
-                    id="location-display"
-                    class="detail-value"
-                ></span>
-
-            </div>
-
-
-            <!-- GUEST COUNT -->
-
-            <div class="reservation-detail">
-
-                <span class="detail-label">
-                    Number of Guests
-                </span>
-
-                <span
-                    id="guests-display"
-                    class="detail-value"
-                ></span>
-
-            </div>
-
+            <strong
+                id="game-display"
+                class="detail-value"
+            ></strong>
 
         </div>
 
 
-        <!-- =================================================
-             PAYMENT SUMMARY
-             ================================================= -->
+        <!-- DATE -->
 
-        <div class="payment-summary">
+        <div class="reservation-detail">
 
-            <h2>
-                Reservation Cost
-            </h2>
+            <span class="detail-label">
+                Date
+            </span>
+
+            <strong
+                id="date-display"
+                class="detail-value"
+            ></strong>
+
+        </div>
 
 
-            <div class="payment-row">
+        <!-- TIME -->
+
+        <div class="reservation-detail">
+
+            <span class="detail-label">
+                Time
+            </span>
+
+            <strong
+                id="time-display"
+                class="detail-value"
+            ></strong>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="reservation-detail">
+
+            <span class="detail-label">
+                Location
+            </span>
+
+            <strong
+                id="location-display"
+                class="detail-value"
+            ></strong>
+
+        </div>
+
+
+        <!-- GUEST COUNT -->
+
+        <div class="reservation-detail">
+
+            <span class="detail-label">
+                Number of Guests
+            </span>
+
+            <strong
+                id="guests-display"
+                class="detail-value"
+            ></strong>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         PAYMENT SUMMARY
+         ================================================= -->
+
+    <div class="payment-summary">
+
+        <h3>
+            Reservation Cost
+        </h3>
+
+        <div class="payment-amounts">
+
+
+            <!-- TOTAL -->
+
+            <div class="payment-amount">
 
                 <span>
                     Total
@@ -233,7 +167,9 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             </div>
 
 
-            <div class="payment-row">
+            <!-- DEPOSIT -->
+
+            <div class="payment-amount deposit">
 
                 <span>
                     Deposit Due
@@ -246,7 +182,9 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             </div>
 
 
-            <div class="payment-row">
+            <!-- REMAINING -->
+
+            <div class="payment-amount">
 
                 <span>
                     Remaining Balance
@@ -258,332 +196,417 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
             </div>
 
-        </div>
-
-
-        <!-- =================================================
-             CONFIRMATION FORM
-             ================================================= -->
-
-        <div class="confirmation-box">
-
-            <h2>
-                Confirm Your Reservation
-            </h2>
-
-            <p>
-                Please verify your information and complete
-                each acknowledgment below before confirming
-                your reservation.
-            </p>
-
-
-            <form id="confirmation-form">
-
-
-                <!-- =================================================
-                     HIDDEN RESERVATION INFORMATION
-                     ================================================= -->
-
-                <input
-                    type="hidden"
-                    name="game"
-                    id="game"
-                >
-
-                <input
-                    type="hidden"
-                    name="confirmation_token"
-                    id="confirmation_token"
-                >
-
-                <input
-                    type="hidden"
-                    name="reservation_date"
-                    id="reservation_date"
-                >
-
-                <input
-                    type="hidden"
-                    name="reservation_time"
-                    id="reservation_time"
-                >
-
-                <input
-                    type="hidden"
-                    name="reservation_location"
-                    id="reservation_location"
-                >
-
-                <input
-                    type="hidden"
-                    name="number_of_guests"
-                    id="number_of_guests"
-                >
-
-                <input
-                    type="hidden"
-                    name="total"
-                    id="total"
-                >
-
-                <input
-                    type="hidden"
-                    name="deposit_due"
-                    id="deposit_due"
-                >
-
-                <input
-                    type="hidden"
-                    name="remaining_balance"
-                    id="remaining_balance"
-                >
-
-
-                <!-- =================================================
-                     ORGANIZER INFORMATION
-                     ================================================= -->
-
-                <div class="form-group">
-
-                    <label for="organizer_name">
-                        Organizer Name
-                    </label>
-
-                    <input
-                        type="text"
-                        id="organizer_name"
-                        name="organizer_name"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="organizer_email">
-                        Organizer Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="organizer_email"
-                        name="organizer_email"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- =================================================
-                     REQUIRED ACKNOWLEDGMENTS
-                     ================================================= -->
-
-                <div class="acknowledgments">
-
-                    <h3>
-                        Before You Confirm
-                    </h3>
-
-
-                    <!-- =================================================
-                         CLIENT AGREEMENT
-                         ================================================= -->
-
-                    <label class="checkbox-label">
-
-                        <input
-                            type="checkbox"
-                            name="client_agreement_acknowledged"
-                            value="Yes"
-                            required
-                        >
-
-                        <span>
-
-                            I have read and agree to the
-                            <a
-                                href="client-agreement.html"
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                Part of the Plot Client Agreement
-                            </a>.
-
-                        </span>
-
-                    </label>
-
-
-                    <!-- =================================================
-                         CANCELLATION & PAYMENT POLICY
-                         ================================================= -->
-
-                    <label class="checkbox-label">
-
-                        <input
-                            type="checkbox"
-                            name="cancellation_policy_acknowledged"
-                            value="Yes"
-                            required
-                        >
-
-                        <span>
-
-                            I have read and understand the
-                            cancellation and payment policies
-                            described in the
-                            <a
-                                href="faq.html#payment"
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                FAQ
-                            </a>.
-
-                        </span>
-
-                    </label>
-
-
-                    <!-- =================================================
-                         RESERVATION CONFIRMATION
-                         ================================================= -->
-
-                    <label class="checkbox-label">
-
-                        <input
-                            type="checkbox"
-                            name="reservation_confirmation"
-                            value="Yes"
-                            required
-                        >
-
-                        <span>
-
-                            I confirm that the reservation
-                            details above are correct and
-                            authorize Part of the Plot to
-                            proceed with this reservation.
-
-                        </span>
-
-                    </label>
-
-
-                </div>
-
-
-                <!-- =================================================
-                     SUBMIT BUTTON
-                     ================================================= -->
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Confirm Reservation
-                </button>
-
-
-            </form>
-
-
-            <!-- =================================================
-                 CONFIRMATION MESSAGE
-                 ================================================= -->
-
-            <div
-                id="confirmation-message"
-                class="confirmation-message"
-                style="display: none;"
-            ></div>
-
 
         </div>
 
 
+        <p class="payment-summary-note">
+            Your deposit is due after your reservation
+            has been confirmed.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<!-- =================================================
+     BEFORE YOU CONFIRM
+     ================================================= -->
+
+<div
+    id="confirmation-information"
+    class="confirm-information"
+    style="display: none;"
+>
+
+    <h2>
+        Before You Confirm
+    </h2>
+
+    <p>
+        Please review the following information before
+        confirming your reservation.
+    </p>
+
+    <div class="confirm-links">
+
+        <a
+            href="client-agreement.html"
+            target="_blank"
+            rel="noopener"
+        >
+            Client Agreement
+        </a>
+
+        <a
+            href="faq.html#payment"
+            target="_blank"
+            rel="noopener"
+        >
+            Cancellation & Payment Policy
+        </a>
+
+        <a
+            href="organizer-responsibilities.html"
+            target="_blank"
+            rel="noopener"
+        >
+            Organizer Responsibilities
+        </a>
+
+        <a
+            href="guest-guidelines.html"
+            target="_blank"
+            rel="noopener"
+        >
+            Guest Guidelines
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =================================================
+     CONFIRMATION FORM
+     ================================================= -->
+
+<div
+    id="confirmation-box"
+    class="confirmation-box"
+    style="display: none;"
+>
+
+    <h2>
+        Confirm Your Reservation
+    </h2>
+
+    <p>
+        Please verify your information and complete
+        each required acknowledgment below.
+    </p>
+
+
+    <form id="confirmation-form">
+
+
         <!-- =================================================
-             PAYMENT SECTION
+             HIDDEN RESERVATION INFORMATION
              ================================================= -->
 
-        <div
-            id="payment-section"
-            class="payment-section"
-            style="display: none;"
+        <input
+            type="hidden"
+            name="game"
+            id="game"
         >
 
-            <h2>
-                Reservation Confirmed
-            </h2>
+        <input
+            type="hidden"
+            name="confirmation_token"
+            id="confirmation_token"
+        >
+
+        <input
+            type="hidden"
+            name="reservation_date"
+            id="reservation_date"
+        >
+
+        <input
+            type="hidden"
+            name="reservation_time"
+            id="reservation_time"
+        >
+
+        <input
+            type="hidden"
+            name="reservation_location"
+            id="reservation_location"
+        >
+
+        <input
+            type="hidden"
+            name="number_of_guests"
+            id="number_of_guests"
+        >
+
+        <input
+            type="hidden"
+            name="total"
+            id="total"
+        >
+
+        <input
+            type="hidden"
+            name="deposit_due"
+            id="deposit_due"
+        >
+
+        <input
+            type="hidden"
+            name="remaining_balance"
+            id="remaining_balance"
+        >
+
+
+        <!-- =================================================
+             ORGANIZER INFORMATION
+             ================================================= -->
+
+        <div class="form-group">
+
+            <label for="organizer_name">
+                Organizer Name
+            </label>
+
+            <input
+                type="text"
+                id="organizer_name"
+                name="organizer_name"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="organizer_email">
+                Organizer Email
+            </label>
+
+            <input
+                type="email"
+                id="organizer_email"
+                name="organizer_email"
+                required
+            >
+
+        </div>
+
+
+        <!-- =================================================
+             REQUIRED ACKNOWLEDGMENTS
+             ================================================= -->
+
+        <div class="acknowledgments">
+
+            <h3>
+                Before You Confirm
+            </h3>
+
+
+            <!-- CLIENT AGREEMENT -->
+
+            <label class="checkbox-label">
+
+                <input
+                    type="checkbox"
+                    name="client_agreement_acknowledged"
+                    value="Yes"
+                    required
+                >
+
+                <span>
+
+                    I have read and agree to the
+                    <a
+                        href="client-agreement.html"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Part of the Plot Client Agreement
+                    </a>.
+
+                </span>
+
+            </label>
+
+
+            <!-- CANCELLATION POLICY -->
+
+            <label class="checkbox-label">
+
+                <input
+                    type="checkbox"
+                    name="cancellation_policy_acknowledged"
+                    value="Yes"
+                    required
+                >
+
+                <span>
+
+                    I have read and understand the
+                    cancellation and payment policies
+                    described in the
+                    <a
+                        href="faq.html#payment"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        FAQ
+                    </a>.
+
+                </span>
+
+            </label>
+
+
+            <!-- RESERVATION CONFIRMATION -->
+
+            <label class="checkbox-label">
+
+                <input
+                    type="checkbox"
+                    name="reservation_confirmation"
+                    value="Yes"
+                    required
+                >
+
+                <span>
+
+                    I confirm that the reservation
+                    details above are correct and
+                    authorize Part of the Plot to
+                    proceed with this reservation.
+
+                </span>
+
+            </label>
+
+
+        </div>
+
+
+        <!-- =================================================
+             SUBMIT BUTTON
+             ================================================= -->
+
+        <button
+            type="submit"
+            class="button"
+        >
+            Confirm Reservation
+        </button>
+
+
+    </form>
+
+
+    <!-- =================================================
+         CONFIRMATION MESSAGE
+         ================================================= -->
+
+    <div
+        id="confirmation-message"
+        class="confirmation-message"
+        style="display: none;"
+    ></div>
+
+
+</div>
+
+
+<!-- =================================================
+     PAYMENT SECTION
+     ================================================= -->
+
+<div
+    id="payment-section"
+    class="payment-section"
+    style="display: none;"
+>
+
+
+    <!-- =================================================
+         PAYMENT SUCCESS
+         ================================================= -->
+
+    <div class="payment-success">
+
+        <h2>
+            Reservation Confirmed
+        </h2>
+
+        <p>
+            Your reservation has been confirmed.
+            Your deposit is now due.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         PAYMENT BOX
+         ================================================= -->
+
+    <div class="payment-box">
+
+        <h2>
+            Make Your Deposit
+        </h2>
+
+        <p>
+            Choose one of the payment options below.
+            Online payment information will be available
+            here soon.
+        </p>
+
+
+        <!-- STRIPE -->
+
+        <div class="payment-option">
+
+            <h3>
+                Pay Online
+            </h3>
 
             <p>
-                Your reservation has been confirmed.
-                Your deposit is now due.
+                Secure online payment will be
+                available here.
             </p>
 
+            <button
+                type="button"
+                class="button"
+                disabled
+            >
+                Pay Deposit
+            </button>
 
-            <div class="payment-options">
-
-
-                <!-- STRIPE -->
-
-                <div class="payment-option">
-
-                    <h3>
-                        Pay Online
-                    </h3>
-
-                    <p>
-                        Secure online payment will be
-                        available here.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        disabled
-                    >
-                        Pay Deposit
-                    </button>
-
-                </div>
+        </div>
 
 
-                <!-- VENMO -->
+        <!-- VENMO -->
 
-                <div class="payment-option">
+        <div class="payment-option">
 
-                    <h3>
-                        Venmo
-                    </h3>
+            <h3>
+                Venmo
+            </h3>
 
-                    <p>
-                        Venmo payment information will
-                        be provided here.
-                    </p>
+            <p>
+                Venmo payment information will
+                be provided here.
+            </p>
 
-                </div>
-
-
-                <!-- CASH -->
-
-                <div class="payment-option">
-
-                    <h3>
-                        Cash
-                    </h3>
-
-                    <p>
-                        Cash payment arrangements can
-                        be made with Part of the Plot.
-                    </p>
-
-                </div>
+        </div>
 
 
-            </div>
+        <!-- CASH -->
+
+        <div class="payment-option">
+
+            <h3>
+                Cash
+            </h3>
+
+            <p>
+                Cash payment arrangements can
+                be made with Part of the Plot.
+            </p>
 
         </div>
 
@@ -592,589 +615,3 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
 </div>
-
-
-</section>
-
-</main>
-
-<!-- =========================================================
-     JAVASCRIPT
-     ========================================================= -->
-
-<script>
-
-    const CONFIRM_RESERVATION_URL =
-        "https://fqcabbpvevtlzzwsvezi.supabase.co/functions/v1/confirm-reservation";
-
-
-    /* =========================================================
-       GET RESERVATION TOKEN
-       ========================================================= */
-
-    const urlParams =
-        new URLSearchParams(
-            window.location.search
-        );
-
-    const confirmationToken =
-        urlParams.get("token");
-
-
-    /* =========================================================
-       ELEMENTS
-       ========================================================= */
-
-    const loadingMessage =
-        document.getElementById("loading-message");
-
-    const reservationSummary =
-        document.getElementById("reservation-summary");
-
-    const confirmationForm =
-        document.getElementById("confirmation-form");
-
-    const confirmationMessage =
-        document.getElementById("confirmation-message");
-
-    const paymentSection =
-        document.getElementById("payment-section");
-
-
-    /* =========================================================
-       FORMAT CURRENCY
-       ========================================================= */
-
-    function formatCurrency(value) {
-
-        const amount =
-            Number(value) || 0;
-
-        return amount.toLocaleString(
-            "en-US",
-            {
-                style: "currency",
-                currency: "USD"
-            }
-        );
-
-    }
-
-
-    /* =========================================================
-       FORMAT DATE
-       ========================================================= */
-
-    function formatDate(dateString) {
-
-        if (!dateString) {
-            return "";
-        }
-
-        const date =
-            new Date(
-                dateString + "T00:00:00"
-            );
-
-        return date.toLocaleDateString(
-            "en-US",
-            {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-            }
-        );
-
-    }
-
-
-    /* =========================================================
-       FORMAT TIME
-       ========================================================= */
-
-    function formatTime(timeString) {
-
-        if (!timeString) {
-            return "";
-        }
-
-        const parts =
-            timeString.split(":");
-
-        const hours =
-            Number(parts[0]);
-
-        const minutes =
-            parts[1] || "00";
-
-        const date =
-            new Date();
-
-        date.setHours(
-            hours,
-            Number(minutes),
-            0,
-            0
-        );
-
-        return date.toLocaleTimeString(
-            "en-US",
-            {
-                hour: "numeric",
-                minute: "2-digit"
-            }
-        );
-
-    }
-
-
-    /* =========================================================
-       LOAD RESERVATION
-       ========================================================= */
-
-    async function loadReservation() {
-
-        if (!confirmationToken) {
-
-            loadingMessage.innerHTML =
-                "<p>Invalid or missing confirmation link.</p>";
-
-            return;
-        }
-
-
-        try {
-
-            const response =
-                await fetch(
-                    CONFIRM_RESERVATION_URL +
-                    "?token=" +
-                    encodeURIComponent(
-                        confirmationToken
-                    ),
-                    {
-                        method: "GET",
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        }
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (
-                !response.ok ||
-                !data.success
-            ) {
-
-                throw new Error(
-                    data.error ||
-                    "Unable to load reservation."
-                );
-
-            }
-
-
-            const reservation =
-                data.reservation;
-
-
-            /* =================================================
-               DISPLAY RESERVATION INFORMATION
-               ================================================= */
-
-            document.getElementById("game-display")
-                .textContent =
-                reservation.game || "—";
-
-
-            document.getElementById("date-display")
-                .textContent =
-                formatDate(
-                    reservation.reservation_date
-                );
-
-
-            document.getElementById("time-display")
-                .textContent =
-                formatTime(
-                    reservation.reservation_time
-                );
-
-
-            document.getElementById("location-display")
-                .textContent =
-                reservation.location || "—";
-
-
-            document.getElementById("guests-display")
-                .textContent =
-                reservation.number_of_guests || "—";
-
-
-            /* =================================================
-               PAYMENT INFORMATION
-               ================================================= */
-
-            document.getElementById("total-display")
-                .textContent =
-                formatCurrency(
-                    reservation.total
-                );
-
-
-            document.getElementById("deposit-display")
-                .textContent =
-                formatCurrency(
-                    reservation.deposit_due
-                );
-
-
-            document.getElementById("remaining-display")
-                .textContent =
-                formatCurrency(
-                    reservation.remaining_balance
-                );
-
-
-            /* =================================================
-               HIDDEN FIELDS
-               ================================================= */
-
-            document.getElementById("game")
-                .value =
-                reservation.game || "";
-
-
-            document.getElementById("confirmation_token")
-                .value =
-                reservation.confirmation_token ||
-                confirmationToken;
-
-
-            document.getElementById("reservation_date")
-                .value =
-                reservation.reservation_date || "";
-
-
-            document.getElementById("reservation_time")
-                .value =
-                reservation.reservation_time || "";
-
-
-            document.getElementById("reservation_location")
-                .value =
-                reservation.location || "";
-
-
-            document.getElementById("number_of_guests")
-                .value =
-                reservation.number_of_guests || "";
-
-
-            document.getElementById("total")
-                .value =
-                reservation.total || "";
-
-
-            document.getElementById("deposit_due")
-                .value =
-                reservation.deposit_due || "";
-
-
-            document.getElementById("remaining_balance")
-                .value =
-                reservation.remaining_balance || "";
-
-
-            /* =================================================
-               ORGANIZER INFORMATION
-               ================================================= */
-
-            document.getElementById("organizer_name")
-                .value =
-                reservation.organizer_name || "";
-
-
-            document.getElementById("organizer_email")
-                .value =
-                reservation.organizer_email || "";
-
-
-            /* =================================================
-               SHOW RESERVATION
-               ================================================= */
-
-            loadingMessage.style.display =
-                "none";
-
-            reservationSummary.style.display =
-                "block";
-
-
-            /* =================================================
-               ALREADY CONFIRMED
-               ================================================= */
-
-            if (
-                reservation.status === "confirmed"
-            ) {
-
-                confirmationForm.style.display =
-                    "none";
-
-
-                confirmationMessage.style.display =
-                    "block";
-
-
-                confirmationMessage.innerHTML =
-
-                    "<h3>Reservation Already Confirmed</h3>" +
-
-                    "<p>" +
-                    "This reservation has already been confirmed. " +
-                    "If you need assistance, please contact " +
-                    "Part of the Plot." +
-                    "</p>";
-
-
-                paymentSection.style.display =
-                    "block";
-
-            }
-
-
-        } catch (error) {
-
-            console.error(
-                "Reservation loading error:",
-                error
-            );
-
-
-            loadingMessage.innerHTML =
-
-                "<p>" +
-                "We were unable to load your reservation. " +
-                "Please check your confirmation link or contact " +
-                "Part of the Plot for assistance." +
-                "</p>";
-
-        }
-
-    }
-
-
-    /* =========================================================
-       CONFIRM RESERVATION
-       ========================================================= */
-
-    confirmationForm.addEventListener(
-        "submit",
-        async function (event) {
-
-            event.preventDefault();
-
-
-            /* =================================================
-               BROWSER VALIDATION
-               ================================================= */
-
-            if (
-                !confirmationForm.checkValidity()
-            ) {
-
-                confirmationForm.reportValidity();
-
-                return;
-            }
-
-
-            const formData =
-                new FormData(
-                    confirmationForm
-                );
-
-
-            /* =================================================
-               CONFIRMATION DATA
-               ================================================= */
-
-            const confirmationData = {
-
-                confirmation_token:
-                    formData.get(
-                        "confirmation_token"
-                    ),
-
-                organizer_name:
-                    formData.get(
-                        "organizer_name"
-                    ),
-
-                organizer_email:
-                    formData.get(
-                        "organizer_email"
-                    ),
-
-                client_agreement_acknowledged:
-                    formData.get(
-                        "client_agreement_acknowledged"
-                    ),
-
-                cancellation_policy_acknowledged:
-                    formData.get(
-                        "cancellation_policy_acknowledged"
-                    ),
-
-                reservation_confirmation:
-                    formData.get(
-                        "reservation_confirmation"
-                    )
-
-            };
-
-
-            /* =================================================
-               DISABLE BUTTON
-               ================================================= */
-
-            const submitButton =
-                confirmationForm.querySelector(
-                    'button[type="submit"]'
-                );
-
-
-            submitButton.disabled =
-                true;
-
-            submitButton.textContent =
-                "Confirming...";
-
-
-            confirmationMessage.style.display =
-                "none";
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        CONFIRM_RESERVATION_URL,
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    confirmationData
-                                )
-                        }
-                    );
-
-
-                const data =
-                    await response.json();
-
-
-                if (
-                    !response.ok ||
-                    !data.success
-                ) {
-
-                    throw new Error(
-                        data.error ||
-                        "Unable to confirm reservation."
-                    );
-
-                }
-
-
-                /* =================================================
-                   SUCCESS
-                   ================================================= */
-
-                confirmationForm.style.display =
-                    "none";
-
-
-                confirmationMessage.style.display =
-                    "block";
-
-
-                confirmationMessage.innerHTML =
-
-                    "<h3>Reservation Confirmed!</h3>" +
-
-                    "<p>" +
-                    "Thank you! Your reservation has been confirmed. " +
-                    "Your deposit is now due." +
-                    "</p>";
-
-
-                paymentSection.style.display =
-                    "block";
-
-
-                window.scrollTo({
-                    top:
-                        paymentSection.offsetTop - 40,
-                    behavior:
-                        "smooth"
-                });
-
-
-            } catch (error) {
-
-                console.error(
-                    "Reservation confirmation error:",
-                    error
-                );
-
-
-                confirmationMessage.style.display =
-                    "block";
-
-
-                confirmationMessage.innerHTML =
-
-                    "<p>" +
-                    "We were unable to confirm your reservation. " +
-                    "Please make sure all required information and " +
-                    "acknowledgments have been completed, then try again." +
-                    "</p>";
-
-
-                submitButton.disabled =
-                    false;
-
-                submitButton.textContent =
-                    "Confirm Reservation";
-
-            }
-
-        }
-    );
-
-
-    /* =========================================================
-       INITIALIZE
-       ========================================================= */
-
-    loadReservation();
-
-</script>
-
-</body>
-
-</html>
