@@ -19,7 +19,7 @@
     align-items: center;
     justify-content: center;
 
-    padding: 70px 30px;
+    padding: 110px 30px 70px;
 
     text-align: center;
 
@@ -371,7 +371,7 @@
         min-height: 0;
         height: auto;
 
-        padding: 65px 20px 55px;
+        padding: 95px 20px 55px;
     }
 
 
@@ -417,8 +417,9 @@
         padding: 0 5px;
 
         font-size: 12px;
-
         line-height: 1.5;
+
+        white-space: normal;
     }
 
 
@@ -458,7 +459,7 @@
 @media (max-width: 380px) {
 
     .hero {
-        padding-top: 55px;
+        padding-top: 85px;
         padding-bottom: 50px;
     }
 
