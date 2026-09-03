@@ -3,7 +3,6 @@ PART OF THE PLOT
 site.js
 
 General site functionality:
-
 * Site root/path handling
 * Shared header
 * Shared footer
@@ -13,13 +12,60 @@ General site functionality:
 * Scheduling modal loading
 
 Does NOT contain:
-
 * Supabase configuration
 * Game data
 * Game pricing
 * Reservation submission
 * Scheduling logic
-  ========================================= */
+========================================= */
+
+
+/* =========================================
+GOOGLE ANALYTICS
+========================================= */
+
+function initializeGoogleAnalytics() {
+
+const measurementId = "G-HC4C1T69RD";
+
+/* Prevent duplicate Google Analytics tags */
+if (
+    document.querySelector(
+        'script[data-google-analytics="true"]'
+    )
+) {
+    return;
+}
+
+/* Initialize Google Analytics data layer */
+window.dataLayer = window.dataLayer || [];
+
+function gtag() {
+    window.dataLayer.push(arguments);
+}
+
+window.gtag = gtag;
+
+gtag("js", new Date());
+gtag("config", measurementId);
+
+/* Load Google Analytics */
+const script = document.createElement("script");
+
+script.async = true;
+script.src =
+    "https://www.googletagmanager.com/gtag/js?id=" +
+    encodeURIComponent(measurementId);
+
+script.setAttribute(
+    "data-google-analytics",
+    "true"
+);
+
+document.head.appendChild(script);
+
+}
+
 
 /* =========================================
 SITE ROOT
@@ -27,106 +73,63 @@ SITE ROOT
 
 function getSiteRoot() {
 
+const path = window.location.pathname;
 
-const path =
-    window.location.pathname;
+const gamesFolder = "/games/";
 
-const gamesFolder =
-    "/games/";
+const gamesPosition = path.indexOf(gamesFolder);
 
-const gamesPosition =
-    path.indexOf(
-        gamesFolder
-    );
-
-if (
-    gamesPosition !== -1
-) {
+if (gamesPosition !== -1) {
 
     return (
-        path.substring(
-            0,
-            gamesPosition
-        ) +
+        path.substring(0, gamesPosition) +
         "/"
     );
 
 }
 
-const lastSlash =
-    path.lastIndexOf(
-        "/"
-    );
+const lastSlash = path.lastIndexOf("/");
 
-return (
-    path.substring(
-        0,
-        lastSlash + 1
-    )
-);
-
+return path.substring(0, lastSlash + 1);
 
 }
 
-const siteRoot =
-getSiteRoot();
+const siteRoot = getSiteRoot();
+
 
 /* =========================================
 FIX SHARED LINKS
 ========================================= */
 
-function fixSharedLinks(
-container
-) {
-
+function fixSharedLinks(container) {
 
 if (!container) {
     return;
 }
 
-const links =
-    container.querySelectorAll(
-        "a"
-    );
+const links = container.querySelectorAll("a");
 
-links.forEach(
-    link => {
+links.forEach(link => {
 
-        const href =
-            link.getAttribute(
-                "href"
-            );
+    const href = link.getAttribute("href");
 
-        if (
-            href &&
-            !href.startsWith(
-                "http"
-            ) &&
-            !href.startsWith(
-                "#"
-            ) &&
-            !href.startsWith(
-                "mailto:"
-            ) &&
-            !href.startsWith(
-                "tel:"
-            ) &&
-            !href.startsWith(
-                "/"
-            )
-        ) {
+    if (
+        href &&
+        !href.startsWith("http") &&
+        !href.startsWith("#") &&
+        !href.startsWith("mailto:") &&
+        !href.startsWith("tel:") &&
+        !href.startsWith("/")
+    ) {
 
-            link.href =
-                siteRoot +
-                href;
-
-        }
+        link.href = siteRoot + href;
 
     }
-);
 
+});
 
 }
+
 
 /* =========================================
 LOAD SHARED HEADER
@@ -134,11 +137,8 @@ LOAD SHARED HEADER
 
 async function loadSharedHeader() {
 
-
 const siteHeader =
-    document.getElementById(
-        "site-header"
-    );
+    document.getElementById("site-header");
 
 if (!siteHeader) {
     return;
@@ -147,10 +147,7 @@ if (!siteHeader) {
 try {
 
     const response =
-        await fetch(
-            siteRoot +
-            "header.html"
-        );
+        await fetch(siteRoot + "header.html");
 
     if (!response.ok) {
 
@@ -160,20 +157,15 @@ try {
 
     }
 
-    const html =
-        await response.text();
+    const html = await response.text();
 
-    siteHeader.innerHTML =
-        html;
+    siteHeader.innerHTML = html;
 
-    fixSharedLinks(
-        siteHeader
-    );
+    fixSharedLinks(siteHeader);
 
     initializeNavigation();
 
 }
-
 catch (error) {
 
     console.error(
@@ -183,8 +175,8 @@ catch (error) {
 
 }
 
-
 }
+
 
 /* =========================================
 LOAD SHARED FOOTER
@@ -192,11 +184,8 @@ LOAD SHARED FOOTER
 
 async function loadSharedFooter() {
 
-
 const siteFooter =
-    document.getElementById(
-        "site-footer"
-    );
+    document.getElementById("site-footer");
 
 if (!siteFooter) {
     return;
@@ -205,10 +194,7 @@ if (!siteFooter) {
 try {
 
     const response =
-        await fetch(
-            siteRoot +
-            "footer.html"
-        );
+        await fetch(siteRoot + "footer.html");
 
     if (!response.ok) {
 
@@ -218,18 +204,13 @@ try {
 
     }
 
-    const html =
-        await response.text();
+    const html = await response.text();
 
-    siteFooter.innerHTML =
-        html;
+    siteFooter.innerHTML = html;
 
-    fixSharedLinks(
-        siteFooter
-    );
+    fixSharedLinks(siteFooter);
 
 }
-
 catch (error) {
 
     console.error(
@@ -239,28 +220,23 @@ catch (error) {
 
 }
 
-
 }
+
 
 /* =========================================
 LOAD SCHEDULING MODAL
 ========================================= */
 
 /*
-
 * schedule.html is loaded dynamically
 * into:
-*
-* 
-  #schedule-modal-container
-  
+* #schedule-modal-container
 *
 * Scheduling functionality itself belongs
 * in scheduling.js.
-  */
+*/
 
 async function loadSchedulingModal() {
-
 
 const scheduleContainer =
     document.getElementById(
@@ -281,15 +257,13 @@ if (
     );
 
     return;
+
 }
 
 try {
 
     const response =
-        await fetch(
-            siteRoot +
-            "schedule.html"
-        );
+        await fetch(siteRoot + "schedule.html");
 
     if (!response.ok) {
 
@@ -299,20 +273,15 @@ try {
 
     }
 
-    const html =
-        await response.text();
+    const html = await response.text();
 
-    scheduleContainer.innerHTML =
-        html;
+    scheduleContainer.innerHTML = html;
 
-    fixSharedLinks(
-        scheduleContainer
-    );
+    fixSharedLinks(scheduleContainer);
 
     await initializeSchedulingSystem();
 
 }
-
 catch (error) {
 
     console.error(
@@ -322,8 +291,8 @@ catch (error) {
 
 }
 
-
 }
+
 
 /* =========================================
 NAVIGATION
@@ -331,21 +300,14 @@ NAVIGATION
 
 function initializeNavigation() {
 
-
 const menuToggle =
-    document.getElementById(
-        "menuToggle"
-    );
+    document.getElementById("menuToggle");
 
 const navMenu =
-    document.getElementById(
-        "navMenu"
-    );
+    document.getElementById("navMenu");
 
 const gamesDropdown =
-    document.querySelector(
-        ".nav-dropdown"
-    );
+    document.querySelector(".nav-dropdown");
 
 const gamesTitle =
     document.querySelector(
@@ -356,61 +318,35 @@ if (!navMenu) {
     return;
 }
 
-
-/* =========================================
-   NAVIGATION LINKS
-========================================= */
-
 const navLinks =
-    navMenu.querySelectorAll(
-        "a"
-    );
+    navMenu.querySelectorAll("a");
 
-navLinks.forEach(
-    link => {
+navLinks.forEach(link => {
 
-        const href =
-            link.getAttribute(
-                "href"
-            );
+    const href =
+        link.getAttribute("href");
 
-        if (
-            href &&
-            !href.startsWith(
-                "http"
-            ) &&
-            !href.startsWith(
-                "#"
-            ) &&
-            !href.startsWith(
-                "mailto:"
-            ) &&
-            !href.startsWith(
-                "tel:"
-            ) &&
-            !href.startsWith(
-                "/"
-            )
-        ) {
+    if (
+        href &&
+        !href.startsWith("http") &&
+        !href.startsWith("#") &&
+        !href.startsWith("mailto:") &&
+        !href.startsWith("tel:") &&
+        !href.startsWith("/")
+    ) {
 
-            link.href =
-                siteRoot +
-                href;
-
-        }
+        link.href =
+            siteRoot + href;
 
     }
-);
+
+});
 
 
-/* =========================================
-   LOGO
-========================================= */
+/* LOGO */
 
 const siteLogo =
-    document.getElementById(
-        "siteLogo"
-    );
+    document.getElementById("siteLogo");
 
 if (siteLogo) {
 
@@ -419,24 +355,19 @@ if (siteLogo) {
         "partOfThePlotLogo.png";
 
     const logoLink =
-        siteLogo.closest(
-            "a"
-        );
+        siteLogo.closest("a");
 
     if (logoLink) {
 
         logoLink.href =
-            siteRoot +
-            "index.html";
+            siteRoot + "index.html";
 
     }
 
 }
 
 
-/* =========================================
-   MOBILE MENU
-========================================= */
+/* MOBILE MENU */
 
 if (menuToggle) {
 
@@ -451,54 +382,47 @@ if (menuToggle) {
 
             menuToggle.setAttribute(
                 "aria-expanded",
-                isOpen
-                    ? "true"
-                    : "false"
+                isOpen ? "true" : "false"
             );
 
         }
     );
 
+    navLinks.forEach(link => {
 
-    navLinks.forEach(
-        link => {
+        link.addEventListener(
+            "click",
+            () => {
 
-            link.addEventListener(
-                "click",
-                () => {
+                if (
+                    link.classList.contains(
+                        "nav-dropdown-title"
+                    ) &&
+                    window.innerWidth <= 900
+                ) {
 
-                    if (
-                        link.classList.contains(
-                            "nav-dropdown-title"
-                        ) &&
-                        window.innerWidth <= 900
-                    ) {
-
-                        return;
-
-                    }
-
-                    navMenu.classList.remove(
-                        "active"
-                    );
-
-                    menuToggle.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
+                    return;
 
                 }
-            );
 
-        }
-    );
+                navMenu.classList.remove(
+                    "active"
+                );
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+        );
+
+    });
 
 }
 
 
-/* =========================================
-   GAMES DROPDOWN
-========================================= */
+/* GAMES DROPDOWN */
 
 if (
     gamesDropdown &&
@@ -509,9 +433,7 @@ if (
         "click",
         event => {
 
-            if (
-                window.innerWidth <= 900
-            ) {
+            if (window.innerWidth <= 900) {
 
                 event.preventDefault();
 
@@ -522,9 +444,7 @@ if (
 
                 gamesTitle.setAttribute(
                     "aria-expanded",
-                    isOpen
-                        ? "true"
-                        : "false"
+                    isOpen ? "true" : "false"
                 );
 
             }
@@ -534,8 +454,8 @@ if (
 
 }
 
-
 }
+
 
 /* =========================================
 FAQ ACCORDION
@@ -543,24 +463,14 @@ FAQ ACCORDION
 
 function initializeFAQ() {
 
-
 const faqQuestions =
     document.querySelectorAll(
         ".faq-question"
     );
 
-if (
-    faqQuestions.length === 0
-) {
-
+if (faqQuestions.length === 0) {
     return;
-
 }
-
-
-/* =========================================
-   OPEN FAQ
-========================================= */
 
 function openFAQ(
     faqItem,
@@ -585,66 +495,48 @@ function openFAQ(
         !answer ||
         !question
     ) {
-
         return;
-
     }
 
-
-    /*
-     * Close all other FAQ items.
-     */
-
     document
-        .querySelectorAll(
-            ".faq-item"
-        )
-        .forEach(
-            item => {
+        .querySelectorAll(".faq-item")
+        .forEach(item => {
 
-                if (
-                    item !== faqItem
-                ) {
+            if (item !== faqItem) {
 
-                    item.classList.remove(
-                        "active"
+                item.classList.remove(
+                    "active"
+                );
+
+                const otherAnswer =
+                    item.querySelector(
+                        ".faq-answer"
                     );
 
-                    const otherAnswer =
-                        item.querySelector(
-                            ".faq-answer"
-                        );
+                if (otherAnswer) {
 
-                    if (otherAnswer) {
+                    otherAnswer.style.maxHeight =
+                        null;
 
-                        otherAnswer.style.maxHeight =
-                            null;
+                }
 
-                    }
+                const otherQuestion =
+                    item.querySelector(
+                        ".faq-question"
+                    );
 
-                    const otherQuestion =
-                        item.querySelector(
-                            ".faq-question"
-                        );
+                if (otherQuestion) {
 
-                    if (otherQuestion) {
-
-                        otherQuestion.setAttribute(
-                            "aria-expanded",
-                            "false"
-                        );
-
-                    }
+                    otherQuestion.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
 
                 }
 
             }
-        );
 
-
-    /*
-     * Open selected FAQ.
-     */
+        });
 
     faqItem.classList.add(
         "active"
@@ -660,37 +552,21 @@ function openFAQ(
         50 +
         "px";
 
-
-    /*
-     * When opened from a URL hash,
-     * scroll the item into view.
-     */
-
     if (scrollToItem) {
 
-        setTimeout(
-            () => {
+        setTimeout(() => {
 
-                faqItem.scrollIntoView({
-                    behavior:
-                        "smooth",
+            faqItem.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
 
-                    block:
-                        "center"
-                });
-
-            },
-            100
-        );
+        }, 100);
 
     }
 
 }
 
-
-/* =========================================
-   FAQ CLICK HANDLERS
-========================================= */
 
 faqQuestions.forEach(
     question => {
@@ -713,10 +589,7 @@ faqQuestions.forEach(
                         "active"
                     );
 
-
-                if (
-                    isCurrentlyOpen
-                ) {
+                if (isCurrentlyOpen) {
 
                     faqItem.classList.remove(
                         "active"
@@ -743,10 +616,7 @@ faqQuestions.forEach(
 
                 }
 
-
-                openFAQ(
-                    faqItem
-                );
+                openFAQ(faqItem);
 
             }
         );
@@ -754,10 +624,6 @@ faqQuestions.forEach(
     }
 );
 
-
-/* =========================================
-   OPEN FAQ FROM URL HASH
-========================================= */
 
 function openFAQFromHash() {
 
@@ -778,9 +644,7 @@ function openFAQFromHash() {
     }
 
     const faqItem =
-        document.getElementById(
-            id
-        );
+        document.getElementById(id);
 
     if (
         faqItem &&
@@ -798,17 +662,15 @@ function openFAQFromHash() {
 
 }
 
-
 openFAQFromHash();
-
 
 window.addEventListener(
     "hashchange",
     openFAQFromHash
 );
 
-
 }
+
 
 /* =========================================
 FADE-IN ANIMATIONS
@@ -816,38 +678,20 @@ FADE-IN ANIMATIONS
 
 function initializeFadeInAnimations() {
 
-
 const sections =
     document.querySelectorAll(
         ".section, .how-it-works, .faq, .contact"
     );
 
-
-if (
-    sections.length === 0
-) {
-
+if (sections.length === 0) {
     return;
-
 }
 
-
-/*
- * If IntersectionObserver is not
- * available, leave everything visible.
- */
-
 if (
-    !(
-        "IntersectionObserver"
-        in window
-    )
+    !("IntersectionObserver" in window)
 ) {
-
     return;
-
 }
-
 
 const observer =
     new IntersectionObserver(
@@ -877,26 +721,29 @@ const observer =
 
         },
         {
-            threshold:
-                0.05
+            threshold: 0.05
         }
     );
 
 
-sections.forEach(
-    section => {
+sections.forEach(section => {
 
-        /*
-         * IMPORTANT:
-         *
-         * Sections are visible by default.
-         * The previous version set opacity to 0
-         * before waiting for IntersectionObserver.
-         *
-         * Some mobile browsers can fail to trigger
-         * the observer correctly, which can leave an
-         * entire page invisible.
-         */
+    section.style.opacity = "1";
+
+    section.style.transform =
+        "translateY(0)";
+
+    section.style.transition =
+        "opacity 0.8s ease, transform 0.8s ease";
+
+    observer.observe(section);
+
+});
+
+
+setTimeout(() => {
+
+    sections.forEach(section => {
 
         section.style.opacity =
             "1";
@@ -904,50 +751,12 @@ sections.forEach(
         section.style.transform =
             "translateY(0)";
 
-        section.style.transition =
-            "opacity 0.8s ease, transform 0.8s ease";
+    });
 
-
-        /*
-         * Continue observing the section.
-         */
-
-        observer.observe(
-            section
-        );
-
-    }
-);
-
-
-/*
- * SAFETY FALLBACK
- *
- * If IntersectionObserver does not trigger,
- * make sure all sections remain visible.
- */
-
-setTimeout(
-    () => {
-
-        sections.forEach(
-            section => {
-
-                section.style.opacity =
-                    "1";
-
-                section.style.transform =
-                    "translateY(0)";
-
-            }
-        );
-
-    },
-    2000
-);
-
+}, 2000);
 
 }
+
 
 /* =========================================
 INITIALIZE SITE
@@ -955,46 +764,30 @@ INITIALIZE SITE
 
 async function initializeSite() {
 
-
-/*
- * Load shared components.
- */
+initializeGoogleAnalytics();
 
 await Promise.all([
     loadSharedHeader(),
     loadSharedFooter()
 ]);
 
-
-/*
- * Initialize page-specific
- * site functionality.
- */
-
 initializeFAQ();
 
 initializeFadeInAnimations();
 
-
-/*
- * Load the scheduling modal if
- * this page contains one.
- */
-
 await loadSchedulingModal();
 
-
 }
+
 
 /* =========================================
 START SITE
 ========================================= */
 
 if (
-document.readyState ===
-"loading"
+    document.readyState ===
+    "loading"
 ) {
-
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -1004,13 +797,9 @@ document.addEventListener(
     }
 );
 
-
 }
-
 else {
 
-
 initializeSite();
-
 
 }
