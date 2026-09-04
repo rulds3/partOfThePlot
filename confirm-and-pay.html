@@ -1601,20 +1601,163 @@
      * separately.
      */
 
-    if (stripePaymentButton) {
+	/* =========================================================
+	   STRIPE PAYMENT
+	   ========================================================= */
 
-        stripePaymentButton.addEventListener(
-            "click",
-            function() {
+	const CREATE_STRIPE_CHECKOUT_URL =
+		"https://fqcabbpvevtlzzwsvezi.supabase.co/functions/v1/create-stripe-checkout";
 
-                alert(
-                    "Online card payments will be available here soon."
-                );
 
-            }
-        );
+	if (stripePaymentButton) {
 
-    }
+		stripePaymentButton.addEventListener(
+			"click",
+			async function() {
+
+				/*
+				 * Get the reservation confirmation token.
+				 */
+
+				const token =
+					getConfirmationToken();
+
+
+				if (!token) {
+
+					alert(
+						"We could not identify your reservation. Please return to the confirmation link from your email and try again."
+					);
+
+					return;
+
+				}
+
+
+				/*
+				 * Disable the button while
+				 * Stripe Checkout is being prepared.
+				 */
+
+				stripePaymentButton.disabled =
+					true;
+
+				stripePaymentButton.textContent =
+					"Preparing Secure Payment...";
+
+
+				try {
+
+					const response =
+						await fetch(
+							CREATE_STRIPE_CHECKOUT_URL,
+							{
+								method: "POST",
+
+								headers: {
+									"Content-Type":
+										"application/json"
+								},
+
+								body:
+									JSON.stringify({
+										confirmation_token:
+											token
+									})
+							}
+						);
+
+
+					let data = null;
+
+
+					try {
+
+						data =
+							await response.json();
+
+					}
+					catch (jsonError) {
+
+						data = null;
+
+					}
+
+
+					if (!response.ok) {
+
+						const errorMessage =
+							data &&
+							data.error
+								? data.error
+								: "We were unable to prepare your payment.";
+
+
+						throw new Error(
+							errorMessage
+						);
+
+					}
+
+
+					/*
+					 * Make sure Stripe returned
+					 * a Checkout URL.
+					 */
+
+					if (
+						!data ||
+						!data.checkout_url
+					) {
+
+						throw new Error(
+							"Stripe did not return a payment link."
+						);
+
+					}
+
+
+					/*
+					 * Send the customer to Stripe Checkout.
+					 */
+
+					window.location.href =
+						data.checkout_url;
+
+				}
+
+
+				catch (error) {
+
+					console.error(
+						"Stripe Checkout error:",
+						error
+					);
+
+
+					alert(
+						error.message ||
+						"We were unable to start the card payment. Please try again."
+					);
+
+
+					/*
+					 * Re-enable the button
+					 * if something went wrong.
+					 */
+
+					stripePaymentButton.disabled =
+						false;
+
+					stripePaymentButton.textContent =
+						"Pay Deposit by Card";
+
+				}
+
+			}
+		);
+
+	}
 
 
     if (venmoPaymentButton) {
