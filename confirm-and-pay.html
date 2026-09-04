@@ -9,6 +9,7 @@
 <meta
 name="viewport"
 content="width=device-width, initial-scale=1.0"
+
 >
 
 <title>Confirm Your Reservation | Part of the Plot</title>
@@ -22,6 +23,7 @@ content="width=device-width, initial-scale=1.0"
 <meta
 name="description"
 content="Review and confirm your Part of the Plot mystery party reservation."
+
 >
 
 <link
@@ -50,6 +52,60 @@ content="Review and confirm your Part of the Plot mystery party reservation."
     rel="stylesheet"
 >
 
+<style>
+
+    /* =========================================================
+       PAYMENT AMOUNT RADIO BUTTONS
+       ========================================================= */
+
+    .payment-amount-choice {
+
+        margin-bottom: 2rem;
+
+    }
+
+
+    .payment-amount-choice h3 {
+
+        margin-bottom: 1rem;
+
+    }
+
+
+    .radio-label {
+
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        cursor: pointer;
+        margin-bottom: 0.9rem;
+
+    }
+
+
+    .radio-label input[type="radio"] {
+
+        margin-top: 0.25rem;
+        flex-shrink: 0;
+
+    }
+
+
+    .radio-label span {
+
+        line-height: 1.5;
+
+    }
+
+
+    .radio-label strong {
+
+        font-weight: 600;
+
+    }
+
+</style>
+
 </head>
 
 <body class="confirm-page">
@@ -68,538 +124,607 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 <section class="section confirm-section">
 
-    <div class="confirm-container">
+
+<div class="confirm-container">
 
 
-        <!-- =================================================
-             INTRODUCTION
-             ================================================= -->
+    <!-- =================================================
+         INTRODUCTION
+         ================================================= -->
 
-        <div class="confirm-intro">
+    <div class="confirm-intro">
 
-            <p class="eyebrow">
-                PART OF THE PLOT
-            </p>
+        <p class="eyebrow">
+            PART OF THE PLOT
+        </p>
 
-            <h1>
-                Confirm Your Reservation
-            </h1>
+        <h1>
+            Confirm Your Reservation
+        </h1>
 
-            <p>
-                Please review the details of your reservation
-                below. If everything looks correct, complete the
-                confirmation form to accept your reservation.
-            </p>
+        <p>
+            Please review the details of your reservation
+            below. If everything looks correct, complete the
+            confirmation form to accept your reservation.
+        </p>
 
-        </div>
-
-
-        <!-- =================================================
-             LOADING MESSAGE
-             ================================================= -->
-
-        <div
-            id="loading-message"
-            class="confirmation-box"
-        >
-
-            <h2>
-                Loading Your Reservation
-            </h2>
-
-            <p>
-                Please wait while we retrieve your reservation details.
-            </p>
-
-        </div>
+    </div>
 
 
-        <!-- =================================================
-             RESERVATION SUMMARY
-             ================================================= -->
+    <!-- =================================================
+         LOADING MESSAGE
+         ================================================= -->
 
-        <div
-            id="reservation-summary"
-            class="reservation-summary"
-            style="display: none;"
-        >
+    <div
+        id="loading-message"
+        class="confirmation-box"
+    >
 
-            <h2>
-                Reservation Details
-            </h2>
+        <h2>
+            Loading Your Reservation
+        </h2>
 
+        <p>
+            Please wait while we retrieve your reservation details.
+        </p>
 
-            <div class="reservation-details">
-
-
-                <div class="reservation-detail">
-
-                    <span>
-                        Game
-                    </span>
-
-                    <strong
-                        id="display-game"
-                        class="detail-value"
-                    ></strong>
-
-                </div>
+    </div>
 
 
-                <div class="reservation-detail">
+    <!-- =================================================
+         RESERVATION SUMMARY
+         ================================================= -->
 
-                    <span>
-                        Date
-                    </span>
+    <div
+        id="reservation-summary"
+        class="reservation-summary"
+        style="display: none;"
+    >
 
-                    <strong
-                        id="display-date"
-                        class="detail-value"
-                    ></strong>
-
-                </div>
-
-
-                <div class="reservation-detail">
-
-                    <span>
-                        Time
-                    </span>
-
-                    <strong
-                        id="display-time"
-                        class="detail-value"
-                    ></strong>
-
-                </div>
+        <h2>
+            Reservation Details
+        </h2>
 
 
-                <div class="reservation-detail">
-
-                    <span>
-                        Location
-                    </span>
-
-                    <strong
-                        id="display-location"
-                        class="detail-value"
-                    ></strong>
-
-                </div>
+        <div class="reservation-details">
 
 
-                <div class="reservation-detail">
+            <div class="reservation-detail">
 
-                    <span>
-                        Guests
-                    </span>
+                <span>
+                    Game
+                </span>
 
-                    <strong
-                        id="display-guests"
-                        class="detail-value"
-                    ></strong>
-
-                </div>
-
-
-                <div class="reservation-detail">
-
-                    <span>
-                        Organizer
-                    </span>
-
-                    <strong
-                        id="display-organizer"
-                        class="detail-value"
-                    ></strong>
-
-                </div>
-
-
-                <div class="reservation-detail">
-
-                    <span>
-                        Organizer Email
-                    </span>
-
-                    <strong
-                        id="display-email"
-                        class="detail-value"
-                    ></strong>
-
-                </div>
-
-
-                <div class="reservation-detail">
-
-                    <span>
-                        Organizer Phone
-                    </span>
-
-                    <strong
-                        id="display-phone"
-                        class="detail-value"
-                    ></strong>
-
-                </div>
-
+                <strong
+                    id="display-game"
+                    class="detail-value"
+                ></strong>
 
             </div>
 
 
-            <!-- =================================================
-                 PAYMENT SUMMARY
-                 ================================================= -->
+            <div class="reservation-detail">
 
-            <div class="payment-summary">
+                <span>
+                    Date
+                </span>
 
-                <h3>
-                    Reservation Cost
-                </h3>
-
-
-                <div class="payment-amounts">
-
-                    <div class="payment-amount">
-
-                        <span>
-                            Total
-                        </span>
-
-                        <strong
-                            id="display-total"
-                        >
-                            $0.00
-                        </strong>
-
-                    </div>
-
-
-                    <div class="payment-amount deposit">
-
-                        <span>
-                            Deposit Due
-                        </span>
-
-                        <strong
-                            id="display-deposit"
-                        >
-                            $0.00
-                        </strong>
-
-                    </div>
-
-
-                    <div class="payment-amount">
-
-                        <span>
-                            Remaining Balance
-                        </span>
-
-                        <strong
-                            id="display-remaining"
-                        >
-                            $0.00
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <p class="payment-summary-note">
-                    Your reservation will be officially confirmed
-                    once your required deposit has been received.
-                </p>
+                <strong
+                    id="display-date"
+                    class="detail-value"
+                ></strong>
 
             </div>
+
+
+            <div class="reservation-detail">
+
+                <span>
+                    Time
+                </span>
+
+                <strong
+                    id="display-time"
+                    class="detail-value"
+                ></strong>
+
+            </div>
+
+
+            <div class="reservation-detail">
+
+                <span>
+                    Location
+                </span>
+
+                <strong
+                    id="display-location"
+                    class="detail-value"
+                ></strong>
+
+            </div>
+
+
+            <div class="reservation-detail">
+
+                <span>
+                    Guests
+                </span>
+
+                <strong
+                    id="display-guests"
+                    class="detail-value"
+                ></strong>
+
+            </div>
+
+
+            <div class="reservation-detail">
+
+                <span>
+                    Organizer
+                </span>
+
+                <strong
+                    id="display-organizer"
+                    class="detail-value"
+                ></strong>
+
+            </div>
+
+
+            <div class="reservation-detail">
+
+                <span>
+                    Organizer Email
+                </span>
+
+                <strong
+                    id="display-email"
+                    class="detail-value"
+                ></strong>
+
+            </div>
+
+
+            <div class="reservation-detail">
+
+                <span>
+                    Organizer Phone
+                </span>
+
+                <strong
+                    id="display-phone"
+                    class="detail-value"
+                ></strong>
+
+            </div>
+
 
         </div>
 
 
         <!-- =================================================
-             CONFIRMATION FORM
+             PAYMENT SUMMARY
              ================================================= -->
 
-        <div
-            id="confirmation-box"
-            class="confirmation-box"
-            style="display: none;"
-        >
+        <div class="payment-summary">
 
-            <h2>
-                Accept Your Reservation
-            </h2>
+            <h3>
+                Reservation Cost
+            </h3>
 
-            <p>
-                Please enter your information exactly as it appears
-                on your reservation and confirm the items below.
+
+            <div class="payment-amounts">
+
+                <div class="payment-amount">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong
+                        id="display-total"
+                    >
+                        $0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="payment-amount deposit">
+
+                    <span>
+                        Deposit Due
+                    </span>
+
+                    <strong
+                        id="display-deposit"
+                    >
+                        $0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="payment-amount">
+
+                    <span>
+                        Remaining Balance
+                    </span>
+
+                    <strong
+                        id="display-remaining"
+                    >
+                        $0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <p class="payment-summary-note">
+                Your reservation will be officially confirmed
+                once your required deposit has been received.
             </p>
 
+        </div>
 
-            <form id="confirmation-form">
-
-
-                <!-- =============================================
-                     HIDDEN RESERVATION DATA
-                     ============================================= -->
-
-                <input
-                    type="hidden"
-                    id="confirmation-token"
-                    name="confirmation_token"
-                >
+    </div>
 
 
-                <!-- =============================================
-                     ORGANIZER INFORMATION
-                     ============================================= -->
+    <!-- =================================================
+         CONFIRMATION FORM
+         ================================================= -->
 
-                <div class="form-group">
+    <div
+        id="confirmation-box"
+        class="confirmation-box"
+        style="display: none;"
+    >
 
-                    <label for="organizer-name">
-                        Organizer Name
-                    </label>
+        <h2>
+            Accept Your Reservation
+        </h2>
 
-                    <input
-                        type="text"
-                        id="organizer-name"
-                        name="organizer_name"
-                        autocomplete="name"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="organizer-email">
-                        Organizer Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="organizer-email"
-                        name="organizer_email"
-                        autocomplete="email"
-                        required
-                    >
-
-                </div>
+        <p>
+            Please enter your information exactly as it appears
+            on your reservation and confirm the items below.
+        </p>
 
 
-                <!-- =============================================
-                     REQUIRED CONFIRMATIONS
-                     ============================================= -->
-
-                <div class="acknowledgments">
-
-
-                    <label class="checkbox-label">
-
-                        <input
-                            type="checkbox"
-                            name="client_agreement_acknowledged"
-                            value="Yes"
-                            required
-                        >
-
-                        <span>
-                            I have read and agree to the
-                            <a
-                                href="client-agreement.html"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Part of the Plot Client Agreement
-                            </a>.
-                        </span>
-
-                    </label>
-
-
-                    <label class="checkbox-label">
-
-                        <input
-                            type="checkbox"
-                            name="cancellation_policy_acknowledged"
-                            value="Yes"
-                            required
-                        >
-
-                        <span>
-                            I have read and understand the
-                            <a
-                                href="faq.html#payment"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                cancellation and payment policies
-                            </a>
-                            described in the FAQ.
-                        </span>
-
-                    </label>
-
-
-                    <label class="checkbox-label">
-
-                        <input
-                            type="checkbox"
-                            name="reservation_confirmation"
-                            value="Yes"
-                            required
-                        >
-
-                        <span>
-                            I confirm that the reservation and details
-                            above are correct and authorize Part of
-                            the Plot to proceed with this reservation.
-                        </span>
-
-                    </label>
-
-
-                </div>
-
-
-                <!-- =============================================
-                     SUBMIT BUTTON
-                     ============================================= -->
-
-                <button
-                    type="submit"
-                    class="button"
-                    id="confirm-button"
-                >
-                    Accept Reservation
-                </button>
-
-
-            </form>
+        <form id="confirmation-form">
 
 
             <!-- =============================================
-                 CONFIRMATION MESSAGE
+                 HIDDEN RESERVATION DATA
                  ============================================= -->
 
-            <div
-                id="confirmation-message"
-                class="confirmation-message"
-                style="display: none;"
-            ></div>
+            <input
+                type="hidden"
+                id="confirmation-token"
+                name="confirmation_token"
+            >
 
 
-        </div>
+            <!-- =============================================
+                 ORGANIZER INFORMATION
+                 ============================================= -->
+
+            <div class="form-group">
+
+                <label for="organizer-name">
+                    Organizer Name
+                </label>
+
+                <input
+                    type="text"
+                    id="organizer-name"
+                    name="organizer_name"
+                    autocomplete="name"
+                    required
+                >
+
+            </div>
 
 
-        <!-- =================================================
-             PAYMENT SECTION
-             ================================================= -->
+            <div class="form-group">
+
+                <label for="organizer-email">
+                    Organizer Email
+                </label>
+
+                <input
+                    type="email"
+                    id="organizer-email"
+                    name="organizer_email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- =============================================
+                 REQUIRED CONFIRMATIONS
+                 ============================================= -->
+
+            <div class="acknowledgments">
+
+
+                <label class="checkbox-label">
+
+                    <input
+                        type="checkbox"
+                        name="client_agreement_acknowledged"
+                        value="Yes"
+                        required
+                    >
+
+                    <span>
+                        I have read and agree to the
+                        <a
+                            href="client-agreement.html"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Part of the Plot Client Agreement
+                        </a>.
+                    </span>
+
+                </label>
+
+
+                <label class="checkbox-label">
+
+                    <input
+                        type="checkbox"
+                        name="cancellation_policy_acknowledged"
+                        value="Yes"
+                        required
+                    >
+
+                    <span>
+                        I have read and understand the
+                        <a
+                            href="faq.html#payment"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            cancellation and payment policies
+                        </a>
+                        described in the FAQ.
+                    </span>
+
+                </label>
+
+
+                <label class="checkbox-label">
+
+                    <input
+                        type="checkbox"
+                        name="reservation_confirmation"
+                        value="Yes"
+                        required
+                    >
+
+                    <span>
+                        I confirm that the reservation and details
+                        above are correct and authorize Part of
+                        the Plot to proceed with this reservation.
+                    </span>
+
+                </label>
+
+
+            </div>
+
+
+            <!-- =============================================
+                 SUBMIT BUTTON
+                 ============================================= -->
+
+            <button
+                type="submit"
+                class="button"
+                id="confirm-button"
+            >
+                Accept Reservation
+            </button>
+
+
+        </form>
+
+
+        <!-- =============================================
+             CONFIRMATION MESSAGE
+             ============================================= -->
 
         <div
-            id="payment-section"
-            class="payment-section"
+            id="confirmation-message"
+            class="confirmation-message"
             style="display: none;"
-        >
-
-
-            <div class="payment-success">
-
-                <h2 id="payment-status-heading">
-                    Reservation Approved!
-                </h2>
-
-                <p id="payment-status-message">
-                    Your reservation has been approved and is being
-                    held for you. Your reservation will be officially
-                    confirmed once your required deposit has been received.
-                </p>
-
-            </div>
-
-
-            <div class="payment-box">
-
-                <h2>
-                    Pay Your Deposit
-                </h2>
-
-
-                <div class="payment-option">
-
-                    <h3>
-                        Pay by Card
-                    </h3>
-
-                    <p>
-                        Pay your deposit securely online using a
-                        credit or debit card.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="button"
-                        id="stripe-payment-button"
-                    >
-                        Pay Deposit by Card
-                    </button>
-
-                </div>
-
-
-                <div class="payment-option">
-
-                    <h3>
-                        Pay with Venmo
-                    </h3>
-
-                    <p>
-                        Send your deposit through Venmo using the
-                        payment information provided by Part of
-                        the Plot.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="button"
-                        id="venmo-payment-button"
-                    >
-                        Pay with Venmo
-                    </button>
-
-                </div>
-
-
-                <div class="payment-option">
-
-                    <h3>
-                        Pay with Cash
-                    </h3>
-
-                    <p>
-                        If you prefer to pay in cash, please contact
-                        Part of the Plot to make arrangements.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="button"
-                        id="cash-payment-button"
-                    >
-                        Pay with Cash
-                    </button>
-
-                </div>
-
-
-            </div>
-
-        </div>
+        ></div>
 
 
     </div>
+
+
+    <!-- =================================================
+         PAYMENT SECTION
+         ================================================= -->
+
+    <div
+        id="payment-section"
+        class="payment-section"
+        style="display: none;"
+    >
+
+
+        <div class="payment-success">
+
+            <h2 id="payment-status-heading">
+                Reservation Approved!
+            </h2>
+
+            <p id="payment-status-message">
+                Your reservation has been approved and is being
+                held for you. Your reservation will be officially
+                confirmed once your required deposit has been received.
+            </p>
+
+        </div>
+
+
+        <div class="payment-box">
+
+            <h2>
+                Pay Your Deposit
+            </h2>
+
+
+            <!-- =============================================
+                 PAYMENT AMOUNT
+                 ============================================= -->
+
+            <div class="payment-amount-choice">
+
+                <h3>
+                    How much would you like to pay?
+                </h3>
+
+
+                <label class="radio-label">
+
+                    <input
+                        type="radio"
+                        name="payment_amount"
+                        value="deposit"
+                        checked
+                    >
+
+                    <span>
+                        <strong>
+                            Pay Deposit
+                        </strong>
+                        —
+                        <span id="payment-deposit-choice">
+                            $0.00
+                        </span>
+                    </span>
+
+                </label>
+
+
+                <label class="radio-label">
+
+                    <input
+                        type="radio"
+                        name="payment_amount"
+                        value="full"
+                    >
+
+                    <span>
+                        <strong>
+                            Pay in Full
+                        </strong>
+                        —
+                        <span id="payment-full-choice">
+                            $0.00
+                        </span>
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <!-- =============================================
+                 STRIPE
+                 ============================================= -->
+
+            <div class="payment-option">
+
+                <h3>
+                    Pay by Card
+                </h3>
+
+                <p>
+                    Pay securely online using a credit or debit card.
+                </p>
+
+                <button
+                    type="button"
+                    class="button"
+                    id="stripe-payment-button"
+                >
+                    Pay Deposit by Card
+                </button>
+
+            </div>
+
+
+            <!-- =============================================
+                 VENMO
+                 ============================================= -->
+
+            <div class="payment-option">
+
+                <h3>
+                    Pay with Venmo
+                </h3>
+
+                <p>
+                    Send your payment through Venmo using the
+                    payment information provided by Part of
+                    the Plot.
+                </p>
+
+                <button
+                    type="button"
+                    class="button"
+                    id="venmo-payment-button"
+                >
+                    Pay with Venmo
+                </button>
+
+            </div>
+
+
+            <!-- =============================================
+                 CASH
+                 ============================================= -->
+
+            <div class="payment-option">
+
+                <h3>
+                    Pay with Cash
+                </h3>
+
+                <p>
+                    If you prefer to pay in cash, please contact
+                    Part of the Plot to make arrangements.
+                </p>
+
+                <button
+                    type="button"
+                    class="button"
+                    id="cash-payment-button"
+                >
+                    Pay with Cash
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
 
 </section>
 
@@ -713,6 +838,33 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             );
 
         return params.get("payment");
+
+    }
+
+
+    /* =========================================================
+       GET SELECTED PAYMENT TYPE
+       ========================================================= */
+
+    function getSelectedPaymentType() {
+
+        const selectedPayment =
+            document.querySelector(
+                'input[name="payment_amount"]:checked'
+            );
+
+
+        if (
+            selectedPayment &&
+            selectedPayment.value === "full"
+        ) {
+
+            return "full";
+
+        }
+
+
+        return "deposit";
 
     }
 
@@ -1139,6 +1291,109 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             )
         );
 
+
+        /*
+         * Populate the payment amount choices.
+         */
+
+        const depositChoice =
+            document.getElementById(
+                "payment-deposit-choice"
+            );
+
+
+        const fullChoice =
+            document.getElementById(
+                "payment-full-choice"
+            );
+
+
+        if (depositChoice) {
+
+            depositChoice.textContent =
+                formatCurrency(
+                    reservation.deposit_due
+                );
+
+        }
+
+
+        if (fullChoice) {
+
+            fullChoice.textContent =
+                formatCurrency(
+                    reservation.total
+                );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       UPDATE PAYMENT BUTTON TEXT
+       ========================================================= */
+
+    function updatePaymentButtonText() {
+
+        const paymentType =
+            getSelectedPaymentType();
+
+
+        if (paymentType === "full") {
+
+            if (stripePaymentButton) {
+
+                stripePaymentButton.textContent =
+                    "Pay in Full by Card";
+
+            }
+
+
+            if (venmoPaymentButton) {
+
+                venmoPaymentButton.textContent =
+                    "Pay in Full with Venmo";
+
+            }
+
+
+            if (cashPaymentButton) {
+
+                cashPaymentButton.textContent =
+                    "Pay in Full with Cash";
+
+            }
+
+
+            return;
+
+        }
+
+
+        if (stripePaymentButton) {
+
+            stripePaymentButton.textContent =
+                "Pay Deposit by Card";
+
+        }
+
+
+        if (venmoPaymentButton) {
+
+            venmoPaymentButton.textContent =
+                "Pay Deposit with Venmo";
+
+        }
+
+
+        if (cashPaymentButton) {
+
+            cashPaymentButton.textContent =
+                "Pay Deposit with Cash";
+
+        }
+
     }
 
 
@@ -1193,6 +1448,9 @@ content="Review and confirm your Part of the Plot mystery party reservation."
         confirmationBox.style.display =
             "block";
 
+
+        updatePaymentButtonText();
+
     }
 
 
@@ -1210,7 +1468,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
         paymentStatusMessage.textContent =
-            "Stripe has received your payment. We are confirming your deposit now. Your reservation will be officially confirmed once the payment is verified.";
+            "Stripe has received your payment. We are confirming your payment now. Your reservation will be officially confirmed once the payment is verified.";
 
 
         if (stripePaymentButton) {
@@ -1304,15 +1562,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
     async function waitForPaymentConfirmation() {
 
-        /*
-         * The Stripe Checkout success page can load before
-         * the webhook has finished updating Supabase.
-         *
-         * Check several times rather than assuming that
-         * returning from Stripe means the reservation is
-         * already confirmed.
-         */
-
         const maxAttempts =
             10;
 
@@ -1374,13 +1623,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
         }
 
 
-        /*
-         * If the webhook has not completed after
-         * the polling period, leave the customer
-         * with a clear message rather than falsely
-         * claiming the reservation is confirmed.
-         */
-
         paymentStatusHeading.textContent =
             "Payment Submitted";
 
@@ -1433,11 +1675,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
         try {
-
-            /*
-             * The confirm-reservation Edge Function supports
-             * GET requests for retrieving a reservation.
-             */
 
             const response =
                 await fetch(
@@ -1495,10 +1732,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             }
 
 
-            /*
-             * Store the confirmation token.
-             */
-
             const tokenField =
                 document.getElementById(
                     "confirmation-token"
@@ -1513,26 +1746,14 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             }
 
 
-            /*
-             * Display reservation details.
-             */
-
             displayReservation(
                 reservation
             );
 
 
-            /*
-             * Hide loading message.
-             */
-
             loadingMessage.style.display =
                 "none";
 
-
-            /*
-             * Show reservation summary.
-             */
 
             reservationSummary.style.display =
                 "block";
@@ -1570,10 +1791,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
                 showPaymentProcessingState();
 
-                /*
-                 * Give the webhook a moment to arrive,
-                 * then begin checking Supabase.
-                 */
 
                 setTimeout(
                     function() {
@@ -1603,7 +1820,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
                 paymentStatusMessage.textContent =
-                    "Your reservation is still being held for you. The card payment was cancelled, so your deposit has not yet been received.";
+                    "Your reservation is still being held for you. The card payment was cancelled, so your payment has not yet been received.";
 
 
                 return;
@@ -1649,11 +1866,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                 "approved"
             ) {
 
-                /*
-                 * Show confirmation form unless the customer
-                 * has already accepted the reservation.
-                 */
-
                 if (
                     reservation.client_agreement_accepted
                 ) {
@@ -1685,17 +1897,9 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                 }
 
 
-                /*
-                 * Show confirmation form.
-                 */
-
                 confirmationBox.style.display =
                     "block";
 
-
-                /*
-                 * Pre-fill organizer information.
-                 */
 
                 const organizerName =
                     document.getElementById(
@@ -1792,6 +1996,30 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
     /* =========================================================
+       PAYMENT AMOUNT RADIO BUTTONS
+       ========================================================= */
+
+    document
+        .querySelectorAll(
+            'input[name="payment_amount"]'
+        )
+        .forEach(
+            function(radio) {
+
+                radio.addEventListener(
+                    "change",
+                    function() {
+
+                        updatePaymentButtonText();
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =========================================================
        ACCEPT RESERVATION
        ========================================================= */
 
@@ -1849,11 +2077,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             };
 
 
-            /*
-             * Verify all three required
-             * confirmations.
-             */
-
             if (
                 payload.client_agreement_acknowledged !== "Yes" ||
                 payload.cancellation_policy_acknowledged !== "Yes" ||
@@ -1876,10 +2099,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
             }
 
-
-            /*
-             * Disable button while processing.
-             */
 
             confirmButton.disabled =
                 true;
@@ -1946,11 +2165,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                 }
 
 
-                /*
-                 * The reservation has been accepted,
-                 * but it is NOT confirmed yet.
-                 */
-
                 confirmationForm.style.display =
                     "none";
 
@@ -1976,25 +2190,20 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                 `;
 
 
-                /*
-                 * Show payment section.
-                 */
-
                 paymentStatusHeading.textContent =
                     "Reservation Approved!";
 
 
                 paymentStatusMessage.textContent =
-                    "Your reservation has been approved and is being held for you. Please submit your required deposit below to officially confirm your reservation.";
+                    "Your reservation has been approved and is being held for you. Please choose your payment amount and payment method below.";
 
 
                 paymentSection.style.display =
                     "block";
 
 
-                /*
-                 * Scroll to payment section.
-                 */
+                updatePaymentButtonText();
+
 
                 setTimeout(
                     function() {
@@ -2061,10 +2270,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             "click",
             async function() {
 
-                /*
-                 * Get the reservation confirmation token.
-                 */
-
                 const token =
                     getConfirmationToken();
 
@@ -2080,10 +2285,9 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                 }
 
 
-                /*
-                 * Disable the button while
-                 * Stripe Checkout is being prepared.
-                 */
+                const paymentType =
+                    getSelectedPaymentType();
+
 
                 stripePaymentButton.disabled =
                     true;
@@ -2108,8 +2312,13 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
                                 body:
                                     JSON.stringify({
+
                                         confirmation_token:
-                                            token
+                                            token,
+
+                                        payment_type:
+                                            paymentType
+
                                     })
                             }
                         );
@@ -2147,11 +2356,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                     }
 
 
-                    /*
-                     * Make sure Stripe returned
-                     * a Checkout URL.
-                     */
-
                     if (
                         !data ||
                         !data.checkout_url
@@ -2163,10 +2367,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
                     }
 
-
-                    /*
-                     * Send the customer to Stripe Checkout.
-                     */
 
                     window.location.href =
                         data.checkout_url;
@@ -2188,17 +2388,11 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                     );
 
 
-                    /*
-                     * Re-enable the button
-                     * if something went wrong.
-                     */
-
                     stripePaymentButton.disabled =
                         false;
 
 
-                    stripePaymentButton.textContent =
-                        "Pay Deposit by Card";
+                    updatePaymentButtonText();
 
                 }
 
@@ -2218,8 +2412,26 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             "click",
             function() {
 
+                const paymentType =
+                    getSelectedPaymentType();
+
+
+                if (
+                    paymentType ===
+                    "full"
+                ) {
+
+                    alert(
+                        "Venmo payment instructions for paying your reservation in full will be provided by Part of the Plot."
+                    );
+
+                    return;
+
+                }
+
+
                 alert(
-                    "Venmo payment instructions will be provided by Part of the Plot."
+                    "Venmo payment instructions for your required deposit will be provided by Part of the Plot."
                 );
 
             }
@@ -2238,8 +2450,26 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             "click",
             function() {
 
+                const paymentType =
+                    getSelectedPaymentType();
+
+
+                if (
+                    paymentType ===
+                    "full"
+                ) {
+
+                    alert(
+                        "Please contact Part of the Plot to arrange payment of your reservation in full."
+                    );
+
+                    return;
+
+                }
+
+
                 alert(
-                    "Please contact Part of the Plot to arrange cash payment."
+                    "Please contact Part of the Plot to arrange payment of your required deposit."
                 );
 
             }
@@ -2255,6 +2485,8 @@ content="Review and confirm your Part of the Plot mystery party reservation."
     document.addEventListener(
         "DOMContentLoaded",
         function() {
+
+            updatePaymentButtonText();
 
             loadReservation();
 
