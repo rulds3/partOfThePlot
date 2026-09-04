@@ -9,7 +9,6 @@
 <meta
 name="viewport"
 content="width=device-width, initial-scale=1.0"
-
 >
 
 <title>Confirm Your Reservation | Part of the Plot</title>
@@ -23,7 +22,6 @@ content="width=device-width, initial-scale=1.0"
 <meta
 name="description"
 content="Review and confirm your Part of the Plot mystery party reservation."
-
 >
 
 <link
@@ -90,7 +88,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             <p>
                 Please review the details of your reservation
                 below. If everything looks correct, complete the
-                confirmation form to finalize your reservation.
+                confirmation form to accept your reservation.
             </p>
 
         </div>
@@ -310,8 +308,8 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
                 <p class="payment-summary-note">
-                    Your reservation is not considered confirmed
-                    until you complete the confirmation process below.
+                    Your reservation will be officially confirmed
+                    once your required deposit has been received.
                 </p>
 
             </div>
@@ -330,7 +328,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
         >
 
             <h2>
-                Confirm Your Reservation
+                Accept Your Reservation
             </h2>
 
             <p>
@@ -475,7 +473,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                     class="button"
                     id="confirm-button"
                 >
-                    Confirm Reservation
+                    Accept Reservation
                 </button>
 
 
@@ -509,14 +507,14 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
             <div class="payment-success">
 
-                <h2>
-                    Reservation Confirmed!
+                <h2 id="payment-status-heading">
+                    Reservation Approved!
                 </h2>
 
-                <p>
-                    Your reservation has been successfully confirmed.
-                    Please use one of the payment options below to
-                    submit your deposit.
+                <p id="payment-status-message">
+                    Your reservation has been approved and is being
+                    held for you. Your reservation will be officially
+                    confirmed once your required deposit has been received.
                 </p>
 
             </div>
@@ -667,6 +665,26 @@ content="Review and confirm your Part of the Plot mystery party reservation."
         document.getElementById("payment-section");
 
 
+    const paymentStatusHeading =
+        document.getElementById("payment-status-heading");
+
+
+    const paymentStatusMessage =
+        document.getElementById("payment-status-message");
+
+
+    const stripePaymentButton =
+        document.getElementById("stripe-payment-button");
+
+
+    const venmoPaymentButton =
+        document.getElementById("venmo-payment-button");
+
+
+    const cashPaymentButton =
+        document.getElementById("cash-payment-button");
+
+
     /* =========================================================
        GET CONFIRMATION TOKEN
        ========================================================= */
@@ -679,6 +697,22 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             );
 
         return params.get("token");
+
+    }
+
+
+    /* =========================================================
+       GET PAYMENT RESULT
+       ========================================================= */
+
+    function getPaymentResult() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        return params.get("payment");
 
     }
 
@@ -733,12 +767,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
         }
 
 
-        /*
-         * Handle YYYY-MM-DD manually.
-         * This prevents browser timezone conversion
-         * from changing the displayed date.
-         */
-
         const isoMatch =
             value.match(
                 /^(\d{4})-(\d{2})-(\d{2})$/
@@ -790,10 +818,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
         }
 
-
-        /*
-         * Handle M/D/YYYY and MM/DD/YYYY.
-         */
 
         const slashMatch =
             value.match(
@@ -847,10 +871,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
         }
 
 
-        /*
-         * Final fallback.
-         */
-
         const parsedDate =
             new Date(value);
 
@@ -873,10 +893,6 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
         }
 
-
-        /*
-         * Never display "Invalid Date."
-         */
 
         return value;
 
@@ -1127,6 +1143,269 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
     /* =========================================================
+       SHOW CONFIRMED STATE
+       ========================================================= */
+
+    function showConfirmedState() {
+
+        confirmationBox.innerHTML = `
+            <h2>
+                Reservation Confirmed!
+            </h2>
+
+            <p>
+                Your deposit has been received and your reservation
+                is officially confirmed.
+            </p>
+
+            <p>
+                Your reservation is now on the books with
+                Part of the Plot.
+            </p>
+
+            <p>
+                If you need to make a change to your reservation,
+                please contact Part of the Plot.
+            </p>
+        `;
+
+
+        confirmationBox.style.display =
+            "block";
+
+
+        paymentSection.style.display =
+            "none";
+
+    }
+
+
+    /* =========================================================
+       SHOW PAYMENT SECTION
+       ========================================================= */
+
+    function showPaymentSection() {
+
+        paymentSection.style.display =
+            "block";
+
+
+        confirmationBox.style.display =
+            "block";
+
+    }
+
+
+    /* =========================================================
+       SHOW PAYMENT PROCESSING STATE
+       ========================================================= */
+
+    function showPaymentProcessingState() {
+
+        showPaymentSection();
+
+
+        paymentStatusHeading.textContent =
+            "Payment Received";
+
+
+        paymentStatusMessage.textContent =
+            "Stripe has received your payment. We are confirming your deposit now. Your reservation will be officially confirmed once the payment is verified.";
+
+
+        if (stripePaymentButton) {
+
+            stripePaymentButton.disabled =
+                true;
+
+            stripePaymentButton.textContent =
+                "Payment Processing...";
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CHECK PAYMENT STATUS
+       ========================================================= */
+
+    async function checkPaymentStatus() {
+
+        const token =
+            getConfirmationToken();
+
+
+        if (!token) {
+
+            return null;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    CONFIRM_RESERVATION_URL +
+                    "?token=" +
+                    encodeURIComponent(token)
+                );
+
+
+            let data = null;
+
+
+            try {
+
+                data =
+                    await response.json();
+
+            }
+            catch (jsonError) {
+
+                data = null;
+
+            }
+
+
+            if (!response.ok) {
+
+                return null;
+
+            }
+
+
+            return (
+                data &&
+                data.reservation
+                    ? data.reservation
+                    : data
+            );
+
+        }
+        catch (error) {
+
+            console.error(
+                "Payment status check error:",
+                error
+            );
+
+            return null;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       WAIT FOR STRIPE WEBHOOK
+       ========================================================= */
+
+    async function waitForPaymentConfirmation() {
+
+        /*
+         * The Stripe Checkout success page can load before
+         * the webhook has finished updating Supabase.
+         *
+         * Check several times rather than assuming that
+         * returning from Stripe means the reservation is
+         * already confirmed.
+         */
+
+        const maxAttempts =
+            10;
+
+
+        const delay =
+            2000;
+
+
+        for (
+            let attempt = 0;
+            attempt < maxAttempts;
+            attempt++
+        ) {
+
+            const reservation =
+                await checkPaymentStatus();
+
+
+            if (reservation) {
+
+                displayReservation(
+                    reservation
+                );
+
+
+                if (
+                    reservation.status ===
+                    "confirmed" &&
+                    reservation.deposit_paid_at
+                ) {
+
+                    showConfirmedState();
+
+                    return true;
+
+                }
+
+            }
+
+
+            if (
+                attempt <
+                maxAttempts - 1
+            ) {
+
+                await new Promise(
+                    function(resolve) {
+
+                        setTimeout(
+                            resolve,
+                            delay
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+
+
+        /*
+         * If the webhook has not completed after
+         * the polling period, leave the customer
+         * with a clear message rather than falsely
+         * claiming the reservation is confirmed.
+         */
+
+        paymentStatusHeading.textContent =
+            "Payment Submitted";
+
+
+        paymentStatusMessage.textContent =
+            "Your payment has been submitted successfully. Your reservation is being finalized. You do not need to pay again. If your reservation does not show as confirmed shortly, please contact Part of the Plot.";
+
+
+        if (stripePaymentButton) {
+
+            stripePaymentButton.disabled =
+                true;
+
+            stripePaymentButton.textContent =
+                "Payment Submitted";
+
+        }
+
+
+        return false;
+
+    }
+
+
+    /* =========================================================
        LOAD RESERVATION
        ========================================================= */
 
@@ -1156,27 +1435,15 @@ content="Review and confirm your Part of the Plot mystery party reservation."
         try {
 
             /*
-             * The confirm-reservation Edge Function expects
-             * the confirmation token in a POST request.
+             * The confirm-reservation Edge Function supports
+             * GET requests for retrieving a reservation.
              */
 
             const response =
                 await fetch(
-                    CONFIRM_RESERVATION_URL,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-                                confirmation_token:
-                                    token
-                            })
-                    }
+                    CONFIRM_RESERVATION_URL +
+                    "?token=" +
+                    encodeURIComponent(token)
                 );
 
 
@@ -1271,33 +1538,51 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                 "block";
 
 
-            /*
-             * If already confirmed, don't show
-             * the confirmation form.
-             */
+            /* =================================================
+               ALREADY CONFIRMED
+               ================================================= */
 
             if (
-                reservation.status === "confirmed" ||
-                reservation.confirmed_at
+                reservation.status ===
+                "confirmed" &&
+                reservation.deposit_paid_at
             ) {
 
-                confirmationBox.innerHTML = `
-                    <h2>Reservation Already Confirmed</h2>
+                showConfirmedState();
 
-                    <p>
-                        This reservation has already been confirmed.
-                        No further confirmation is required.
-                    </p>
+                return;
 
-                    <p>
-                        If you need to make a change to your reservation,
-                        please contact Part of the Plot.
-                    </p>
-                `;
+            }
 
 
-                confirmationBox.style.display =
-                    "block";
+            /* =================================================
+               PAYMENT RETURN
+               ================================================= */
+
+            const paymentResult =
+                getPaymentResult();
+
+
+            if (
+                paymentResult ===
+                "success"
+            ) {
+
+                showPaymentProcessingState();
+
+                /*
+                 * Give the webhook a moment to arrive,
+                 * then begin checking Supabase.
+                 */
+
+                setTimeout(
+                    function() {
+
+                        waitForPaymentConfirmation();
+
+                    },
+                    1000
+                );
 
 
                 return;
@@ -1305,50 +1590,175 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             }
 
 
-            /*
-             * Show confirmation form.
-             */
+            if (
+                paymentResult ===
+                "cancelled"
+            ) {
+
+                showPaymentSection();
+
+
+                paymentStatusHeading.textContent =
+                    "Reservation Approved";
+
+
+                paymentStatusMessage.textContent =
+                    "Your reservation is still being held for you. The card payment was cancelled, so your deposit has not yet been received.";
+
+
+                return;
+
+            }
+
+
+            /* =================================================
+               DEPOSIT ALREADY RECORDED
+               ================================================= */
+
+            if (
+                reservation.deposit_paid_at
+            ) {
+
+                if (
+                    reservation.status ===
+                    "confirmed"
+                ) {
+
+                    showConfirmedState();
+
+                    return;
+
+                }
+
+
+                showPaymentProcessingState();
+
+                waitForPaymentConfirmation();
+
+                return;
+
+            }
+
+
+            /* =================================================
+               RESERVATION APPROVED
+               ================================================= */
+
+            if (
+                reservation.status ===
+                "approved"
+            ) {
+
+                /*
+                 * Show confirmation form unless the customer
+                 * has already accepted the reservation.
+                 */
+
+                if (
+                    reservation.client_agreement_accepted
+                ) {
+
+                    confirmationBox.innerHTML = `
+                        <h2>
+                            Reservation Approved!
+                        </h2>
+
+                        <p>
+                            Your reservation has been approved and
+                            is being held for you.
+                        </p>
+
+                        <p>
+                            Your agreements have already been recorded.
+                            Please submit your required deposit below
+                            to officially confirm your reservation.
+                        </p>
+                    `;
+
+                    confirmationBox.style.display =
+                        "block";
+
+                    showPaymentSection();
+
+                    return;
+
+                }
+
+
+                /*
+                 * Show confirmation form.
+                 */
+
+                confirmationBox.style.display =
+                    "block";
+
+
+                /*
+                 * Pre-fill organizer information.
+                 */
+
+                const organizerName =
+                    document.getElementById(
+                        "organizer-name"
+                    );
+
+
+                const organizerEmail =
+                    document.getElementById(
+                        "organizer-email"
+                    );
+
+
+                if (
+                    organizerName &&
+                    reservation.organizer_name
+                ) {
+
+                    organizerName.value =
+                        reservation.organizer_name;
+
+                }
+
+
+                if (
+                    organizerEmail &&
+                    reservation.organizer_email
+                ) {
+
+                    organizerEmail.value =
+                        reservation.organizer_email;
+
+                }
+
+
+                return;
+
+            }
+
+
+            /* =================================================
+               UNEXPECTED STATUS
+               ================================================= */
+
+            confirmationBox.innerHTML = `
+                <h2>
+                    Reservation Unavailable
+                </h2>
+
+                <p>
+                    This reservation is not currently available
+                    for confirmation.
+                </p>
+
+                <p>
+                    Please contact Part of the Plot if you believe
+                    you received this message in error.
+                </p>
+            `;
+
 
             confirmationBox.style.display =
                 "block";
-
-
-            /*
-             * Pre-fill organizer information.
-             */
-
-            const organizerName =
-                document.getElementById(
-                    "organizer-name"
-                );
-
-
-            const organizerEmail =
-                document.getElementById(
-                    "organizer-email"
-                );
-
-
-            if (
-                organizerName &&
-                reservation.organizer_name
-            ) {
-
-                organizerName.value =
-                    reservation.organizer_name;
-
-            }
-
-
-            if (
-                organizerEmail &&
-                reservation.organizer_email
-            ) {
-
-                organizerEmail.value =
-                    reservation.organizer_email;
-
-            }
 
         }
         catch (error) {
@@ -1382,7 +1792,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
     /* =========================================================
-       CONFIRM RESERVATION
+       ACCEPT RESERVATION
        ========================================================= */
 
     confirmationForm.addEventListener(
@@ -1476,7 +1886,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
             confirmButton.textContent =
-                "Confirming...";
+                "Submitting...";
 
 
             confirmationMessage.style.display =
@@ -1526,7 +1936,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                         data &&
                         data.error
                             ? data.error
-                            : "We were unable to confirm your reservation.";
+                            : "We were unable to accept your reservation.";
 
 
                     throw new Error(
@@ -1537,7 +1947,8 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
                 /*
-                 * Confirmation succeeded.
+                 * The reservation has been accepted,
+                 * but it is NOT confirmed yet.
                  */
 
                 confirmationForm.style.display =
@@ -1550,16 +1961,17 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
                 confirmationMessage.innerHTML = `
                     <h3>
-                        Reservation Confirmed!
+                        Reservation Approved!
                     </h3>
 
                     <p>
-                        Thank you! Your reservation has been confirmed.
+                        Thank you! Your reservation has been approved
+                        and is being held for you.
                     </p>
 
                     <p>
-                        Your deposit is now due. Please select a
-                        payment option below.
+                        Your reservation will be officially confirmed
+                        once your required deposit has been received.
                     </p>
                 `;
 
@@ -1567,6 +1979,14 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                 /*
                  * Show payment section.
                  */
+
+                paymentStatusHeading.textContent =
+                    "Reservation Approved!";
+
+
+                paymentStatusMessage.textContent =
+                    "Your reservation has been approved and is being held for you. Please submit your required deposit below to officially confirm your reservation.";
+
 
                 paymentSection.style.display =
                     "block";
@@ -1594,7 +2014,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
             catch (error) {
 
                 console.error(
-                    "Reservation confirmation error:",
+                    "Reservation acceptance error:",
                     error
                 );
 
@@ -1607,7 +2027,7 @@ content="Review and confirm your Part of the Plot mystery party reservation."
                     <p>
                         ${escapeHtml(
                             error.message ||
-                            "We were unable to confirm your reservation."
+                            "We were unable to accept your reservation."
                         )}
                     </p>
 
@@ -1623,34 +2043,12 @@ content="Review and confirm your Part of the Plot mystery party reservation."
 
 
                 confirmButton.textContent =
-                    "Confirm Reservation";
+                    "Accept Reservation";
 
             }
 
         }
     );
-
-
-    /* =========================================================
-       PAYMENT BUTTONS
-       ========================================================= */
-
-    const stripePaymentButton =
-        document.getElementById(
-            "stripe-payment-button"
-        );
-
-
-    const venmoPaymentButton =
-        document.getElementById(
-            "venmo-payment-button"
-        );
-
-
-    const cashPaymentButton =
-        document.getElementById(
-            "cash-payment-button"
-        );
 
 
     /* =========================================================
