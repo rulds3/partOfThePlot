@@ -453,6 +453,23 @@
 }
 
 
+/* Acknowledgment Links */
+
+.acknowledgment a {
+    color: var(--gold);
+
+    text-decoration: underline;
+
+    text-underline-offset: 2px;
+
+    transition: color 0.2s ease;
+}
+
+.acknowledgment a:hover {
+    color: var(--light-gold);
+}
+
+
 /* =========================================================
    12. CONFIRM BUTTON
    ========================================================= */
@@ -713,11 +730,18 @@
    ========================================================= */
 
 .payment-button {
-    display: inline-block;
+    display: inline-flex;
 
-    min-width: 220px;
+    align-items: center;
+    justify-content: center;
 
-    padding: 13px 22px;
+    width: fit-content;
+    min-width: 230px;
+    min-height: 48px;
+
+    padding: 13px 24px;
+
+    box-sizing: border-box;
 
     border: 1px solid var(--gold);
 
@@ -729,7 +753,11 @@
     font-size: 0.75rem;
     font-weight: 600;
 
+    line-height: 1.2;
     letter-spacing: 0.05em;
+
+    text-align: center;
+    text-decoration: none;
     text-transform: uppercase;
 
     cursor: pointer;
@@ -741,13 +769,37 @@
         transform 0.2s ease;
 }
 
+
+/* All Payment Buttons — Same Hover */
+
 .payment-button:hover {
     background: var(--gold);
 
     color: var(--dark);
 
+    border-color: var(--gold);
+
     transform: translateY(-1px);
 }
+
+
+/* All Payment Buttons — Active */
+
+.payment-button:active {
+    transform: translateY(0);
+}
+
+
+/* All Payment Buttons — Keyboard Focus */
+
+.payment-button:focus-visible {
+    outline: 2px solid var(--light-gold);
+
+    outline-offset: 3px;
+}
+
+
+/* All Payment Buttons — Disabled */
 
 .payment-button:disabled {
     opacity: 0.5;
@@ -761,31 +813,57 @@
 /* Stripe */
 
 .stripe-button {
-    background: var(--gold);
+    background: transparent;
 
-    color: var(--dark);
+    color: var(--light-gold);
+
+    border-color: var(--gold);
 }
 
 .stripe-button:hover {
-    background: var(--light-gold);
+    background: var(--gold);
 
     color: var(--dark);
 
-    border-color: var(--light-gold);
+    border-color: var(--gold);
 }
 
 
 /* Venmo */
 
 .venmo-button {
-    border-color: rgba(198, 161, 91, 0.7);
+    background: transparent;
+
+    color: var(--light-gold);
+
+    border-color: var(--gold);
+}
+
+.venmo-button:hover {
+    background: var(--gold);
+
+    color: var(--dark);
+
+    border-color: var(--gold);
 }
 
 
 /* Cash */
 
 .cash-button {
-    border-color: rgba(198, 161, 91, 0.7);
+    background: transparent;
+
+    color: var(--light-gold);
+
+    border-color: var(--gold);
+}
+
+.cash-button:hover {
+    background: var(--gold);
+
+    color: var(--dark);
+
+    border-color: var(--gold);
 }
 
 
