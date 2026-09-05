@@ -71,29 +71,32 @@
 
 
         <!-- =================================================
-             MESSAGE + FILTERS
+             MESSAGE
+        ================================================= -->
+
+        <p
+            id="admin-message"
+            class="admin-message"
+            aria-live="polite"
+        >
+            Loading reservations...
+        </p>
+
+
+        <!-- =================================================
+             RESERVATION FILTERS
         ================================================= -->
 
         <div class="admin-dashboard-tools">
 
-            <p
-                id="admin-message"
-                class="admin-message"
-                aria-live="polite"
-            >
-                Loading reservations...
-            </p>
-
-
             <div
                 class="reservation-filters"
-                role="group"
                 aria-label="Reservation filters"
             >
 
                 <button
-                    type="button"
                     class="reservation-filter active"
+                    type="button"
                     data-filter="all"
                 >
                     All
@@ -101,8 +104,8 @@
 
 
                 <button
-                    type="button"
                     class="reservation-filter"
+                    type="button"
                     data-filter="upcoming"
                 >
                     Upcoming
@@ -110,8 +113,8 @@
 
 
                 <button
-                    type="button"
                     class="reservation-filter"
+                    type="button"
                     data-filter="attention"
                 >
                     Needs Attention
@@ -119,8 +122,8 @@
 
 
                 <button
-                    type="button"
                     class="reservation-filter"
+                    type="button"
                     data-filter="past"
                 >
                     Past
@@ -145,12 +148,10 @@
 
 </main>
 
-
 <script
     type="module"
     src="admin-dashboard.js"
 ></script>
-
 
 </body>
 

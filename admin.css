@@ -538,6 +538,7 @@
         1fr
         1fr
         80px
+        minmax(200px, 1.7fr)
         35px;
 
     align-items:
@@ -649,24 +650,21 @@
 
 
 /* ---------------------------------------------------------
-   SUMMARY PAYMENT DETAIL
+   SUMMARY PAYMENT
    --------------------------------------------------------- */
 
-.summary-payment {
+.payment-summary-field {
 
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    gap:
-        3px;
+    min-width:
+        190px;
 
 }
 
 
 .summary-payment-main {
+
+    display:
+        block;
 
     color:
         var(--cream);
@@ -674,16 +672,28 @@
     font-size:
         13px;
 
+    line-height:
+        1.35;
+
 }
 
 
 .summary-payment-detail {
+
+    display:
+        block;
+
+    margin-top:
+        4px;
 
     color:
         var(--muted);
 
     font-size:
         10px;
+
+    font-weight:
+        400;
 
     line-height:
         1.4;
@@ -769,19 +779,56 @@
    11. ATTENTION INDICATOR
    ========================================================= */
 
-.reservation-attention {
+.summary-attention {
 
     display:
-        inline-flex;
-
-    align-items:
-        center;
-
-    gap:
-        6px;
+        block;
 
     margin-top:
-        6px;
+        8px;
+
+    color:
+        #d98c8c;
+
+    font-size:
+        9px;
+
+    line-height:
+        1.35;
+
+}
+
+
+.summary-attention strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        3px;
+
+    color:
+        #d98c8c;
+
+    font-size:
+        8px;
+
+    letter-spacing:
+        1px;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.summary-attention span {
+
+    display:
+        block;
+
+    margin:
+        0;
 
     color:
         #d98c8c;
@@ -790,30 +837,10 @@
         9px;
 
     letter-spacing:
-        0.5px;
-
-}
-
-
-.reservation-attention::before {
-
-    content:
-        "";
-
-    width:
-        6px;
-
-    height:
-        6px;
-
-    flex-shrink:
         0;
 
-    border-radius:
-        50%;
-
-    background:
-        #d98c8c;
+    text-transform:
+        none;
 
 }
 
@@ -1706,10 +1733,6 @@
 }
 
 
-/* ---------------------------------------------------------
-   NO FILTER RESULTS
-   --------------------------------------------------------- */
-
 .no-filter-results {
 
     padding:
@@ -2000,10 +2023,6 @@
 
 @media (max-width: 600px) {
 
-    /* -----------------------------------------------------
-       DASHBOARD
-    ----------------------------------------------------- */
-
     .admin-dashboard {
 
         padding:
@@ -2011,10 +2030,6 @@
 
     }
 
-
-    /* -----------------------------------------------------
-       HEADER
-       ----------------------------------------------------- */
 
     .admin-header {
 
@@ -2048,10 +2063,6 @@
 
     }
 
-
-    /* -----------------------------------------------------
-       FILTERS
-       ----------------------------------------------------- */
 
     .admin-dashboard-tools {
 
@@ -2092,26 +2103,10 @@
     }
 
 
-    /* -----------------------------------------------------
-       RESERVATION SUMMARY
-       ----------------------------------------------------- */
-
     .reservation-summary-row {
 
         padding:
             18px 18px;
-
-    }
-
-
-    /* -----------------------------------------------------
-       DETAILS
-       ----------------------------------------------------- */
-
-    .reservation-details-panel {
-
-        padding:
-            0 20px 25px;
 
     }
 
@@ -2125,9 +2120,13 @@
     }
 
 
-    /* -----------------------------------------------------
-       PAYMENT
-       ----------------------------------------------------- */
+    .reservation-details-panel {
+
+        padding:
+            0 20px 25px;
+
+    }
+
 
     .payment-status-summary {
 
@@ -2162,10 +2161,6 @@
     }
 
 
-    /* -----------------------------------------------------
-       PLAYER ROW
-       ----------------------------------------------------- */
-
     .player-row {
 
         grid-template-columns:
@@ -2197,10 +2192,6 @@
     }
 
 
-    /* -----------------------------------------------------
-       ACTIONS
-       ----------------------------------------------------- */
-
     .reservation-actions {
 
         flex-direction:
@@ -2219,10 +2210,6 @@
 
     }
 
-
-    /* -----------------------------------------------------
-       LOGIN
-       ----------------------------------------------------- */
 
     .admin-login {
 

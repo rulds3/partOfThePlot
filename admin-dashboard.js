@@ -527,10 +527,6 @@ function reservationMatchesFilter(
         today.getTime();
 
 
-    /* -----------------------------------------------------
-       UPCOMING
-    ----------------------------------------------------- */
-
     if (
         filter === "upcoming"
     ) {
@@ -539,10 +535,6 @@ function reservationMatchesFilter(
 
     }
 
-
-    /* -----------------------------------------------------
-       PAST
-    ----------------------------------------------------- */
 
     if (
         filter === "past"
@@ -556,104 +548,145 @@ function reservationMatchesFilter(
     }
 
 
-    /* -----------------------------------------------------
-       NEEDS ATTENTION
-    ----------------------------------------------------- */
-
     if (
         filter === "attention"
     ) {
 
-        const depositPaid =
-            Boolean(
-                reservation.deposit_paid_at
-            );
-
-
-        const remainingBalance =
-            Number(
-                reservation.remaining_balance || 0
-            );
-
-
-        const finalPaid =
-            Boolean(
-                reservation.final_payment_paid_at
-            ) ||
-            (
-                depositPaid &&
-                remainingBalance <= 0
-            );
-
-
-        /* ---------------------------------------------
-           Pending approval / action
-        --------------------------------------------- */
-
-        if (
-            reservation.status ===
-                "awaiting_confirmation" ||
-            reservation.status ===
-                "pending"
-        ) {
-
-            return true;
-
-        }
-
-
-        /* ---------------------------------------------
-           Approved but deposit unpaid
-        --------------------------------------------- */
-
-        if (
-            reservation.status === "approved" &&
-            !depositPaid
-        ) {
-
-            return true;
-
-        }
-
-
-        /* ---------------------------------------------
-           Confirmed but final balance unpaid
-        --------------------------------------------- */
-
-        if (
-            reservation.status === "confirmed" &&
-            depositPaid &&
-            !finalPaid &&
-            remainingBalance > 0
-        ) {
-
-            return true;
-
-        }
-
-
-        /* ---------------------------------------------
-           Event has passed but reservation remains
-           otherwise active
-        --------------------------------------------- */
-
-        if (
-            eventDate > 0 &&
-            eventDate < todayTime &&
-            reservation.status !== "declined"
-        ) {
-
-            return true;
-
-        }
-
-
-        return false;
+        return getAttentionReasons(
+            reservation
+        ).length > 0;
 
     }
 
 
     return true;
+
+}
+
+
+/* =========================================================
+   ATTENTION REASONS
+   ========================================================= */
+
+function getAttentionReasons(
+    reservation
+) {
+
+    const reasons = [];
+
+
+    const depositPaid =
+        Boolean(
+            reservation.deposit_paid_at
+        );
+
+
+    const remainingBalance =
+        Number(
+            reservation.remaining_balance || 0
+        );
+
+
+    const finalPaid =
+        Boolean(
+            reservation.final_payment_paid_at
+        ) ||
+        (
+            depositPaid &&
+            remainingBalance <= 0
+        );
+
+
+    const eventDate =
+        parseReservationDate(
+            reservation.reservation_date
+        );
+
+
+    const today =
+        new Date();
+
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const todayTime =
+        today.getTime();
+
+
+    if (
+        reservation.status ===
+            "awaiting_confirmation" ||
+        reservation.status ===
+            "pending"
+    ) {
+
+        reasons.push(
+            "Awaiting Approval"
+        );
+
+    }
+
+
+    if (
+        reservation.status === "approved" &&
+        !depositPaid
+    ) {
+
+        reasons.push(
+            "Deposit Not Paid"
+        );
+
+    }
+
+
+    if (
+        reservation.status === "confirmed" &&
+        depositPaid &&
+        !finalPaid &&
+        remainingBalance > 0
+    ) {
+
+        reasons.push(
+            "Final Balance Due"
+        );
+
+    }
+
+
+    if (
+        reservation.organizer_notes &&
+        String(
+            reservation.organizer_notes
+        ).trim()
+    ) {
+
+        reasons.push(
+            "Organizer Notes"
+        );
+
+    }
+
+
+    if (
+        eventDate > 0 &&
+        eventDate < todayTime &&
+        reservation.status !== "declined"
+    ) {
+
+        reasons.push(
+            "Event Has Passed"
+        );
+
+    }
+
+
+    return reasons;
 
 }
 
@@ -735,11 +768,25 @@ function createReservationCard(
         );
 
 
-    const needsAttention =
-        reservationMatchesFilter(
-            reservation,
-            "attention"
-        );
+	const attentionReasons =
+		getAttentionReasons(
+			reservation
+		);
+
+
+	const needsAttention =
+		attentionReasons.length > 0;
+
+
+	if (
+		needsAttention
+	) {
+
+		item.classList.add(
+			"needs-attention"
+		);
+
+	}
 
 
     let paymentSummary =
@@ -795,6 +842,35 @@ function createReservationCard(
                 </span>
 
             </strong>
+
+			${
+				needsAttention
+					? `
+						<div class="summary-attention">
+
+							<strong>
+								Needs Attention
+							</strong>
+
+							<span>
+								${attentionReasons
+									.map(
+										function(reason) {
+
+											return escapeHtml(
+												reason
+											);
+
+										}
+									)
+									.join(" • ")
+								}
+							</span>
+
+						</div>
+					  `
+					: ""
+			}
 
         </div>
 
@@ -859,30 +935,80 @@ function createReservationCard(
         </div>
 
 
-        <div class="summary-field payment-summary-field">
+		<div class="summary-field payment-summary-field">
 
-            <span>Payment</span>
-
-            <strong>
-
-                ${escapeHtml(
-                    paymentSummary
-                )}
-
-            </strong>
-
-        </div>
+			<span>
+				Payment
+			</span>
 
 
-        ${
-            needsAttention
-                ? `
-                    <div class="summary-attention">
-                        Needs Attention
-                    </div>
-                  `
-                : ""
-        }
+			<strong class="summary-payment-main">
+
+				${escapeHtml(
+					paymentSummary
+				)}
+
+			</strong>
+
+
+			${
+				depositPaid &&
+				reservation.deposit_payment_method
+					? `
+						<span class="summary-payment-detail">
+
+							Deposit:
+							${escapeHtml(
+								paymentMethodDisplay(
+									reservation.deposit_payment_method
+								)
+							)}
+
+						</span>
+					  `
+					: ""
+			}
+
+
+			${
+				finalPaid &&
+				reservation.final_payment_method
+					? `
+						<span class="summary-payment-detail">
+
+							Final:
+							${escapeHtml(
+								paymentMethodDisplay(
+									reservation.final_payment_method
+								)
+							)}
+
+						</span>
+					  `
+					: ""
+			}
+
+
+			${
+				depositPaid &&
+				!finalPaid &&
+				remainingBalance > 0
+					? `
+						<span class="summary-payment-detail">
+
+							Due:
+							${escapeHtml(
+								formatMoney(
+									remainingBalance
+								)
+							)}
+
+						</span>
+					  `
+					: ""
+			}
+
+		</div>
 
 
         <div class="expand-icon">
@@ -2741,9 +2867,13 @@ function initializePaymentControls(
        DEPOSIT
     ===================================================== */
 
-    if (
-        !depositPaid
-    ) {
+	if (
+		!depositPaid &&
+		(
+			reservation.status === "approved" ||
+			reservation.status === "confirmed"
+		)
+	) {
 
         paymentActions.innerHTML = `
 
@@ -2964,18 +3094,26 @@ function initializePaymentControls(
                            DEPOSIT
                         --------------------------------- */
 
-                        if (
-                            paymentType === "deposit"
-                        ) {
+						if (
+							paymentType === "deposit"
+						) {
 
-                            updates.deposit_payment_method =
-                                method;
+							updates.deposit_payment_method =
+								method;
 
 
-                            updates.deposit_paid_at =
-                                now;
+							updates.deposit_paid_at =
+								now;
 
-                        }
+
+							updates.status =
+								"confirmed";
+
+
+							updates.confirmed_at =
+								now;
+
+						}
 
 
                         /* ---------------------------------
@@ -3004,30 +3142,38 @@ function initializePaymentControls(
                            PAID IN FULL
                         --------------------------------- */
 
-                        if (
-                            paymentType === "full"
-                        ) {
+						if (
+							paymentType === "full"
+						) {
 
-                            updates.deposit_payment_method =
-                                method;
-
-
-                            updates.deposit_paid_at =
-                                now;
+							updates.deposit_payment_method =
+								method;
 
 
-                            updates.remaining_balance =
-                                0;
+							updates.deposit_paid_at =
+								now;
 
 
-                            updates.final_payment_paid_at =
-                                now;
+							updates.remaining_balance =
+								0;
 
 
-                            updates.final_payment_method =
-                                method;
+							updates.final_payment_paid_at =
+								now;
 
-                        }
+
+							updates.final_payment_method =
+								method;
+
+
+							updates.status =
+								"confirmed";
+
+
+							updates.confirmed_at =
+								now;
+
+						}
 
 
                         await adminRequest(
@@ -3676,6 +3822,60 @@ function formatReservationStatus(
 
 }
 
+
+/* =========================================================
+   PAYMENT METHOD DISPLAY
+   ========================================================= */
+
+function paymentMethodDisplay(
+    method
+) {
+
+    if (!method) {
+
+        return "";
+
+    }
+
+
+    const normalized =
+        String(
+            method
+        ).toLowerCase();
+
+
+    if (
+        normalized === "stripe"
+    ) {
+
+        return "Stripe";
+
+    }
+
+
+    if (
+        normalized === "venmo"
+    ) {
+
+        return "Venmo";
+
+    }
+
+
+    if (
+        normalized === "cash"
+    ) {
+
+        return "Cash";
+
+    }
+
+
+    return String(
+        method
+    );
+
+}
 
 /* =========================================================
    DETAIL FIELD
