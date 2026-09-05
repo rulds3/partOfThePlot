@@ -28,20 +28,17 @@
 
 
 /* =========================================================
-   2. CONFIRM SECTION
+   2. CONFIRM CONTAINER
    ========================================================= */
-
-.confirm-section {
-    width: 100%;
-
-    padding: 90px 20px 120px;
-}
 
 .confirm-container {
     width: 100%;
     max-width: 850px;
 
     margin: 0 auto;
+    padding: 90px 20px 120px;
+
+    box-sizing: border-box;
 }
 
 
@@ -55,6 +52,19 @@
     margin: 0 auto 60px;
 
     text-align: center;
+}
+
+.confirm-intro .eyebrow {
+    margin: 0 0 10px;
+
+    color: var(--gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
 }
 
 .confirm-intro h1 {
@@ -72,10 +82,6 @@
     color: var(--gold);
 }
 
-.confirm-intro .divider {
-    margin: 25px auto;
-}
-
 .confirm-intro > p:last-child {
     max-width: 650px;
 
@@ -89,11 +95,85 @@
 
 
 /* =========================================================
-   4. SHARED CONFIRMATION HEADINGS
+   4. STATUS BOXES
+   ========================================================= */
+
+.status-box {
+    margin-bottom: 30px;
+    padding: 35px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(81, 64, 111, 0.16),
+            rgba(13, 16, 23, 0.88)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+
+    text-align: center;
+}
+
+.status-box h2 {
+    margin: 0 0 12px;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.status-box p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+
+/* Loading */
+
+.loading-box {
+    border-color: rgba(198, 161, 91, 0.25);
+}
+
+.loading-box p {
+    font-style: italic;
+}
+
+
+/* Error */
+
+.error-box {
+    border-color: rgba(180, 80, 80, 0.4);
+}
+
+
+/* Success */
+
+.success-box {
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(198, 161, 91, 0.10),
+            transparent 65%
+        );
+
+    border-top: 1px solid rgba(198, 161, 91, 0.4);
+    border-bottom: 1px solid rgba(198, 161, 91, 0.4);
+}
+
+
+/* =========================================================
+   5. SHARED HEADINGS
    ========================================================= */
 
 .reservation-summary h2,
-.confirm-information h2,
 .confirmation-box h2,
 .payment-box h2 {
     margin-top: 0;
@@ -107,7 +187,7 @@
 
 
 /* =========================================================
-   5. RESERVATION SUMMARY
+   6. RESERVATION SUMMARY
    ========================================================= */
 
 .reservation-summary {
@@ -133,7 +213,9 @@
 }
 
 
-/* Reservation Details */
+/* =========================================================
+   7. RESERVATION DETAILS
+   ========================================================= */
 
 .reservation-details {
     display: grid;
@@ -142,17 +224,17 @@
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.reservation-detail {
+.detail-row {
     padding: 18px 15px;
 
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.reservation-detail:nth-child(odd) {
+.detail-row:nth-child(odd) {
     border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.reservation-detail span {
+.detail-label {
     display: block;
 
     margin-bottom: 6px;
@@ -167,7 +249,7 @@
     text-transform: uppercase;
 }
 
-.reservation-detail strong {
+.detail-value {
     display: block;
 
     color: var(--cream);
@@ -176,80 +258,93 @@
     font-size: 0.9rem;
     font-weight: 500;
     line-height: 1.5;
+
+    overflow-wrap: anywhere;
 }
 
 
 /* =========================================================
-   6. BEFORE YOU CONFIRM
+   8. PAYMENT SUMMARY
    ========================================================= */
 
-.confirm-information {
-    margin-bottom: 30px;
-    padding: 30px 35px;
+.payment-summary {
+    grid-column: 1 / -1;
 
-    background: rgba(13, 16, 23, 0.45);
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
 
-    border-left: 3px solid var(--gold);
+    border-top: 1px solid rgba(198, 161, 91, 0.35);
 }
 
-.confirm-information h2 {
-    margin-bottom: 10px;
-}
+.payment-summary h3 {
+    margin: 0 0 1rem;
 
-.confirm-information > p {
-    margin-bottom: 22px;
+    color: var(--cream);
 
-    color: var(--muted);
-
-    font-size: 0.9rem;
-    line-height: 1.7;
-}
-
-
-/* Confirm Links */
-
-.confirm-links {
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 12px;
-}
-
-.confirm-links a {
-    display: inline-block;
-
-    padding: 10px 15px;
-
-    background: rgba(198, 161, 91, 0.07);
-
-    border: 1px solid rgba(198, 161, 91, 0.3);
-
-    color: var(--gold);
-
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
     font-weight: 600;
 
     letter-spacing: 0.04em;
-    text-decoration: none;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
 }
 
-.confirm-links a:hover {
-    background: rgba(198, 161, 91, 0.14);
 
-    border-color: rgba(198, 161, 91, 0.6);
+/* Payment Rows */
 
-    transform: translateY(-1px);
+.payment-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 12px 15px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+}
+
+.payment-summary-row strong {
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.payment-summary-row:last-of-type {
+    border-bottom: none;
+}
+
+.payment-summary-row:last-of-type strong {
+    color: var(--light-gold);
+
+    font-size: 1.15rem;
+}
+
+
+/* Payment Summary Note */
+
+.payment-summary-note {
+    margin: 1rem 0 0;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+    line-height: 1.6;
+
+    text-align: center;
+
+    opacity: 0.85;
 }
 
 
 /* =========================================================
-   7. CONFIRMATION BOX
+   9. CONFIRMATION BOX
    ========================================================= */
 
 .confirmation-box {
@@ -289,60 +384,23 @@
 
 
 /* =========================================================
-   8. CONFIRMATION FORM
+   10. CONFIRMATION FORM
    ========================================================= */
 
-#confirmation-form label:not(.checkbox-label),
 #confirmation-form label {
     font-family: 'Montserrat', sans-serif;
 }
 
-#confirmation-form label:not(.checkbox-label) {
-    display: block;
 
-    margin: 0 0 7px;
+/* Hidden inputs */
 
-    color: var(--cream);
-
-    font-size: 0.75rem;
-    font-weight: 600;
-
-    letter-spacing: 0.05em;
-}
-
-#confirmation-form input[type="text"],
-#confirmation-form input[type="email"] {
-    width: 100%;
-
-    margin-bottom: 20px;
-    padding: 13px 15px;
-
-    background: rgba(255, 255, 255, 0.045);
-    color: var(--cream);
-
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 2px;
-
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-
-    outline: none;
-
-    transition:
-        border-color 0.2s ease,
-        background 0.2s ease;
-}
-
-#confirmation-form input[type="text"]:focus,
-#confirmation-form input[type="email"]:focus {
-    background: rgba(255, 255, 255, 0.07);
-
-    border-color: rgba(198, 161, 91, 0.7);
+#confirmation-form input[type="hidden"] {
+    display: none;
 }
 
 
 /* =========================================================
-   9. ACKNOWLEDGMENTS
+   11. ACKNOWLEDGMENTS
    ========================================================= */
 
 .acknowledgments {
@@ -355,29 +413,29 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.checkbox-label {
-    display: flex !important;
+.acknowledgment {
+    display: flex;
+
     align-items: flex-start;
 
     gap: 12px;
-    margin-bottom: 17px !important;
 
-    color: var(--muted) !important;
+    margin-bottom: 17px;
 
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 0.78rem !important;
-    font-weight: 400 !important;
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 400;
 
     line-height: 1.6;
-
-    letter-spacing: 0 !important;
 }
 
-.checkbox-label:last-child {
-    margin-bottom: 0 !important;
+.acknowledgment:last-child {
+    margin-bottom: 0;
 }
 
-.checkbox-label input[type="checkbox"] {
+.acknowledgment input[type="checkbox"] {
     flex: 0 0 auto;
 
     width: 17px;
@@ -386,21 +444,20 @@
     margin: 2px 0 0;
 
     accent-color: var(--gold);
+
+    cursor: pointer;
 }
 
-.checkbox-label a {
-    color: var(--gold);
-
-    text-decoration: underline;
-    text-underline-offset: 3px;
+.acknowledgment span {
+    flex: 1;
 }
 
 
 /* =========================================================
-   10. CONFIRM BUTTON
+   12. CONFIRM BUTTON
    ========================================================= */
 
-#confirmation-form .button {
+#confirmation-form .btn {
     display: block;
 
     width: fit-content;
@@ -411,7 +468,24 @@
 
 
 /* =========================================================
-   11. PAYMENT SECTION
+   13. FORM MESSAGE
+   ========================================================= */
+
+.form-message {
+    margin-top: 18px;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   14. PAYMENT SECTION
    ========================================================= */
 
 .payment-section {
@@ -420,7 +494,303 @@
 
 
 /* =========================================================
-   12. PAYMENT SUCCESS
+   15. PAYMENT STATUS
+   ========================================================= */
+
+.payment-status {
+    margin-bottom: 30px;
+    padding: 30px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(198, 161, 91, 0.08),
+            transparent 70%
+        );
+
+    border-top: 1px solid rgba(198, 161, 91, 0.3);
+    border-bottom: 1px solid rgba(198, 161, 91, 0.3);
+
+    text-align: center;
+}
+
+.payment-status h2 {
+    margin: 0 0 10px;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 500;
+}
+
+.payment-status p {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: var(--muted);
+
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   16. PAYMENT BOX
+   ========================================================= */
+
+.payment-box {
+    padding: 40px 45px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(81, 64, 111, 0.22),
+            rgba(13, 16, 23, 0.94)
+        );
+
+    border: 1px solid rgba(198, 161, 91, 0.45);
+
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+}
+
+.payment-box > h2 {
+    margin-bottom: 8px;
+
+    text-align: center;
+}
+
+.payment-description {
+    margin-bottom: 30px;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   17. PAYMENT AMOUNT CHOICE
+   ========================================================= */
+
+.payment-amount-choice {
+    margin-bottom: 25px;
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.14);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.payment-amount-choice h3 {
+    margin: 0 0 15px;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   18. PAYMENT RADIO BUTTONS
+   ========================================================= */
+
+.payment-radio {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+    padding: 15px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.payment-radio:last-child {
+    margin-bottom: 0;
+}
+
+.payment-radio:hover {
+    background: rgba(198, 161, 91, 0.05);
+
+    border-color: rgba(198, 161, 91, 0.3);
+}
+
+.payment-radio input[type="radio"] {
+    flex: 0 0 auto;
+
+    width: 18px;
+    height: 18px;
+
+    margin: 2px 0 0;
+
+    accent-color: var(--gold);
+
+    cursor: pointer;
+}
+
+.radio-content {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.radio-content strong {
+    color: var(--cream);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.radio-content small {
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   19. PAYMENT OPTION
+   ========================================================= */
+
+.payment-option {
+    margin-top: 18px;
+    padding: 25px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    text-align: center;
+}
+
+.payment-option h3 {
+    margin: 0 0 8px;
+
+    color: var(--cream);
+
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.payment-option p {
+    margin: 0 0 18px;
+
+    color: var(--muted);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   20. PAYMENT BUTTONS
+   ========================================================= */
+
+.payment-button {
+    display: inline-block;
+
+    min-width: 220px;
+
+    padding: 13px 22px;
+
+    border: 1px solid var(--gold);
+
+    background: transparent;
+
+    color: var(--light-gold);
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.payment-button:hover {
+    background: var(--gold);
+
+    color: var(--dark);
+
+    transform: translateY(-1px);
+}
+
+.payment-button:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* Stripe */
+
+.stripe-button {
+    background: var(--gold);
+
+    color: var(--dark);
+}
+
+.stripe-button:hover {
+    background: var(--light-gold);
+
+    color: var(--dark);
+
+    border-color: var(--light-gold);
+}
+
+
+/* Venmo */
+
+.venmo-button {
+    border-color: rgba(198, 161, 91, 0.7);
+}
+
+
+/* Cash */
+
+.cash-button {
+    border-color: rgba(198, 161, 91, 0.7);
+}
+
+
+/* =========================================================
+   21. PAYMENT SUCCESS
    ========================================================= */
 
 .payment-success {
@@ -461,198 +831,26 @@
 
 
 /* =========================================================
-   13. PAYMENT BOX
+   22. PAID-IN-FULL MESSAGE
    ========================================================= */
 
-.payment-box {
-    padding: 40px 45px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(81, 64, 111, 0.22),
-            rgba(13, 16, 23, 0.94)
-        );
-
-    border: 1px solid rgba(198, 161, 91, 0.45);
-
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
-}
-
-.payment-box > h2 {
-    margin-bottom: 8px;
-
-    text-align: center;
-}
-
-.payment-box > p {
-    margin-bottom: 30px;
-
-    color: var(--muted);
-
-    font-size: 0.85rem;
-
-    text-align: center;
-}
-
-
-/* =========================================================
-   14. PAYMENT OPTION
-   ========================================================= */
-
-.payment-option {
-    margin-top: 18px;
-    padding: 25px;
-
-    background: rgba(255, 255, 255, 0.025);
-
-    border: 1px solid rgba(255, 255, 255, 0.08);
-
-    text-align: center;
-}
-
-.payment-option h3 {
-    margin: 0 0 8px;
+#paid-in-full-message h2 {
+    margin-bottom: 15px;
 
     color: var(--cream);
 
     font-family: 'Cinzel', serif;
-    font-size: 1.2rem;
+    font-size: clamp(28px, 5vw, 42px);
     font-weight: 500;
 }
 
-.payment-option p {
-    margin: 0 0 18px;
-
-    color: var(--muted);
-
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.8rem;
-    line-height: 1.6;
-}
-
-.payment-option .button {
-    display: inline-block;
-}
-
-.payment-note {
-    margin-top: 15px !important;
-    margin-bottom: 0 !important;
-
-    font-size: 0.7rem !important;
-    font-style: italic;
+#paid-in-full-message p + p {
+    margin-top: 15px;
 }
 
 
 /* =========================================================
-   15. PAYMENT SUMMARY
-   ========================================================= */
-
-.payment-summary {
-    grid-column: 1 / -1;
-
-    margin-top: 1rem;
-    padding-top: 1.5rem;
-
-    border-top: 1px solid rgba(198, 161, 91, 0.35);
-}
-
-.payment-summary h3 {
-    margin: 0 0 1rem;
-
-    color: var(--cream);
-
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-
-    letter-spacing: 0.04em;
-}
-
-
-/* Payment Amounts */
-
-.payment-amounts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 1rem;
-}
-
-.payment-amount {
-    padding: 1rem;
-
-    background: rgba(255, 255, 255, 0.03);
-
-    border: 1px solid rgba(198, 161, 91, 0.25);
-    border-radius: 8px;
-
-    text-align: center;
-}
-
-.payment-amount span {
-    display: block;
-
-    margin-bottom: 0.4rem;
-
-    color: var(--cream);
-
-    font-size: 0.75rem;
-
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-
-    opacity: 0.7;
-}
-
-.payment-amount strong {
-    display: block;
-
-    color: var(--cream);
-
-    font-family: 'Cinzel', serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-
-/* Deposit Amount */
-
-.payment-amount.deposit {
-    background: rgba(198, 161, 91, 0.10);
-
-    border-color: var(--gold);
-}
-
-.payment-amount.deposit span {
-    opacity: 1;
-}
-
-.payment-amount.deposit strong {
-    color: var(--light-gold);
-
-    font-size: 1.5rem;
-}
-
-
-/* Payment Summary Note */
-
-.payment-summary-note {
-    margin: 1rem 0 0;
-
-    color: var(--muted);
-
-    font-size: 0.85rem;
-    line-height: 1.6;
-
-    text-align: center;
-
-    opacity: 0.7;
-}
-
-
-/* =========================================================
-   16. TABLET — 900px AND BELOW
+   23. TABLET — 900px AND BELOW
    ========================================================= */
 
 @media (max-width: 900px) {
@@ -665,12 +863,12 @@
 
 
 /* =========================================================
-   17. MOBILE — 700px AND BELOW
+   24. MOBILE — 700px AND BELOW
    ========================================================= */
 
 @media (max-width: 700px) {
 
-    .confirm-section {
+    .confirm-container {
         padding: 65px 15px 90px;
     }
 
@@ -690,24 +888,12 @@
         grid-template-columns: 1fr;
     }
 
-    .reservation-detail {
+    .detail-row {
         padding: 15px 5px;
     }
 
-    .reservation-detail:nth-child(odd) {
+    .detail-row:nth-child(odd) {
         border-right: none;
-    }
-
-    .confirm-information {
-        padding: 25px 20px;
-    }
-
-    .confirm-links {
-        flex-direction: column;
-    }
-
-    .confirm-links a {
-        text-align: center;
     }
 
     .confirmation-box {
@@ -718,16 +904,16 @@
         padding: 18px 15px;
     }
 
-    .checkbox-label {
-        font-size: 0.75rem !important;
+    .acknowledgment {
+        font-size: 0.75rem;
     }
 
-    #confirmation-form .button {
+    #confirmation-form .btn {
         width: 100%;
     }
 
-    .payment-success {
-        padding: 35px 20px;
+    .payment-status {
+        padding: 25px 20px;
     }
 
     .payment-box {
@@ -738,7 +924,7 @@
         padding: 22px 15px;
     }
 
-    .payment-option .button {
+    .payment-button {
         width: 100%;
 
         box-sizing: border-box;
@@ -750,12 +936,12 @@
 
 
 /* =========================================================
-   18. VERY SMALL SCREENS — 450px AND BELOW
+   25. VERY SMALL SCREENS — 450px AND BELOW
    ========================================================= */
 
 @media (max-width: 450px) {
 
-    .confirm-section {
+    .confirm-container {
         padding-left: 12px;
         padding-right: 12px;
     }
@@ -765,18 +951,29 @@
     }
 
     .reservation-summary h2,
-    .confirm-information h2,
     .confirmation-box h2,
     .payment-box h2 {
         font-size: 1.45rem;
     }
 
-    .payment-amounts {
-        grid-template-columns: 1fr;
+    .payment-summary-row {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 4px;
     }
 
-    .payment-amount {
-        padding: 0.9rem;
+    .payment-amount-choice {
+        padding: 15px;
+    }
+
+    .payment-radio {
+        padding: 13px;
+    }
+
+    .payment-option {
+        padding: 20px 12px;
     }
 
 }
