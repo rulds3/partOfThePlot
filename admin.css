@@ -1556,3 +1556,66 @@
     }
 
 }
+
+/* =========================================================
+   ADMIN EMAIL COMPOSER
+========================================================= */
+
+.admin-email-composer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.admin-email-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.admin-email-field label {
+    font-weight: 600;
+    color: var(--cream);
+}
+
+
+.admin-email-field input,
+.admin-email-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid rgba(198, 161, 91, 0.25);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 15px;
+}
+
+
+.admin-email-field input:focus,
+.admin-email-field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+
+.admin-email-field textarea {
+    min-height: 180px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+
+.admin-email-status {
+    align-self: center;
+    font-size: 14px;
+    color: var(--light-gold);
+}
+
+
+.admin-email-composer .detail-field {
+    margin-bottom: 0;
+}
