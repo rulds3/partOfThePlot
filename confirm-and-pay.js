@@ -106,7 +106,7 @@ function getPaymentResult() {
 /* =========================================================
    GET PAYMENT MODE
    =========================================================
-   
+
    Normal mode:
    - deposit
    - full
@@ -605,7 +605,8 @@ function displayReservation(
 
 
     /*
-     * Populate the initial payment choices.
+     * Populate payment choices if those
+     * optional elements exist.
      */
 
     const depositChoice =
@@ -658,7 +659,7 @@ function setupBalanceMode(
 
 
     /*
-     * Change the introductory text.
+     * Change introductory text.
      */
 
     const introHeading =
@@ -703,8 +704,7 @@ function setupBalanceMode(
 
 
     /*
-     * Hide the initial deposit/full payment
-     * choices.
+     * Hide initial payment choices.
      */
 
     const paymentAmountChoice =
@@ -722,7 +722,7 @@ function setupBalanceMode(
 
 
     /*
-     * Update the payment section heading.
+     * Update payment heading.
      */
 
     const paymentHeading =
@@ -740,7 +740,7 @@ function setupBalanceMode(
 
 
     /*
-     * Update the status message.
+     * Update status message.
      */
 
     if (paymentStatusHeading) {
@@ -810,7 +810,7 @@ function setupBalanceMode(
 
 
     /*
-     * Change the reservation cost note.
+     * Change reservation payment note.
      */
 
     const paymentSummaryNote =
@@ -828,8 +828,8 @@ function setupBalanceMode(
 
 
     /*
-     * Make sure the displayed remaining
-     * balance is the amount being paid.
+     * Make sure displayed remaining balance
+     * is correct.
      */
 
     const balanceAmount =
@@ -1047,7 +1047,7 @@ function showPaymentSection() {
 
 
     /*
-     * In balance mode, the confirmation box
+     * In balance mode, confirmation box
      * should remain hidden.
      */
 
@@ -1282,12 +1282,6 @@ async function waitForPaymentConfirmation() {
                     reservation.deposit_paid_at
                 ) {
 
-                    /*
-                     * If the customer originally chose
-                     * full payment, the reservation is
-                     * also paid in full.
-                     */
-
                     if (
                         reservationIsPaidInFull(
                             reservation
@@ -1492,10 +1486,6 @@ async function loadReservation() {
             );
 
 
-            /*
-             * Final balance has already been paid.
-             */
-
             if (
                 reservationIsPaidInFull(
                     reservation
@@ -1509,10 +1499,6 @@ async function loadReservation() {
             }
 
 
-            /*
-             * Final balance still needs to be paid.
-             */
-
             if (
                 reservation.status ===
                 "confirmed"
@@ -1524,10 +1510,6 @@ async function loadReservation() {
 
             }
 
-
-            /*
-             * Unexpected status for a balance link.
-             */
 
             confirmationBox.innerHTML = `
                 <h2>
@@ -1558,10 +1540,6 @@ async function loadReservation() {
         /* =================================================
            INITIAL PAYMENT MODE
            ================================================= */
-
-        /*
-         * Already confirmed.
-         */
 
         if (
             reservation.status ===
@@ -1868,51 +1846,38 @@ if (confirmationForm) {
                 );
 
 
-            const formData =
-                new FormData(
-                    confirmationForm
+            /*
+             * The current HTML uses three actual
+             * checkboxes. Validate their checked state
+             * directly rather than looking for the old
+             * "Yes" form values.
+             */
+
+            const agreementAcknowledgment =
+                document.getElementById(
+                    "agreement-acknowledgment"
                 );
 
 
-            const payload = {
+            const cancellationAcknowledgment =
+                document.getElementById(
+                    "cancellation-acknowledgment"
+                );
 
-                confirmation_token:
-                    formData.get(
-                        "confirmation_token"
-                    ),
 
-                organizer_name:
-                    formData.get(
-                        "organizer_name"
-                    ),
-
-                organizer_email:
-                    formData.get(
-                        "organizer_email"
-                    ),
-
-                client_agreement_acknowledged:
-                    formData.get(
-                        "client_agreement_acknowledged"
-                    ),
-
-                cancellation_policy_acknowledged:
-                    formData.get(
-                        "cancellation_policy_acknowledged"
-                    ),
-
-                reservation_confirmation:
-                    formData.get(
-                        "reservation_confirmation"
-                    )
-
-            };
+            const responsibilitiesAcknowledgment =
+                document.getElementById(
+                    "responsibilities-acknowledgment"
+                );
 
 
             if (
-                payload.client_agreement_acknowledged !== "Yes" ||
-                payload.cancellation_policy_acknowledged !== "Yes" ||
-                payload.reservation_confirmation !== "Yes"
+                !agreementAcknowledgment ||
+                !agreementAcknowledgment.checked ||
+                !cancellationAcknowledgment ||
+                !cancellationAcknowledgment.checked ||
+                !responsibilitiesAcknowledgment ||
+                !responsibilitiesAcknowledgment.checked
             ) {
 
                 confirmationMessage.style.display =
@@ -1930,6 +1895,40 @@ if (confirmationForm) {
                 return;
 
             }
+
+
+            /*
+             * Build the payload using the field names
+             * expected by the confirmation Edge Function.
+             */
+
+            const payload = {
+
+                confirmation_token:
+                    document.getElementById(
+                        "confirmation-token"
+                    ).value,
+
+                organizer_name:
+                    document.getElementById(
+                        "organizer-name"
+                    ).value,
+
+                organizer_email:
+                    document.getElementById(
+                        "organizer-email"
+                    ).value,
+
+                client_agreement_acknowledged:
+                    "Yes",
+
+                cancellation_policy_acknowledged:
+                    "Yes",
+
+                reservation_confirmation:
+                    "Yes"
+
+            };
 
 
             confirmButton.disabled =
@@ -2084,7 +2083,7 @@ if (confirmationForm) {
 
 
                 confirmButton.textContent =
-                    "Accept Reservation";
+                    "Confirm Reservation";
 
             }
 
