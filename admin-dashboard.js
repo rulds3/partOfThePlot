@@ -125,10 +125,6 @@ async function loadReservations() {
         }
 
 
-        /* -------------------------------------------------
-           GET RESERVATIONS
-        ------------------------------------------------- */
-
         const result =
             await adminRequest(
                 "admin-reservations",
@@ -142,17 +138,9 @@ async function loadReservations() {
             result.reservations || [];
 
 
-        /* -------------------------------------------------
-           CLEAR CURRENT LIST
-        ------------------------------------------------- */
-
         reservationList.innerHTML =
             "";
 
-
-        /* -------------------------------------------------
-           NO RESERVATIONS
-        ------------------------------------------------- */
 
         if (
             reservations.length === 0
@@ -182,10 +170,6 @@ async function loadReservations() {
         }
 
 
-        /* -------------------------------------------------
-           RESERVATION COUNT
-        ------------------------------------------------- */
-
         if (message) {
 
             message.textContent =
@@ -199,10 +183,6 @@ async function loadReservations() {
 
         }
 
-
-        /* -------------------------------------------------
-           CREATE RESERVATION CARDS
-        ------------------------------------------------- */
 
         reservations.forEach(
             function(reservation) {
@@ -778,6 +758,111 @@ function createReservationCard(
         ${playerSection}
 
 
+        <!-- =================================================
+             EMAIL ORGANIZER
+        ================================================= -->
+
+        <section class="details-section">
+
+            <h3>
+                Email Organizer
+            </h3>
+
+
+            <div
+                class="admin-email-composer"
+                data-email-composer
+            >
+
+                <div class="detail-field">
+
+                    <span>
+                        To
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(
+                            reservation.organizer_email || ""
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="admin-email-field">
+
+                    <label
+                        for="email-subject-${escapeHtml(
+                            reservation.id
+                        )}"
+                    >
+                        Subject
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="email-subject-${escapeHtml(
+                            reservation.id
+                        )}"
+                        data-email-subject
+                        maxlength="200"
+                        placeholder="Email subject..."
+                    >
+
+                </div>
+
+
+                <div class="admin-email-field">
+
+                    <label
+                        for="email-message-${escapeHtml(
+                            reservation.id
+                        )}"
+                    >
+                        Message
+                    </label>
+
+
+                    <textarea
+                        id="email-message-${escapeHtml(
+                            reservation.id
+                        )}"
+                        data-email-message
+                        rows="9"
+                        maxlength="10000"
+                        placeholder="Write your message to the organizer..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="reservation-actions">
+
+                    <button
+                        type="button"
+                        class="button"
+                        data-action="send-email"
+                    >
+
+                        Send Email
+
+                    </button>
+
+
+                    <span
+                        class="admin-email-status"
+                        data-email-status
+                        aria-live="polite"
+                    ></span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
         <div class="reservation-actions">
 
             <button
@@ -836,8 +921,223 @@ function createReservationCard(
 
 
     /* =====================================================
+       EMAIL ORGANIZER
+    ===================================================== */
+
+    const emailSubject =
+        detailsPanel.querySelector(
+            "[data-email-subject]"
+        );
+
+
+    const emailMessage =
+        detailsPanel.querySelector(
+            "[data-email-message]"
+        );
+
+
+    const sendEmailButton =
+        detailsPanel.querySelector(
+            '[data-action="send-email"]'
+        );
+
+
+    const emailStatus =
+        detailsPanel.querySelector(
+            "[data-email-status]"
+        );
+
+
+    if (sendEmailButton) {
+
+        sendEmailButton.addEventListener(
+            "click",
+            async function(event) {
+
+                event.stopPropagation();
+
+
+                const subject =
+                    emailSubject?.value.trim() ||
+                    "";
+
+
+                const message =
+                    emailMessage?.value.trim() ||
+                    "";
+
+
+                if (!subject) {
+
+                    if (emailStatus) {
+
+                        emailStatus.textContent =
+                            "Please enter a subject.";
+
+                    }
+
+
+                    emailSubject?.focus();
+
+                    return;
+
+                }
+
+
+                if (!message) {
+
+                    if (emailStatus) {
+
+                        emailStatus.textContent =
+                            "Please enter a message.";
+
+                    }
+
+
+                    emailMessage?.focus();
+
+                    return;
+
+                }
+
+
+                const confirmed =
+                    confirm(
+                        "Send this email to " +
+                        (
+                            reservation.organizer_name ||
+                            reservation.organizer_email
+                        ) +
+                        "?"
+                    );
+
+
+                if (!confirmed) {
+
+                    return;
+
+                }
+
+
+                sendEmailButton.disabled =
+                    true;
+
+
+                sendEmailButton.textContent =
+                    "Sending...";
+
+
+                if (emailStatus) {
+
+                    emailStatus.textContent =
+                        "";
+
+                }
+
+
+                try {
+
+                    await adminRequest(
+                        "admin-send-email",
+                        {
+                            body: {
+
+                                reservation_id:
+                                    reservation.id,
+
+                                subject:
+                                    subject,
+
+                                message:
+                                    message
+
+                            }
+                        }
+                    );
+
+
+                    if (emailStatus) {
+
+                        emailStatus.textContent =
+                            "Email sent successfully.";
+
+                    }
+
+
+                    sendEmailButton.textContent =
+                        "Email Sent";
+
+
+                    if (emailSubject) {
+
+                        emailSubject.value =
+                            "";
+
+                    }
+
+
+                    if (emailMessage) {
+
+                        emailMessage.value =
+                            "";
+
+                    }
+
+
+                    setTimeout(
+                        function() {
+
+                            if (sendEmailButton) {
+
+                                sendEmailButton.disabled =
+                                    false;
+
+                                sendEmailButton.textContent =
+                                    "Send Email";
+
+                            }
+
+                        },
+                        2000
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Send organizer email error:",
+                        error
+                    );
+
+
+                    if (emailStatus) {
+
+                        emailStatus.textContent =
+                            error.message ||
+                            "Could not send email.";
+
+                    }
+
+
+                    sendEmailButton.disabled =
+                        false;
+
+
+                    sendEmailButton.textContent =
+                        "Send Email";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
        RESEND CHARACTER EMAIL
-       ===================================================== */
+    ===================================================== */
 
     const resendButtons =
         detailsPanel.querySelectorAll(
@@ -1021,7 +1321,7 @@ function createReservationCard(
 
     /* =====================================================
        APPEND CARD
-       ===================================================== */
+    ===================================================== */
 
     item.appendChild(
         summaryButton
@@ -1040,7 +1340,7 @@ function createReservationCard(
 
     /* =====================================================
        EXPAND / COLLAPSE
-       ===================================================== */
+    ===================================================== */
 
     summaryButton.addEventListener(
         "click",
@@ -1065,7 +1365,7 @@ function createReservationCard(
 
     /* =====================================================
        EDIT
-       ===================================================== */
+    ===================================================== */
 
     const editButton =
         detailsPanel.querySelector(
@@ -1096,7 +1396,7 @@ function createReservationCard(
 
     /* =====================================================
        APPROVE
-       ===================================================== */
+    ===================================================== */
 
     const approveButton =
         detailsPanel.querySelector(
@@ -1184,7 +1484,7 @@ function createReservationCard(
 
     /* =====================================================
        DECLINE
-       ===================================================== */
+    ===================================================== */
 
     const declineButton =
         detailsPanel.querySelector(
@@ -1277,7 +1577,7 @@ function createReservationCard(
 
     /* =====================================================
        CHARACTER ASSIGNMENTS
-       ===================================================== */
+    ===================================================== */
 
     initializeCharacterAssignments(
         detailsPanel,
@@ -1329,10 +1629,6 @@ function initializeCharacterAssignments(
     }
 
 
-    /* -----------------------------------------------------
-       UPDATE ASSIGNMENT COUNT
-    ----------------------------------------------------- */
-
     function updateAssignmentCount() {
 
         if (!assignmentStatus) {
@@ -1367,10 +1663,6 @@ function initializeCharacterAssignments(
 
     }
 
-
-    /* -----------------------------------------------------
-       PREVENT DUPLICATE CHARACTERS
-    ----------------------------------------------------- */
 
     function updateCharacterOptions() {
 
@@ -1428,10 +1720,6 @@ function initializeCharacterAssignments(
     }
 
 
-    /* -----------------------------------------------------
-       SELECTION CHANGE
-    ----------------------------------------------------- */
-
     characterSelects.forEach(
         function(select) {
 
@@ -1460,18 +1748,10 @@ function initializeCharacterAssignments(
     );
 
 
-    /* -----------------------------------------------------
-       INITIALIZE
-    ----------------------------------------------------- */
-
     updateCharacterOptions();
 
     updateAssignmentCount();
 
-
-    /* -----------------------------------------------------
-       SAVE CHARACTER ASSIGNMENTS
-    ----------------------------------------------------- */
 
     if (
         saveCharactersButton
@@ -1891,10 +2171,6 @@ function showEditForm(
     );
 
 
-    /* =====================================================
-       CANCEL EDIT
-       ===================================================== */
-
     const cancelButton =
         editForm.querySelector(
             '[data-action="cancel-edit"]'
@@ -1914,10 +2190,6 @@ function showEditForm(
 
     }
 
-
-    /* =====================================================
-       SAVE EDIT
-       ===================================================== */
 
     editForm.addEventListener(
         "submit",
@@ -1998,10 +2270,6 @@ function showEditForm(
 
             };
 
-
-            /* =================================================
-               VALIDATION
-               ================================================= */
 
             if (
                 !updatedData.reservation_date ||
