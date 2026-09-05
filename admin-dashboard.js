@@ -21,6 +21,10 @@ const reservationList =
     );
 
 
+let activeReservationFilter =
+    "all";
+
+
 if (reservationList) {
 
     initializeDashboard();
@@ -82,10 +86,77 @@ async function initializeDashboard() {
 
 
     /* -----------------------------------------------------
+       RESERVATION FILTERS
+    ----------------------------------------------------- */
+
+    initializeReservationFilters();
+
+
+    /* -----------------------------------------------------
        LOAD RESERVATIONS
     ----------------------------------------------------- */
 
     await loadReservations();
+
+}
+
+
+/* =========================================================
+   RESERVATION FILTERS
+   ========================================================= */
+
+function initializeReservationFilters() {
+
+    const filterButtons =
+        document.querySelectorAll(
+            ".reservation-filter"
+        );
+
+
+    if (
+        filterButtons.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    filterButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const filter =
+                        button.dataset.filter ||
+                        "all";
+
+
+                    activeReservationFilter =
+                        filter;
+
+
+                    filterButtons.forEach(
+                        function(item) {
+
+                            item.classList.toggle(
+                                "active",
+                                item === button
+                            );
+
+                        }
+                    );
+
+
+                    loadReservations();
+
+                }
+            );
+
+        }
+    );
 
 }
 
@@ -135,12 +206,57 @@ async function loadReservations() {
 
 
         const reservations =
-            result.reservations || [];
+            Array.isArray(
+                result.reservations
+            )
+                ? result.reservations
+                : [];
 
 
         reservationList.innerHTML =
             "";
 
+
+        /* -------------------------------------------------
+           SORT BY EVENT DATE
+        ------------------------------------------------- */
+
+        reservations.sort(
+            function(a, b) {
+
+                return (
+                    parseReservationDate(
+                        a.reservation_date
+                    ) -
+                    parseReservationDate(
+                        b.reservation_date
+                    )
+                );
+
+            }
+        );
+
+
+        /* -------------------------------------------------
+           APPLY FILTER
+        ------------------------------------------------- */
+
+        const filteredReservations =
+            reservations.filter(
+                function(reservation) {
+
+                    return reservationMatchesFilter(
+                        reservation,
+                        activeReservationFilter
+                    );
+
+                }
+            );
+
+
+        /* -------------------------------------------------
+           NO RESERVATIONS AT ALL
+        ------------------------------------------------- */
 
         if (
             reservations.length === 0
@@ -170,21 +286,83 @@ async function loadReservations() {
         }
 
 
-        if (message) {
+        /* -------------------------------------------------
+           NO RESERVATIONS FOR CURRENT FILTER
+        ------------------------------------------------- */
 
-            message.textContent =
-                reservations.length +
-                " reservation" +
-                (
-                    reservations.length === 1
-                        ? ""
-                        : "s"
-                );
+        if (
+            filteredReservations.length === 0
+        ) {
+
+            if (message) {
+
+                message.textContent =
+                    reservations.length +
+                    " reservation" +
+                    (
+                        reservations.length === 1
+                            ? ""
+                            : "s"
+                    );
+
+            }
+
+
+            reservationList.innerHTML = `
+
+                <div class="empty-message">
+
+                    No reservations match this filter.
+
+                </div>
+
+            `;
+
+
+            return;
 
         }
 
 
-        reservations.forEach(
+        /* -------------------------------------------------
+           MESSAGE
+        ------------------------------------------------- */
+
+        if (message) {
+
+            if (
+                activeReservationFilter === "all"
+            ) {
+
+                message.textContent =
+                    reservations.length +
+                    " reservation" +
+                    (
+                        reservations.length === 1
+                            ? ""
+                            : "s"
+                    );
+
+            }
+
+            else {
+
+                message.textContent =
+                    filteredReservations.length +
+                    " of " +
+                    reservations.length +
+                    " reservations";
+
+            }
+
+        }
+
+
+        /* -------------------------------------------------
+           CREATE CARDS
+        ------------------------------------------------- */
+
+        filteredReservations.forEach(
             function(reservation) {
 
                 createReservationCard(
@@ -213,6 +391,269 @@ async function loadReservations() {
         }
 
     }
+
+}
+
+
+/* =========================================================
+   PARSE RESERVATION DATE
+   ========================================================= */
+
+function parseReservationDate(
+    dateString
+) {
+
+    if (!dateString) {
+
+        return 0;
+
+    }
+
+
+    const match =
+        String(
+            dateString
+        ).trim().match(
+            /^([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})$/
+        );
+
+
+    if (!match) {
+
+        const fallback =
+            new Date(
+                dateString
+            );
+
+
+        return isNaN(
+            fallback.getTime()
+        )
+            ? 0
+            : fallback.getTime();
+
+    }
+
+
+    const monthName =
+        match[1].toLowerCase();
+
+
+    const day =
+        Number(
+            match[2]
+        );
+
+
+    const year =
+        Number(
+            match[3]
+        );
+
+
+    const months = {
+
+        january: 0,
+        february: 1,
+        march: 2,
+        april: 3,
+        may: 4,
+        june: 5,
+        july: 6,
+        august: 7,
+        september: 8,
+        october: 9,
+        november: 10,
+        december: 11
+
+    };
+
+
+    if (
+        months[monthName] === undefined
+    ) {
+
+        return 0;
+
+    }
+
+
+    return new Date(
+        year,
+        months[monthName],
+        day
+    ).getTime();
+
+}
+
+
+/* =========================================================
+   RESERVATION FILTER
+   ========================================================= */
+
+function reservationMatchesFilter(
+    reservation,
+    filter
+) {
+
+    if (
+        filter === "all"
+    ) {
+
+        return true;
+
+    }
+
+
+    const eventDate =
+        parseReservationDate(
+            reservation.reservation_date
+        );
+
+
+    const today =
+        new Date();
+
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const todayTime =
+        today.getTime();
+
+
+    /* -----------------------------------------------------
+       UPCOMING
+    ----------------------------------------------------- */
+
+    if (
+        filter === "upcoming"
+    ) {
+
+        return eventDate >= todayTime;
+
+    }
+
+
+    /* -----------------------------------------------------
+       PAST
+    ----------------------------------------------------- */
+
+    if (
+        filter === "past"
+    ) {
+
+        return (
+            eventDate > 0 &&
+            eventDate < todayTime
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       NEEDS ATTENTION
+    ----------------------------------------------------- */
+
+    if (
+        filter === "attention"
+    ) {
+
+        const depositPaid =
+            Boolean(
+                reservation.deposit_paid_at
+            );
+
+
+        const remainingBalance =
+            Number(
+                reservation.remaining_balance || 0
+            );
+
+
+        const finalPaid =
+            Boolean(
+                reservation.final_payment_paid_at
+            ) ||
+            (
+                depositPaid &&
+                remainingBalance <= 0
+            );
+
+
+        /* ---------------------------------------------
+           Pending approval / action
+        --------------------------------------------- */
+
+        if (
+            reservation.status ===
+                "awaiting_confirmation" ||
+            reservation.status ===
+                "pending"
+        ) {
+
+            return true;
+
+        }
+
+
+        /* ---------------------------------------------
+           Approved but deposit unpaid
+        --------------------------------------------- */
+
+        if (
+            reservation.status === "approved" &&
+            !depositPaid
+        ) {
+
+            return true;
+
+        }
+
+
+        /* ---------------------------------------------
+           Confirmed but final balance unpaid
+        --------------------------------------------- */
+
+        if (
+            reservation.status === "confirmed" &&
+            depositPaid &&
+            !finalPaid &&
+            remainingBalance > 0
+        ) {
+
+            return true;
+
+        }
+
+
+        /* ---------------------------------------------
+           Event has passed but reservation remains
+           otherwise active
+        --------------------------------------------- */
+
+        if (
+            eventDate > 0 &&
+            eventDate < todayTime &&
+            reservation.status !== "declined"
+        ) {
+
+            return true;
+
+        }
+
+
+        return false;
+
+    }
+
+
+    return true;
 
 }
 
@@ -272,6 +713,69 @@ function createReservationCard(
     );
 
 
+    const depositPaid =
+        Boolean(
+            reservation.deposit_paid_at
+        );
+
+
+    const remainingBalance =
+        Number(
+            reservation.remaining_balance || 0
+        );
+
+
+    const finalPaid =
+        Boolean(
+            reservation.final_payment_paid_at
+        ) ||
+        (
+            depositPaid &&
+            remainingBalance <= 0
+        );
+
+
+    const needsAttention =
+        reservationMatchesFilter(
+            reservation,
+            "attention"
+        );
+
+
+    let paymentSummary =
+        "Unpaid";
+
+
+    if (
+        depositPaid &&
+        finalPaid
+    ) {
+
+        paymentSummary =
+            "Paid in Full";
+
+    }
+
+    else if (
+        depositPaid &&
+        !finalPaid
+    ) {
+
+        paymentSummary =
+            "Deposit Paid";
+
+    }
+
+    else if (
+        !depositPaid
+    ) {
+
+        paymentSummary =
+            "Deposit Unpaid";
+
+    }
+
+
     summaryButton.innerHTML = `
 
         <div class="summary-field">
@@ -283,7 +787,9 @@ function createReservationCard(
                 <span class="reservation-status">
 
                     ${escapeHtml(
-                        reservation.status
+                        formatReservationStatus(
+                            reservation.status
+                        )
                     )}
 
                 </span>
@@ -351,6 +857,32 @@ function createReservationCard(
             </strong>
 
         </div>
+
+
+        <div class="summary-field payment-summary-field">
+
+            <span>Payment</span>
+
+            <strong>
+
+                ${escapeHtml(
+                    paymentSummary
+                )}
+
+            </strong>
+
+        </div>
+
+
+        ${
+            needsAttention
+                ? `
+                    <div class="summary-attention">
+                        Needs Attention
+                    </div>
+                  `
+                : ""
+        }
 
 
         <div class="expand-icon">
@@ -3047,6 +3579,100 @@ function showEditForm(
 
         }
     );
+
+}
+
+
+/* =========================================================
+   RESERVATION STATUS DISPLAY
+   ========================================================= */
+
+function formatReservationStatus(
+    status
+) {
+
+    if (!status) {
+
+        return "";
+
+    }
+
+
+    const normalized =
+        String(
+            status
+        ).toLowerCase();
+
+
+    if (
+        normalized ===
+        "awaiting_confirmation"
+    ) {
+
+        return "Awaiting Approval";
+
+    }
+
+
+    if (
+        normalized ===
+        "approved"
+    ) {
+
+        return "Approved";
+
+    }
+
+
+    if (
+        normalized ===
+        "confirmed"
+    ) {
+
+        return "Confirmed";
+
+    }
+
+
+    if (
+        normalized ===
+        "declined"
+    ) {
+
+        return "Declined";
+
+    }
+
+
+    if (
+        normalized ===
+        "cancelled" ||
+        normalized ===
+        "canceled"
+    ) {
+
+        return "Cancelled";
+
+    }
+
+
+    return String(
+        status
+    )
+
+        .replace(
+            /_/g,
+            " "
+        )
+
+        .replace(
+            /\b\w/g,
+            function(letter) {
+
+                return letter.toUpperCase();
+
+            }
+        );
 
 }
 

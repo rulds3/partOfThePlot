@@ -71,16 +71,64 @@
 
 
         <!-- =================================================
-             MESSAGE
+             MESSAGE + FILTERS
         ================================================= -->
 
-        <p
-            id="admin-message"
-            class="admin-message"
-            aria-live="polite"
-        >
-            Loading reservations...
-        </p>
+        <div class="admin-dashboard-tools">
+
+            <p
+                id="admin-message"
+                class="admin-message"
+                aria-live="polite"
+            >
+                Loading reservations...
+            </p>
+
+
+            <div
+                class="reservation-filters"
+                role="group"
+                aria-label="Reservation filters"
+            >
+
+                <button
+                    type="button"
+                    class="reservation-filter active"
+                    data-filter="all"
+                >
+                    All
+                </button>
+
+
+                <button
+                    type="button"
+                    class="reservation-filter"
+                    data-filter="upcoming"
+                >
+                    Upcoming
+                </button>
+
+
+                <button
+                    type="button"
+                    class="reservation-filter"
+                    data-filter="attention"
+                >
+                    Needs Attention
+                </button>
+
+
+                <button
+                    type="button"
+                    class="reservation-filter"
+                    data-filter="past"
+                >
+                    Past
+                </button>
+
+            </div>
+
+        </div>
 
 
         <!-- =================================================
@@ -97,10 +145,12 @@
 
 </main>
 
+
 <script
     type="module"
     src="admin-dashboard.js"
 ></script>
+
 
 </body>
 
