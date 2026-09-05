@@ -704,6 +704,99 @@ function createReservationCard(
         </section>
 
 
+        <!-- =================================================
+             PAYMENT STATUS
+        ================================================= -->
+
+        <section class="details-section">
+
+            <h3>
+                Payment Status
+            </h3>
+
+
+            <div
+                class="payment-status-panel"
+                data-payment-panel
+            >
+
+                <div class="payment-status-summary">
+
+                    <div class="detail-field">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+                            ${formatMoney(
+                                reservation.total
+                            )}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-field">
+
+                        <span>
+                            Deposit
+                        </span>
+
+                        <strong data-deposit-status>
+
+                            ${
+                                reservation.deposit_paid_at
+                                    ? "Paid"
+                                    : "Unpaid"
+                            }
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-field">
+
+                        <span>
+                            Final Balance
+                        </span>
+
+                        <strong data-final-status>
+
+                            ${
+                                Number(
+                                    reservation.remaining_balance || 0
+                                ) <= 0 &&
+                                reservation.deposit_paid_at
+                                    ? "Paid"
+                                    : "Unpaid"
+                            }
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="payment-status-message"
+                    data-payment-message
+                    aria-live="polite"
+                ></div>
+
+
+                <div
+                    class="payment-actions"
+                    data-payment-actions
+                ></div>
+
+            </div>
+
+        </section>
+
+
         <section class="details-section">
 
             <h3>
@@ -922,7 +1015,7 @@ function createReservationCard(
 
     /* =====================================================
        EMAIL ORGANIZER
-    ===================================================== */
+       ===================================================== */
 
     const emailSubject =
         detailsPanel.querySelector(
@@ -1137,7 +1230,7 @@ function createReservationCard(
 
     /* =====================================================
        RESEND CHARACTER EMAIL
-    ===================================================== */
+       ===================================================== */
 
     const resendButtons =
         detailsPanel.querySelectorAll(
@@ -1321,7 +1414,7 @@ function createReservationCard(
 
     /* =====================================================
        APPEND CARD
-    ===================================================== */
+       ===================================================== */
 
     item.appendChild(
         summaryButton
@@ -1340,7 +1433,7 @@ function createReservationCard(
 
     /* =====================================================
        EXPAND / COLLAPSE
-    ===================================================== */
+       ===================================================== */
 
     summaryButton.addEventListener(
         "click",
@@ -1365,7 +1458,7 @@ function createReservationCard(
 
     /* =====================================================
        EDIT
-    ===================================================== */
+       ===================================================== */
 
     const editButton =
         detailsPanel.querySelector(
@@ -1396,7 +1489,7 @@ function createReservationCard(
 
     /* =====================================================
        APPROVE
-    ===================================================== */
+       ===================================================== */
 
     const approveButton =
         detailsPanel.querySelector(
@@ -1484,7 +1577,7 @@ function createReservationCard(
 
     /* =====================================================
        DECLINE
-    ===================================================== */
+       ===================================================== */
 
     const declineButton =
         detailsPanel.querySelector(
@@ -1577,9 +1670,19 @@ function createReservationCard(
 
     /* =====================================================
        CHARACTER ASSIGNMENTS
-    ===================================================== */
+       ===================================================== */
 
     initializeCharacterAssignments(
+        detailsPanel,
+        reservation
+    );
+
+
+    /* =====================================================
+       PAYMENT CONTROLS
+       ===================================================== */
+
+    initializePaymentControls(
         detailsPanel,
         reservation
     );
@@ -1878,6 +1981,601 @@ function initializeCharacterAssignments(
         );
 
     }
+
+}
+
+
+/* =========================================================
+   PAYMENT CONTROLS
+   ========================================================= */
+
+function initializePaymentControls(
+    detailsPanel,
+    reservation
+) {
+
+    const paymentActions =
+        detailsPanel.querySelector(
+            "[data-payment-actions]"
+        );
+
+
+    const paymentMessage =
+        detailsPanel.querySelector(
+            "[data-payment-message]"
+        );
+
+
+    const depositStatus =
+        detailsPanel.querySelector(
+            "[data-deposit-status]"
+        );
+
+
+    const finalStatus =
+        detailsPanel.querySelector(
+            "[data-final-status]"
+        );
+
+
+    if (
+        !paymentActions
+    ) {
+
+        return;
+
+    }
+
+
+    const depositPaid =
+        Boolean(
+            reservation.deposit_paid_at
+        );
+
+
+    const remainingBalance =
+        Number(
+            reservation.remaining_balance || 0
+        );
+
+
+    const finalPaid =
+        Boolean(
+            reservation.final_payment_paid_at
+        ) ||
+        (
+            depositPaid &&
+            remainingBalance <= 0
+        );
+
+
+    const paymentMethodName =
+        function(method) {
+
+            if (!method) {
+
+                return "";
+
+            }
+
+
+            const normalized =
+                String(
+                    method
+                ).toLowerCase();
+
+
+            if (
+                normalized === "stripe"
+            ) {
+
+                return "Stripe";
+
+            }
+
+
+            if (
+                normalized === "venmo"
+            ) {
+
+                return "Venmo";
+
+            }
+
+
+            if (
+                normalized === "cash"
+            ) {
+
+                return "Cash";
+
+            }
+
+
+            return method;
+
+        };
+
+
+    /* =====================================================
+       DISPLAY PAYMENT METHODS
+       ===================================================== */
+
+    if (
+        depositPaid &&
+        reservation.deposit_payment_method
+    ) {
+
+        depositStatus.textContent =
+            "Paid with " +
+            paymentMethodName(
+                reservation.deposit_payment_method
+            );
+
+    }
+
+
+    if (
+        finalPaid &&
+        reservation.final_payment_method
+    ) {
+
+        finalStatus.textContent =
+            "Paid with " +
+            paymentMethodName(
+                reservation.final_payment_method
+            );
+
+    }
+
+
+    /* =====================================================
+       PAID IN FULL
+    ===================================================== */
+
+    if (
+        depositPaid &&
+        finalPaid
+    ) {
+
+        paymentActions.innerHTML = `
+
+            <div class="payment-paid-in-full">
+
+                ✓ Paid in Full
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       FINAL BALANCE
+    ===================================================== */
+
+    if (
+        depositPaid &&
+        !finalPaid &&
+        remainingBalance > 0
+    ) {
+
+        paymentActions.innerHTML = `
+
+            <div class="payment-action-label">
+
+                Record Final Balance Payment
+
+            </div>
+
+
+            <div class="payment-button-row">
+
+                <button
+                    type="button"
+                    class="button"
+                    data-payment-method="venmo"
+                    data-payment-type="final"
+                >
+
+                    Paid with Venmo
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="button"
+                    data-payment-method="cash"
+                    data-payment-type="final"
+                >
+
+                    Paid with Cash
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       DEPOSIT
+    ===================================================== */
+
+    if (
+        !depositPaid
+    ) {
+
+        paymentActions.innerHTML = `
+
+            <div class="payment-action-label">
+
+                Record Deposit Payment
+
+            </div>
+
+
+            <div class="payment-button-row">
+
+                <button
+                    type="button"
+                    class="button"
+                    data-payment-method="venmo"
+                    data-payment-type="deposit"
+                >
+
+                    Deposit Paid with Venmo
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="button"
+                    data-payment-method="cash"
+                    data-payment-type="deposit"
+                >
+
+                    Deposit Paid with Cash
+
+                </button>
+
+            </div>
+
+
+            <div class="payment-action-label payment-full-label">
+
+                Or record the entire reservation as paid in full
+
+            </div>
+
+
+            <div class="payment-button-row">
+
+                <button
+                    type="button"
+                    class="button"
+                    data-payment-method="venmo"
+                    data-payment-type="full"
+                >
+
+                    Paid in Full with Venmo
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="button"
+                    data-payment-method="cash"
+                    data-payment-type="full"
+                >
+
+                    Paid in Full with Cash
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       PAYMENT BUTTONS
+    ===================================================== */
+
+    const paymentButtons =
+        paymentActions.querySelectorAll(
+            "[data-payment-method]"
+        );
+
+
+    paymentButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                async function(event) {
+
+                    event.stopPropagation();
+
+
+                    const method =
+                        button.dataset.paymentMethod;
+
+
+                    const paymentType =
+                        button.dataset.paymentType;
+
+
+                    if (
+                        !method ||
+                        !paymentType
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    let confirmationMessage =
+                        "";
+
+
+                    if (
+                        paymentType === "deposit"
+                    ) {
+
+                        confirmationMessage =
+                            "Record the $" +
+                            Number(
+                                reservation.deposit_due || 0
+                            ).toFixed(2) +
+                            " deposit as paid with " +
+                            paymentMethodName(
+                                method
+                            ) +
+                            "?";
+
+                    }
+
+
+                    else if (
+                        paymentType === "final"
+                    ) {
+
+                        confirmationMessage =
+                            "Record the $" +
+                            remainingBalance.toFixed(2) +
+                            " final balance as paid with " +
+                            paymentMethodName(
+                                method
+                            ) +
+                            "?";
+
+                    }
+
+
+                    else if (
+                        paymentType === "full"
+                    ) {
+
+                        confirmationMessage =
+                            "Record this reservation as paid in full with " +
+                            paymentMethodName(
+                                method
+                            ) +
+                            "?";
+
+                    }
+
+
+                    const confirmed =
+                        confirm(
+                            confirmationMessage
+                        );
+
+
+                    if (!confirmed) {
+
+                        return;
+
+                    }
+
+
+                    paymentButtons.forEach(
+                        function(item) {
+
+                            item.disabled =
+                                true;
+
+                        }
+                    );
+
+
+                    button.textContent =
+                        "Saving...";
+
+
+                    if (paymentMessage) {
+
+                        paymentMessage.textContent =
+                            "";
+
+                    }
+
+
+                    try {
+
+                        const now =
+                            new Date().toISOString();
+
+
+                        const updates = {
+
+                            reservation_id:
+                                reservation.id
+
+                        };
+
+
+                        /* ---------------------------------
+                           DEPOSIT
+                        --------------------------------- */
+
+                        if (
+                            paymentType === "deposit"
+                        ) {
+
+                            updates.deposit_payment_method =
+                                method;
+
+
+                            updates.deposit_paid_at =
+                                now;
+
+                        }
+
+
+                        /* ---------------------------------
+                           FINAL BALANCE
+                        --------------------------------- */
+
+                        if (
+                            paymentType === "final"
+                        ) {
+
+                            updates.remaining_balance =
+                                0;
+
+
+                            updates.final_payment_paid_at =
+                                now;
+
+
+                            updates.final_payment_method =
+                                method;
+
+                        }
+
+
+                        /* ---------------------------------
+                           PAID IN FULL
+                        --------------------------------- */
+
+                        if (
+                            paymentType === "full"
+                        ) {
+
+                            updates.deposit_payment_method =
+                                method;
+
+
+                            updates.deposit_paid_at =
+                                now;
+
+
+                            updates.remaining_balance =
+                                0;
+
+
+                            updates.final_payment_paid_at =
+                                now;
+
+
+                            updates.final_payment_method =
+                                method;
+
+                        }
+
+
+                        await adminRequest(
+                            "admin-update-reservation",
+                            {
+                                body:
+                                    updates
+                            }
+                        );
+
+
+                        if (paymentMessage) {
+
+                            paymentMessage.textContent =
+                                "Payment recorded successfully.";
+
+                        }
+
+
+                        setTimeout(
+                            function() {
+
+                                loadReservations();
+
+                            },
+                            500
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            "Record payment error:",
+                            error
+                        );
+
+
+                        if (paymentMessage) {
+
+                            paymentMessage.textContent =
+                                error.message ||
+                                "Could not record payment.";
+
+                        }
+
+
+                        paymentButtons.forEach(
+                            function(item) {
+
+                                item.disabled =
+                                    false;
+
+                            }
+                        );
+
+
+                        button.textContent =
+                            paymentType === "deposit"
+                                ? "Deposit Paid with " +
+                                  paymentMethodName(
+                                      method
+                                  )
+                                : paymentType === "final"
+                                    ? "Paid with " +
+                                      paymentMethodName(
+                                          method
+                                      )
+                                    : "Paid in Full with " +
+                                      paymentMethodName(
+                                          method
+                                      );
+
+                    }
+
+                }
+            );
+
+        }
+    );
 
 }
 
