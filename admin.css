@@ -1943,11 +1943,16 @@
     }
 
 
+    /*
+       Keep all summary fields available at tablet size.
+       Mobile-only rules below handle the simplified layout.
+    */
+
     .summary-field:nth-child(3),
     .summary-field:nth-child(4) {
 
         display:
-            none;
+            block;
 
     }
 
@@ -2103,10 +2108,163 @@
     }
 
 
+    /* -----------------------------------------------------
+       MOBILE RESERVATION SUMMARY
+       ----------------------------------------------------- */
+
     .reservation-summary-row {
 
+        position:
+            relative;
+
+        display:
+            flex;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+        gap:
+            7px;
+
         padding:
-            18px 18px;
+            18px 50px 18px 18px;
+
+    }
+
+
+    .reservation-summary-row .summary-field {
+
+        display:
+            flex;
+
+        align-items:
+            baseline;
+
+        gap:
+            5px;
+
+        min-width:
+            0;
+
+    }
+
+
+    .reservation-summary-row .summary-field > span:first-child {
+
+        display:
+            inline;
+
+        flex-shrink:
+            0;
+
+        margin:
+            0;
+
+        font-size:
+            9px;
+
+        letter-spacing:
+            1px;
+
+    }
+
+
+    .reservation-summary-row .summary-field > span:first-child::after {
+
+        content:
+            ":";
+
+    }
+
+
+    .reservation-summary-row .summary-field strong {
+
+        display:
+            inline;
+
+        min-width:
+            0;
+
+        font-size:
+            12px;
+
+        line-height:
+            1.4;
+
+    }
+
+
+    /*
+       Guests remain available in the expanded reservation
+       details, but are hidden from the collapsed summary.
+    */
+
+    .reservation-summary-row .summary-guests-field {
+
+        display:
+            none;
+
+    }
+
+
+    /*
+       Hide the extra payment details from the collapsed
+       mobile summary so Payment stays on one clean line.
+    */
+
+    .reservation-summary-row .summary-payment-detail {
+
+        display:
+            none;
+
+    }
+
+
+    /*
+       Keep Needs Attention underneath the status.
+    */
+
+    .reservation-summary-row .summary-attention {
+
+        margin-top:
+            4px;
+
+    }
+
+
+    /*
+       Keep the expansion arrow on the right side.
+    */
+
+    .reservation-summary-row .expand-icon {
+
+        position:
+            absolute;
+
+        top:
+            50%;
+
+        right:
+            18px;
+
+        margin:
+            0;
+
+        transform:
+            translateY(-50%);
+
+    }
+
+
+    .reservation-item.expanded
+    .reservation-summary-row .expand-icon {
+
+        transform:
+            translateY(-50%)
+            rotate(180deg);
 
     }
 
@@ -2265,7 +2423,19 @@
     .reservation-summary-row {
 
         padding:
-            16px 15px;
+            16px 15px 16px 15px;
+
+    }
+
+
+    /*
+       Keep extra room for the arrow on very small screens.
+    */
+
+    .reservation-summary-row {
+
+        padding-right:
+            47px;
 
     }
 
