@@ -1,0 +1,480 @@
+/* =========================================================
+   PART OF THE PLOT
+   DEAD MAN'S CHEST
+   ADMIN CREW RESULTS
+   ========================================================= */
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.admin-header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.admin-tool-button {
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.crew-intro {
+
+    margin-bottom: 25px;
+
+}
+
+
+.crew-intro h2 {
+
+    margin-bottom: 10px;
+
+}
+
+
+.crew-intro p {
+
+    margin:
+        5px
+        0;
+
+    color: var(--muted);
+
+}
+
+
+/* =========================================================
+   VOTE COUNT
+========================================================= */
+
+.vote-count {
+
+    margin-bottom: 20px;
+
+    padding:
+        15px
+        18px;
+
+    border:
+        1px solid
+        rgba(198, 161, 91, 0.25);
+
+    background:
+        rgba(198, 161, 91, 0.05);
+
+    color: var(--light-gold);
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   VOTE LIST
+========================================================= */
+
+.vote-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.vote-row {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 1fr)
+        minmax(220px, 1fr);
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding:
+        12px
+        15px;
+
+    border:
+        1px solid
+        rgba(198, 161, 91, 0.15);
+
+    background:
+        rgba(255, 255, 255, 0.02);
+
+}
+
+
+.vote-character {
+
+    font-weight: 600;
+
+    color: var(--cream);
+
+}
+
+
+.vote-select {
+
+    width: 100%;
+
+    padding:
+        10px
+        12px;
+
+    border:
+        1px solid
+        rgba(198, 161, 91, 0.3);
+
+    border-radius: 2px;
+
+    background:
+        var(--dark-blue);
+
+    color: var(--cream);
+
+    font:
+        inherit;
+
+}
+
+
+.vote-select:focus {
+
+    outline: none;
+
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(198, 161, 91, 0.12);
+
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.crew-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 25px;
+
+}
+
+
+.button-secondary {
+
+    background:
+        transparent;
+
+    border:
+        1px solid
+        rgba(198, 161, 91, 0.45);
+
+    color: var(--cream);
+
+}
+
+
+.button-secondary:hover {
+
+    border-color:
+        var(--gold);
+
+}
+
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+.crew-results {
+
+    margin-top: 55px;
+
+}
+
+
+.results-heading {
+
+    margin-bottom: 25px;
+
+}
+
+
+.results-heading h2 {
+
+    margin-top: 5px;
+
+}
+
+
+/* =========================================================
+   WINNER CARDS
+========================================================= */
+
+.winner-card {
+
+    margin-bottom: 20px;
+
+    padding: 25px;
+
+    border:
+        1px solid
+        rgba(198, 161, 91, 0.3);
+
+    background:
+        rgba(198, 161, 91, 0.04);
+
+}
+
+
+.winner-rank {
+
+    margin-bottom: 8px;
+
+    color:
+        var(--gold);
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.12em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.winner-name {
+
+    margin:
+        0
+        0
+        20px;
+
+    color:
+        var(--cream);
+
+}
+
+
+/* =========================================================
+   WINNER STATS
+========================================================= */
+
+.winner-stats {
+
+    display: flex;
+
+    gap: 40px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.winner-stats div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+
+.winner-stats span {
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.85rem;
+
+}
+
+
+.winner-stats strong {
+
+    color:
+        var(--light-gold);
+
+    font-size:
+        1.25rem;
+
+}
+
+
+/* =========================================================
+   CREW MEMBERS
+========================================================= */
+
+.crew-members {
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid
+        rgba(198, 161, 91, 0.15);
+
+}
+
+
+.crew-members h4 {
+
+    margin:
+        0
+        0
+        12px;
+
+}
+
+
+.crew-members ul,
+.island-card ul {
+
+    margin:
+        0;
+
+    padding-left:
+        20px;
+
+}
+
+
+.crew-members li,
+.island-card li {
+
+    margin-bottom:
+        6px;
+
+    color:
+        var(--muted);
+
+}
+
+
+/* =========================================================
+   ISLAND
+========================================================= */
+
+.island-card {
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    border:
+        1px solid
+        rgba(198, 161, 91, 0.18);
+
+}
+
+
+.island-card h3 {
+
+    margin-top: 0;
+
+}
+
+
+/* =========================================================
+   EMPTY / ERROR
+========================================================= */
+
+.vote-empty {
+
+    padding:
+        30px;
+
+    text-align: center;
+
+    color:
+        var(--muted);
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .admin-header-actions {
+
+        width: 100%;
+
+        justify-content:
+            flex-start;
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .vote-row {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 8px;
+
+    }
+
+
+    .winner-stats {
+
+        gap: 25px;
+
+    }
+
+
+    .crew-actions {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .crew-actions .button {
+
+        width: 100%;
+
+    }
+
+}

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Crew Results | Part of the Plot</title>
+
+    <link
+        rel="icon"
+        type="image/x-icon"
+        href="../../favicon.ico"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="admin-dead-mans-chest.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<main class="admin-dashboard">
+
+    <div class="admin-container">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================= -->
+
+        <header class="admin-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    PART OF THE PLOT
+                </p>
+
+                <h1>
+                    Crew Results
+                </h1>
+
+                <p>
+                    A Dead Man's Chest
+                </p>
+
+            </div>
+
+
+            <div class="admin-header-actions">
+
+                <a
+                    href="admin-dashboard.html"
+                    class="button admin-tool-button"
+                >
+                    Reservations
+                </a>
+
+
+                <button
+                    id="logout-button"
+                    class="button logout-button"
+                    type="button"
+                >
+                    Log Out
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             INSTRUCTIONS
+        ================================================= -->
+
+        <section class="crew-intro">
+
+            <h2>
+                Enter the Votes
+            </h2>
+
+            <p>
+                Select who each character voted for.
+                Leave <strong>No Vote</strong> for anyone
+                who is not playing.
+            </p>
+
+            <p>
+                Characters may vote for themselves.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             VOTE COUNT
+        ================================================= -->
+
+        <div
+            id="vote-count"
+            class="vote-count"
+        >
+            0 of 0 votes entered
+        </div>
+
+
+        <!-- =================================================
+             VOTE LIST
+        ================================================= -->
+
+        <section class="vote-section">
+
+            <div
+                id="vote-list"
+                class="vote-list"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================= -->
+
+        <div class="crew-actions">
+
+            <button
+                id="calculate-button"
+                class="button"
+                type="button"
+                disabled
+            >
+                Calculate Results
+            </button>
+
+
+            <button
+                id="clear-button"
+                class="button button-secondary"
+                type="button"
+            >
+                Clear All Votes
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             MESSAGE
+        ================================================= -->
+
+        <p
+            id="admin-message"
+            class="admin-message"
+            aria-live="polite"
+        ></p>
+
+
+        <!-- =================================================
+             RESULTS
+        ================================================= -->
+
+        <section
+            id="results"
+            class="crew-results"
+            hidden
+        >
+
+            <div class="results-heading">
+
+                <p class="eyebrow">
+                    A DEAD MAN'S CHEST
+                </p>
+
+                <h2>
+                    Final Results
+                </h2>
+
+            </div>
+
+
+            <!-- WINNER 1 -->
+
+            <article
+                id="winner-one"
+                class="winner-card"
+            >
+
+                <div class="winner-rank">
+                    Winner #1
+                </div>
+
+                <h3 class="winner-name"></h3>
+
+                <div class="winner-stats">
+
+                    <div>
+                        <span>Crew</span>
+                        <strong class="crew-size"></strong>
+                    </div>
+
+                    <div>
+                        <span>Direct Votes</span>
+                        <strong class="direct-votes"></strong>
+                    </div>
+
+                </div>
+
+
+                <div class="crew-members">
+
+                    <h4>
+                        Crew Members
+                    </h4>
+
+                    <ul></ul>
+
+                </div>
+
+            </article>
+
+
+            <!-- WINNER 2 -->
+
+            <article
+                id="winner-two"
+                class="winner-card"
+            >
+
+                <div class="winner-rank">
+                    Winner #2
+                </div>
+
+                <h3 class="winner-name"></h3>
+
+                <div class="winner-stats">
+
+                    <div>
+                        <span>Crew</span>
+                        <strong class="crew-size"></strong>
+                    </div>
+
+                    <div>
+                        <span>Direct Votes</span>
+                        <strong class="direct-votes"></strong>
+                    </div>
+
+                </div>
+
+
+                <div class="crew-members">
+
+                    <h4>
+                        Crew Members
+                    </h4>
+
+                    <ul></ul>
+
+                </div>
+
+            </article>
+
+
+            <!-- ISLAND -->
+
+            <article class="island-card">
+
+                <h3>
+                    Remaining on the Island
+                </h3>
+
+                <ul id="island-list"></ul>
+
+            </article>
+
+        </section>
+
+
+    </div>
+
+</main>
+
+
+<script
+    type="module"
+    src="admin-dead-mans-chest.js"
+></script>
+
+
+</body>
+
+</html>
