@@ -501,6 +501,7 @@ function renderVoteList() {
 
                     updateVoteCount();
 
+
                     /*
                      * Results are no longer current
                      * after a vote changes.
@@ -642,6 +643,13 @@ function calculateResults() {
 
     /*
      * Determine the two captains.
+     *
+     * The first captain is the player with
+     * the most direct votes.
+     *
+     * If there is a tie for second place,
+     * potential crew size is used to decide
+     * the second captain.
      */
 
     const captainResult =
@@ -672,7 +680,8 @@ function calculateResults() {
 
 
     /*
-     * Calculate the two crews.
+     * Calculate the actual two crews using
+     * the selected captains.
      */
 
     const crewOne =
@@ -914,6 +923,11 @@ function determineCaptains(
     directVoteCounts
 ) {
 
+    /*
+     * Sort players from highest direct votes
+     * to lowest.
+     */
+
     const sorted =
         [...activePlayers].sort(
             function(a, b) {
@@ -945,55 +959,13 @@ function determineCaptains(
         ] || 0;
 
 
-    const secondVotes =
-        directVoteCounts[
-            sorted[1].id
-        ] || 0;
-
-
     /*
-     * If more than one person is tied for
-     * the second captain position, stop and
-     * let the admin resolve it manually.
-     */
-
-    const tiedForSecond =
-        sorted.filter(
-            character =>
-                (
-                    directVoteCounts[
-                        character.id
-                    ] || 0
-                ) === secondVotes
-        );
-
-
-    if (
-        tiedForSecond.length > 1 &&
-        firstVotes !== secondVotes
-    ) {
-
-        return {
-
-            success:
-                false,
-
-            message:
-                "There is a tie for the second captain position. Please review the votes and resolve the tie manually."
-
-        };
-
-    }
-
-
-    /*
-     * If everyone has zero votes, there is no
-     * meaningful way to choose captains.
+     * If the highest vote total is zero,
+     * nobody has received a direct vote.
      */
 
     if (
-        firstVotes === 0 &&
-        secondVotes === 0
+        firstVotes === 0
     ) {
 
         return {
@@ -1009,16 +981,193 @@ function determineCaptains(
     }
 
 
+    /*
+     * Captain #1 is always the person with
+     * the most direct votes.
+     */
+
+    const captainOne =
+        sorted[0];
+
+
+    /*
+     * Find everyone tied for the second-highest
+     * direct vote total.
+     */
+
+    const secondVotes =
+        directVoteCounts[
+            sorted[1].id
+        ] || 0;
+
+
+    const tiedForSecond =
+        sorted.filter(
+            character =>
+                (
+                    directVoteCounts[
+                        character.id
+                    ] || 0
+                ) === secondVotes
+        );
+
+
+    /*
+     * No tie for second:
+     *
+     * Simply use the second-highest
+     * direct vote getter.
+     */
+
+    if (
+        tiedForSecond.length === 1
+    ) {
+
+        return {
+
+            success:
+                true,
+
+            captainOne:
+                captainOne,
+
+            captainTwo:
+                tiedForSecond[0]
+
+        };
+
+    }
+
+
+    /*
+     * There is a tie for second.
+     *
+     * Test each tied candidate as the
+     * second captain and determine how
+     * large their potential crew would be.
+     */
+
+    const potentialCaptains =
+        tiedForSecond.map(
+            function(candidate) {
+
+                const potentialCrew =
+                    calculateCrew(
+                        captainOne.id,
+                        candidate.id,
+                        activePlayers
+                    );
+
+
+                return {
+
+                    candidate:
+                        candidate,
+
+                    crewSize:
+                        potentialCrew.length,
+
+                    directVotes:
+                        directVoteCounts[
+                            candidate.id
+                        ] || 0
+
+                };
+
+            }
+        );
+
+
+    /*
+     * Sort the potential second captains:
+     *
+     * 1. Largest potential crew
+     * 2. Most direct votes
+     */
+
+    potentialCaptains.sort(
+        function(a, b) {
+
+            if (
+                a.crewSize !==
+                b.crewSize
+            ) {
+
+                return (
+                    b.crewSize -
+                    a.crewSize
+                );
+
+            }
+
+
+            if (
+                a.directVotes !==
+                b.directVotes
+            ) {
+
+                return (
+                    b.directVotes -
+                    a.directVotes
+                );
+
+            }
+
+
+            return 0;
+
+        }
+    );
+
+
+    /*
+     * Check whether the best two candidates
+     * are still completely tied.
+     */
+
+    const best =
+        potentialCaptains[0];
+
+
+    const secondBest =
+        potentialCaptains[1];
+
+
+    if (
+        best.crewSize ===
+            secondBest.crewSize &&
+        best.directVotes ===
+            secondBest.directVotes
+    ) {
+
+        return {
+
+            success:
+                false,
+
+            message:
+                "There is still a tie for the second captain position after comparing potential crew sizes. Please review the votes and resolve the tie manually."
+
+        };
+
+    }
+
+
+    /*
+     * The candidate with the largest potential
+     * crew becomes Captain #2.
+     */
+
     return {
 
         success:
             true,
 
         captainOne:
-            sorted[0],
+            captainOne,
 
         captainTwo:
-            sorted[1]
+            best.candidate
 
     };
 
@@ -1063,6 +1212,7 @@ function calculateCrew(
 
             /*
              * Captains have already been assigned.
+
              */
 
             if (
@@ -1198,6 +1348,7 @@ function followVoteChain(
 
         /*
          * No vote means the chain ends.
+
          */
 
         if (
