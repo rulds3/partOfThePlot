@@ -2456,3 +2456,35 @@
     }
 
 }
+
+
+/* =====================================================
+   ADMIN HEADER ACTIONS
+===================================================== */
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.admin-tool-button {
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .admin-header-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+}
