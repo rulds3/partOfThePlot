@@ -437,19 +437,23 @@
         >
 
 
+            <!--
+                PAYMENT STATUS
+
+                Hidden during the normal approval/payment flow.
+                JavaScript displays this only when needed,
+                such as after returning from Stripe.
+            -->
+
             <div
                 id="payment-status"
                 class="payment-status"
+                style="display: none;"
             >
 
-                <h2 id="payment-status-heading">
-                    Reservation Confirmed
-                </h2>
+                <h2 id="payment-status-heading"></h2>
 
-                <p id="payment-status-message">
-                    Your reservation has been approved.
-                    Please complete your required payment below.
-                </p>
+                <p id="payment-status-message"></p>
 
             </div>
 

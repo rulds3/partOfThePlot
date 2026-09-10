@@ -1071,6 +1071,7 @@ function showPaymentSection() {
 function showPaymentProcessingState() {
 
     showPaymentSection();
+	showPaymentStatus();
 
 
     if (isBalanceMode()) {
