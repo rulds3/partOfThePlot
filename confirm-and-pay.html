@@ -4,56 +4,62 @@
 
 <head>
 
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <title>Confirm Your Reservation | Part of the Plot</title>
 
-<title>Confirm Your Reservation | Part of the Plot</title>
+    <meta
+        name="description"
+        content="Confirm your Part of the Plot mystery party reservation and complete your required payment."
+    >
 
-<meta
-    name="description"
-    content="Confirm your Part of the Plot mystery party reservation and complete your required payment."
->
+    <link
+        rel="icon"
+        type="image/x-icon"
+        href="favicon.ico"
+    >
 
-<link
-    rel="icon"
-    type="image/x-icon"
-    href="favicon.ico"
->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-<link
-    rel="stylesheet"
-    href="style.css"
->
-
-<link
-    rel="stylesheet"
-    href="confirm.css"
->
-
+    <link
+        rel="stylesheet"
+        href="confirm.css"
+    >
 
 </head>
+
 
 <body>
 
 
-<!-- HEADER -->
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
 
 <div id="site-header"></div>
 
 
-<!-- MAIN -->
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
 
 <main class="confirm-page">
 
     <section class="confirm-container">
 
 
-        <!-- INTRO -->
+        <!-- =================================================
+             INTRO
+             ================================================= -->
 
         <div class="confirm-intro">
 
@@ -73,7 +79,10 @@
         </div>
 
 
-        <!-- LOADING -->
+
+        <!-- =================================================
+             LOADING
+             ================================================= -->
 
         <div
             id="loading-message"
@@ -87,7 +96,10 @@
         </div>
 
 
-        <!-- RESERVATION SUMMARY -->
+
+        <!-- =================================================
+             RESERVATION DETAILS
+             ================================================= -->
 
         <section
             id="reservation-summary"
@@ -220,70 +232,13 @@
 
             </div>
 
-
-            <!-- PAYMENT SUMMARY -->
-
-            <div class="payment-summary">
-
-                <h3>
-                    Payment Summary
-                </h3>
-
-
-                <div class="payment-summary-row">
-
-                    <span>
-                        Total
-                    </span>
-
-                    <strong
-                        id="display-total"
-                    ></strong>
-
-                </div>
-
-
-                <div class="payment-summary-row">
-
-                    <span>
-                        Required Deposit
-                    </span>
-
-                    <strong
-                        id="display-deposit"
-                    ></strong>
-
-                </div>
-
-
-                <div class="payment-summary-row">
-
-                    <span>
-                        Remaining Balance
-                    </span>
-
-                    <strong
-                        id="display-remaining"
-                    ></strong>
-
-                </div>
-
-
-                <p
-                    id="payment-summary-note"
-                    class="payment-summary-note"
-                >
-                    Your reservation will be officially confirmed
-                    once your required deposit has been received.
-                </p>
-
-            </div>
-
-
         </section>
 
 
-        <!-- CONFIRMATION BOX -->
+
+        <!-- =================================================
+             REVIEW & ACKNOWLEDGE
+             ================================================= -->
 
         <section
             id="confirmation-box"
@@ -292,13 +247,13 @@
         >
 
             <h2>
-                Confirm Your Reservation
+                Review &amp; Acknowledge
             </h2>
 
             <p>
                 Please review the information above and confirm
-                that you agree to the following before making your
-                payment.
+                that you agree to the following before continuing
+                to payment.
             </p>
 
 
@@ -329,7 +284,10 @@
                 >
 
 
-                <!-- AGREEMENTS -->
+
+                <!-- =================================================
+                     ACKNOWLEDGMENTS
+                     ================================================= -->
 
                 <div class="acknowledgments">
 
@@ -346,7 +304,9 @@
                         >
 
                         <span>
+
                             I have reviewed and agree to the
+
                             <a
                                 href="client-agreement.html"
                                 target="_blank"
@@ -354,9 +314,11 @@
                             >
                                 Part of the Plot Client Agreement
                             </a>.
+
                         </span>
 
                     </label>
+
 
 
                     <!-- CANCELLATION POLICY -->
@@ -371,7 +333,9 @@
                         >
 
                         <span>
+
                             I have reviewed and agree to the
+
                             <a
                                 href="faq.html#payment"
                                 target="_blank"
@@ -379,9 +343,11 @@
                             >
                                 Part of the Plot cancellation policy
                             </a>.
+
                         </span>
 
                     </label>
+
 
 
                     <!-- RESPONSIBILITIES -->
@@ -396,8 +362,10 @@
                         >
 
                         <span>
+
                             I understand the organizer responsibilities
                             and guest guidelines for my event.
+
                         </span>
 
                     </label>
@@ -406,12 +374,17 @@
                 </div>
 
 
+
+                <!-- =================================================
+                     CONTINUE TO PAYMENT
+                     ================================================= -->
+
                 <button
                     type="submit"
                     id="confirm-button"
                     class="btn btn-primary"
                 >
-                    Confirm Reservation
+                    Continue to Payment
                 </button>
 
 
@@ -428,7 +401,10 @@
         </section>
 
 
-        <!-- PAYMENT SECTION -->
+
+        <!-- =================================================
+             PAYMENT SECTION
+             ================================================= -->
 
         <section
             id="payment-section"
@@ -437,13 +413,13 @@
         >
 
 
-            <!--
-                PAYMENT STATUS
+            <!-- =================================================
+                 PAYMENT STATUS
 
-                Hidden during the normal approval/payment flow.
-                JavaScript displays this only when needed,
-                such as after returning from Stripe.
-            -->
+                 Hidden during the normal approval/payment flow.
+                 JavaScript displays this only when needed,
+                 such as after returning from Stripe.
+                 ================================================= -->
 
             <div
                 id="payment-status"
@@ -458,11 +434,12 @@
             </div>
 
 
+
             <div class="payment-box">
 
 
                 <h2 id="payment-heading">
-                    Pay Your Deposit
+                    Payment
                 </h2>
 
 
@@ -475,7 +452,72 @@
                 </p>
 
 
-                <!-- PAYMENT AMOUNT -->
+
+                <!-- =================================================
+                     PAYMENT SUMMARY
+                     ================================================= -->
+
+                <div class="payment-summary">
+
+                    <h3>
+                        Payment Summary
+                    </h3>
+
+
+                    <div class="payment-summary-row">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong
+                            id="display-total"
+                        ></strong>
+
+                    </div>
+
+
+                    <div class="payment-summary-row">
+
+                        <span>
+                            Required Deposit
+                        </span>
+
+                        <strong
+                            id="display-deposit"
+                        ></strong>
+
+                    </div>
+
+
+                    <div class="payment-summary-row">
+
+                        <span>
+                            Remaining Balance
+                        </span>
+
+                        <strong
+                            id="display-remaining"
+                        ></strong>
+
+                    </div>
+
+
+                    <p
+                        id="payment-summary-note"
+                        class="payment-summary-note"
+                    >
+                        Your reservation will be officially confirmed
+                        once your required deposit has been received.
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PAYMENT AMOUNT
+                     ================================================= -->
 
                 <div class="payment-amount-choice">
 
@@ -535,7 +577,10 @@
                 </div>
 
 
-                <!-- STRIPE -->
+
+                <!-- =================================================
+                     STRIPE
+                     ================================================= -->
 
                 <div class="payment-option">
 
@@ -562,7 +607,14 @@
                 </div>
 
 
-                <!-- VENMO
+
+                <!-- =================================================
+                     VENMO
+
+                     Kept commented out for possible future use.
+                     ================================================= -->
+
+                <!--
 
                 <div class="payment-option">
 
@@ -591,7 +643,14 @@
                 -->
 
 
-                <!-- CASH
+
+                <!-- =================================================
+                     CASH
+
+                     Kept commented out for possible future use.
+                     ================================================= -->
+
+                <!--
 
                 <div class="payment-option">
 
@@ -620,6 +679,11 @@
                 -->
 
 
+
+                <!-- =================================================
+                     PAYMENT MESSAGE
+                     ================================================= -->
+
                 <div
                     id="payment-message"
                     class="form-message"
@@ -630,11 +694,13 @@
 
             </div>
 
-
         </section>
 
 
-        <!-- ERROR / UNAVAILABLE -->
+
+        <!-- =================================================
+             ERROR / UNAVAILABLE
+             ================================================= -->
 
         <div
             id="unavailable-message"
@@ -653,7 +719,10 @@
         </div>
 
 
-        <!-- PAID IN FULL -->
+
+        <!-- =================================================
+             PAID IN FULL
+             ================================================= -->
 
         <div
             id="paid-in-full-message"
@@ -683,12 +752,18 @@
 </main>
 
 
-<!-- FOOTER -->
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
 
 <div id="site-footer"></div>
 
 
-<!-- SITE SCRIPTS -->
+
+<!-- =========================================================
+     SITE SCRIPTS
+     ========================================================= -->
 
 <script src="supabase.js"></script>
 
