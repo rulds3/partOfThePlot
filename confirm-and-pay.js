@@ -176,22 +176,14 @@ function getSelectedPaymentType() {
 
     /*
      * If the page was opened specifically for the
-     * final balance, always use the balance payment type.
+     * final balance, or the reservation is already
+     * confirmed, always use the balance payment type.
      */
 
-    if (isBalanceMode()) {
-
-        return "balance";
-
-    }
-
-
-    /*
-     * If the reservation is already confirmed,
-     * the only available payment is the remaining balance.
-     */
-
-    if (confirmedPaymentMode) {
+    if (
+        isBalanceMode() ||
+        confirmedPaymentMode
+    ) {
 
         return "balance";
 
@@ -950,7 +942,7 @@ function setupBalanceMode(
     if (paymentStatusHeading) {
 
         paymentStatusHeading.textContent =
-            "Reservation Confirmed";
+            "Payment Status";
 
     }
 
@@ -958,7 +950,7 @@ function setupBalanceMode(
     if (paymentStatusMessage) {
 
         paymentStatusMessage.textContent =
-            "Your reservation is confirmed. Your deposit has been received, and the remaining balance shown below is due 7 days before your event.";
+            "Your deposit has been paid. Your remaining balance is shown below and is due 7 days before your event.";
 
     }
 
@@ -1158,17 +1150,79 @@ function showConfirmedState(
 ) {
 
     /*
-     * This reservation is confirmed, so any payment
-     * made from this page must be for the final balance.
+     * FINAL BALANCE MODE
+     *
+     * The reservation is already confirmed and this
+     * page was opened specifically to collect the
+     * remaining balance.
+     *
+     * Keep Reservation Details visible at the top,
+     * but do NOT show the old "Reservation Confirmed!"
+     * message again.
+     */
+
+    if (isBalanceMode()) {
+
+        confirmedPaymentMode = true;
+
+
+        if (confirmationBox) {
+
+            confirmationBox.style.display =
+                "none";
+
+        }
+
+
+        if (paymentSection) {
+
+            paymentSection.style.display =
+                "block";
+
+        }
+
+
+        hideInitialPaymentChoices();
+
+
+        displayFinalBalance(
+            reservation
+        );
+
+
+        showPaymentStatus();
+
+
+        if (paymentStatusHeading) {
+
+            paymentStatusHeading.textContent =
+                "Payment Status";
+
+        }
+
+
+        if (paymentStatusMessage) {
+
+            paymentStatusMessage.textContent =
+                "Your deposit has been paid. Your remaining balance is shown below and is due 7 days before your event.";
+
+        }
+
+
+        updatePaymentButtonText();
+
+
+        return;
+
+    }
+
+
+    /*
+     * NORMAL CONFIRMED RESERVATION
      */
 
     confirmedPaymentMode = true;
 
-
-    /*
-     * Replace the old confirmation box with a clear
-     * confirmation message.
-     */
 
     confirmationBox.innerHTML = `
         <h2>
@@ -1264,6 +1318,44 @@ function showPaidInFullState() {
     }
 
 
+    /*
+     * If this is the final-payment page, do not show
+     * the old reservation-confirmation message.
+     */
+
+    if (isBalanceMode()) {
+
+        confirmationBox.innerHTML = `
+            <h2>
+                Paid in Full!
+            </h2>
+
+            <p>
+                Your reservation is officially confirmed and
+                your balance has been paid in full.
+            </p>
+
+            <p>
+                Your reservation is now on the books with
+                Part of the Plot.
+            </p>
+
+            <p>
+                If you need to make a change to your reservation,
+                please contact Part of the Plot.
+            </p>
+        `;
+
+
+        confirmationBox.style.display =
+            "block";
+
+
+        return;
+
+    }
+
+
     confirmationBox.innerHTML = `
         <h2>
             Reservation Confirmed!
@@ -1336,7 +1428,10 @@ function showPaymentProcessingState() {
     showPaymentStatus();
 
 
-    if (isBalanceMode() || confirmedPaymentMode) {
+    if (
+        isBalanceMode() ||
+        confirmedPaymentMode
+    ) {
 
         paymentStatusHeading.textContent =
             "Final Payment Received";
@@ -1790,8 +1885,10 @@ async function loadReservation() {
             ) {
 
                 /*
-                 * Show the confirmation + payment status
-                 * together, rather than just the payment box.
+                 * Show only the final-payment section.
+                 *
+                 * Reservation Details remain visible at
+                 * the top of the page.
                  */
 
                 showConfirmedState(
@@ -2406,7 +2503,7 @@ if (confirmationForm) {
 
 
                 confirmButton.textContent =
-                    "Confirm Reservation";
+                    "Continue to Payment";
 
             }
 
@@ -2568,6 +2665,10 @@ if (stripePaymentButton) {
    VENMO PAYMENT
    ========================================================= */
 
+/*
+ * Retained for possible future reuse.
+ */
+
 if (venmoPaymentButton) {
 
     venmoPaymentButton.addEventListener(
@@ -2621,6 +2722,10 @@ if (venmoPaymentButton) {
 /* =========================================================
    CASH PAYMENT
    ========================================================= */
+
+/*
+ * Retained for possible future reuse.
+ */
 
 if (cashPaymentButton) {
 
