@@ -11,6 +11,7 @@
    - Character assignment
    - Date validation
    - Reservation submission
+   - Venue address collection
 
    Depends on:
    - supabase.js
@@ -52,13 +53,8 @@ function getSchedulingGame(
         return null;
     }
 
-
     /*
      * Use getGameRecord() from supabase.js.
-     *
-     * AVAILABLE_GAMES is maintained by
-     * supabase.js and does not need to be
-     * attached to window.
      */
 
     if (
@@ -71,7 +67,6 @@ function getSchedulingGame(
         );
 
     }
-
 
     return null;
 
@@ -98,8 +93,8 @@ async function getSchedulingGamePrice(
     ) {
 
         return null;
-    }
 
+    }
 
     try {
 
@@ -138,7 +133,6 @@ function initializeScheduling() {
         return;
     }
 
-
     schedulingInitialized =
         true;
 
@@ -156,11 +150,9 @@ function initializeScheduling() {
                 "scheduleModal"
             );
 
-
         if (!scheduleModal) {
             return;
         }
-
 
         /*
          * If a game was supplied by the
@@ -174,7 +166,6 @@ function initializeScheduling() {
                     "game"
                 );
 
-
             if (gameSelect) {
 
                 const gameOption =
@@ -186,12 +177,10 @@ function initializeScheduling() {
                             requestedGame
                     );
 
-
                 if (gameOption) {
 
                     gameSelect.value =
                         requestedGame;
-
 
                     gameSelect.dispatchEvent(
                         new Event(
@@ -208,17 +197,14 @@ function initializeScheduling() {
 
         }
 
-
         scheduleModal.classList.add(
             "active"
         );
-
 
         scheduleModal.setAttribute(
             "aria-hidden",
             "false"
         );
-
 
         document.body.style.overflow =
             "hidden";
@@ -237,22 +223,18 @@ function initializeScheduling() {
                 "scheduleModal"
             );
 
-
         if (!scheduleModal) {
             return;
         }
-
 
         scheduleModal.classList.remove(
             "active"
         );
 
-
         scheduleModal.setAttribute(
             "aria-hidden",
             "true"
         );
-
 
         document.body.style.overflow =
             "";
@@ -273,9 +255,6 @@ function initializeScheduling() {
 
     /* -----------------------------------------
        SCHEDULE BUTTONS
-       
-       Event delegation is used because the
-       header is loaded dynamically.
     ----------------------------------------- */
 
     document.addEventListener(
@@ -287,19 +266,15 @@ function initializeScheduling() {
                     "#scheduleButton, .schedule-button"
                 );
 
-
             if (!button) {
                 return;
             }
 
-
             event.preventDefault();
-
 
             const requestedGame =
                 button.dataset.game ||
                 null;
-
 
             openScheduleModal(
                 requestedGame
@@ -322,14 +297,11 @@ function initializeScheduling() {
                     "#closeModal"
                 );
 
-
             if (!closeButton) {
                 return;
             }
 
-
             event.preventDefault();
-
 
             closeScheduleModal();
 
@@ -349,7 +321,6 @@ function initializeScheduling() {
                 document.getElementById(
                     "scheduleModal"
                 );
-
 
             if (
                 scheduleModal &&
@@ -382,12 +353,10 @@ function initializeScheduling() {
 
             }
 
-
             const scheduleModal =
                 document.getElementById(
                     "scheduleModal"
                 );
-
 
             if (
                 scheduleModal &&
@@ -469,6 +438,38 @@ function initializeSchedulingForm() {
     const playersSelect =
         document.getElementById(
             "players"
+        );
+
+
+    /*
+     * Venue address fields.
+     *
+     * These are combined into the existing
+     * reservations.location column before
+     * the reservation is submitted.
+     */
+
+    const locationStreetInput =
+        document.getElementById(
+            "schedule-location-street"
+        );
+
+
+    const locationCityInput =
+        document.getElementById(
+            "schedule-location-city"
+        );
+
+
+    const locationStateInput =
+        document.getElementById(
+            "schedule-location-state"
+        );
+
+
+    const locationZipInput =
+        document.getElementById(
+            "schedule-location-zip"
         );
 
 
@@ -1193,6 +1194,98 @@ function initializeSchedulingForm() {
 
                 }
             );
+
+
+            /* -----------------------------------------
+               BUILD VENUE ADDRESS
+            ----------------------------------------- */
+
+            const locationStreet =
+                String(
+                    formData.get(
+                        "location_street"
+                    ) || ""
+                ).trim();
+
+
+            const locationCity =
+                String(
+                    formData.get(
+                        "location_city"
+                    ) || ""
+                ).trim();
+
+
+            const locationState =
+                String(
+                    formData.get(
+                        "location_state"
+                    ) || ""
+                ).trim();
+
+
+            const locationZip =
+                String(
+                    formData.get(
+                        "location_zip"
+                    ) || ""
+                ).trim();
+
+
+            /*
+             * The individual address fields are only
+             * used to build the existing database
+             * location value.
+             */
+
+            if (
+                !locationStreet ||
+                !locationCity ||
+                !locationState ||
+                !locationZip
+            ) {
+
+                alert(
+                    "Please enter the complete venue address, including street, city, state, and ZIP code."
+                );
+
+
+                scheduleSubmissionLocked =
+                    false;
+
+
+                return;
+
+            }
+
+
+            /*
+             * Store the complete venue address in the
+             * existing reservations.location column.
+             */
+
+            reservationData.location =
+                [
+                    locationStreet,
+                    locationCity,
+                    `${locationState} ${locationZip}`
+                ]
+                    .join(", ");
+
+
+            /*
+             * Remove the temporary individual
+             * address fields so they are not sent
+             * as unnecessary reservation properties.
+             */
+
+            delete reservationData.location_street;
+
+            delete reservationData.location_city;
+
+            delete reservationData.location_state;
+
+            delete reservationData.location_zip;
 
 
             /* -----------------------------------------
