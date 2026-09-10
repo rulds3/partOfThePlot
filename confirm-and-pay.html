@@ -4,7 +4,6 @@
 
 <head>
 
-```
 <meta charset="UTF-8">
 
 <meta
@@ -34,7 +33,6 @@
     rel="stylesheet"
     href="confirm.css"
 >
-```
 
 </head>
 
@@ -46,13 +44,13 @@
 
 <div id="site-header"></div>
 
+
 <!-- =========================================================
      MAIN
      ========================================================= -->
 
 <main class="confirm-page">
 
-```
 <section class="confirm-container">
 
 
@@ -67,12 +65,14 @@
         </p>
 
         <h1>
-            Confirm Your Reservation
+            Reservation Status
         </h1>
 
-        <p>
-            Please review your reservation details and confirm
-            the required information below.
+        <p
+            id="reservation-status-text"
+            class="reservation-status-text"
+        >
+            Loading...
         </p>
 
     </div>
@@ -97,7 +97,9 @@
 
 
     <!-- =================================================
-         RESERVATION DETAILS
+         RESERVATION SUMMARY
+         
+         The "Reservation Details" heading has been removed.
          ================================================= -->
 
     <section
@@ -105,11 +107,6 @@
         class="reservation-summary"
         style="display: none;"
     >
-
-        <h2>
-            Reservation Details
-        </h2>
-
 
         <div class="reservation-details">
 
@@ -413,7 +410,10 @@
 
 
         <!-- =================================================
-             PAYMENT STATUS
+             LEGACY PAYMENT STATUS BOX
+
+             Kept in the DOM for existing JavaScript
+             compatibility, but hidden for the new layout.
              ================================================= -->
 
         <div
@@ -442,10 +442,8 @@
             <!-- =================================================
                  FINAL BALANCE
 
-                 Normally hidden.
-
-                 In final-payment mode, the JavaScript makes
-                 this visible and fills in the remaining balance.
+                 Used for confirmed reservations and
+                 final-payment mode.
                  ================================================= -->
 
             <div
@@ -463,15 +461,23 @@
                     class="final-balance-amount"
                 ></strong>
 
+                <p class="final-balance-due-message">
+                    Your remaining balance is due 7 days
+                    before your event.
+                </p>
+
             </div>
 
 
 
             <!-- =================================================
                  PAYMENT AMOUNT
+
+                 Used only for the approved / initial state.
                  ================================================= -->
 
             <div class="payment-amount-choice">
+
 
                 <!-- PAY DEPOSIT -->
 
@@ -548,18 +554,6 @@
 
 
             <!-- =================================================
-                 LEGACY REMAINING BALANCE ID
-
-                 Kept in the DOM because existing JavaScript
-                 uses this ID.
-
-                 The visible final-payment display above now
-                 uses this same ID.
-                 ================================================= -->
-
-
-
-            <!-- =================================================
                  STRIPE
                  ================================================= -->
 
@@ -598,13 +592,11 @@
                     Pay with Venmo
                 </h3>
 
-
                 <p id="venmo-payment-description">
                     If you prefer to pay with Venmo, please
                     contact Part of the Plot for payment
                     instructions.
                 </p>
-
 
                 <button
                     type="button"
@@ -634,13 +626,11 @@
                     Pay with Cash
                 </h3>
 
-
                 <p id="cash-payment-description">
                     If you prefer to pay with cash, please
                     contact Part of the Plot to make
                     arrangements.
                 </p>
-
 
                 <button
                     type="button"
@@ -707,12 +697,12 @@
     >
 
         <h2>
-            Your Reservation Is Fully Paid!
+            Paid in Full!
         </h2>
 
         <p>
-            Thank you! Your final payment has been received
-            and your reservation is fully paid.
+            Your reservation is confirmed and your balance
+            has been paid in full.
         </p>
 
         <p>
@@ -724,15 +714,18 @@
 
 
 </section>
-```
 
 </main>
+
+
 
 <!-- =========================================================
      FOOTER
      ========================================================= -->
 
 <div id="site-footer"></div>
+
+
 
 <!-- =========================================================
      SITE SCRIPTS
