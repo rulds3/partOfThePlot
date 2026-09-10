@@ -677,7 +677,7 @@ function displayReservation(
         "display-total",
         formatCurrency(
             reservation.total
-        )
+        ) + " + tax"
     );
 
 
@@ -685,7 +685,7 @@ function displayReservation(
         "display-deposit",
         formatCurrency(
             reservation.deposit_due
-        )
+        ) + " + tax"
     );
 
 
@@ -693,7 +693,7 @@ function displayReservation(
         "display-remaining",
         formatCurrency(
             reservation.remaining_balance
-        )
+        ) + " + tax"
     );
 
 
@@ -719,7 +719,7 @@ function displayReservation(
         depositChoice.textContent =
             formatCurrency(
                 reservation.deposit_due
-            );
+            ) + " + tax";
 
     }
 
@@ -729,7 +729,7 @@ function displayReservation(
         fullChoice.textContent =
             formatCurrency(
                 reservation.total
-            );
+            ) + " + tax";
 
     }
 
@@ -936,7 +936,7 @@ function setupBalanceMode(
         balanceAmount.textContent =
             formatCurrency(
                 reservation.remaining_balance
-            );
+            ) + " + tax";
 
     }
 
