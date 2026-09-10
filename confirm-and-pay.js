@@ -44,6 +44,10 @@ const paymentSection =
     document.getElementById("payment-section");
 
 
+const paymentStatus =
+    document.getElementById("payment-status");
+
+
 const paymentStatusHeading =
     document.getElementById("payment-status-heading");
 
@@ -62,6 +66,17 @@ const venmoPaymentButton =
 
 const cashPaymentButton =
     document.getElementById("cash-payment-button");
+
+
+/*
+ * Tracks whether the required agreements have already
+ * been accepted for the reservation currently loaded.
+ *
+ * This is intentionally based on the reservation returned
+ * from Supabase rather than browser storage.
+ */
+
+let agreementsAlreadyAccepted = false;
 
 
 /* =========================================================
@@ -105,14 +120,6 @@ function getPaymentResult() {
 
 /* =========================================================
    GET PAYMENT MODE
-   =========================================================
-
-   Normal mode:
-   - deposit
-   - full
-
-   Final balance mode:
-   - balance
    ========================================================= */
 
 function getPaymentMode() {
@@ -516,6 +523,92 @@ function setText(
 
     element.textContent =
         String(value);
+
+}
+
+
+/* =========================================================
+   CHECK WHETHER A DATABASE VALUE MEANS "YES"
+   ========================================================= */
+
+function isAcceptedValue(value) {
+
+    if (value === true) {
+
+        return true;
+
+    }
+
+
+    if (value === false) {
+
+        return false;
+
+    }
+
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return false;
+
+    }
+
+
+    const normalized =
+        String(value)
+            .trim()
+            .toLowerCase();
+
+
+    return (
+        normalized === "yes" ||
+        normalized === "true"
+    );
+
+}
+
+
+/* =========================================================
+   CHECK WHETHER ALL REQUIRED AGREEMENTS ARE ACCEPTED
+   ========================================================= */
+
+function reservationHasAcceptedAgreements(
+    reservation
+) {
+
+    if (!reservation) {
+
+        return false;
+
+    }
+
+
+    const clientAgreementAccepted =
+        isAcceptedValue(
+            reservation.client_agreement_accepted
+        );
+
+
+    const cancellationPolicyAccepted =
+        isAcceptedValue(
+            reservation.cancellation_policy_acknowledged
+        );
+
+
+    const reservationConfirmationAccepted =
+        isAcceptedValue(
+            reservation.reservation_confirmation
+        );
+
+
+    return (
+        clientAgreementAccepted &&
+        cancellationPolicyAccepted &&
+        reservationConfirmationAccepted
+    );
 
 }
 
@@ -961,10 +1054,51 @@ function updatePaymentButtonText() {
 
 
 /* =========================================================
+   SHOW PAYMENT STATUS
+   ========================================================= */
+
+function showPaymentStatus() {
+
+    if (!paymentStatus) {
+
+        return;
+
+    }
+
+
+    paymentStatus.style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   HIDE PAYMENT STATUS
+   ========================================================= */
+
+function hidePaymentStatus() {
+
+    if (!paymentStatus) {
+
+        return;
+
+    }
+
+
+    paymentStatus.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
    SHOW CONFIRMED STATE
    ========================================================= */
 
 function showConfirmedState() {
+
+    hidePaymentStatus();
+
 
     confirmationBox.innerHTML = `
         <h2>
@@ -1003,6 +1137,9 @@ function showConfirmedState() {
    ========================================================= */
 
 function showPaidInFullState() {
+
+    hidePaymentStatus();
+
 
     confirmationBox.innerHTML = `
         <h2>
@@ -1047,11 +1184,15 @@ function showPaymentSection() {
 
 
     /*
-     * In balance mode, confirmation box
+     * In balance mode, or when the required agreements
+     * have already been accepted, the confirmation form
      * should remain hidden.
      */
 
-    if (!isBalanceMode()) {
+    if (
+        !isBalanceMode() &&
+        !agreementsAlreadyAccepted
+    ) {
 
         confirmationBox.style.display =
             "block";
@@ -1071,7 +1212,8 @@ function showPaymentSection() {
 function showPaymentProcessingState() {
 
     showPaymentSection();
-	showPaymentStatus();
+
+    showPaymentStatus();
 
 
     if (isBalanceMode()) {
@@ -1329,6 +1471,9 @@ async function waitForPaymentConfirmation() {
     }
 
 
+    showPaymentStatus();
+
+
     paymentStatusHeading.textContent =
         "Payment Submitted";
 
@@ -1447,6 +1592,17 @@ async function loadReservation() {
             );
 
         }
+
+
+        /*
+         * Determine whether the required agreements
+         * have already been recorded.
+         */
+
+        agreementsAlreadyAccepted =
+            reservationHasAcceptedAgreements(
+                reservation
+            );
 
 
         const tokenField =
@@ -1582,6 +1738,26 @@ async function loadReservation() {
             "success"
         ) {
 
+            /*
+             * The customer has already accepted the
+             * agreements if they were able to reach
+             * Stripe from this page.
+             *
+             * Keep the confirmation form hidden.
+             */
+
+            agreementsAlreadyAccepted =
+                true;
+
+
+            if (confirmationBox) {
+
+                confirmationBox.style.display =
+                    "none";
+
+            }
+
+
             showPaymentProcessingState();
 
 
@@ -1605,7 +1781,15 @@ async function loadReservation() {
             "cancelled"
         ) {
 
+            /*
+             * If the customer already accepted the
+             * agreements, do not bring the form back.
+             */
+
             showPaymentSection();
+
+
+            showPaymentStatus();
 
 
             paymentStatusHeading.textContent =
@@ -1655,6 +1839,10 @@ async function loadReservation() {
             }
 
 
+            agreementsAlreadyAccepted =
+                true;
+
+
             showPaymentProcessingState();
 
             waitForPaymentConfirmation();
@@ -1673,30 +1861,22 @@ async function loadReservation() {
             "approved"
         ) {
 
+            /*
+             * If all required agreements have already
+             * been recorded, skip the confirmation form
+             * completely and go straight to payment.
+             */
+
             if (
-                reservation.client_agreement_accepted
+                agreementsAlreadyAccepted
             ) {
 
-                confirmationBox.innerHTML = `
-                    <h2>
-                        Reservation Approved!
-                    </h2>
-
-                    <p>
-                        Your reservation has been approved and
-                        is being held for you.
-                    </p>
-
-                    <p>
-                        Your agreements have already been recorded.
-                        Please submit your required deposit below
-                        to officially confirm your reservation.
-                    </p>
-                `;
-
-
                 confirmationBox.style.display =
-                    "block";
+                    "none";
+
+
+                confirmationMessage.textContent =
+                    "";
 
 
                 showPaymentSection();
@@ -1705,6 +1885,11 @@ async function loadReservation() {
 
             }
 
+
+            /*
+             * Agreements have not yet been accepted.
+             * Show the confirmation form.
+             */
 
             confirmationBox.style.display =
                 "block";
@@ -1848,10 +2033,7 @@ if (confirmationForm) {
 
 
             /*
-             * The current HTML uses three actual
-             * checkboxes. Validate their checked state
-             * directly rather than looking for the old
-             * "Yes" form values.
+             * Validate all three required checkboxes.
              */
 
             const agreementAcknowledgment =
@@ -1997,6 +2179,15 @@ if (confirmationForm) {
                 }
 
 
+                /*
+                 * The agreements are now recorded.
+                 * Remember that for the rest of this page session.
+                 */
+
+                agreementsAlreadyAccepted =
+                    true;
+
+
                 confirmationForm.style.display =
                     "none";
 
@@ -2022,12 +2213,13 @@ if (confirmationForm) {
                 `;
 
 
-                paymentStatusHeading.textContent =
-                    "Reservation Approved!";
+                /*
+                 * The payment-status box is hidden during
+                 * the normal approval flow because the approval
+                 * message above already communicates the status.
+                 */
 
-
-                paymentStatusMessage.textContent =
-                    "Your reservation has been approved and is being held for you. Please choose your payment amount and payment method below.";
+                hidePaymentStatus();
 
 
                 paymentSection.style.display =
