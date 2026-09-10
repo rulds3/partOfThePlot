@@ -68,15 +68,29 @@ const cashPaymentButton =
     document.getElementById("cash-payment-button");
 
 
+const finalBalanceDisplay =
+    document.getElementById("final-balance-display");
+
+
+const displayRemaining =
+    document.getElementById("display-remaining");
+
+
 /*
  * Tracks whether the required agreements have already
  * been accepted for the reservation currently loaded.
- *
- * This is intentionally based on the reservation returned
- * from Supabase rather than browser storage.
  */
 
 let agreementsAlreadyAccepted = false;
+
+
+/*
+ * Tracks whether the reservation is already confirmed
+ * and the payment button should therefore pay the
+ * remaining balance rather than a deposit.
+ */
+
+let confirmedPaymentMode = false;
 
 
 /* =========================================================
@@ -160,7 +174,24 @@ function isBalanceMode() {
 
 function getSelectedPaymentType() {
 
+    /*
+     * If the page was opened specifically for the
+     * final balance, always use the balance payment type.
+     */
+
     if (isBalanceMode()) {
+
+        return "balance";
+
+    }
+
+
+    /*
+     * If the reservation is already confirmed,
+     * the only available payment is the remaining balance.
+     */
+
+    if (confirmedPaymentMode) {
 
         return "balance";
 
@@ -698,8 +729,8 @@ function displayReservation(
 
 
     /*
-     * Populate payment choices if those
-     * optional elements exist.
+     * Populate optional payment choice elements
+     * if they exist.
      */
 
     const depositChoice =
@@ -737,6 +768,89 @@ function displayReservation(
 
 
 /* =========================================================
+   DISPLAY FINAL BALANCE
+   ========================================================= */
+
+function displayFinalBalance(
+    reservation
+) {
+
+    if (!reservation) {
+
+        return;
+
+    }
+
+
+    const remainingBalance =
+        Number(
+            reservation.remaining_balance
+        );
+
+
+    if (
+        !Number.isFinite(
+            remainingBalance
+        ) ||
+        remainingBalance <= 0
+    ) {
+
+        if (finalBalanceDisplay) {
+
+            finalBalanceDisplay.style.display =
+                "none";
+
+        }
+
+
+        return;
+
+    }
+
+
+    if (displayRemaining) {
+
+        displayRemaining.textContent =
+            formatCurrency(
+                remainingBalance
+            ) + " + tax";
+
+    }
+
+
+    if (finalBalanceDisplay) {
+
+        finalBalanceDisplay.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =========================================================
+   HIDE INITIAL PAYMENT CHOICES
+   ========================================================= */
+
+function hideInitialPaymentChoices() {
+
+    const paymentAmountChoice =
+        document.querySelector(
+            ".payment-amount-choice"
+        );
+
+
+    if (paymentAmountChoice) {
+
+        paymentAmountChoice.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================================
    PREPARE PAGE FOR FINAL BALANCE MODE
    ========================================================= */
 
@@ -749,6 +863,9 @@ function setupBalanceMode(
         return;
 
     }
+
+
+    confirmedPaymentMode = true;
 
 
     /*
@@ -796,22 +913,7 @@ function setupBalanceMode(
     }
 
 
-    /*
-     * Hide initial payment choices.
-     */
-
-    const paymentAmountChoice =
-        document.querySelector(
-            ".payment-amount-choice"
-        );
-
-
-    if (paymentAmountChoice) {
-
-        paymentAmountChoice.style.display =
-            "none";
-
-    }
+    hideInitialPaymentChoices();
 
 
     /*
@@ -827,13 +929,22 @@ function setupBalanceMode(
     if (paymentHeading) {
 
         paymentHeading.textContent =
-            "Complete Your Final Payment";
+            "Final Payment";
 
     }
 
 
     /*
-     * Update status message.
+     * Show the remaining balance.
+     */
+
+    displayFinalBalance(
+        reservation
+    );
+
+
+    /*
+     * Update payment status.
      */
 
     if (paymentStatusHeading) {
@@ -847,63 +958,31 @@ function setupBalanceMode(
     if (paymentStatusMessage) {
 
         paymentStatusMessage.textContent =
-            "Your reservation is confirmed. Your remaining balance is due 7 days before your event.";
+            "Your reservation is confirmed. Your deposit has been received, and the remaining balance shown below is due 7 days before your event.";
 
     }
 
 
     /*
-     * Update payment descriptions.
+     * Update Stripe description.
      */
 
-    const paymentOptions =
-        document.querySelectorAll(
-            ".payment-option"
+    const stripeParagraph =
+        document.querySelector(
+            ".payment-option p"
         );
 
 
-    if (paymentOptions.length >= 3) {
+    if (stripeParagraph) {
 
-        const stripeParagraph =
-            paymentOptions[0].querySelector("p");
-
-
-        const venmoParagraph =
-            paymentOptions[1].querySelector("p");
-
-
-        const cashParagraph =
-            paymentOptions[2].querySelector("p");
-
-
-        if (stripeParagraph) {
-
-            stripeParagraph.textContent =
-                "Pay your remaining balance securely online using a credit or debit card.";
-
-        }
-
-
-        if (venmoParagraph) {
-
-            venmoParagraph.textContent =
-                "Send your remaining balance through Venmo using the payment information provided by Part of the Plot.";
-
-        }
-
-
-        if (cashParagraph) {
-
-            cashParagraph.textContent =
-                "If you prefer to pay your remaining balance in cash, please contact Part of the Plot to make arrangements.";
-
-        }
+        stripeParagraph.textContent =
+            "Pay your remaining balance securely online using a credit or debit card.";
 
     }
 
 
     /*
-     * Change reservation payment note.
+     * Update final balance note if one exists.
      */
 
     const paymentSummaryNote =
@@ -916,27 +995,6 @@ function setupBalanceMode(
 
         paymentSummaryNote.textContent =
             "Your reservation is already confirmed. The remaining balance shown above is due 7 days before your event.";
-
-    }
-
-
-    /*
-     * Make sure displayed remaining balance
-     * is correct.
-     */
-
-    const balanceAmount =
-        document.getElementById(
-            "display-remaining"
-        );
-
-
-    if (balanceAmount) {
-
-        balanceAmount.textContent =
-            formatCurrency(
-                reservation.remaining_balance
-            ) + " + tax";
 
     }
 
@@ -962,7 +1020,7 @@ function updatePaymentButtonText() {
         if (stripePaymentButton) {
 
             stripePaymentButton.textContent =
-                "Pay Final Balance by Card";
+                "Pay Remaining Balance by Card";
 
         }
 
@@ -1095,10 +1153,22 @@ function hidePaymentStatus() {
    SHOW CONFIRMED STATE
    ========================================================= */
 
-function showConfirmedState() {
+function showConfirmedState(
+    reservation
+) {
 
-    hidePaymentStatus();
+    /*
+     * This reservation is confirmed, so any payment
+     * made from this page must be for the final balance.
+     */
 
+    confirmedPaymentMode = true;
+
+
+    /*
+     * Replace the old confirmation box with a clear
+     * confirmation message.
+     */
 
     confirmationBox.innerHTML = `
         <h2>
@@ -1126,8 +1196,50 @@ function showConfirmedState() {
         "block";
 
 
+    /*
+     * Show the payment section beneath the confirmation.
+     */
+
     paymentSection.style.display =
-        "none";
+        "block";
+
+
+    /*
+     * Hide the initial deposit/full-payment choices.
+     */
+
+    hideInitialPaymentChoices();
+
+
+    /*
+     * Show the remaining balance.
+     */
+
+    displayFinalBalance(
+        reservation
+    );
+
+
+    /*
+     * Show payment status.
+     */
+
+    showPaymentStatus();
+
+
+    paymentStatusHeading.textContent =
+        "Payment Status";
+
+
+    paymentStatusMessage.textContent =
+        "Your deposit has been paid. Your remaining balance is shown below and is due 7 days before your event.";
+
+
+    /*
+     * Make the Stripe button a final-balance button.
+     */
+
+    updatePaymentButtonText();
 
 }
 
@@ -1138,22 +1250,33 @@ function showConfirmedState() {
 
 function showPaidInFullState() {
 
+    confirmedPaymentMode = true;
+
+
     hidePaymentStatus();
+
+
+    if (paymentSection) {
+
+        paymentSection.style.display =
+            "none";
+
+    }
 
 
     confirmationBox.innerHTML = `
         <h2>
-            Paid in Full!
+            Reservation Confirmed!
         </h2>
 
         <p>
-            Your final balance has been received and your
-            reservation is now paid in full.
+            Your reservation is officially confirmed and
+            paid in full.
         </p>
 
         <p>
-            Your reservation is fully confirmed and on the books
-            with Part of the Plot.
+            Your reservation is now on the books with
+            Part of the Plot.
         </p>
 
         <p>
@@ -1165,10 +1288,6 @@ function showPaidInFullState() {
 
     confirmationBox.style.display =
         "block";
-
-
-    paymentSection.style.display =
-        "none";
 
 }
 
@@ -1184,13 +1303,14 @@ function showPaymentSection() {
 
 
     /*
-     * In balance mode, or when the required agreements
-     * have already been accepted, the confirmation form
-     * should remain hidden.
+     * In normal initial-payment mode, show the
+     * confirmation form if the agreements have not
+     * already been accepted.
      */
 
     if (
         !isBalanceMode() &&
+        !confirmedPaymentMode &&
         !agreementsAlreadyAccepted
     ) {
 
@@ -1216,7 +1336,7 @@ function showPaymentProcessingState() {
     showPaymentStatus();
 
 
-    if (isBalanceMode()) {
+    if (isBalanceMode() || confirmedPaymentMode) {
 
         paymentStatusHeading.textContent =
             "Final Payment Received";
@@ -1398,7 +1518,10 @@ async function waitForPaymentConfirmation() {
              * FINAL BALANCE PAYMENT
              */
 
-            if (isBalanceMode()) {
+            if (
+                isBalanceMode() ||
+                confirmedPaymentMode
+            ) {
 
                 if (
                     reservationIsPaidInFull(
@@ -1436,7 +1559,9 @@ async function waitForPaymentConfirmation() {
                     }
                     else {
 
-                        showConfirmedState();
+                        showConfirmedState(
+                            reservation
+                        );
 
                     }
 
@@ -1478,7 +1603,10 @@ async function waitForPaymentConfirmation() {
         "Payment Submitted";
 
 
-    if (isBalanceMode()) {
+    if (
+        isBalanceMode() ||
+        confirmedPaymentMode
+    ) {
 
         paymentStatusMessage.textContent =
             "Your final payment has been submitted successfully. We are finalizing your payment now. You do not need to pay again. If your reservation does not show as paid in full shortly, please contact Part of the Plot.";
@@ -1661,7 +1789,14 @@ async function loadReservation() {
                 "confirmed"
             ) {
 
-                showPaymentSection();
+                /*
+                 * Show the confirmation + payment status
+                 * together, rather than just the payment box.
+                 */
+
+                showConfirmedState(
+                    reservation
+                );
 
                 return;
 
@@ -1695,7 +1830,7 @@ async function loadReservation() {
 
 
         /* =================================================
-           INITIAL PAYMENT MODE
+           CONFIRMED RESERVATION
            ================================================= */
 
         if (
@@ -1715,7 +1850,9 @@ async function loadReservation() {
             }
             else {
 
-                showConfirmedState();
+                showConfirmedState(
+                    reservation
+                );
 
             }
 
@@ -1742,8 +1879,6 @@ async function loadReservation() {
              * The customer has already accepted the
              * agreements if they were able to reach
              * Stripe from this page.
-             *
-             * Keep the confirmation form hidden.
              */
 
             agreementsAlreadyAccepted =
@@ -1829,7 +1964,9 @@ async function loadReservation() {
                 }
                 else {
 
-                    showConfirmedState();
+                    showConfirmedState(
+                        reservation
+                    );
 
                 }
 
@@ -2181,7 +2318,6 @@ if (confirmationForm) {
 
                 /*
                  * The agreements are now recorded.
-                 * Remember that for the rest of this page session.
                  */
 
                 agreementsAlreadyAccepted =
@@ -2212,12 +2348,6 @@ if (confirmationForm) {
                     </p>
                 `;
 
-
-                /*
-                 * The payment-status box is hidden during
-                 * the normal approval flow because the approval
-                 * message above already communicates the status.
-                 */
 
                 hidePaymentStatus();
 
@@ -2311,6 +2441,11 @@ if (stripePaymentButton) {
 
             }
 
+
+            /*
+             * This will automatically be "balance" when
+             * the reservation is already confirmed.
+             */
 
             const paymentType =
                 getSelectedPaymentType();
