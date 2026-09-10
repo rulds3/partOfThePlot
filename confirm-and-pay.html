@@ -415,10 +415,6 @@
 
             <!-- =================================================
                  PAYMENT STATUS
-
-                 Hidden during the normal approval/payment flow.
-                 JavaScript displays this only when needed,
-                 such as after returning from Stripe.
                  ================================================= -->
 
             <div
@@ -447,71 +443,9 @@
                     id="payment-description"
                     class="payment-description"
                 >
-                    Choose whether to pay your required deposit
-                    or the full reservation amount now.
+                    Choose how you would like to pay for your
+                    reservation.
                 </p>
-
-
-
-                <!-- =================================================
-                     PAYMENT SUMMARY
-                     ================================================= -->
-
-                <div class="payment-summary">
-
-                    <h3>
-                        Payment Summary
-                    </h3>
-
-
-                    <div class="payment-summary-row">
-
-                        <span>
-                            Total
-                        </span>
-
-                        <strong
-                            id="display-total"
-                        ></strong>
-
-                    </div>
-
-
-                    <div class="payment-summary-row">
-
-                        <span>
-                            Required Deposit
-                        </span>
-
-                        <strong
-                            id="display-deposit"
-                        ></strong>
-
-                    </div>
-
-
-                    <div class="payment-summary-row">
-
-                        <span>
-                            Remaining Balance
-                        </span>
-
-                        <strong
-                            id="display-remaining"
-                        ></strong>
-
-                    </div>
-
-
-                    <p
-                        id="payment-summary-note"
-                        class="payment-summary-note"
-                    >
-                        Your reservation will be officially confirmed
-                        once your required deposit has been received.
-                    </p>
-
-                </div>
 
 
 
@@ -527,6 +461,8 @@
                     </h3>
 
 
+                    <!-- PAY DEPOSIT -->
+
                     <label class="payment-radio">
 
                         <input
@@ -538,18 +474,30 @@
 
                         <span class="radio-content">
 
-                            <strong>
-                                Pay Deposit
-                            </strong>
+                            <span class="payment-choice-line">
 
-                            <small>
-                                Required to secure your reservation
-                            </small>
+                                <strong>
+                                    Pay Deposit
+                                </strong>
+
+                                <small>
+                                    Required to secure your reservation
+                                </small>
+
+                            </span>
+
+                            <strong
+                                id="display-deposit"
+                                class="payment-choice-amount"
+                            ></strong>
 
                         </span>
 
                     </label>
 
+
+
+                    <!-- PAY IN FULL -->
 
                     <label class="payment-radio">
 
@@ -561,13 +509,22 @@
 
                         <span class="radio-content">
 
-                            <strong>
-                                Pay in Full
-                            </strong>
+                            <span class="payment-choice-line">
 
-                            <small>
-                                Pay the entire reservation amount now
-                            </small>
+                                <strong>
+                                    Pay in Full
+                                </strong>
+
+                                <small>
+                                    Pay the entire reservation amount now
+                                </small>
+
+                            </span>
+
+                            <strong
+                                id="display-total"
+                                class="payment-choice-amount"
+                            ></strong>
 
                         </span>
 
@@ -575,6 +532,20 @@
 
 
                 </div>
+
+
+
+                <!-- =================================================
+                     REMAINING BALANCE
+
+                     Kept in the DOM because the existing
+                     JavaScript uses this ID.
+                     ================================================= -->
+
+                <span
+                    id="display-remaining"
+                    style="display: none;"
+                ></span>
 
 
 
