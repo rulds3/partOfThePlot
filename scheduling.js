@@ -1273,19 +1273,19 @@ function initializeSchedulingForm() {
                     .join(", ");
 
 
-            /*
-             * Remove the temporary individual
-             * address fields so they are not sent
-             * as unnecessary reservation properties.
-             */
+			/* KEEP STRUCTURED VENUE ADDRESS */
 
-            delete reservationData.location_street;
+			reservationData.venue_street =
+				locationStreet;
 
-            delete reservationData.location_city;
+			reservationData.venue_city =
+				locationCity;
 
-            delete reservationData.location_state;
+			reservationData.venue_state =
+				locationState;
 
-            delete reservationData.location_zip;
+			reservationData.venue_zip =
+				locationZip;
 
 
             /* -----------------------------------------
