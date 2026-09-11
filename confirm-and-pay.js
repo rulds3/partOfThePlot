@@ -1024,7 +1024,7 @@ function showConfirmedState(
 
 
     setReservationStatus(
-        "Confirmed - Your deposit has been paid, and your date has been reserved./nFull payment is due 7 days before your scheduled date."
+        "Confirmed - Your deposit has been paid, and your date has been reserved.\nFull payment is due 7 days before your scheduled date."
     );
 
 
@@ -1109,7 +1109,7 @@ function showApprovedPaymentState() {
 
 
     setReservationStatus(
-        "Approved - your chosen date is available. /n A deposit is required to reserve it."
+        "Approved - your chosen date is available. \n A deposit is required to reserve it."
     );
 
 
@@ -1178,7 +1178,7 @@ function showReviewState(
 
 
     setReservationStatus(
-        "Approved - your chosen date is available. /n A deposit is required to reserve it."
+        "Approved - your chosen date is available. \n A deposit is required to reserve it."
     );
 
 
@@ -1262,7 +1262,7 @@ function setupBalanceMode(
 
 
     setReservationStatus(
-        "Confirmed - Your deposit has been paid, and your date has been reserved./nFull payment is due 7 days before your scheduled date."
+        "Confirmed - Your deposit has been paid, and your date has been reserved.\nFull payment is due 7 days before your scheduled date."
     );
 
 
@@ -2148,7 +2148,7 @@ async function loadReservation() {
         ) {
 
             setReservationStatus(
-                "Approved - your chosen date is available. /n A deposit is required to reserve it."
+                "Approved - your chosen date is available. \n A deposit is required to reserve it."
             );
 
 
@@ -2565,7 +2565,7 @@ if (confirmationForm) {
 
 
                 setReservationStatus(
-					"Approved - your chosen date is available. /n A deposit is required to reserve it."
+					"Approved - your chosen date is available. \n A deposit is required to reserve it."
                 );
 
 
