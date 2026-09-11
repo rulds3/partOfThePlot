@@ -2,50 +2,64 @@
 
 <div class="modal" id="scheduleModal">
 
-    <div class="modal-content">
 
-        <button
-            class="modal-close"
-            id="closeModal"
-            type="button"
+<div class="modal-content">
+
+    <button
+        class="modal-close"
+        id="closeModal"
+        type="button"
+    >
+        &times;
+    </button>
+
+
+    <div class="modal-header">
+
+        <p class="eyebrow">
+            PLAN YOUR MYSTERY
+        </p>
+
+        <h2>
+            Schedule a Game
+        </h2>
+
+        <p>
+            Tell me a little about your event and I'll get back
+            to you to work out the details.
+        </p>
+
+    </div>
+
+
+    <form id="scheduleForm">
+
+        <!-- ================= SPAM PROTECTION ================= -->
+
+        <input
+            type="text"
+            name="_gotcha"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+            style="position:absolute; left:-9999px;"
         >
-            &times;
-        </button>
 
 
-        <div class="modal-header">
+        <!-- =====================================================
+             CONTACT INFORMATION
+        ====================================================== -->
 
-            <p class="eyebrow">
-                PLAN YOUR MYSTERY
-            </p>
+        <div class="schedule-section">
 
-            <h2>
-                Schedule a Game
-            </h2>
+            <div class="schedule-section-header">
 
-            <p>
-                Tell me a little about your event and I'll get back
-                to you to work out the details.
-            </p>
+                <h3>
+                    Contact Information
+                </h3>
 
-        </div>
+            </div>
 
-
-        <form id="scheduleForm">
-
-            <!-- ================= SPAM PROTECTION ================= -->
-
-            <input
-                type="text"
-                name="_gotcha"
-                tabindex="-1"
-                autocomplete="off"
-                aria-hidden="true"
-                style="position:absolute; left:-9999px;"
-            >
-
-
-            <!-- ================= CONTACT INFORMATION ================= -->
 
             <div class="form-row">
 
@@ -97,6 +111,23 @@
 
             </div>
 
+        </div>
+
+
+        <!-- =====================================================
+             GAME & SCHEDULING
+        ====================================================== -->
+
+        <div class="schedule-section">
+
+            <div class="schedule-section-header">
+
+                <h3>
+                    Game &amp; Scheduling
+                </h3>
+
+            </div>
+
 
             <!-- ================= GAME ================= -->
 
@@ -119,22 +150,21 @@
                     <option value="A Dead Man's Chest">
                         A Dead Man's Chest
                     </option>
-					
+
                     <option value="Spellbound">
                         Spellbound
                     </option>
-                    
+
                     <option value="Way Out West">
                         Way Out West
                     </option>
-                  
 
                 </select>
 
 
                 <!-- ================= GAME PRICE ================= -->
 
-                <p class="schedule-price">
+                <p class="form-help schedule-price">
 
                     <span id="schedule-price-amount"></span>
 
@@ -214,7 +244,9 @@
             </div>
 
 
-            <p class="form-help schedule-day-note">
+            <!-- ================= AVAILABILITY NOTE ================= -->
+
+            <p class="form-help">
                 Games are available Monday, Tuesday, Thursday, Friday, and Saturday.
             </p>
 
@@ -236,84 +268,122 @@
 
             </div>
 
+        </div>
 
-			<!-- ================= LOCATION ================= -->
 
-			<div class="form-group">
+        <!-- =====================================================
+             VENUE
+        ====================================================== -->
 
-				<label for="schedule-location-street">
-					Chosen Venue Address *
-				</label>
+        <div class="schedule-section">
 
-				<input
-					type="text"
-					id="schedule-location-street"
-					name="location_street"
-					placeholder="Street address"
-					required
-				>
+            <div class="schedule-section-header">
 
-			</div>
+                <h3>
+                    Venue - Where will your mystery take place?
+                </h3>
 
-			<div class="form-group">
+            </div>
 
-				<label for="schedule-location-city">
-					City *
-				</label>
 
-				<input
-					type="text"
-					id="schedule-location-city"
-					name="location_city"
-					placeholder="City"
-					required
-				>
+            <div class="form-group">
 
-			</div>
+                <label for="schedule-location-street">
+                    Chosen Venue Address *
+                </label>
 
-			<div class="form-group">
+                <input
+                    type="text"
+                    id="schedule-location-street"
+                    name="location_street"
+                    placeholder="Street address"
+                    autocomplete="street-address"
+                    required
+                >
 
-				<label for="schedule-location-state">
-					State *
-				</label>
+            </div>
 
-				<input
-					type="text"
-					id="schedule-location-state"
-					name="location_state"
-					value="Idaho"
-					required
-				>
 
-			</div>
+            <div class="form-row">
 
-			<div class="form-group">
+                <div class="form-group">
 
-				<label for="schedule-location-zip">
-					ZIP Code *
-				</label>
+                    <label for="schedule-location-city">
+                        City *
+                    </label>
 
-				<input
-					type="text"
-					id="schedule-location-zip"
-					name="location_zip"
-					placeholder="ZIP code"
-					inputmode="numeric"
-					autocomplete="postal-code"
-					pattern="[0-9]{5}(-[0-9]{4})?"
-					required
-				>
+                    <input
+                        type="text"
+                        id="schedule-location-city"
+                        name="location_city"
+                        placeholder="City"
+                        autocomplete="address-level2"
+                        required
+                    >
 
-				<p class="form-help">
-					Enter the complete physical address where the party will take place.
-				</p>
+                </div>
 
-			</div>
+
+                <div class="form-group">
+
+                    <label for="schedule-location-state">
+                        State *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="schedule-location-state"
+                        name="location_state"
+                        value="Idaho"
+                        autocomplete="address-level1"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="schedule-location-zip">
+                        ZIP Code *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="schedule-location-zip"
+                        name="location_zip"
+                        placeholder="ZIP code"
+                        inputmode="numeric"
+                        autocomplete="postal-code"
+                        pattern="[0-9]{5}(-[0-9]{4})?"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             CHARACTER ASSIGNMENTS
+        ====================================================== -->
+
+        <div class="schedule-section">
+
+            <div class="schedule-section-header">
+
+                <h3>
+                    Character Assignments
+                </h3>
+
+            </div>
 
 
             <!-- ================= CHARACTER ASSIGNMENT ================= -->
 
-            <div class="form-group">
+            <div class="form-group character-assignment-section">
 
                 <label>
                     How would you like character assignments handled? *
@@ -330,8 +400,11 @@
                             required
                         >
 
-                        Ahead of time
-                        (Characters can prepare for their parts.)
+                        Ahead of time -
+
+                        <span class="radio-description">
+                            Players can prepare for their parts.
+                        </span>
 
                     </label>
 
@@ -344,8 +417,11 @@
                             value="party"
                         >
 
-                        At the party
-                        (Less worry about last minute cast changes.)
+                        At the party - 
+
+                        <span class="radio-description">
+                            Less worry about last minute cast changes.
+                        </span>
 
                     </label>
 
@@ -354,7 +430,7 @@
             </div>
 
 
-            <!-- ================= CHARACTER INFORMATION ================= -->
+            <!-- ================= PLAYER INFORMATION ================= -->
 
             <div
                 id="character-info"
@@ -367,9 +443,8 @@
                 </label>
 
                 <p class="form-help">
-                    Enter the name and email address for each player.
-                    I'll use this information to send character assignments
-                    and any necessary instructions before the game.
+                    Enter each player's name and email so I can send character assignments
+                    and any instructions before the game.
                 </p>
 
                 <div id="character-players"></div>
@@ -379,129 +454,144 @@
 
             <!-- ================= CHARACTER NOTES ================= -->
 
-            <div class="form-group character-notes-section">
+            <details class="character-notes-section">
 
-                <label>
-                    Character Notes
-                </label>
+                <summary>
 
-                <p class="form-help">
-                    You don't have to fill out this section, but these details
-                    will help me match characters to your group.
-                </p>
+                    <span>
+                        Optional: Help with character matching
+                    </span>
+
+                    <span class="character-notes-plus">
+                        +
+                    </span>
+
+                </summary>
 
 
-                <!-- ================= COUPLES ================= -->
-
-                <div class="form-group character-notes">
-
-                    <label for="couples">
-                        Couples
-                    </label>
+                <div class="character-notes-content">
 
                     <p class="form-help">
-                        Are any of the players married, dating, or otherwise
-                        a couple? Please list their names.
+                        Share anything that might help with character matching,
+                        such as couples, especially outgoing players, or players
+                        who prefer a quieter role.
                     </p>
 
-                    <textarea
-                        id="couples"
-                        name="couples"
-                        rows="2"
-                        placeholder="Example: Sarah & Mike; Emily & Josh"
-                    ></textarea>
+
+                    <!-- ================= COUPLES ================= -->
+
+                    <div class="form-group character-notes">
+
+                        <label for="couples">
+                            Couples
+                        </label>
+
+                        <textarea
+                            id="couples"
+                            name="couples"
+                            rows="2"
+                            placeholder="Example: Sarah & Mike; Emily & Josh"
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- ================= OUTGOING PLAYERS ================= -->
+
+                    <div class="form-group character-notes">
+
+                        <label for="outgoing-players">
+                            Outgoing Players
+                        </label>
+
+                        <textarea
+                            id="outgoing-players"
+                            name="outgoingPlayers"
+                            rows="2"
+                            placeholder="Example: Sarah, Mike, and Taylor"
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- ================= RESERVED PLAYERS ================= -->
+
+                    <div class="form-group character-notes">
+
+                        <label for="reserved-players">
+                            More Reserved Players
+                        </label>
+
+                        <textarea
+                            id="reserved-players"
+                            name="reservedPlayers"
+                            rows="2"
+                            placeholder="Example: Alex and Jamie"
+                        ></textarea>
+
+                    </div>
 
                 </div>
 
+            </details>
 
-                <!-- ================= OUTGOING PLAYERS ================= -->
-
-                <div class="form-group character-notes">
-
-                    <label for="outgoing-players">
-                        Outgoing Players
-                    </label>
-
-                    <p class="form-help">
-                        Which players would you describe as especially
-                        outgoing, talkative, or comfortable taking the lead?
-                    </p>
-
-                    <textarea
-                        id="outgoing-players"
-                        name="outgoingPlayers"
-                        rows="2"
-                        placeholder="Example: Sarah, Mike, and Taylor"
-                    ></textarea>
-
-                </div>
-
-
-                <!-- ================= RESERVED PLAYERS ================= -->
-
-                <div class="form-group character-notes">
-
-                    <label for="reserved-players">
-                        More Reserved Players
-                    </label>
-
-                    <p class="form-help">
-                        Which players tend to be quieter, more reserved,
-                        or prefer not to be the center of attention?
-                    </p>
-
-                    <textarea
-                        id="reserved-players"
-                        name="reservedPlayers"
-                        rows="2"
-                        placeholder="Example: Alex and Jamie"
-                    ></textarea>
-
-                </div>
-
-            </div>
-
-
-            <!-- ================= ADDITIONAL MESSAGE ================= -->
-
-            <div class="form-group">
-
-                <label for="schedule-message">
-                    Anything else you'd like to share?
-                </label>
-
-                <textarea
-                    id="schedule-message"
-                    name="message"
-                    rows="5"
-                    placeholder="Questions, special requests, or anything else you'd like me to know."
-                ></textarea>
-
-            </div>
-
-
-            <!-- ================= SUBMIT ================= -->
-
-            <button
-                type="submit"
-                class="button form-submit"
-            >
-                Send Scheduling Request
-            </button>
-
-        </form>
-
-
-        <!-- ================= SUCCESS MESSAGE ================= -->
-
-        <div
-            id="schedule-success"
-            class="form-success"
-            style="display: none;"
-        >
         </div>
 
 
+        <!-- =====================================================
+             DIVIDER BEFORE ADDITIONAL MESSAGE
+        ====================================================== -->
+
+        <div
+            class="schedule-form-divider"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- =====================================================
+             ADDITIONAL MESSAGE
+        ====================================================== -->
+
+        <div class="form-group">
+
+            <label for="schedule-message">
+                Anything else you'd like to share?
+            </label>
+
+            <textarea
+                id="schedule-message"
+                name="message"
+                rows="5"
+                placeholder="Questions, special requests, or anything else you'd like me to know."
+            ></textarea>
+
+        </div>
+
+
+        <!-- =====================================================
+             SUBMIT
+        ====================================================== -->
+
+        <button
+            type="submit"
+            class="button form-submit"
+        >
+            Send Scheduling Request
+        </button>
+
+    </form>
+
+
+    <!-- ================= SUCCESS MESSAGE ================= -->
+
+    <div
+        id="schedule-success"
+        class="form-success"
+        style="display: none;"
+    >
     </div>
+
+
+</div>
 
 </div>

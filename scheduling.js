@@ -491,12 +491,18 @@ function initializeSchedulingForm() {
         );
 
 
+    /*
+     * Character notes are separate from the
+     * player-information box.
+     *
+     * They remain available regardless of
+     * how character assignments are handled.
+     */
+
     const characterNotes =
-        characterInfo
-            ? characterInfo.querySelector(
-                ".character-notes-section"
-            )
-            : null;
+        document.querySelector(
+            ".character-notes-section"
+        );
 
 
     const playerInformationLabel =
@@ -542,17 +548,29 @@ function initializeSchedulingForm() {
 
 
         /*
-         * Character information is always
-         * available.
+         * Player Information is ONLY visible
+         * when characters are being assigned
+         * ahead of time.
+         *
+         * Anything already entered remains
+         * intact while the section is hidden.
          */
 
         if (characterInfo) {
 
             characterInfo.style.display =
-                "block";
+                isAheadOfTime
+                    ? "flex"
+                    : "none";
 
         }
 
+
+        /*
+         * Character Notes are independent of
+         * the assignment method and remain
+         * available.
+         */
 
         if (characterNotes) {
 
@@ -564,37 +582,14 @@ function initializeSchedulingForm() {
 
         /*
          * If characters are not being assigned
-         * ahead of time, hide player information.
+         * ahead of time, stop here.
+         *
+         * IMPORTANT:
+         * Do NOT clear characterPlayers.
+         * This preserves entered information.
          */
 
         if (!isAheadOfTime) {
-
-            if (playerInformationLabel) {
-
-                playerInformationLabel.style.display =
-                    "none";
-
-            }
-
-
-            if (playerInformationHelp) {
-
-                playerInformationHelp.style.display =
-                    "none";
-
-            }
-
-
-            if (characterPlayers) {
-
-                characterPlayers.innerHTML =
-                    "";
-
-                characterPlayers.style.display =
-                    "none";
-
-            }
-
 
             return;
 
@@ -646,11 +641,16 @@ function initializeSchedulingForm() {
 
             if (characterPlayers) {
 
+                /*
+                 * There are no player fields
+                 * to preserve yet because no
+                 * player count has been selected.
+                 */
+
                 characterPlayers.innerHTML =
                     '<p class="form-help">Choose the number of players above first.</p>';
 
             }
-
 
             return;
 
@@ -661,6 +661,37 @@ function initializeSchedulingForm() {
             return;
         }
 
+
+        /*
+         * If the correct number of player
+         * sections already exists, leave them
+         * completely untouched.
+         *
+         * This is what preserves names and
+         * email addresses when the section
+         * is hidden and shown again.
+         */
+
+        const existingPlayerGroups =
+            characterPlayers.querySelectorAll(
+                ".character-player"
+            );
+
+
+        if (
+            existingPlayerGroups.length ===
+            numberOfPlayers
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+         * The number of players has changed,
+         * so rebuild the dynamic fields.
+         */
 
         characterPlayers.innerHTML =
             "";
@@ -838,6 +869,11 @@ function initializeSchedulingForm() {
 
             /*
              * Rebuild/reset dynamic fields.
+             *
+             * Because the form was reset, the
+             * assignment radios are no longer
+             * selected, so Player Information
+             * will remain hidden.
              */
 
             updateCharacterFields();
@@ -1273,19 +1309,19 @@ function initializeSchedulingForm() {
                     .join(", ");
 
 
-			/* KEEP STRUCTURED VENUE ADDRESS */
+            /* KEEP STRUCTURED VENUE ADDRESS */
 
-			reservationData.venue_street =
-				locationStreet;
+            reservationData.venue_street =
+                locationStreet;
 
-			reservationData.venue_city =
-				locationCity;
+            reservationData.venue_city =
+                locationCity;
 
-			reservationData.venue_state =
-				locationState;
+            reservationData.venue_state =
+                locationState;
 
-			reservationData.venue_zip =
-				locationZip;
+            reservationData.venue_zip =
+                locationZip;
 
 
             /* -----------------------------------------
@@ -2216,6 +2252,50 @@ async function initializeGamePlayerOptions() {
             await updateSchedulePrice(
                 game
             );
+
+
+            /*
+             * Character information depends
+             * on the selected player count.
+             *
+             * Only update it when the organizer
+             * has chosen "Ahead of time."
+             */
+
+            const assignment =
+                document.querySelector(
+                    'input[name="characterAssignment"]:checked'
+                );
+
+
+            if (
+                assignment &&
+                assignment.value ===
+                    "ahead"
+            ) {
+
+                const characterInfo =
+                    document.getElementById(
+                        "character-info"
+                    );
+
+
+                if (characterInfo) {
+
+                    /*
+                     * Trigger the existing
+                     * character-field logic.
+                     */
+
+                    characterInfo.dispatchEvent(
+                        new Event(
+                            "characterplayerschange"
+                        )
+                    );
+
+                }
+
+            }
 
         }
     );
