@@ -410,26 +410,15 @@
    ========================================================= */
 
 .video-container {
-    position: relative;
-    z-index: 1;
-
     width: 100%;
     max-width: 700px;
-
     margin: 30px auto;
 }
 
-
 .video-container video {
     display: block;
-
     width: 100%;
     height: auto;
-
-    border-radius: 8px;
-
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 
