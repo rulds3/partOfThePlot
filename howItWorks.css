@@ -405,11 +405,13 @@
 }
 
 
-/* =========================================================
+/* =====================================================
    4. ORGANIZER VIDEO
-   ========================================================= */
+   ===================================================== */
 
 .video-container {
+    position: relative;
+    z-index: 10;
     width: 100%;
     max-width: 700px;
     margin: 30px auto;
@@ -417,8 +419,12 @@
 
 .video-container video {
     display: block;
+    position: relative;
+    z-index: 10;
     width: 100%;
     height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 
