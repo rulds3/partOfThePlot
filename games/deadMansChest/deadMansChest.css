@@ -477,6 +477,19 @@
 }
 
 
+/* ---------------------------------------------------------
+   KEEP STORY HEADING PHRASES ON ONE LINE
+   --------------------------------------------------------- */
+
+.deadMansChest-story-text h2 {
+    white-space: nowrap;
+}
+
+.deadMansChest-story-text h2 span {
+    white-space: nowrap;
+}
+
+
 .deadMansChest-story-text h2 span {
     color: var(--gold);
 }
@@ -1016,9 +1029,17 @@
 
 
     .deadMansChest-story-text h2 {
-        font-size: clamp(32px, 10vw, 45px);
+        font-size: clamp(20px, 5.5vw, 32px);
 
-        line-height: 1.15;
+        line-height: 1.3;
+
+        white-space: nowrap;
+    }
+
+
+    .deadMansChest-story-text h2 span {
+		display: inline;
+		white-space: nowrap;
     }
 
 
