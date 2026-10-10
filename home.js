@@ -161,6 +161,7 @@ async function loadUpcomingGames() {
 						${formatEventTime(game.reservation_time)}
 						&nbsp;·&nbsp;
 						${escapeHtml(game.location)}
+						&nbsp;·&nbsp; Ages 18+
 						${
 							formatTicketPrice(game.ticket_price)
 								? `&nbsp;·&nbsp; ${formatTicketPrice(game.ticket_price)}`
