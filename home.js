@@ -156,11 +156,17 @@ async function loadUpcomingGames() {
                         ${escapeHtml(game.game)}
                     </h3>
 
-                    <p class="upcoming-game-details">
-                        ${formatEventTime(game.reservation_time)}
-                        &nbsp;·&nbsp;
-                        ${escapeHtml(game.location)}
-                    </p>
+
+					<p class="upcoming-game-details">
+						${formatEventTime(game.reservation_time)}
+						&nbsp;·&nbsp;
+						${escapeHtml(game.location)}
+						${
+							formatTicketPrice(game.ticket_price)
+								? `&nbsp;·&nbsp; ${formatTicketPrice(game.ticket_price)}`
+								: ""
+						}
+					</p>
 
                     ${
                         registrationClosed
@@ -872,6 +878,29 @@ function initializeRegistrationButtons() {
 
         }
     );
+
+}
+
+
+/* =========================================
+FORMAT TICKET PRICE
+========================================= */
+
+function formatTicketPrice(price) {
+
+    const amount = Number(price);
+
+    if (price === null || price === undefined || price === "" ||
+        !Number.isFinite(amount)) {
+        return "";
+    }
+
+    return amount.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+		minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }) + " per person";
 
 }
 
