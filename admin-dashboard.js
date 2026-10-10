@@ -10,6 +10,8 @@ import {
     adminRequest
 } from "./admin.js";
 
+const loadGamesFromSupabase = window.loadGamesFromSupabase;
+
 
 /* =========================================================
    PAGE INITIALIZATION
@@ -52,7 +54,117 @@ async function initializeDashboard() {
 
     }
 
+	/*----------------------------------
+	LOAD GAMES FOR PUBLIC EVENTS
+	-----------------------------------*/
 
+	const publicEventGame =
+		document.getElementById(
+			"public-event-game"
+		);
+
+	if (publicEventGame) {
+
+		const games =
+			await loadGamesFromSupabase();
+
+		games.forEach(
+			game => {
+
+				const option =
+					document.createElement(
+						"option"
+					);
+
+				option.value =
+					game.name;
+
+				option.textContent =
+					game.name;
+
+				option.dataset.gameId =
+					game.id;
+
+				publicEventGame.appendChild(
+					option
+				);
+			}
+		);
+	}
+	
+	if (publicEventGame) {
+
+    publicEventGame.addEventListener(
+        "change",
+        function() {
+
+            const selectedGame =
+                publicEventGame.value;
+
+			const capacityDisplay =
+				document.getElementById(
+					"public-event-capacity"
+				);
+
+			if (!selectedGame) {
+
+				if (capacityDisplay) {
+					capacityDisplay.textContent = "";
+				}
+
+				return;
+
+			}
+
+            const gameCharacters =
+                publicEventCharacters.filter(
+                    function(character) {
+
+                        return (
+                            character.game ===
+                            selectedGame &&
+                            character.active === true
+                        );
+
+                    }
+                );
+
+            const maleCount =
+                gameCharacters.filter(
+                    character =>
+                        character.gender ===
+                        "male"
+                ).length;
+
+            const femaleCount =
+                gameCharacters.filter(
+                    character =>
+                        character.gender ===
+                        "female"
+                ).length;
+
+            const eitherCount =
+                gameCharacters.filter(
+                    character =>
+                        character.gender ===
+                        "either"
+                ).length;
+
+            const totalCount =
+                gameCharacters.length;
+
+			if (capacityDisplay) {
+
+				capacityDisplay.textContent =
+					`${totalCount} player spots available ` +
+					`(${maleCount} male, ${femaleCount} female, ` +
+					`${eitherCount} flexible)`;
+
+			}
+        }
+    );
+}
+	
     /* -----------------------------------------------------
        LOG OUT
     ----------------------------------------------------- */
@@ -84,6 +196,295 @@ async function initializeDashboard() {
 
     }
 
+	/* =========================================================
+	   PUBLIC GAME MODAL
+	========================================================= */
+
+	const publicEventModal =
+		document.getElementById(
+			"public-event-modal"
+		);
+
+
+	const openPublicEventForm =
+		document.getElementById(
+			"open-public-event-form"
+		);
+
+
+	const closePublicEventForm =
+		document.getElementById(
+			"close-public-event-form"
+		);
+
+
+	const cancelPublicEventForm =
+		document.getElementById(
+			"cancel-public-event-form"
+		);
+
+
+	function openPublicEventModal() {
+
+		publicEventModal.hidden = false;
+
+	}
+
+
+	function closePublicEventModal() {
+
+		publicEventModal.hidden = true;
+
+	}
+
+
+	if (openPublicEventForm) {
+
+		openPublicEventForm.addEventListener(
+			"click",
+			openPublicEventModal
+		);
+
+	}
+
+
+	if (closePublicEventForm) {
+
+		closePublicEventForm.addEventListener(
+			"click",
+			closePublicEventModal
+		);
+
+
+	}
+
+
+	if (cancelPublicEventForm) {
+
+		cancelPublicEventForm.addEventListener(
+			"click",
+			closePublicEventModal
+		);
+
+	}
+
+
+	/* =========================================================
+	   CREATE PUBLIC GAME
+	========================================================= */
+
+	const publicEventForm =
+		document.getElementById(
+			"public-event-form"
+		);
+
+
+	const publicEventFormMessage =
+		document.getElementById(
+			"public-event-form-message"
+		);
+
+
+	if (publicEventForm) {
+
+		publicEventForm.addEventListener(
+			"submit",
+			async function(event) {
+
+				event.preventDefault();
+
+
+				const submitButton =
+					publicEventForm.querySelector(
+						'button[type="submit"]'
+					);
+
+
+				if (submitButton) {
+
+					submitButton.disabled =
+						true;
+
+					submitButton.textContent =
+						"Creating...";
+
+				}
+
+
+				if (publicEventFormMessage) {
+
+					publicEventFormMessage.textContent =
+						"";
+
+				}
+
+
+				try {
+
+					const formData =
+						new FormData(
+							publicEventForm
+						);
+
+
+					const result =
+						await adminRequest(
+							"admin-create-public-event",
+							{
+								method:
+									"POST",
+
+								body: {
+
+									game:
+										formData.get(
+											"game"
+										),
+
+									reservation_date:
+										formData.get(
+											"reservation_date"
+										),
+
+									reservation_time:
+										formData.get(
+											"reservation_time"
+										),
+
+									location:
+										formData.get(
+											"location"
+										),
+
+									ticket_price:
+										formData.get(
+											"ticket_price"
+										),
+
+									registration_deadline:
+										formData.get(
+											"registration_deadline"
+										) || null,
+
+									public_description:
+										formData.get(
+											"public_description"
+										) || null,
+										
+									venue_street:
+										document.getElementById(
+											"public-event-venue-street"
+										).value,
+
+									venue_city:
+										document.getElementById(
+											"public-event-venue-city"
+										).value,
+
+									venue_state:
+										document.getElementById(
+											"public-event-venue-state"
+										).value,
+
+									venue_zip:
+										document.getElementById(
+											"public-event-venue-zip"
+										).value,
+
+								}
+
+							}
+						);
+
+
+					console.log(
+						"Public game created:",
+						result
+					);
+
+
+					if (publicEventFormMessage) {
+
+						publicEventFormMessage.textContent =
+							"Public game created successfully.";
+
+					}
+
+
+					publicEventForm.reset();
+
+
+					const capacityDisplay =
+						document.getElementById(
+							"public-event-capacity"
+						);
+
+
+					if (capacityDisplay) {
+
+						capacityDisplay.textContent =
+							"";
+
+					}
+
+
+					setTimeout(
+						async function() {
+
+							closePublicEventModal();
+
+							if (publicEventFormMessage) {
+
+								publicEventFormMessage.textContent =
+									"";
+
+							}
+
+							await loadReservations();
+
+						},
+						800
+					);
+
+
+				}
+				catch (error) {
+
+					console.error(
+						"Create public game error:",
+						error
+					);
+
+
+					if (publicEventFormMessage) {
+
+						publicEventFormMessage.textContent =
+							error.message ||
+							"Could not create the public game.";
+
+					}
+
+				}
+				finally {
+
+					if (submitButton) {
+
+						submitButton.disabled =
+							false;
+
+						submitButton.textContent =
+							"Create Public Game";
+
+					}
+
+				}
+
+			}
+		);
+
+	}
+
+
 
     /* -----------------------------------------------------
        RESERVATION FILTERS
@@ -99,7 +500,6 @@ async function initializeDashboard() {
     await loadReservations();
 
 }
-
 
 /* =========================================================
    RESERVATION FILTERS
@@ -164,6 +564,7 @@ function initializeReservationFilters() {
 /* =========================================================
    LOAD RESERVATIONS
    ========================================================= */
+let publicEventCharacters = [];
 
 async function loadReservations() {
 
@@ -212,7 +613,13 @@ async function loadReservations() {
                 ? result.reservations
                 : [];
 
-
+		publicEventCharacters =
+			Array.isArray(
+				result.characters
+			)
+				? result.characters
+				: [];
+				
         reservationList.innerHTML =
             "";
 

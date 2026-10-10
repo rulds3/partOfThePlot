@@ -35,6 +35,9 @@ const SUPABASE_ANON_KEY =
     "sb_publishable_5FNoD9eo9A29lEjvsSKgkQ_sZdRqXQ7";
 
 
+window.SUPABASE_URL = SUPABASE_URL;
+window.SUPABASE_ANON_KEY = SUPABASE_ANON_KEY;
+
 /* =========================================================
    SUPABASE HELPER
    ========================================================= */
@@ -694,3 +697,13 @@ else {
     initializeSupabasePrices();
 
 }
+
+// Make Supabase functions and game data available to regular scripts.
+Object.defineProperty(window, "AVAILABLE_GAMES", {
+    configurable: true,
+    get: () => AVAILABLE_GAMES
+});
+
+window.loadGamesFromSupabase = loadGamesFromSupabase;
+window.getGameRecord = getGameRecord;
+window.getGamePrice = getGamePrice;

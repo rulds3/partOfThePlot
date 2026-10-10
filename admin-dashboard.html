@@ -62,12 +62,19 @@
 			<div class="admin-header-actions">
 
 				<a
-					href="games/deadMansChest/admin-dead-mans-chest.html"
+					href="../../admin-dead-mans-chest.html"
 					class="button admin-tool-button"
 				>
 					Crew Results
 				</a>
 
+				<button
+					id="open-public-event-form"
+					class="button admin-tool-button"
+					type="button"
+				>
+					Create Public Game
+				</button>
 
 				<button
 					id="logout-button"
@@ -81,6 +88,246 @@
 
 		</header>
 
+
+		<!-- =================================================
+			 CREATE PUBLIC GAME MODAL
+		================================================= -->
+
+		<div
+			id="public-event-modal"
+			class="admin-modal"
+			hidden
+		>
+
+			<div
+				class="admin-modal-content"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="public-event-modal-title"
+			>
+
+				<div class="admin-modal-header">
+
+					<div>
+
+						<p class="eyebrow">
+							TICKETED EVENTS
+						</p>
+
+						<h2 id="public-event-modal-title">
+							Create Public Game
+						</h2>
+
+					</div>
+
+
+					<button
+						id="close-public-event-form"
+						class="admin-modal-close"
+						type="button"
+						aria-label="Close"
+					>
+						&times;
+					</button>
+
+				</div>
+
+
+				<form
+					id="public-event-form"
+					class="public-event-form"
+				>
+
+					<div class="form-field">
+						<label for="public-event-game">Game</label>
+
+						<select
+							id="public-event-game"
+							name="game"
+							required
+						>
+							<option value="">
+								Select a game
+							</option>
+						</select>
+
+						<p
+							id="public-event-capacity"
+							class="form-help"
+						></p>
+					</div>
+
+
+					<div class="form-field">
+
+						<label for="public-event-date">
+							Date
+						</label>
+
+						<input
+							id="public-event-date"
+							name="reservation_date"
+							type="date"
+							required
+						>
+
+					</div>
+
+
+					<div class="form-field">
+
+						<label for="public-event-time">
+							Start Time
+						</label>
+
+						<input
+							id="public-event-time"
+							name="reservation_time"
+							type="time"
+							required
+						>
+
+					</div>
+
+
+					<div class="form-field">
+						<label for="public-event-location">
+							Public Location
+						</label>
+
+						<input
+							id="public-event-location"
+							name="location"
+							type="text"
+							placeholder="Idaho Falls"
+							required
+						>
+					</div>
+
+					<div class="form-field form-field-full">
+						<label>
+							Venue Address
+						</label>
+
+						<div class="venue-address-fields">
+
+							<input
+								id="public-event-venue-street"
+								name="venue_street"
+								type="text"
+								placeholder="Street address"
+								autocomplete="street-address"
+								required
+							>
+
+							<input
+								id="public-event-venue-city"
+								name="venue_city"
+								type="text"
+								placeholder="City"
+								autocomplete="address-level2"
+								required
+							>
+
+							<input
+								id="public-event-venue-state"
+								name="venue_state"
+								type="text"
+								placeholder="State"
+								maxlength="2"
+								autocomplete="address-level1"
+								required
+							>
+
+							<input
+								id="public-event-venue-zip"
+								name="venue_zip"
+								type="text"
+								inputmode="numeric"
+								placeholder="ZIP"
+								autocomplete="postal-code"
+								required
+							>
+
+						</div>
+					</div>
+
+					<div class="form-field">
+						<label for="public-event-price">Price Per Person</label>
+						<input
+							id="public-event-price"
+							name="ticket_price"
+							type="number"
+							min="0"
+							step="0.01"
+							placeholder="35.00"
+							required
+						>
+					</div>
+					
+					<div class="form-field">
+
+						<label for="public-event-deadline">
+							Registration Deadline
+						</label>
+
+						<input
+							id="public-event-deadline"
+							name="registration_deadline"
+							type="datetime-local"
+						>
+
+					</div>
+
+
+					<div class="form-field form-field-full">
+
+						<label for="public-event-description">
+							Public Description
+						</label>
+
+						<textarea
+							id="public-event-description"
+							name="public_description"
+							rows="4"
+							placeholder="Tell players about this particular game..."
+						></textarea>
+
+					</div>
+
+
+					<p
+						id="public-event-form-message"
+						class="admin-message"
+						aria-live="polite"
+					></p>
+
+
+					<div class="form-actions">
+
+						<button
+							type="button"
+							id="cancel-public-event-form"
+							class="button admin-tool-button"
+						>
+							Cancel
+						</button>
+
+
+						<button
+							type="submit"
+							class="button"
+						>
+							Create Public Game
+						</button>
+
+					</div>
+
+				</form>
+
+			</div>
+
+		</div>
 
         <!-- =================================================
              MESSAGE
@@ -159,6 +406,8 @@
     </div>
 
 </main>
+
+<script src="supabase.js"></script>
 
 <script
     type="module"

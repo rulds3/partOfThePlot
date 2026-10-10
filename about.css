@@ -445,7 +445,7 @@
        ----------------------------------------------------- */
 
     .about-intro {
-        padding: 85px 20px 70px;
+        padding: 125px 20px 70px;
     }
 
 
@@ -548,7 +548,7 @@
 @media (max-width: 500px) {
 
     .about-intro {
-        padding: 75px 18px 60px;
+        padding: 115px 18px 60px;
     }
 
 

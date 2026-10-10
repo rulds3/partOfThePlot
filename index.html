@@ -50,156 +50,183 @@
     <div id="site-header"></div>
 
 
-<!-- ================= HERO ================= -->
+	<!-- ================= HERO ================= -->
 
-<section id="home" class="hero">
+	<section id="home" class="hero">
 
-    <div class="hero-content">
+		<div class="hero-content">
 
-        <p class="eyebrow">
-            IMMERSIVE ROLE-PLAYING MYSTERY PARTIES<br>
-			SERVING THE IDAHO FALLS AREA - YOU CHOOSE THE VENUE!
-        </p>
+			<p class="eyebrow">
+				IMMERSIVE ROLE-PLAYING MYSTERY PARTIES<br>
+				SERVING THE IDAHO FALLS AREA - YOU CHOOSE THE VENUE!
+			</p>
 
-        <h1>
-            PART OF THE<br>
-            <span>PLOT</span>
-        </h1>
+			<h1>
+				PART OF THE<br>
+				<span>PLOT</span>
+			</h1>
 
-        <div class="divider"></div>
+			<div class="divider"></div>
 
-        <p class="tagline">
-            Don't just watch the story.<br>
-            <strong>Be part of it.</strong>
-        </p>
-
-
-        <!-- HERO BUTTONS -->
-
-        <div class="hero-buttons">
-
-            <a href="games.html" class="button">
-                Explore the Games
-            </a>
-
-			<button type="button" class="button button-outline" id="scheduleButton">
-				Schedule a Game
-			</button>
-
-        </div>
-
-		<p class="schedule-availability">
-			Limited dates available each month.
-		</p>
-
-    </div>
-
-</section>
+			<p class="tagline">
+				Don't just watch the story.<br>
+				<strong>Be part of it.</strong>
+			</p>
 
 
-    <!-- ================= INTRO ================= -->
+			<!-- HERO BUTTONS -->
 
-    <section id="intro" class="intro">
+			<div class="hero-buttons">
 
-        <p class="eyebrow">
-            MORE THAN A MYSTERY
-        </p>
+				<a href="games.html" class="button">
+					Explore the Games
+				</a>
 
-        <h2>
-            What if you weren't<br>
-            just watching the mystery?
-        </h2>
+				<button type="button" class="button button-outline" id="scheduleButton">
+					Schedule a Game
+				</button>
 
-        <p class="intro-text">
-            What if you were one of the characters?
-        </p>
+				<a href="#upcoming-games" class="button">Upcoming Public Games</a>
 
-        <p>
-            At Part of the Plot, you don't sit back and watch a mystery unfold.<br>
-            You step into the story.
-        </p>
+			</div>
 
-    </section>
+			<p class="schedule-availability">
+				Limited dates available each month.
+			</p>
 
-<!-- ================= WHAT MAKES THE GAMES DIFFERENT ================= -->
+		</div>
 
-<section class="experience-section games-experience">
+	</section>
 
 
-    <div class="experience">
+	<!-- ================= UPCOMING GAMES ================= -->
+
+	<section class="upcoming-games-section" id="upcoming-games">
+	
+		<div class="upcoming-games-header">
+		
+
+			<p class="eyebrow">
+				OPEN TO THE PUBLIC
+			</p>
+
+			<h2>
+				Upcoming Games
+			</h2>
+
+			<p>
+				Join a scheduled mystery game and become part of the story.
+			</p>
+
+		</div>
 
 
-        <div>
+		<div id="upcoming-games-list" class="upcoming-games-list">
 
-            <span class="experience-icon">
-                ✦
-            </span>
+			<p class="upcoming-games-loading">
+				Loading upcoming games...
+			</p>
 
-            <h3>
-                Become a Character
-            </h3>
+		</div>
 
-            <p>
-                Everyone receives a role and becomes
-                part of the story—not an audience member.
-            </p>
-
-        </div>
+	</section>
 
 
-        <div>
+	<!-- ================= PUBLIC GAME REGISTRATION MODAL ================= -->
 
-            <span class="experience-icon">
-                ✦
-            </span>
+	<div id="public-registration-modal" class="public-registration-modal" hidden>
 
-            <h3>
-                Discover Secrets
-            </h3>
+		<div
+			class="public-registration-modal-content"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="public-registration-title"
+		>
 
-            <p>
-                Your character knows things other players
-                don't. Talk, investigate, and figure out
-                what is really happening.
-            </p>
+			<div class="public-registration-modal-header">
 
-        </div>
+				<div>
+					<p class="eyebrow">JOIN THE STORY</p>
 
+					<h2 id="public-registration-title">
+						Register for the Game
+					</h2>
 
-        <div>
+					<p id="public-registration-event-info">
+						Loading game information...
+					</p>
+				</div>
 
-            <span class="experience-icon">
-                ✦
-            </span>
+				<button
+					id="close-public-registration"
+					class="public-registration-close"
+					type="button"
+					aria-label="Close"
+				>
+					&times;
+				</button>
 
-            <h3>
-                Make the Story Happen
-            </h3>
-
-            <p>
-                The mystery unfolds through the players.
-                What you say and do can change the experience.
-            </p>
-
-        </div>
-
-
-    </div>
-
-</section>
+			</div>
 
 
 
-<!-- ================= EXPLORE THE GAMES ================= -->
+			<form id="public-registration-form">
 
-<section class="games-cta">
+				<div class="form-field">
+					<label for="public-player-count">Number of Players</label>
+					<select id="public-player-count" name="player_count" required>
+						<option value="1">1 Player</option>
+						<option value="2">2 Players</option>
+						<option value="3">3 Players</option>
+						<option value="4">4 Players</option>
+					</select>
+					<p class="form-help">
+						Register everyone together and pay once for the group.
+					</p>
+				</div>
 
-    <a href="games.html" class="button button-light">
-        Explore the Games
-    </a>
+				<div id="public-player-fields"></div>
+				
+				<div class="form-field">
+					<label for="public-booking-notes">
+						Anything Else We Should Know?
+						<span class="optional">(optional)</span>
+					</label>
+					<textarea
+						id="public-booking-notes"
+						name="booking_notes"
+						rows="4"
+						maxlength="2000"
+						placeholder="Anything else that would help us plan for your group?"
+					></textarea>
+				</div>
 
-</section>
+				<div
+					id="public-registration-message"
+					class="admin-message"
+					aria-live="polite"
+				></div>
 
+				<div class="public-registration-actions">
+					<button
+						type="button"
+						id="cancel-public-registration"
+						class="button admin-tool-button"
+					>
+						Cancel
+					</button>
+
+					<button type="submit" class="button">
+						Continue to Payment
+					</button>
+				</div>
+
+			</form>
+
+
+		</div>
+
+	</div>
 
 
 <!-- ================= FOOTER ================= -->
@@ -217,6 +244,7 @@
 <script src="supabase.js"></script>
 <script src="site.js"></script>
 <script src="scheduling.js"></script>
+<script type="module" src="home.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Registration Confirmed | Part of the Plot
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="home.css"
+    >
+
+	<style>
+
+		.public-confirmation-page {
+			min-height: 70vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 120px 80px 20px;
+			background:
+				radial-gradient(
+					circle at top,
+					rgba(198, 161, 91, 0.08),
+					transparent 45%
+				),
+				#0d1017;
+		}
+
+
+		.public-confirmation-content {
+			width: 100%;
+			max-width: 720px;
+			text-align: center;
+		}
+
+
+		.public-confirmation-content h1 {
+			margin: 10px 0 20px;
+			font-family: "Cinzel", serif;
+			font-size: clamp(2.2rem, 5vw, 3.6rem);
+			color: #e2c989;
+		}
+
+
+		.public-confirmation-intro {
+			max-width: 580px;
+			margin: 0 auto 45px;
+			font-size: 1.1rem;
+			line-height: 1.7;
+			color: rgba(255, 255, 255, 0.82);
+		}
+
+
+		.public-confirmation-details {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1px;
+			margin: 0 auto 45px;
+			border: 1px solid rgba(198, 161, 91, 0.35);
+			background: rgba(198, 161, 91, 0.18);
+		}
+
+
+		.confirmation-detail {
+			padding: 25px 20px;
+			background: #151a27;
+		}
+
+
+		.confirmation-detail-label {
+			display: block;
+			margin-bottom: 8px;
+			font-family: "Montserrat", sans-serif;
+			font-size: 0.72rem;
+			font-weight: 600;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			color: #c6a15b;
+		}
+
+
+		.confirmation-detail strong {
+			display: block;
+			font-family: "Cinzel", serif;
+			font-size: 1.05rem;
+			line-height: 1.5;
+			color: #ffffff;
+		}
+
+
+		.public-confirmation-next-steps {
+			max-width: 600px;
+			margin: 0 auto 40px;
+			text-align: center;
+		}
+
+
+		.public-confirmation-next-steps h2 {
+			margin-bottom: 20px;
+			font-family: "Cinzel", serif;
+			color: #e2c989;
+			text-align: center;
+		}
+
+
+		.public-confirmation-next-steps p {
+			margin: 0 0 14px;
+			line-height: 1.7;
+			color: rgba(255, 255, 255, 0.78);
+		}
+
+
+		.public-confirmation-actions {
+			text-align: center;
+		}
+
+
+		@media (max-width: 600px) {
+
+			.public-confirmation-page {
+				padding: 60px 18px;
+			}
+
+			.public-confirmation-details {
+				grid-template-columns: 1fr;
+			}
+
+			.confirmation-detail {
+				padding: 20px;
+			}
+
+		}
+
+	</style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div id="site-header"></div>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+        <section class="public-confirmation-page">
+
+            <div class="public-confirmation-content">
+
+
+                <p class="eyebrow">
+                    YOU'RE PART OF THE STORY
+                </p>
+
+
+                <h1>
+                    Registration Confirmed!
+                </h1>
+
+
+                <p class="public-confirmation-intro">
+                    Your spot has been successfully reserved.<br>
+                    We can't wait to have you join the mystery.
+                </p>
+
+
+
+                <!-- ================= GAME INFORMATION ================= -->
+
+                <div
+                    id="public-confirmation-details"
+                    class="public-confirmation-details"
+                >
+
+                    <div class="confirmation-detail">
+
+                        <span class="confirmation-detail-label">
+                            Game
+                        </span>
+
+                        <strong id="confirmation-game">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <div class="confirmation-detail">
+
+                        <span class="confirmation-detail-label">
+                            Date
+                        </span>
+
+                        <strong id="confirmation-date">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <div class="confirmation-detail">
+
+                        <span class="confirmation-detail-label">
+                            Time
+                        </span>
+
+                        <strong id="confirmation-time">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                    <div class="confirmation-detail">
+
+                        <span class="confirmation-detail-label">
+                            Location
+                        </span>
+
+                        <strong id="confirmation-location">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= NEXT STEPS ================= -->
+
+                <div class="public-confirmation-next-steps">
+
+                    <h2>
+                        What Happens Next?
+                    </h2>
+
+                    <p>
+                        Once we have a full game, we'll assign characters 
+						and send all your game information to the email address 
+						you provided during registration.
+                    </p>
+
+                    <p>
+                        For now, mark your calendar and get ready.
+                        The mystery awaits!
+                    </p>
+
+                </div>
+
+
+
+                <!-- ================= HOME BUTTON ================= -->
+
+                <div class="public-confirmation-actions">
+
+                    <a
+                        href="index.html"
+                        class="button"
+                    >
+                        Return to Part of the Plot
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div id="site-footer"></div>
+
+
+
+    <!-- ================= SCRIPTS ================= -->
+
+    <script src="site.js"></script>
+
+
+	<script type="module">
+
+	const SUPABASE_URL = window.SUPABASE_URL;
+	const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY;
+
+
+		const params =
+			new URLSearchParams(
+				window.location.search
+			);
+
+
+		const playerId =
+			params.get("player_id");
+
+
+		const paymentStatus =
+			params.get("payment");
+
+
+		const gameElement =
+			document.getElementById(
+				"confirmation-game"
+			);
+
+
+		const dateElement =
+			document.getElementById(
+				"confirmation-date"
+			);
+
+
+		const timeElement =
+			document.getElementById(
+				"confirmation-time"
+			);
+
+
+		const locationElement =
+			document.getElementById(
+				"confirmation-location"
+			);
+
+
+		function formatTime(time) {
+
+			if (!time) {
+				return "";
+			}
+
+			const parts =
+				String(time).split(":");
+
+			if (parts.length < 2) {
+				return time;
+			}
+
+			let hours =
+				parseInt(parts[0], 10);
+
+			const minutes =
+				parts[1];
+
+			if (
+				Number.isNaN(hours) ||
+				!minutes
+			) {
+				return time;
+			}
+
+			const suffix =
+				hours >= 12
+					? "PM"
+					: "AM";
+
+			hours =
+				hours % 12 || 12;
+
+			return `${hours}:${minutes} ${suffix}`;
+
+		}
+
+
+		function formatDate(date) {
+
+			if (!date) {
+				return "";
+			}
+
+			const parts =
+				String(date).split("-");
+
+			if (parts.length !== 3) {
+				return date;
+			}
+
+			const year =
+				parseInt(parts[0], 10);
+
+			const month =
+				parseInt(parts[1], 10);
+
+			const day =
+				parseInt(parts[2], 10);
+
+			if (
+				Number.isNaN(year) ||
+				Number.isNaN(month) ||
+				Number.isNaN(day)
+			) {
+				return date;
+			}
+
+			const dateObject =
+				new Date(
+					Date.UTC(
+						year,
+						month - 1,
+						day
+					)
+				);
+
+			return dateObject.toLocaleDateString(
+				"en-US",
+				{
+					month: "long",
+					day: "numeric",
+					year: "numeric",
+					timeZone: "UTC"
+				}
+			);
+
+		}
+
+		async function loadConfirmation() {
+
+			/*
+			 * If Stripe sent the customer back with
+			 * payment=cancelled, show a clear message.
+			 */
+
+			if (
+				paymentStatus ===
+				"cancelled"
+			) {
+
+				gameElement.textContent =
+					"Payment was cancelled.";
+
+				dateElement.textContent =
+					"";
+
+				timeElement.textContent =
+					"";
+
+				locationElement.textContent =
+					"";
+
+				document.querySelector(
+					".public-confirmation-intro"
+				).textContent =
+					"Your payment was cancelled, so your spot has not been confirmed.";
+
+				return;
+
+			}
+
+
+			if (!playerId) {
+
+				gameElement.textContent =
+					"Registration information unavailable.";
+
+				dateElement.textContent =
+					"";
+
+				timeElement.textContent =
+					"";
+
+				locationElement.textContent =
+					"";
+
+				return;
+
+			}
+
+
+			try {
+
+				const response =
+					await fetch(
+						SUPABASE_URL +
+						"/functions/v1/public-registration-confirmation",
+						{
+							method:
+								"POST",
+
+							headers: {
+								"Content-Type":
+									"application/json",
+
+								"apikey":
+									SUPABASE_ANON_KEY,
+
+								"Authorization":
+									"Bearer " +
+									SUPABASE_ANON_KEY
+							},
+
+							body:
+								JSON.stringify({
+									player_id:
+										playerId
+								})
+						}
+					);
+
+
+				const result =
+					await response.json();
+
+
+				if (!response.ok) {
+
+					throw new Error(
+						result.error ||
+						"Could not load registration."
+					);
+
+				}
+
+
+
+				/*
+				 * Payment may still be processing in Stripe.
+				 * Check again briefly before showing an error.
+				 */
+
+				if (!result.success) {
+
+					const maxAttempts = 6;
+					const retryDelay = 2000;
+
+					for (let attempt = 0; attempt < maxAttempts; attempt++) {
+
+						await new Promise(resolve =>
+							setTimeout(resolve, retryDelay)
+						);
+
+						const retryResponse = await fetch(
+							SUPABASE_URL +
+							"/functions/v1/public-registration-confirmation",
+							{
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json",
+									"apikey": SUPABASE_ANON_KEY,
+									"Authorization": "Bearer " + SUPABASE_ANON_KEY
+								},
+								body: JSON.stringify({
+									player_id: playerId
+								})
+							}
+						);
+
+						const retryResult = await retryResponse.json();
+
+						if (!retryResponse.ok) {
+							throw new Error(
+								retryResult.error ||
+								"Could not verify payment."
+							);
+						}
+
+						if (retryResult.success) {
+							Object.assign(result, retryResult);
+							break;
+						}
+					}
+
+				}
+
+				if (!result.success) {
+
+					gameElement.textContent =
+						"Payment is still being verified.";
+
+					dateElement.textContent = "";
+					timeElement.textContent = "";
+					locationElement.textContent = "";
+
+					document.querySelector(
+						".public-confirmation-intro"
+					).textContent =
+						"Your payment may have gone through, but confirmation is taking longer than expected. Please check your email before attempting payment again.";
+
+					return;
+
+				}
+
+
+
+				const event =
+					result.event;
+
+
+				gameElement.textContent =
+					event.game || "";
+
+
+				dateElement.textContent =
+					formatDate(event.reservation_date);
+
+
+				timeElement.textContent =
+					formatTime(event.reservation_time);
+
+
+				locationElement.textContent =
+					event.location || "";
+
+			}
+
+
+			catch (error) {
+
+				console.error(
+					"Could not load public registration confirmation:",
+					error
+				);
+
+
+				gameElement.textContent =
+					"We're having trouble loading your registration.";
+
+				dateElement.textContent =
+					"";
+
+				timeElement.textContent =
+					"";
+
+				locationElement.textContent =
+					"";
+
+			}
+
+		}
+
+
+		loadConfirmation();
+
+	</script>
+
+</body>
+
+</html>

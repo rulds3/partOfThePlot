@@ -2488,3 +2488,139 @@
     }
 
 }
+
+
+ /* =========================================================
+    CREATE PUBLIC GAME FORM
+========================================================= */
+
+.public-event-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 20px;
+}
+
+
+.public-event-form .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+
+.public-event-form .form-field-full {
+    grid-column: 1 / -1;
+}
+
+
+.public-event-form label {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.public-event-form input,
+.public-event-form select,
+.public-event-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid rgba(198, 161, 91, 0.35);
+    border-radius: 4px;
+    background: #151a27;
+    color: #f5f1e8;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.95rem;
+}
+
+
+.public-event-form input:focus,
+.public-event-form select:focus,
+.public-event-form textarea:focus {
+    outline: none;
+    border-color: #c6a15b;
+    box-shadow: 0 0 0 2px rgba(198, 161, 91, 0.12);
+}
+
+
+.public-event-form textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+
+.public-event-form select {
+    cursor: pointer;
+}
+
+
+.public-event-form input::placeholder,
+.public-event-form textarea::placeholder {
+    color: rgba(245, 241, 232, 0.45);
+}
+
+
+.public-event-form .form-help {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: rgba(245, 241, 232, 0.65);
+}
+
+
+.public-event-form .admin-message {
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+
+.public-event-form .form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+
+.public-event-form .form-actions button {
+    min-width: 130px;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+--------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .public-event-form {
+        grid-template-columns: 1fr;
+    }
+
+
+    .public-event-form .form-field-full {
+        grid-column: auto;
+    }
+
+
+    .public-event-form .admin-message {
+        grid-column: auto;
+    }
+
+
+    .public-event-form .form-actions {
+        grid-column: auto;
+        flex-direction: column-reverse;
+    }
+
+
+    .public-event-form .form-actions button {
+        width: 100%;
+    }
+
+}

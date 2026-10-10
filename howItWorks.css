@@ -1113,6 +1113,57 @@
 
 }
 
+/* =========================================================
+   21. INTRO AUDIENCE BUTTONS
+   ========================================================= */
+
+.how-it-works-audience-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    margin-top: 30px;
+}
+
+.how-it-works-audience-buttons .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 220px;
+    min-height: 50px;
+    box-sizing: border-box;
+    padding: 12px 20px;
+
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Keep section headings visible below the fixed header */
+#organizer-section,
+#player-section {
+    scroll-margin-top: 90px;
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+
+    .how-it-works-audience-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .how-it-works-audience-buttons .button {
+        width: 220px;
+        min-height: 50px;
+        max-width: 100%;
+    }
+
+}
+
 
 /* =========================================================
    END
