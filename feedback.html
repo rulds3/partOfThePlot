@@ -1,8 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -12,39 +12,25 @@
 
     <title>Tell Us What You Think | Part of the Plot</title>
 
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
     <meta
         name="description"
         content="Tell us about your Part of the Plot mystery party experience."
     >
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-	
-	
-	<link
-        rel="stylesheet"
-        href="feedback.css"
-    >
-
-    <!-- Google Fonts -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="feedback.css">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
         rel="stylesheet"
     >
 
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
-
 <body>
-
 
 <!-- ================= NAVIGATION ================= -->
 
@@ -69,7 +55,8 @@
 
             <p>
                 We'd love to hear about your experience. Your feedback helps us
-                make future Part of the Plot events the best they can be.
+                make future Part of the Plot events the best they can be.  <strong>All
+				questions are optional.</strong>
             </p>
 
         </div>
@@ -80,7 +67,7 @@
         <form id="feedbackForm">
 
 
-            <!-- Question 1 -->
+            <!-- QUESTION 1 -->
 
             <div class="feedback-question">
 
@@ -88,29 +75,20 @@
                     1. Overall, how would you rate your experience?
                 </label>
 
-
                 <div
                     class="star-rating"
                     role="radiogroup"
                     aria-label="Overall experience rating"
                 >
 
-                    <!-- 5 Stars -->
-
                     <input
                         type="radio"
                         id="star5"
                         name="overallRating"
                         value="5"
-                        required
                     >
 
-                    <label
-                        for="star5"
-                        title="5 stars"
-                        aria-label="5 stars"
-                    >★</label>
-
+                    <label for="star5" title="5 stars" aria-label="5 stars">★</label>
 
                     <input
                         type="radio"
@@ -119,12 +97,7 @@
                         value="4"
                     >
 
-                    <label
-                        for="star4"
-                        title="4 stars"
-                        aria-label="4 stars"
-                    >★</label>
-
+                    <label for="star4" title="4 stars" aria-label="4 stars">★</label>
 
                     <input
                         type="radio"
@@ -133,12 +106,7 @@
                         value="3"
                     >
 
-                    <label
-                        for="star3"
-                        title="3 stars"
-                        aria-label="3 stars"
-                    >★</label>
-
+                    <label for="star3" title="3 stars" aria-label="3 stars">★</label>
 
                     <input
                         type="radio"
@@ -147,12 +115,7 @@
                         value="2"
                     >
 
-                    <label
-                        for="star2"
-                        title="2 stars"
-                        aria-label="2 stars"
-                    >★</label>
-
+                    <label for="star2" title="2 stars" aria-label="2 stars">★</label>
 
                     <input
                         type="radio"
@@ -161,49 +124,38 @@
                         value="1"
                     >
 
-                    <label
-                        for="star1"
-                        title="1 star"
-                        aria-label="1 star"
-                    >★</label>
+                    <label for="star1" title="1 star" aria-label="1 star">★</label>
 
                 </div>
 
             </div>
 
 
-            <!-- Question 2 -->
+            <!-- QUESTION 2 -->
 
             <div class="feedback-question">
 
                 <label for="clarity">
 
-                    2. How easy was it to understand what you were supposed
-                    to do during the game?
+                    2. How clear were the instructions, your character's
+                    goals, and how to participate in the game?
 
                 </label>
 
+                <select id="clarity" name="clarity">
 
-                <select
-                    id="clarity"
-                    name="clarity"
-                    required
-                >
+                    <option value="">Please select...</option>
 
-                    <option value="">
-                        Please select...
+                    <option value="Very clear">
+                        Very clear
                     </option>
 
-                    <option value="Very easy">
-                        Very easy
+                    <option value="Mostly clear">
+                        Mostly clear
                     </option>
 
-                    <option value="Mostly easy">
-                        Mostly easy
-                    </option>
-
-                    <option value="Sometimes confusing">
-                        Sometimes confusing
+                    <option value="Some things were confusing">
+                        Some things were confusing
                     </option>
 
                     <option value="Often confusing">
@@ -216,19 +168,21 @@
 
                 </select>
 
+
             </div>
 
 
-            <!-- Question 3 -->
+            <!-- QUESTION 3 -->
 
             <div class="feedback-question">
 
                 <label for="favoritePart">
 
-                    3. What was your favorite part of the experience?
+                    3. What did you enjoy most about the experience?
+                    (For example, your character, the secrets, talking
+                    with other players, solving the mystery, or something else.)
 
                 </label>
-
 
                 <textarea
                     id="favoritePart"
@@ -238,14 +192,10 @@
                 ></textarea>
 
 
-                <span class="optional">
-                    Optional
-                </span>
-
             </div>
 
 
-            <!-- Question 4 -->
+            <!-- QUESTION 4 -->
 
             <div class="feedback-question">
 
@@ -256,7 +206,6 @@
 
                 </label>
 
-
                 <textarea
                     id="improvements"
                     name="improvements"
@@ -265,180 +214,149 @@
                 ></textarea>
 
 
-                <span class="optional">
-                    Optional
-                </span>
-
             </div>
 
 
-            <!-- Question 5 -->
+            <!-- QUESTION 5 -->
 
             <div class="feedback-question">
 
                 <label>
 
-                    5. Would you play another Part of the Plot mystery?
+                    5. Keeping associated costs in mind, which Part of the Plot
+                    experiences would you most likely *purchase*
+                    in the future?
 
                 </label>
 
+                <p>
+                    Select up to 3.<br><br>
+                </p>
 
-                <div class="radio-list">
-
-
-                    <label>
-
-                        <input
-                            type="radio"
-                            name="playAgain"
-                            value="Absolutely!"
-                            required
-                        >
-
-                        Absolutely!
-
-                    </label>
-
+                <div class="radio-list" id="experienceOptions">
 
                     <label>
-
                         <input
-                            type="radio"
-                            name="playAgain"
-                            value="Probably"
+                            type="checkbox"
+                            name="preferredExperiences"
+                            value="Private 3.5-hour mystery for my own group"
                         >
 
-                        Probably
-
+                        A private 3.5-hour mystery for your own group.
                     </label>
-
 
                     <label>
-
                         <input
-                            type="radio"
-                            name="playAgain"
-                            value="Maybe, depending on the mystery"
+                            type="checkbox"
+                            name="preferredExperiences"
+                            value="Public 3.5-hour mystery with light refreshments included"
                         >
 
-                        Maybe, depending on the mystery
-
+                        A 3.5-hour public mystery with light refreshments
+                        included.
                     </label>
-
 
                     <label>
-
                         <input
-                            type="radio"
-                            name="playAgain"
-                            value="Probably not"
+                            type="checkbox"
+                            name="preferredExperiences"
+                            value="Public 3.5-hour mystery at a venue where food can be purchased separately"
                         >
 
-                        Probably not
-
+                        A 3.5-hour public mystery at a venue where you
+                        can purchase food separately.
                     </label>
-
 
                     <label>
-
                         <input
-                            type="radio"
-                            name="playAgain"
-                            value="No"
+                            type="checkbox"
+                            name="preferredExperiences"
+                            value="Premium public mystery with themed decorations and catered food"
                         >
 
-                        No
-
+                        A premium public mystery with themed decorations
+                        and catered food.
                     </label>
 
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="preferredExperiences"
+                            value="Shorter 1.5-hour mystery"
+                        >
+
+                        A shorter, 1.5-hour mystery.
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="preferredExperiences"
+                            value="Purchase a game to host myself"
+                        >
+
+                        A game I could purchase and host myself.
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="notSureYet"
+                            name="preferredExperiences"
+                            value="Not sure yet"
+                        >
+
+                        I'm not sure yet.
+                    </label>
 
                 </div>
+
+
+                <p id="experienceLimitMessage" hidden>
+                    You can select up to three experiences.
+                </p>
 
             </div>
 
 
-            <!-- Question 6 -->
+            <!-- QUESTION 6 -->
 
             <div class="feedback-question">
 
-                <label>
+                <label for="cost">
 
-                    6. Would you recommend Part of the Plot to your friends
-                    or family?
+                    6. For a future 3–3.5-hour public mystery event,
+                    with food purchased separately, what ticket price
+                    would feel reasonable to you?
 
                 </label>
 
-
-                <div class="radio-list">
-
-
-                    <label>
-
-                        <input
-                            type="radio"
-                            name="recommend"
-                            value="Definitely"
-                            required
-                        >
-
-                        Definitely
-
-                    </label>
+                <textarea
+                    id="cost"
+                    name="cost"
+                    rows="2"
+                    placeholder="$$"
+                ></textarea>
 
 
-                    <label>
-
-                        <input
-                            type="radio"
-                            name="recommend"
-                            value="Probably"
-                        >
-
-                        Probably
-
-                    </label>
+            </div>
 
 
-                    <label>
+            <!-- QUESTION 7 -->
 
-                        <input
-                            type="radio"
-                            name="recommend"
-                            value="Maybe"
-                        >
+            <div class="feedback-question">
 
-                        Maybe
+                <label for="allElse">
+                    7. Anything else?
+                </label>
 
-                    </label>
+                <textarea
+                    id="allElse"
+                    name="allElse"
+                    rows="5"
+                    placeholder="Anything else you'd like to share..."
+                ></textarea>
 
-
-                    <label>
-
-                        <input
-                            type="radio"
-                            name="recommend"
-                            value="Probably not"
-                        >
-
-                        Probably not
-
-                    </label>
-
-
-                    <label>
-
-                        <input
-                            type="radio"
-                            name="recommend"
-                            value="Definitely not"
-                        >
-
-                        Definitely not
-
-                    </label>
-
-
-                </div>
 
             </div>
 
@@ -454,17 +372,17 @@
             </button>
 
 
-            <!-- Error Message -->
+            <!-- ERROR MESSAGE -->
 
             <div
                 id="feedbackError"
                 class="feedback-error"
+                role="alert"
                 hidden
             >
                 Something went wrong while submitting your feedback.
                 Please try again.
             </div>
-
 
         </form>
 
@@ -474,6 +392,7 @@
         <div
             id="feedbackSuccess"
             class="feedback-success"
+            role="status"
             hidden
         >
 
@@ -484,7 +403,6 @@
             </p>
 
         </div>
-
 
     </div>
 
@@ -505,7 +423,6 @@
     const SUPABASE_PUBLISHABLE_KEY =
         "sb_publishable_5FNoD9eo9A29lEjvsSKgkQ_sZdRqXQ7";
 
-
     const supabaseClient = window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
@@ -513,7 +430,7 @@
 
 
     /* =========================================
-       FEEDBACK FORM
+       FORM ELEMENTS
     ========================================= */
 
     const feedbackForm =
@@ -528,112 +445,190 @@
     const feedbackSubmit =
         document.getElementById("feedbackSubmit");
 
+    const experienceCheckboxes = [
+        ...document.querySelectorAll(
+            'input[name="preferredExperiences"]'
+        )
+    ];
 
-    feedbackForm.addEventListener("submit", async function(event) {
+    const notSureYet =
+        document.getElementById("notSureYet");
 
-        event.preventDefault();
-
-
-        /* Hide any previous error */
-
-        feedbackError.hidden = true;
-
-
-        /* Prevent double submissions */
-
-        feedbackSubmit.disabled = true;
-
-        feedbackSubmit.textContent = "Submitting...";
+    const experienceLimitMessage =
+        document.getElementById("experienceLimitMessage");
 
 
-        /* Get the selected values */
+    /* =========================================
+       QUESTION 5: CHECKBOX LIMIT
 
-        const formData =
-            new FormData(feedbackForm);
+       Allow up to three choices.
+       "Not sure yet" cannot be combined with
+       the other choices.
+    ========================================= */
 
+    function updateExperienceCheckboxes() {
 
-        const overallRating =
-            Number(formData.get("overallRating"));
-
-        const clarity =
-            formData.get("clarity");
-
-        const favoritePart =
-            formData.get("favoritePart")?.trim() || null;
-
-        const improvements =
-            formData.get("improvements")?.trim() || null;
-
-        const playAgain =
-            formData.get("playAgain");
-
-        const recommend =
-            formData.get("recommend");
-
-
-        /* =========================================
-           SAVE TO SUPABASE
-        ========================================= */
-
-        const { error } = await supabaseClient
-            .from("post_game_feedback")
-            .insert({
-                overall_rating: overallRating,
-                game_clarity: clarity,
-                favorite_part: favoritePart,
-                improvements: improvements,
-                play_again: playAgain,
-                recommend: recommend
-            });
-
-
-        /* =========================================
-           HANDLE RESULT
-        ========================================= */
-
-        if (error) {
-
-            console.error(
-                "Feedback submission error:",
-                error
+        const selectedCheckboxes =
+            experienceCheckboxes.filter(
+                checkbox => checkbox.checked
             );
 
-            feedbackError.hidden = false;
+        const notSureSelected =
+            notSureYet.checked;
 
-            feedbackSubmit.disabled = false;
+        const regularSelections =
+            selectedCheckboxes.filter(
+                checkbox => checkbox !== notSureYet
+            );
 
-            feedbackSubmit.textContent =
-                "Submit Feedback";
+        experienceCheckboxes.forEach(checkbox => {
 
-            return;
-        }
+            if (checkbox === notSureYet) {
 
+                checkbox.disabled =
+                    !notSureSelected &&
+                    regularSelections.length > 0;
 
-        /* =========================================
-           SUCCESS
-        ========================================= */
+            } else {
 
-        feedbackForm.hidden = true;
+                checkbox.disabled =
+                    notSureSelected ||
+                    (
+                        !checkbox.checked &&
+                        regularSelections.length >= 3
+                    );
 
-        feedbackSuccess.hidden = false;
+            }
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
         });
 
+        experienceLimitMessage.hidden =
+            regularSelections.length < 3 ||
+            notSureSelected;
+    }
+
+
+    experienceCheckboxes.forEach(checkbox => {
+
+        checkbox.addEventListener(
+            "change",
+            updateExperienceCheckboxes
+        );
+
     });
+
+
+    /* =========================================
+       SUBMIT FEEDBACK
+    ========================================= */
+
+    feedbackForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            feedbackError.hidden = true;
+
+            feedbackSubmit.disabled = true;
+            feedbackSubmit.textContent = "Submitting...";
+
+            const formData = new FormData(feedbackForm);
+
+
+            /* =====================================
+               COLLECT ANSWERS
+
+               Every question is optional.
+               Unanswered fields are saved as null.
+            ===================================== */
+
+            const ratingValue =
+                formData.get("overallRating");
+
+            const preferredExperiences =
+                formData.getAll("preferredExperiences");
+
+            const feedback = {
+
+                overall_rating:
+                    ratingValue
+                        ? Number(ratingValue)
+                        : null,
+
+                game_clarity:
+                    formData.get("clarity") || null,
+
+                favorite_part:
+                    formData.get("favoritePart")?.trim() || null,
+
+                improvements:
+                    formData.get("improvements")?.trim() || null,
+
+                preferred_experiences:
+                    preferredExperiences,
+
+                acceptable_ticket_price:
+                    formData.get("cost")?.trim() || null,
+
+                anything_else:
+                    formData.get("allElse")?.trim() || null
+
+            };
+
+
+            /* =====================================
+               SAVE TO SUPABASE
+            ===================================== */
+
+            try {
+
+                const { error } = await supabaseClient
+                    .from("post_game_feedback")
+                    .insert(feedback);
+
+                if (error) {
+                    throw error;
+                }
+
+
+                /* =================================
+                   SUCCESS
+                ================================= */
+
+                feedbackForm.hidden = true;
+                feedbackSuccess.hidden = false;
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            } catch (error) {
+
+                console.error(
+                    "Feedback submission error:",
+                    error
+                );
+
+                feedbackError.hidden = false;
+
+                feedbackSubmit.disabled = false;
+                feedbackSubmit.textContent = "Submit Feedback";
+
+            }
+
+        }
+    );
 
 </script>
 
 
-<!-- ================= SITE SCRIPT ================= -->
+<!-- ================= SITE SCRIPTS ================= -->
 
 <script src="supabase.js"></script>
 <script src="site.js"></script>
 <script src="scheduling.js"></script>
 
-
 </body>
-
 </html>
