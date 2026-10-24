@@ -33,7 +33,7 @@ async function loadUpcomingGames() {
             await fetch(
                 SUPABASE_URL +
                 "/rest/v1/upcoming_public_games" +
-                "?select=id,game,reservation_date,reservation_time,location,ticket_price,number_of_guests,registration_deadline,registration_open,event_type,spots_available" +
+                "?select=id,game,reservation_date,reservation_time,location,ticket_price,number_of_guests,registration_deadline,registration_open,event_type,spots_available,public_description" +
                 "&event_type=eq.ticketed" +
                 "&registration_open=eq.true" +
                 "&order=reservation_date.asc,reservation_time.asc",
@@ -169,15 +169,27 @@ async function loadUpcomingGames() {
 						}
 					</p>
 
+
                     ${
                         registrationClosed
                             ? ""
                             : `
-                                <p class="upcoming-game-spots">
-                                    ${spots} spots available
-                                </p>
+                                <div class="upcoming-game-availability">
+                                    <p class="upcoming-game-spots">
+                                        ${spots} spots available
+                                    </p>
+
+                                    ${
+                                        game.public_description
+                                            ? `<p class="upcoming-game-description">
+                                                ${escapeHtml(game.public_description)}
+                                               </p>`
+                                            : ""
+                                    }
+                                </div>
                             `
                     }
+
 
                 </div>
 

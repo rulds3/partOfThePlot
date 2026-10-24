@@ -1157,3 +1157,24 @@
     }
 
 }
+
+/* =========================================================
+   UPCOMING GAME AVAILABILITY AND DESCRIPTION
+   ========================================================= */
+
+.upcoming-game-availability {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+}
+
+.upcoming-game-availability .upcoming-game-spots,
+.upcoming-game-description {
+    margin: 0;
+}
+
+.upcoming-game-description {
+    color: inherit;
+    font-size: 0.95em;
+}
